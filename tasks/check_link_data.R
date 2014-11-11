@@ -6,15 +6,50 @@ require(idep)
 get_ready()
 
 
+
+
 # select linkage files
 link_files_select()
-  head(filelist_full)
-  head(filelist_fname)
-  head(filelist_path)
+  head(filelist_full,  1)
+  head(filelist_fname, 1)
+  head(filelist_path,  1)
   country_path
+  country
 
 # load linkage files
 link_files_load(filelist_full)
+  linkage_env
+  ls(linkage_env001)
+
+
+
+
+# select corpus file
+corpus_file_select()
+  corpus_file_full
+  corpus_file_fname
+  corpus_file_path
+
+# load corpus file
+corpus_file_load()
+  ls(corpus_env)
+  
+
+corpus_env$meta
+names(corpus_env$coding)
+
+corpus_env$date  <- unlist(lapply(
+                        str_extract_all(corpus_env$coding$date,"\\d+"), 
+                        paste, collapse="-")
+                      )
+corpus_env$dplus <- as.numeric(
+                      match(
+                        tolower(str_extract(
+                          corpus_env$coding$date,
+                          "[[:alpha:]]+")),
+                      letters)
+                      )
+corpus_env$dplus <- ifelse(is.na(corpus_env$dplus), 0, corpus_env$dplus)
 
 
 
@@ -59,14 +94,14 @@ ctest(link_texts, filelist_full)
 
 # Writing results to database
 
-SQL <- genInsertsDKU("data_texts", data_texts)
-dbGetQueries(socon, SQL)
+system.time(SQL <- genInsertsDKU("data_texts", data_texts))
+system.time(dbGetQueries(socon, SQL))
 
-SQL <- genInsertsDKU("data_textlines", data_lines)
-dbGetQueries(socon, SQL)
+system.time(SQL <- genInsertsDKU("data_textlines", data_lines))
+system.time(dbGetQueries(socon, SQL))
 
-SQL <- genInsertsDKU("data_linelinkage", data_linkage)
-dbGetQueries(socon, SQL)
+system.time(SQL <- genInsertsDKU("data_linelinkage", data_linkage))
+system.time(dbGetQueries(socon, SQL))
 
 
 

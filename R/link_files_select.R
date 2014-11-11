@@ -15,4 +15,5 @@ link_files_select <- function() {
                       "")
   country_path   <<- paste0("Z:/Gesch\u00e4ftsordnungen/CodingChanges/",
                         str_extract(country_path,"^\\w+"))
+  country        <<- str_extract(country_path,"\\w*$")
 }

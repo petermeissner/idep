@@ -12,5 +12,11 @@ get_ready <- function(){
     data[iffer] <- "NULL"
     data
   }
+  dbGetQueries <<- function(con, SQL){
+    dummyfunc <- function(sql){dbGetQuery(con, sql)}
+    res <- unlist(plyr::llply(SQL, dummyfunc, .progress="text"))
+    res
+  }
+    
   setwd("Z:/Gesch\u00e4ftsordnungen/AggregatedData/working")
 }
