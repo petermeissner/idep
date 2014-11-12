@@ -2,7 +2,7 @@
 #' 
 
 corpus_file_load <- function(){
-  rm("corpus_env", envir=globalenv())
-  corpus_env <<- new.env()
+  suppressWarnings(rm("corpus_env", envir=globalenv()))
+  assign( "corpus_env", new.env(parent=globalenv()), envir=globalenv())
   load(corpus_file_full, envir=corpus_env)
 }

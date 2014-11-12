@@ -29,17 +29,17 @@ link_data_get_linkage <- function(res, meta){
   lnr2         <- res$newline
   textid1      <- meta$id1
   textid2      <- meta$id2
-  minmaj       <- res$diff
-  coder_linkage<- res$coder
-  coder_minmaj <- res$coder2
+  minmaj_code  <- res$diff
+  minmaj_coder <- res$coder2
+  minmaj_memo  <- res$comments
+  linkage_coder<- res$coder
   tmp <- data.frame(id1, id2, 
                     sim, sim_wd, 
                     diff, diff_wd, 
                     type, 
-                    minmaj,
                     textid1, textid2, 
                     lnr1, lnr2,
-                    coder_linkage, coder_minmaj)
+                    minmaj_code, minmaj_coder, minmaj_memo, linkage_coder)
   tmp
 }
 

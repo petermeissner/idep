@@ -4,9 +4,7 @@
 rm(list = ls())
 require(idep)
 get_ready()
-
-
-
+setwd("Z:/Gesch\u00e4ftsordnungen")
 
 # select linkage files
 link_files_select()
@@ -22,8 +20,6 @@ link_files_load(filelist_full)
   ls(linkage_env001)
 
 
-
-
 # select corpus file
 corpus_file_select()
   corpus_file_full
@@ -34,24 +30,12 @@ corpus_file_select()
 corpus_file_load()
   ls(corpus_env)
   
-
-corpus_env$meta
-names(corpus_env$coding)
-
-corpus_env$date  <- unlist(lapply(
-                        str_extract_all(corpus_env$coding$date,"\\d+"), 
-                        paste, collapse="-")
-                      )
-corpus_env$dplus <- as.numeric(
-                      match(
-                        tolower(str_extract(
-                          corpus_env$coding$date,
-                          "[[:alpha:]]+")),
-                      letters)
-                      )
-corpus_env$dplus <- ifelse(is.na(corpus_env$dplus), 0, corpus_env$dplus)
+# preapre data for matching
+corpus_data_prepare()
 
 
+# set the right wd
+setwd("Z:/Geschäftsordnungen/AggregatedData")
 
 # meta data
 fname_data       <- get_meta_from_fname(filelist_full,T)
@@ -61,13 +45,20 @@ names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t
 
 # text data for upload
 data_lines      <- link_files_get_text(filelist_full)
-names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw", "tl_wds_clean")
+  corpus_env$coding$id <- corpus_env$coding$id[ match(data_lines$id, corpus_env$coding$id) ]
+  data_lines$corpus_code <- corpus_env$coding$code
+  data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo), 
+                                  "", corpus_env$coding$memo ) 
+  names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
+                          "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
+
 
 # linkage data
-data_linkage <- link_files_get_linkage(filelist_full)
+syytem.time(data_linkage <- link_files_get_linkage(filelist_full))
 names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_diff", 
-                         "ll_diff_wd", "ll_type", "ll_minmaj", "ll_t_id1", "ll_t_id2", 
-                         "ll_tl_lnr1", "ll_tl_lnr2", "ll_coder_linkage", "ll_coder_minmaj")
+                         "ll_diff_wd", "ll_type", "ll_t_id1", "ll_t_id2", 
+                         "ll_tl_lnr1", "ll_tl_lnr2", "ll_minmaj_code", "ll_minmaj_coder",
+                         "ll_minmaj_memo", "ll_linkage_coder")
 
 
 # text data for testing
@@ -93,16 +84,21 @@ ctest(link_texts, filelist_full)
 
 
 # Writing results to database
-
+message("data_texts")
 system.time(SQL <- genInsertsDKU("data_texts", data_texts))
 system.time(dbGetQueries(socon, SQL))
 
+message("data_textlines")
 system.time(SQL <- genInsertsDKU("data_textlines", data_lines))
 system.time(dbGetQueries(socon, SQL))
 
+message("data_linkage")
 system.time(SQL <- genInsertsDKU("data_linelinkage", data_linkage))
 system.time(dbGetQueries(socon, SQL))
 
+
+sqlVersionTag( con=socon,
+               shortdesc="text data, text line data and linkage data upload" )
 
 
 
