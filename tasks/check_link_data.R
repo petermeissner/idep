@@ -41,20 +41,21 @@ setwd("Z:/Geschäftsordnungen/AggregatedData")
 fname_data       <- get_meta_from_fname(filelist_full,T)
 within_text_data <- link_files_get_date(filelist_full,T)
 data_texts  <- cbind(fname_data, within_text_data)
+text_meta   <- data_texts
 names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")
 
 # text data for upload
 data_lines      <- link_files_get_text(filelist_full)
-  corpus_env$coding$id <- corpus_env$coding$id[ match(data_lines$id, corpus_env$coding$id) ]
-  data_lines$corpus_code <- corpus_env$coding$code
-  data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo), 
-                                  "", corpus_env$coding$memo ) 
+  matcher                <- match(data_lines$id, corpus_env$coding$id)
+  data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
+  data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo[ matcher ]), 
+                                  "", corpus_env$coding$memo[ matcher ] ) 
   names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
                           "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
 
 
 # linkage data
-syytem.time(data_linkage <- link_files_get_linkage(filelist_full))
+system.time(data_linkage <- link_files_get_linkage() )
 names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_diff", 
                          "ll_diff_wd", "ll_type", "ll_t_id1", "ll_t_id2", 
                          "ll_tl_lnr1", "ll_tl_lnr2", "ll_minmaj_code", "ll_minmaj_coder",
@@ -65,7 +66,7 @@ names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_di
 text_texts <- link_files_get_text_only(filelist_full,T) 
 link_texts <- link_files_get_text_only(filelist_full,F) 
 
-# checks : check that all text lines ( max(lnr) ) ar included
+# checks : dates were extracted as expected? 
 dtest(text_meta)
 
 # checks : check that all text lines ( max(lnr) ) ar included

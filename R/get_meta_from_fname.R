@@ -1,14 +1,14 @@
 #' function extracting dates and other information from a link file filename
 
-get_meta_from_fname <- function(fnames , flatten=F){
+get_meta_from_fname <- function(fnames , flatten=F, uniq=T){
   worker <- function(fname, flatten=F) {
     tmp     <- unlist(str_split(basename(fname), " VS "))
     tmp     <- str_replace(tmp, "coded ", "")
     dates   <- lubridate::ymd(tmp)
-    dplus   <- str_extract(tmp,"_[a-zA-Z]")
+    dplus   <- str_replace(str_extract(tmp,"_[a-zA-Z]"),"_","")
     dplus   <- match(tolower(dplus), letters)
     dplus   <- ifelse(is.na(dplus), 0, dplus)
-    country <- str_extract(tmp, "^\\w+")
+    ###country <- str_extract(tmp, "^\\w+")
     id      <- paste0(country,"_",dates, paste("", dplus, sep="." ))
     if (length(id)==2 & !flatten) {
       return( data_frame(
@@ -30,7 +30,7 @@ get_meta_from_fname <- function(fnames , flatten=F){
   }
   if ( flatten ) {
     tmp <- ldply(fnames, worker, flatten)  
-    tmp <- tmp[!duplicated(tmp$id),]
+    if ( uniq == T ) tmp <- tmp[!duplicated(tmp$id),]
     rownames(tmp) <- NULL
     return( tmp )
   }

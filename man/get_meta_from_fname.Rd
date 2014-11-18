@@ -3,7 +3,7 @@
 \alias{get_meta_from_fname}
 \title{function extracting dates and other information from a link file filename}
 \usage{
-get_meta_from_fname(fnames, flatten = F)
+get_meta_from_fname(fnames, flatten = F, uniq = T)
 }
 \description{
 function extracting dates and other information from a link file filename
