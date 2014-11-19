@@ -3,7 +3,7 @@
 \alias{link_files_get_linkage}
 \title{function for extracting dates from link data files}
 \usage{
-link_files_get_linkage(filelist_full)
+link_files_get_linkage()
 }
 \description{
 function for extracting dates from link data files
