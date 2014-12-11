@@ -25,20 +25,20 @@ lastupdate <- as.character(max(as.POSIXlt(c(
                     textlines$int_dupdate_texts,
                     textlines$int_dupdate_linelinkage,
                     textlines$int_dupdate_textlines
-                    ))))
+                    )), na.rm=T ))
 
 textlines$db_version    <- version
 textlines$db_lastupdate <- lastupdate
 
 
-# writing data to file 
+# generating filenames for STATA and R 
 r_name     <- paste0("view_textlines_db_version_",version,".Rdata")
 stata_name <- paste0("view_textlines_db_version_",version,".dta")
 
+# saving to RData
 save(textlines, file=r_name)
 
-
-
+# saving to STATA
 tmp <- textlines
 for(i in 1:length(tmp[1,])){ print(class(tmp[,i]))  }
 tmp <- 

@@ -1,7 +1,7 @@
 #' Some funtions making life easier for handling Databases from within R
 #'
 
-sqlEscape <<- function(data){
+sqlEscape <- function(data){
   iffer <- is.na(data)
   data  <- paste0( "'", dbEscapeStrings(socon, as.character(data)) , "'")
   data[iffer] <- "NULL"
@@ -28,7 +28,7 @@ genInsert <- function(tablename, columnnames, values){
 }
 
 
-dbGetQueries <<- function(con, SQL){
+dbGetQueries <- function(con, SQL){
   dummyfunc <- function(sql){dbGetQuery(con, sql)}
   res <- unlist(plyr::llply(SQL, dummyfunc, .progress="text"))
   res
