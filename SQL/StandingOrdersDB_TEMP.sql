@@ -38,21 +38,63 @@ CREATE TABLE temp_t_id_lags AS
 
 
 
+DROP TABLE IF EXISTS temp_linelinkage1_textlines;
+CREATE TABLE temp_linelinkage1_textlines AS
+	SELECT
+		ll_tl_id1, ll_tl_id2, ll_sim, ll_diff, ll_sim_wd, ll_diff_wd, ll_type, data_linelinkage.ll_t_id1, data_linelinkage.ll_t_id2, ll_tl_lnr1, ll_tl_lnr2, ll_minmaj_code, ll_minmaj_coder, ll_minmaj_memo, ll_linkage_coder, int_dupdate_linelinkage, int_id_linelinkage as int_id_1,
+		textlines1.tl_id as tl_id1 , textlines1.tl_t_id as tl_t_id1 , textlines1.tl_lnr as tl_lnr1 , textlines1.tl_relevant as tl_relevant1 , textlines1.tl_corpus_code as tl_corpus_code1 , textlines1.tl_text as tl_text1 , textlines1.tl_wds_raw as tl_wds_raw1 , textlines1.tl_wds_clean as tl_wds_clean1 , textlines1.tl_corpus_memo as tl_corpus_memo1 
+	FROM data_linelinkage
+	LEFT JOIN data_textlines as textlines1 ON textlines1.tl_id = data_linelinkage.ll_tl_id1
+;
+CREATE INDEX `idx_temp_linelinkage1_textlines_int_id`  ON `temp_linelinkage1_textlines` (int_id_1);
+SELECT * FROM temp_linelinkage2_textlines ; 
 
--- table of unique linkages between specific country-textline-time and second country-textline-time
-DROP TABLE IF EXISTS temp_changes_tl_id ; 
-CREATE TABLE temp_changes_tl_id AS 
-	SELECT DISTINCT ll_tl_id1, ll_tl_id2 from data_linelinkage 
-; 
--- SELECT * FROM temp_changes ; 
 
--- add some indexes
--- DROP INDEX `idx_temp_changes_tl_id_ll_tl_id1`  ON `web234_db3`.`temp_changes_tl_id`;
--- DROP INDEX `idx_temp_changes_tl_id_ll_tl_id2`  ON `web234_db3`.`temp_changes_tl_id`;
--- DROP INDEX `idx_temp_changes_tl_id_ll_tl_id1_ll_tl_id2`  ON `web234_db3`.`temp_changes_tl_id`;
-CREATE INDEX `idx_temp_changes_tl_id_ll_tl_id1`  ON `web234_db3`.`temp_changes_tl_id` (ll_tl_id1) COMMENT '' ALGORITHM DEFAULT LOCK DEFAULT ;
-CREATE INDEX `idx_temp_changes_tl_id_ll_tl_id2`  ON `web234_db3`.`temp_changes_tl_id` (ll_tl_id2) COMMENT '' ALGORITHM DEFAULT LOCK DEFAULT ; 
-CREATE INDEX `idx_temp_changes_tl_id_ll_tl_id1_ll_tl_id2`  ON `web234_db3`.`temp_changes_tl_id` (ll_tl_id1, ll_tl_id2) COMMENT '' ALGORITHM DEFAULT LOCK DEFAULT ;
+DROP TABLE IF EXISTS temp_linelinkage2_textlines;
+CREATE TABLE temp_linelinkage2_textlines AS
+	SELECT
+		int_id_linelinkage as int_id_2,
+		textlines2.tl_id as tl_id2 , textlines2.tl_t_id as tl_t_id2 , textlines2.tl_lnr as tl_lnr2 , textlines2.tl_relevant as tl_relevant2 , textlines2.tl_corpus_code as tl_corpus_code2 , textlines2.tl_text as tl_text2 , textlines2.tl_wds_raw as tl_wds_raw2 , textlines2.tl_wds_clean as tl_wds_clean2 , textlines2.tl_corpus_memo as tl_corpus_memo2 
+	FROM data_linelinkage
+	LEFT JOIN data_textlines as textlines2 ON textlines2.tl_id = data_linelinkage.ll_tl_id2
+;
+CREATE INDEX `idx_temp_linelinkage2_textlines_int_id`  ON `temp_linelinkage2_textlines` (int_id_2);
+SELECT * FROM temp_linelinkage2_textlines ; 
+
+
+
+DROP TABLE IF EXISTS temp_linelinkage_textlines;
+CREATE TABLE temp_linelinkage_textlines 
+AS SELECT * FROM    temp_linelinkage1_textlines AS A
+			JOIN    temp_linelinkage2_textlines as B 
+			ON A.int_id_1 = B.int_id_2
+;
+
+CREATE INDEX `idx_temp_linelinkage_textlines_ll_t_id1`  ON `web234_db3`.`temp_linelinkage_textlines` (ll_t_id1) COMMENT '';
+CREATE INDEX `idx_temp_linelinkage_textlines_ll_t_id2`  ON `web234_db3`.`temp_linelinkage_textlines` (ll_t_id2) COMMENT '';
+
+DROP TABLE IF EXISTS temp_linelinkage_textlines_texts;
+CREATE TABLE temp_linelinkage_textlines_texts AS
+	SELECT * 	FROM temp_linelinkage_textlines AS A
+			JOIN 	(	SELECT t_id as t_t_id1, t_date as t_date1, t_dplus as t_dplus1, t_country as t_country1, t_daccept as t_daccept1, t_dpromul as t_dpromul1, t_denact as t_denact1
+						FROM data_texts
+					) 	AS C
+				ON A.ll_t_id1 = C.t_t_id1
+			JOIN 	(	SELECT t_id as t_t_id2, t_date as t_date2, t_dplus as t_dplus2, t_country as t_country2, t_daccept as t_daccept2,  t_dpromul as t_dpromul2, t_denact as t_denact2
+						FROM data_texts
+					) 	AS D
+				ON A.ll_t_id2 = D.t_t_id2
+;
+
+
+-- SELECT * FROM temp_linelinkage_textlines_texts ; 
+-- SELECT COUNT(*) FROM temp_linelinkage_textlines_texts WHERE ll_type='no-change'; 
+-- SELECT COUNT(*) FROM temp_linelinkage_textlines_texts WHERE ll_type='deletion'; 
+-- SELECT COUNT(*) FROM temp_linelinkage_textlines_texts WHERE ll_type='insertion'; 
+-- SELECT COUNT(*) FROM temp_linelinkage_textlines_texts WHERE ll_type='change'; 
+-- -----------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 -- lead and lag values of tl_id
 DROP TABLE IF EXISTS temp_tl_id_lags ; 
@@ -64,6 +106,8 @@ CREATE TABLE temp_tl_id_lags AS
 		LEFT JOIN temp_changes_tl_id  as temp_changes_tl_id2 on temp_changes_tl_id.ll_tl_id1 = temp_changes_tl_id2.ll_tl_id2 
 ; 
 -- SELECT * FROM temp_tl_id_lags ; 
+-- -----------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 -- lead and lag values of tl_id
@@ -78,53 +122,6 @@ CREATE TABLE temp_tl_id_leads AS
 -- SELECT * FROM temp_tl_id_leads ; 
 -- -----------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
--- linelinkage joined with textlines
-DROP TABLE IF EXISTS temp_linelinkage_textlines ; 
-CREATE TABLE temp_linelinkage_textlines AS 
-	SELECT
-		ll_tl_id1, ll_tl_id2, ll_sim, ll_diff, ll_sim_wd, ll_diff_wd, ll_type, data_linelinkage.ll_t_id1, data_linelinkage.ll_t_id2, ll_tl_lnr1, ll_tl_lnr2, ll_minmaj_code, ll_minmaj_coder, ll_minmaj_memo, ll_linkage_coder, int_dupdate_linelinkage, int_id_linelinkage,
-		textlines1.tl_id as tl_id1 , textlines1.tl_t_id as tl_t_id1 , textlines1.tl_lnr as tl_lnr1 , textlines1.tl_relevant as tl_relevant1 , textlines1.tl_corpus_code as tl_corpus_code1 , textlines1.tl_text as tl_text1 , textlines1.tl_wds_raw as tl_wds_raw1 , textlines1.tl_wds_clean as tl_wds_clean1 , textlines1.tl_corpus_memo as tl_corpus_memo1 , 
-		textlines2.tl_id as tl_id2 , textlines2.tl_t_id as tl_t_id2 , textlines2.tl_lnr as tl_lnr2 , textlines2.tl_relevant as tl_relevant2 , textlines2.tl_corpus_code as tl_corpus_code2 , textlines2.tl_text as tl_text2 , textlines2.tl_wds_raw as tl_wds_raw2 , textlines2.tl_wds_clean as tl_wds_clean2 , textlines2.tl_corpus_memo as tl_corpus_memo2 
-	FROM data_linelinkage
-	LEFT JOIN data_textlines as textlines1 ON textlines1.tl_id = data_linelinkage.ll_tl_id1
-	LEFT JOIN data_textlines as textlines2 ON textlines2.tl_id = data_linelinkage.ll_tl_id2
-;
-SELECT * FROM temp_linelinkage_textlines ; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- lag(linelinkage_id1) joined with textlines
-DROP TABLE IF EXISTS temp_linelinkage_lagid1_textlines ; 
-CREATE TABLE temp_linelinkage_lagid1_textlines AS 
-	SELECT
-		ll_tl_id1, ll_tl_id2, ll_sim, ll_diff, ll_sim_wd, ll_diff_wd, ll_type, ll_t_id1, ll_t_id2, ll_tl_lnr1, ll_tl_lnr2, ll_minmaj_code, ll_minmaj_coder, ll_minmaj_memo, ll_linkage_coder, int_dupdate_linelinkage, int_id_linelinkage,
-		tl_id, tl_t_id, tl_lnr, tl_relevant, tl_corpus_code, tl_text, tl_wds_raw, tl_wds_clean, tl_corpus_memo
-	FROM data_linelinkage
-	LEFT JOIN 
-		(SELECT * FROM temp_ll_id_lags LEFT JOIN data_textlines ON temp_ll_id_lags.t_id1_lag1 = data_textlines.tl_id ) 
-		AS lag_data 
-		ON lag_data.t_id2 = data_linelinkage.ll_tl_id2
-;
-SELECT * FROM temp_linelinkage_lagid1_textlines ;
--- textlines joined with linelinkage_id2
 
 
 -- texts joined with textlines  ----------------------------------------------

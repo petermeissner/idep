@@ -134,4 +134,4 @@ CREATE INDEX idx_t_id1
     ON data_linelinkage (ll_t_id1) ;
 CREATE INDEX idx_t_id2
     ON data_linelinkage (ll_t_id2) ;
-
+CREATE INDEX `idx_data_linelinkage_int_id_linelinkage`  ON `data_linelinkage` (int_id_linelinkage) ;
