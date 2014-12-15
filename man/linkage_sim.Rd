@@ -3,11 +3,11 @@
 \alias{linkage_sim}
 \title{function for calculating similarity again}
 \usage{
-linkage_sim(res, type = c("sim", "diff", "sim_wd", "diff_wd", "wds", "wd1",
+linkage_sim(res, simtype = c("sim", "diff", "sim_wd", "diff_wd", "wds", "wd1",
   "wd2"))
 }
 \arguments{
-\item{type}{is one of sim, diff, sim_wd, diff_wd, wds, wd1, wd2}
+\item{simtype}{is one of sim, diff, sim_wd, diff_wd, wds, wd1, wd2}
 }
 \description{
 function for calculating similarity again

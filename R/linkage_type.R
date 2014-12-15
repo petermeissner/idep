@@ -12,8 +12,8 @@ linkage_type <- function(res) {
     if( !is.na(ol) &  is.na(nl) ) return("deletion")
     if(  is.na(ol) & !is.na(nl) ) return("insertion")
     if( sim==1 )                  return("no-change")
-    if( sim < 1 )        return("change")
-    return("nonsense")
+    if( sim < 1 )                 return("change")
+                                  return("nonsense")
   }
   tmp <- apply(res, 1, worker)
   names(tmp) <- NULL

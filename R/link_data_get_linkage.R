@@ -40,7 +40,17 @@ link_data_get_linkage <- function(res, meta){
                     textid1, textid2, 
                     lnr1, lnr2,
                     minmaj_code, minmaj_coder, minmaj_memo, linkage_coder)
-  tmp
+  
+  # correcting for re-calculation of similarities for type "no-change"
+  iffer   <- tmp$type="no-change" & tmp$sim < 1 
+  tmp_tmp <- tmp[iffer,]
+  tmp[iffer,"sim"]     <- 1
+  tmp[iffer,"diff"]    <- 0
+  tmp[iffer,"diff_wd"] <- 0
+  tmp[iffer,"sim_wd"]  <- tmp_tmp$diff_wd + tmp_tmp$sim_wd
+  
+  # return
+  return(tmp)
 }
 
 
