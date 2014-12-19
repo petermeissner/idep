@@ -99,7 +99,7 @@ system.time(dbGetQueries(socon, SQL))
 
 
 sqlVersionTag( con=socon,
-               shortdesc="text data, text line data and linkage data upload" )
+               shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
 
 
 

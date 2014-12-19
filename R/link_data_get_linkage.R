@@ -42,7 +42,7 @@ link_data_get_linkage <- function(res, meta){
                     minmaj_code, minmaj_coder, minmaj_memo, linkage_coder)
   
   # correcting for re-calculation of similarities for type "no-change"
-  iffer   <- tmp$type="no-change" & tmp$sim < 1 
+  iffer   <- tmp$type=="no-change" & tmp$sim < 1 
   tmp_tmp <- tmp[iffer,]
   tmp[iffer,"sim"]     <- 1
   tmp[iffer,"diff"]    <- 0

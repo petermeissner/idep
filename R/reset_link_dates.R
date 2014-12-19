@@ -4,7 +4,6 @@ reset_link_dates <- function(){
   
   # selecting file
   file  <- file.choose("Choose file for which to change dates")
-  file <- "Z:/Geschäftsordnungen/CodingChanges/testing/NOR-1946_02_18 VS NOR-1948_04_10.Rdata"
   fname <- basename(file)
   '%.%' <- function(a,b) paste0(a,b)
   finfo <- get_meta_from_fname(file)
