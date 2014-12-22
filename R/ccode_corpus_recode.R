@@ -2,6 +2,7 @@
 
 ccode_color_scheme  <- c("#ec7014","#fcbba1", "#D94801", "#41ab5d", "#e7298a", 
                          "#C0C0C0", "#FFFFFF")
+
 ccode_corpus_recode <- function(ccode){
   codes <- rbind(
     cbind(c(111,112,113,114,121,122,123,124,125,131,132,133,134,141,142,143,144,145),1),
