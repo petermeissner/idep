@@ -3,6 +3,7 @@
 # setting things up
 rm(list = ls())
 require(idep)
+library(dplyr)
 get_ready()
 setwd("Z:/Gesch\u00e4ftsordnungen")
 
@@ -82,6 +83,10 @@ ctest(link_texts, filelist_full)
 # tests for linkage
 # ?????????????????????????????
 
+# data.frames to tbl_df
+data_texts   <- tbl_df(data_texts)
+data_lines   <- tbl_df(data_lines)
+data_linkage <- tbl_df(data_linkage)
 
 
 # Writing results to database

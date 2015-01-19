@@ -33,13 +33,17 @@ link_data_get_linkage <- function(res, meta){
   minmaj_coder <- res$coder2
   minmaj_memo  <- res$comments
   linkage_coder<- res$coder
-  tmp <- data.frame(id1, id2, 
-                    sim, sim_wd, 
-                    diff, diff_wd, 
-                    type, 
-                    textid1, textid2, 
-                    lnr1, lnr2,
-                    minmaj_code, minmaj_coder, minmaj_memo, linkage_coder)
+  tmp          <- data.frame( id1, id2, 
+                              sim, sim_wd, 
+                              diff, diff_wd, 
+                              type, 
+                              textid1, textid2, 
+                              lnr1, lnr2,
+                              minmaj_code, minmaj_coder, 
+                              minmaj_memo, linkage_coder)
+
+  # dropping sim_wd==0 & diff_wd==0 --> (wd1 & wd2) == 0
+  tmp <- tmp[ !(sim_wd==0 & diff_wd==0) , ]
   
   # correcting for re-calculation of similarities for type "no-change"
   iffer   <- tmp$type=="no-change" & tmp$sim < 1 
