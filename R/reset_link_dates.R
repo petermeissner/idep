@@ -1,8 +1,9 @@
 #' function for re-setting dates in linkage files 
 
 reset_link_dates <- function(){
-  
+  setwd("z:/")
   # selecting file
+  message("Choose file for which to change dates")
   file  <- file.choose("Choose file for which to change dates")
   fname <- basename(file)
   '%.%' <- function(a,b) paste0(a,b)
@@ -29,7 +30,8 @@ reset_link_dates <- function(){
       while ( ok==F ) {
         message(date_ol_text[i])
         date_ol_new[i] <- readLines(n=1)
-        ok <- grepl("\\d{2}\\.\\d{2}\\.\\d{4}|^$", date_ol_new[i])
+        ok <- grepl("\\d{2}.\\d{2}.\\d{4}|^$", date_ol_new[i]) | date_ol_new[i]=="" 
+        date_ol_new[i] <- paste( unlist(strsplit(date_ol_new[i], "[. ]")), collapse="." )
       }
     }
     date_nl_new <- rep("", length(date_nl_index))
@@ -39,7 +41,8 @@ reset_link_dates <- function(){
       while ( ok==F ) {
         message(date_nl_text[i])
         date_nl_new[i] <- readLines(n=1)
-        ok <- grepl("\\d{2}\\.\\d{2}\\.\\d{4}|^$", date_nl_new[i])
+        ok <- grepl("\\d{2}.\\d{2}.\\d{4}|^$", date_nl_new[i]) | date_nl_new[i]=="" 
+        date_nl_new[i] <- paste( unlist(strsplit(date_nl_new[i], "[. ]")), collapse="." )
       }
     }
     

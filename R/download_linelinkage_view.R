@@ -116,7 +116,7 @@ download_linelinkage_view <- function(con, saveToFile=F){
     
     ll_minmaj_code           :  pro minority versus pro majority (minmaj) coding: 
                                 -99 for I do not know, 0 for neither nor, 1 for 
-                                pro minority, 2 for pro majority 
+                                pro majority, 2 for pro minority 
     
     ll_minmaj_coder          :  name of the minmaj coder
     
