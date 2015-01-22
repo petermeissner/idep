@@ -3,6 +3,11 @@
 
 get_ready <- function(){
   message("sourcing sql functions")
-  source("D:/Users/Peter/DBConnections/DBSOconnection.r")
-  setwd("Z:/Gesch\u00e4ftsordnungen/AggregatedData/working")
+  fname <- "D:/Users/Peter/DBConnections/DBSOconnection.r"
+  if ( file.exists(fname) ) {
+    source(fname)
+  } else {
+    source("C:/Users/Peter/DBConnections")
+  }
+  try(setwd("Z:/Gesch\u00e4ftsordnungen/AggregatedData/working"))
 }
