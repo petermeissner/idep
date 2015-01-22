@@ -45,13 +45,20 @@ link_data_get_linkage <- function(res, meta){
   # dropping sim_wd==0 & diff_wd==0 --> (wd1 & wd2) == 0
   tmp <- tmp[ !(sim_wd==0 & diff_wd==0) , ]
   
-  # correcting for re-calculation of similarities for type "no-change"
-  iffer   <- tmp$type=="no-change" & tmp$sim < 1 
-  tmp_tmp <- tmp[iffer,]
+  # correction of sim, diff, sim_wd, diff_wd for insertions and deletions
+  iffer   <- tmp$type=="insertion" |  tmp$type=="deletion"
+  tmp[iffer,"diff_wd"] <- (tmp$diff_wd + tmp$sim_wd)[iffer]
+  tmp[iffer,"sim_wd"]  <- 0
   tmp[iffer,"sim"]     <- 1
   tmp[iffer,"diff"]    <- 0
+  
+  # correcting for re-calculation of similarities for type "no-change"
+  iffer   <- tmp$type=="no-change" & tmp$sim < 1 
+  tmp[iffer,"sim_wd"]  <- (tmp$diff_wd + tmp$sim_wd)[iffer]
   tmp[iffer,"diff_wd"] <- 0
-  tmp[iffer,"sim_wd"]  <- tmp_tmp$diff_wd + tmp_tmp$sim_wd
+  tmp[iffer,"sim"]     <- 1
+  tmp[iffer,"diff"]    <- 0
+  
   
   # return
   return(tmp)

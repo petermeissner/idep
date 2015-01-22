@@ -74,15 +74,19 @@ reset_link_dates <- function(){
     }
   }
   
-  message("replacing values as requested ...")
-  RESULTS[date_ol_index, "oldtext"] <- date_ol_text_new
-  RESULTS[date_nl_index, "newtext"] <- date_nl_text_new
-  message("changes to date information will be saved to:")
-  message(file)
-  save(RESULTS, file=file)
-  message("done")
+  # using and saving inputs or discard ? 
+  if ( correct=="yes" ) {
+    message("replacing values as requested ...")
+    RESULTS[date_ol_index, "oldtext"] <- date_ol_text_new
+    RESULTS[date_nl_index, "newtext"] <- date_nl_text_new
+    message("changes to date information will be saved to:")
+    message(file)
+    save(RESULTS, file=file)
+    message("done")
+  } else {
+    message("inputs discarded - done.")
+  }
 }
-# !!! testing !!!!!
 
 
 

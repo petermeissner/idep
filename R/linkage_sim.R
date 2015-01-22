@@ -6,15 +6,16 @@ linkage_sim <- function(res,
   worker <- function(res, simtype){
     simtype <- simtype[1]
     res  <- as.data.frame(as.list(res), stringsAsFactors=F)
-    ot   <- tolower(res$Aorigtext)
-    nt   <- tolower(res$Borigtext)
-    dist <- diffr::distanceFunctions$idep
-  
+    
+    # ensuring Text is CLEANed UP
+    ot   <- clean_text( tolower( res$Aorigtext ))
+    nt   <- clean_text( tolower( res$Borigtext ))
+      
     if ( simtype=="diff_wd" ) {
-      return( as.numeric(dist(ot,nt)) )
+      return( as.numeric(text_dist(ot, nt)) )
     } 
     if ( simtype=="sim_wd" )  {
-      return( as.numeric(( nwords(ot) + nwords(nt) ) - dist(ot,nt)) )
+      return( as.numeric(( nwords(ot) + nwords(nt) ) - text_dist(ot, nt)) )
     } 
     if ( simtype=="wd1" )  {
       return( nwords(ot) )
@@ -26,12 +27,12 @@ linkage_sim <- function(res,
       return( nwords(ot) + nwords(nt) )
     } 
     if ( simtype=="sim" )  {
-      return( as.numeric( (( nwords(ot) + nwords(nt) ) - dist(ot,nt)) / 
+      return( as.numeric( (( nwords(ot) + nwords(nt) ) - text_dist(ot, nt)) / 
                            (nwords(ot) + nwords(nt))) 
               )
     } 
     if ( simtype=="diff" )  {
-      return( as.numeric(dist(ot,nt) / (nwords(ot) + nwords(nt))) )
+      return( as.numeric(text_dist(ot, nt) / (nwords(ot) + nwords(nt))) )
     } 
     stop("linkage_sim says: something went terribly wrong.")
   }
