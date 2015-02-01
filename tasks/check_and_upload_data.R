@@ -106,7 +106,7 @@ system.time(dbGetQueries(socon, SQL))
 sqlVersionTag( con=socon,
                shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
 
-
+# MAKE SURE TO generate new temporary tables in db!!!!!
 
 
 
