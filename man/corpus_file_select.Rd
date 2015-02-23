@@ -4,7 +4,7 @@
 \alias{corpus_file_select}
 \title{function for selecting a bunch of link files and computing other vars}
 \usage{
-corpus_file_select()
+corpus_file_select(corpus_file_full = NULL)
 }
 \description{
 function for selecting a bunch of link files and computing other vars

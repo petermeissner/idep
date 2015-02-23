@@ -27,5 +27,13 @@ data.frame(cols=cols, rows=rows, diff_m99, diff_1, diff_2, diff_NA)
 files[diff_m99>0]
 
 
+# these versions have been linked but not coded
 load("Z:/Geschäftsordnungen/CodingChanges/NED/linked changes/NDL-2010_04_20 VS NDL-2010_07_01.Rdata")
 htmltable(select(RESULTS[RESULTS$similarity!=1 & RESULTS$relevant==1,], oldline, newline, oldtext, newtext, similarity))
+
+# corpus coding seems to be ok ... 
+load("Z:/geschäftsordnungen/CodingCorpus/CorpusCoding NED.Rdata")
+table(coding[coding$date=="2010_04_20",]$code, useNA="always")
+table(coding[coding$date=="2010_07_01",]$code, useNA="always")
+
+

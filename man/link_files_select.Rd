@@ -4,7 +4,7 @@
 \alias{link_files_select}
 \title{function for selecting a bunch of link files and computing other vars}
 \usage{
-link_files_select()
+link_files_select(filelist_full = NULL)
 }
 \description{
 function for selecting a bunch of link files and computing other vars

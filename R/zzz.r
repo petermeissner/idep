@@ -6,9 +6,9 @@
   }
   .onAttach   <- function(libname, pkgname){
     #packageStartupMessage("Package Kind of Attached - I think.")
-    require(plyr)
-    require(dplyr)
-    require(lubridate)
-    require(stringr)
+    require(plyr, quietly=T, warn.conflicts=F)
+    require(dplyr, quietly=T, warn.conflicts=F)
+    require(lubridate, quietly=T, warn.conflicts=F)
+    require(stringr, quietly=T, warn.conflicts=F)
   }
 
