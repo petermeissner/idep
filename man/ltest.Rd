@@ -2,11 +2,11 @@
 % Please edit documentation in R/tests.R
 \name{ltest}
 \alias{ltest}
-\title{checks : check that all text lines ( max(lnr) ) ar included}
+\title{checks : check that all text lines ( max(lnr) ) are included}
 \usage{
 ltest(text_texts)
 }
 \description{
-checks : check that all text lines ( max(lnr) ) ar included
+checks : check that all text lines ( max(lnr) ) are included
 }
 

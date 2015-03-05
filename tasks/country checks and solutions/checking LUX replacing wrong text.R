@@ -2,16 +2,15 @@
 
 # setting things up
 rm(list = ls())
-require(idep, quietly=T)
-library(dplyr,  quietly=T)
+require(idep)
+library(dplyr)
 get_ready()
 setwd("Z:/Gesch\u00e4ftsordnungen")
 
 # select linkage files
-folder      <- "Z:/geschäftsordnungen/CodingChanges/IRE/Majority-Minority Coded"
-link_files  <- paste0(folder,"/", list.files(folder, pattern="^coded "))
-
-link_files_select(link_files)
+lfiles <- c(  "Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1985_07_09 VS LUX-1991_01_01.Rdata",
+              "Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1991_01_01 VS LUX-1993_01_05.Rdata"     )
+link_files_select(lfiles)
   head(filelist_full,  1)
   head(filelist_fname, 1)
   head(filelist_path,  1)
@@ -25,9 +24,7 @@ link_files_load(filelist_full)
 
 
 # select corpus file
-corpus_file <- "Z:/geschäftsordnungen/CodingCorpus/CorpusCoding IRE.Rdata"
-
-corpus_file_select(corpus_file)
+corpus_file_select("Z:/Geschäftsordnungen/CodingCorpus/CorpusCoding LUX.Rdata")
   corpus_file_full
   corpus_file_fname
   corpus_file_path
@@ -71,3 +68,82 @@ names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_di
 # text data for testing
 text_texts <- link_files_get_text_only(filelist_full,T) 
 link_texts <- link_files_get_text_only(filelist_full,F) 
+
+# checks : dates were extracted as expected? 
+dtest(text_meta)
+
+# checks : check that all text lines ( max(lnr) ) ar included
+ltest(text_texts)
+
+# checks : check that the second text of version n 
+#          is equal to the first text of version n+1
+#      ... which should be the case because these are 
+#          supposed to be the same texts
+ctest <- ctest(link_texts, filelist_full)
+ctest
+
+
+
+####################################################################
+
+# get LNR with wrong text / good text
+LNR  <- str_extract(ctest$problems[[1]]$t2, "\\d{3}")
+
+
+# get good text for lines
+load("Z:/Geschäftsordnungen/CodingChanges/LUX/LUX-1991_01_01 VS LUX-1993_01_05.Rdata")
+
+iffer <- RESULTS$oldline %in% LNR
+RESULTS[iffer,]$oldline == LNR
+
+TEXT <- RESULTS[iffer, "oldtext"]
+
+
+# replace bad text 
+load("Z:/Geschäftsordnungen/CodingChanges/LUX/LUX-1985_07_09 VS LUX-1991_01_01.Rdata")
+
+iffer <- RESULTS$newline %in% LNR
+RESULTS[iffer,]$newline == LNR
+
+RESULTS[iffer, "newtext"] <- TEXT
+
+
+# save corrected file 
+save(RESULTS, file="Z:/Geschäftsordnungen/CodingChanges/LUX/LUX-1985_07_09 VS LUX-1991_01_01.Rdata")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ dtest <- function(text_meta){
 }
 
 
-#' checks : check that all text lines ( max(lnr) ) ar included
+#' checks : check that all text lines ( max(lnr) ) are included
 ltest <- function(text_texts){
   ltest <- link_data_check_textlength(text_texts)
   if(sum(ltest)==0){
@@ -28,11 +28,12 @@ ltest <- function(text_texts){
 #'          supposed to be the same texts
 ctest <- function(link_texts, filelist_full){
   ctest <- link_data_check_textconsistency(link_texts, filelist_full)
-  if ( dim(ctest[[2]])[1]==0 ) {
-    message("--- OK text consistency OK --")
-  }else{
-    return(ctest)
+  del   <- NULL
+  for ( i in seq_along(ctest$problems) ) {
+    if ( is.null(ctest$problems[[i]]$t1) ) del <- c(del, i)
   }
+  ctest$problems[del] <- NULL
+  return(ctest)
 }
 
 

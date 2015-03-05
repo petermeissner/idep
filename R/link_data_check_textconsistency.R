@@ -1,32 +1,52 @@
 #' function that checks whether text b of linkage 1 and text a of linkage 2 are identical
 
 link_data_check_textconsistency <- function(link_texts, filelist_full){
-  meta <- get_meta_from_fname(filelist_full)
-  res  <- data.frame(id1=meta$id1,id2=meta$id2,N_texts_differ=NA)
+ 
+  ids <- NULL
+  for ( i in seq_along(filelist_full[-1]) ) {
+    ids[i] <- paste(basename(filelist_full)[(i):(i+1)], collapse=" // ")
+  }
+  ids <- str_replace_all(ids, "[.[:alpha:]-]{3,6}","")
+  res  <- data.frame(id=ids, N_texts_differ=NA)
   
   problems <- list()
-  for(i in seq_along(res[,1])) {
-    problems[[i]] <- list(name=as.character(res$id2[i]),
+  for(i in seq_along(res[,1]) ) {
+    problems[[i]] <- list(name=as.character(res$id[i]),
                           t1=NA,t2=NA)
   }
+  
+  del <- NULL 
   
   for ( i in seq_along(link_texts[-1])) {
     t1 <- link_data_clean_text(link_texts[[i]]$t2)
     t2 <- link_data_clean_text(link_texts[[i+1]]$t1)
-    res[i,"N_texts_differ"] <- sum(t1 != t2)
-    problems[[i]]$t1 <- null_to_na(t1[t1 != t2])
-    problems[[i]]$t2 <- null_to_na(t2[t1 != t2])
+    l1 <- link_texts[[i]]$l2
+    l2 <- link_texts[[i+1]]$l1
+    
+    ldiff2 <- ifelse(length(t1)-length(t2) < 0 , 0 , length(t1)-length(t2))
+    ldiff1 <- ifelse(length(t2)-length(t1) < 0 , 0 , length(t2)-length(t1))
+    
+    tt2 <- c(t2, rep("-- NA --", ldiff2))
+    tt1 <- c(t1, rep("-- NA --", ldiff1))
+    ll2 <- c(l2, rep(NA, ldiff2))
+    ll1 <- c(l1, rep(NA, ldiff1))
+    
+    res[i,"N_texts_differ"] <- sum(tt1 != tt2)
+    problems[[i]]$t1 <- paste("[",
+                              unlist(lapply(ll1[tt1 != tt2], null_to_na)), 
+                              "]", ":",
+                              unlist(lapply(tt1[tt1 != tt2], null_to_na)))
+    problems[[i]]$t2 <- paste("[",
+                              unlist(lapply(ll2[tt1 != tt2], null_to_na)), 
+                              "]", ":",
+                              unlist(lapply(tt2[tt1 != tt2], null_to_na)))
+    if( is.null(unlist(lapply(tt2[tt1 != tt2], null_to_na))) ) del <- c(del,i)
   }
   
-  df <- data.frame(name=NA,t1=NA,t2=NA)
-  for(i in seq_along(problems)){
-    tmp <-  data.frame(
-                 name = problems[[i]]$name, 
-                 t1   = problems[[i]]$t1,
-                 t2   = problems[[i]]$t2      )
-    df <- rbind(df, tmp)
-  }
-  problems <- df[!is.na(df$t1) | !is.na(df$t2), ]
+  problems[del] <- NULL
   
   return(list(res=res, problems=problems))
 }
+
+
+
