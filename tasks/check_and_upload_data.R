@@ -46,7 +46,7 @@ text_meta   <- data_texts
 names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")
 
 # text data for upload
-data_lines      <- link_files_get_text(filelist_full)
+data_lines      <- link_files_get_text(linkage_env)
   matcher                <- match(data_lines$id, corpus_env$coding$id)
   data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
   data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo[ matcher ]), 
@@ -64,8 +64,8 @@ names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_di
 
 
 # text data for testing
-text_texts <- link_files_get_text_only(filelist_full,T) 
-link_texts <- link_files_get_text_only(filelist_full,F) 
+text_texts <- link_files_get_text_only(linkage_env,T) 
+link_texts <- link_files_get_text_only(linkage_env,F) 
 
 # checks : dates were extracted as expected? 
 dtest(text_meta)
@@ -89,6 +89,9 @@ data_texts   <- tbl_df(data_texts)
 data_lines   <- tbl_df(data_lines)
 data_linkage <- tbl_df(data_linkage)
 
+
+# re-establish connection
+get_ready()
 
 # Writing results to database
 message("data_texts")

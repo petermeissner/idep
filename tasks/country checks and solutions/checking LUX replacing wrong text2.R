@@ -8,8 +8,8 @@ get_ready()
 setwd("Z:/Gesch\u00e4ftsordnungen")
 
 # select linkage files
-lfiles <- c(  "Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1985_07_09 VS LUX-1991_01_01.Rdata",
-              "Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1991_01_01 VS LUX-1993_01_05.Rdata"     )
+lfiles <- c(  "Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1999_06_01 VS LUX-2000_07_01.Rdata",
+              "Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-2000_07_01 VS LUX-2002_07_17.Rdata"     )
 link_files_select(lfiles)
   head(filelist_full,  1)
   head(filelist_fname, 1)
@@ -87,12 +87,13 @@ ctest
 ####################################################################
 
 # get LNR with wrong text / good text
-index <- grep("1985_07_09 VS 1991_01_01 //  1991_01_01 VS 1993_01_05", unlist(lapply(ctest$problems, `[[`, "name")))
+index <- grep("1999_06_01 VS 2000_07_01 //  2000_07_01 VS 2002_07_17", unlist(lapply(ctest$problems, `[[`, "name")))
 LNR   <- str_extract(ctest$problems[[index]]$t2, "\\d{3}")
 
 
 # get good text for lines
-load("Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1991_01_01 VS LUX-1993_01_05.Rdata")
+lfiles[2]
+load(lfiles[2])
 
 iffer <- RESULTS$oldline %in% LNR
 RESULTS[iffer,]$oldline == LNR
@@ -102,7 +103,7 @@ TEXTorig <- RESULTS[iffer, "Aorigtext"]
 
 
 # replace bad text 
-load("Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1985_07_09 VS LUX-1991_01_01.Rdata")
+load(lfiles[1])
 
 iffer <- RESULTS$newline %in% LNR
 RESULTS[iffer,]$newline == LNR
@@ -112,7 +113,8 @@ RESULTS[iffer, "Borigtext"] <- TEXTorig
 
 
 # save corrected file 
-save(RESULTS, file="Z:/Geschäftsordnungen/CodingChanges/LUX/coded LUX-1985_07_09 VS LUX-1991_01_01.Rdata")
+lfiles[1]
+save(RESULTS, file=lfiles[1])
 
 
 

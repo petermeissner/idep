@@ -1,6 +1,6 @@
 #' function extracting the texts from link data files
 
-link_files_get_text <- function(filelist_full){
+link_files_get_text <- function(linkage_env){
   # easy paste
   '%.%' <- function(a,b) paste0(a,b)
 

@@ -4,7 +4,7 @@
 \alias{link_files_get_text_only}
 \title{function extracting the texts from link data files}
 \usage{
-link_files_get_text_only(filelist_full, flatten = F)
+link_files_get_text_only(linkage_env, flatten = F)
 }
 \description{
 function extracting the texts from link data files

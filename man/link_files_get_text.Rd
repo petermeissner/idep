@@ -4,7 +4,7 @@
 \alias{link_files_get_text}
 \title{function extracting the texts from link data files}
 \usage{
-link_files_get_text(filelist_full)
+link_files_get_text(linkage_env)
 }
 \description{
 function extracting the texts from link data files

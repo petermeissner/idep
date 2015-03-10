@@ -45,8 +45,8 @@ corpus_data_prepare()
 setwd("Z:/Geschäftsordnungen/AggregatedData")
 
 # meta data
-fname_data       <- get_meta_from_fname(filelist_full,T)
-within_text_data <- link_files_get_date(filelist_full,T)
+fname_data       <- get_meta_from_fname(linkage_env,T)
+within_text_data <- link_files_get_date(linkage_env,T)
 data_texts  <- cbind(fname_data, within_text_data)
 text_meta   <- data_texts
 names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")

@@ -7,7 +7,7 @@ get_ready <- function(){
   if ( file.exists(fname) ) {
     source(fname)
   } else {
-    source("C:/Users/Peter/DBConnections")
+    source("~/../DBConnections/DBSOconnection.r")
   }
   try(setwd("Z:/Gesch\u00e4ftsordnungen/AggregatedData/working"))
 }

@@ -1,6 +1,6 @@
 #' function extracting the texts from link data files
 
-link_files_get_text_only <- function(filelist_full, flatten=F){
+link_files_get_text_only <- function(linkage_env, flatten=F){
   worker2 <- function(linkage_env, flatten) {
     link_data_get_text( eval(as.name(linkage_env))$RESULTS)
   }

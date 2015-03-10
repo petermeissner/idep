@@ -33,7 +33,12 @@ ctest <- function(link_texts, filelist_full){
     if ( is.null(ctest$problems[[i]]$t1) ) del <- c(del, i)
   }
   ctest$problems[del] <- NULL
-  return(ctest)
+  if( sum(ctest$res$N_texts_differ)==0 ) {
+    message("--- OK text comparison tests OK --- ")
+    return(NULL)
+  }else{
+    return(ctest)
+  }
 }
 
 
