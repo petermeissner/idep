@@ -31,6 +31,20 @@ files[diff_m99>0]
 load("Z:/Geschäftsordnungen/CodingChanges/NED/linked changes/NDL-2010_04_20 VS NDL-2010_07_01.Rdata")
 htmltable(select(RESULTS[RESULTS$similarity!=1 & RESULTS$relevant==1,], oldline, newline, oldtext, newtext, similarity))
 
+htmltable(
+  select(
+    RESULTS[order(as.numeric(RESULTS$oldline),as.numeric(RESULTS$newline)), ], 
+    oldline, newline, oldtext, newtext, similarity ))
+
+htmltable(
+  select(
+    RESULTS[order(as.numeric(RESULTS$oldline),as.numeric(RESULTS$newline)), ], 
+    oldline, oldtext))
+
+
+
+
+
 # corpus coding seems to be ok ... 
 load("Z:/geschäftsordnungen/CodingCorpus/CorpusCoding NED.Rdata")
 table(coding[coding$date=="2010_04_20",]$code, useNA="always")
