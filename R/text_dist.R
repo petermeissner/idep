@@ -1,6 +1,11 @@
 #' function for calculating the distance between two text snippets
 #' 
 text_dist  = function(text1, text2, clean=F){
+  if ( missing(text2) ) {
+    text2 <- text1[[2]]
+    text1 <- text1[[1]]
+  }
+  
   # cleaning text
   if ( clean==T ) {
     text1 <- clean_text(text1)

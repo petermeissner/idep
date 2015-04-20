@@ -3,14 +3,13 @@
 # setting things up
 rm(list = ls())
 require(idep)
-library(dplyr)
 get_ready()
 setwd("Z:/Gesch\u00e4ftsordnungen")
 
 
 # select linkage files
 path   <- "Z:/Geschäftsordnungen/CodingChanges/GER/R Files/"
-lfiles <- paste0(path, list.files(path, pattern="coded.*Rdata"))[ 9:20 ]
+lfiles <- paste0(path, list.files(path, pattern="coded.*Rdata"))[ 19:20 ] # 9:20
 
 link_files_select(lfiles)
 head(filelist_full,  1)

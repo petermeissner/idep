@@ -6,7 +6,11 @@ link_data_check_textconsistency <- function(link_texts, filelist_full){
   for ( i in seq_along(filelist_full[-1]) ) {
     ids[i] <- paste(basename(filelist_full)[(i):(i+1)], collapse=" // ")
   }
-  ids <- str_replace_all(ids, "[.[:alpha:]-]{3,6}","")
+  ids   %<>%  
+    str_replace_all("[[:alpha:]-]{3,6}","") %>% 
+    str_replace_all("^ ","") %>% 
+    str_replace_all("\\.","") 
+    
   res  <- data.frame(id=ids, N_texts_differ=NA)
   
   problems <- list()

@@ -5,32 +5,33 @@ rm(list = ls())
 require(idep)
 library(dplyr)
 get_ready()
-setwd("Z:/Gesch\u00e4ftsordnungen")
+setwd("Z:/Geschäftsordnungen/CodingChanges/NED/coded changes")
 
 # select linkage files
-link_files_select()
-head(filelist_full,  1)
-head(filelist_fname, 1)
-head(filelist_path,  1)
-country_path
-country
+link_files_select( paste0(getwd(), "/", dir(pattern="coded.*\\.Rdata")) )
+  head(filelist_full,  1)
+  head(filelist_fname, 1)
+  head(filelist_path,  1)
+  country_path
+  country
 
 # load linkage files
 link_files_load(filelist_full)
-linkage_env
-ls(linkage_env001)
+  linkage_env
+  ls(linkage_env001)
 
 
+setwd("Z:/Geschäftsordnungen")
 # select corpus file
-corpus_file_select()
-corpus_file_full
-corpus_file_fname
-corpus_file_path
+corpus_file_select("Z:/Geschäftsordnungen/CodingCorpus/CorpusCoding NED.Rdata")
+  corpus_file_full
+  corpus_file_fname
+  corpus_file_path
 
 # load corpus file
 corpus_file_load()
-ls(corpus_env)
-
+  ls(corpus_env)
+  
 # preapre data for matching
 corpus_data_prepare()
 
@@ -47,12 +48,12 @@ names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t
 
 # text data for upload
 data_lines      <- link_files_get_text(linkage_env)
-matcher                <- match(data_lines$id, corpus_env$coding$id)
-data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
-data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo[ matcher ]), 
-                                    "", corpus_env$coding$memo[ matcher ] ) 
-names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
-                        "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
+  matcher                <- match(data_lines$id, corpus_env$coding$id)
+  data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
+  data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo[ matcher ]), 
+                                  "", corpus_env$coding$memo[ matcher ] ) 
+  names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
+                          "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
 
 
 # linkage data
@@ -111,6 +112,7 @@ sqlVersionTag( con=socon,
                shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
 
 # MAKE SURE TO generate new temporary tables in db!!!!!
+
 
 
 
