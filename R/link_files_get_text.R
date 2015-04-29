@@ -8,6 +8,7 @@ link_files_get_text <- function(linkage_env){
   worker2 <- function(env_name) {
     res  <- eval(as.name(env_name))$RESULTS
     meta <- eval(as.name(env_name))$meta
+    # message(paste(meta[1:2], " ")) # DEV #
     tmp  <- link_data_get_text(res)
     id        <- meta$id1  %.% "_"  %.% str_pad(tmp$l1,4,"left","_")
     id        <- c( id, meta$id2  %.% "_"  %.% str_pad(tmp$l2,4,"left","_") )

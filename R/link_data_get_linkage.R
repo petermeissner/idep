@@ -10,9 +10,16 @@ link_data_get_linkage <- function(res, meta){
   res$newline <- ifelse(is.na(res$newline),"",res$newline)
   
   # set minmaj NA to 0 if relevant==1 and similarity==1
-  res$diff <- ifelse( ( is.na(res$diff) & res$similarity==1 & res$relevant==1 ),
-                      0,
-                      res$diff)
+  if ( is.null(res$diff) ) {
+    res$diff <- NA
+  }else{
+    res$diff <- ifelse( 
+        ( is.na(res$diff) & res$similarity==1 & res$relevant==1 ),
+        0,
+        res$diff
+      )
+  }
+  
   
   # type 
   type <- linkage_type(res)
@@ -30,9 +37,9 @@ link_data_get_linkage <- function(res, meta){
   textid1      <- meta$id1
   textid2      <- meta$id2
   minmaj_code  <- res$diff
-  minmaj_coder <- res$coder2
-  minmaj_memo  <- res$comments
-  linkage_coder<- res$coder
+  minmaj_coder <- ifelse( is.null(res$coder2),   NA, res$coder2)
+  minmaj_memo  <- ifelse( is.null(res$comments), "", res$comments)
+  linkage_coder<- ifelse( is.null(res$coder),    NA, res$coder)
   tmp          <- data.frame( id1, id2, 
                               sim, sim_wd, 
                               diff, diff_wd, 
