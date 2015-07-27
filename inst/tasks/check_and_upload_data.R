@@ -1,14 +1,54 @@
 # script for checking link data and uploading it to server
 
 # setting things up
-rm(list = ls())
-require(idep)
+library(idep)
 library(dplyr)
-get_ready()
-setwd("Z:/Gesch\u00e4ftsordnungen")
+library(RMySQL)
+'%.%' <- function(a,b) paste0(a,b)
+
+
+# connection function
+get_ready <- function(){
+  lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
+  source("~/DBConnections/so_local.r")
+  #source("~/DBConnections/so_latin1_local.r")
+  #source("~/DBConnections/DBSOconnection.r")
+}
+
+# 
+setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+countries <- list.dirs(".",FALSE,FALSE)
+countries
+
+
+# commandline argument evaluation
+eval(parse(text=grep("ctr",  commandArgs(), value=T)))
+if( !exists("ctr") ){
+  stop(
+    paste0(
+      "no country given choose one of these:\n", 
+      paste0(countries, collapse = ", "),
+      "\ne.g.: R < file.R > file.rout --args ctr='AUT'"
+    )
+  )
+}else{
+  message("### ================================== ###")
+  message(ctr)  
+}
+
+message("preparing data ... ")
 
 # select linkage files
-link_files_select()
+# link_files_select()
+linkage_path <- 
+  ifelse( 
+    file.exists(ctr %.% "/coded"), 
+    ctr %.% "/coded", 
+    ctr %.% "/linked"
+  )
+link_files_select(
+  list.files(linkage_path, full.names=T )
+)
 head(filelist_full,  1)
 head(filelist_fname, 1)
 head(filelist_path,  1)
@@ -22,7 +62,13 @@ ls(linkage_env001)
 
 
 # select corpus file
-corpus_file_select()
+# corpus_file_select()
+corpus_file_select(
+  list.files(
+    paste0(ctr,"/corpus"),
+    full.names=T
+  )
+)
 corpus_file_full
 corpus_file_fname
 corpus_file_path
@@ -34,16 +80,13 @@ ls(corpus_env)
 # preapre data for matching
 corpus_data_prepare()
 
-
-# set the right wd
-setwd("Z:/Geschäftsordnungen/AggregatedData")
-
 # meta data
 fname_data       <- get_meta_from_fname(filelist_full,T)
 within_text_data <- link_files_get_date(filelist_full,T)
 data_texts  <- cbind(fname_data, within_text_data)
 text_meta   <- data_texts
 names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")
+
 
 # text data for upload
 data_lines      <- link_files_get_text(linkage_env)
@@ -53,6 +96,8 @@ data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo
                                     "", corpus_env$coding$memo[ matcher ] ) 
 names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
                         "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
+data_lines$tl_text <- enc2utf8(data_lines$tl_text)
+data_lines$tl_corpus_memo <- enc2utf8(data_lines$tl_corpus_memo)
 
 
 # linkage data
@@ -61,6 +106,7 @@ names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_di
                          "ll_diff_wd", "ll_type", "ll_t_id1", "ll_t_id2", 
                          "ll_tl_lnr1", "ll_tl_lnr2", "ll_minmaj_code", "ll_minmaj_coder",
                          "ll_minmaj_memo", "ll_linkage_coder")
+data_linkage$ll_minmaj_memo <- enc2utf8(data_linkage$ll_minmaj_memo)
 
 
 # text data for testing
@@ -78,7 +124,7 @@ ltest(text_texts)
 #      ... which should be the case because these are 
 #          supposed to be the same texts
 ctest <- ctest(link_texts, filelist_full)
-ctest
+ctest[[1]]
 
 # ?????????????????????????????
 # tests for linkage
@@ -88,6 +134,7 @@ ctest
 data_texts   <- tbl_df(data_texts)
 data_lines   <- tbl_df(data_lines)
 data_linkage <- tbl_df(data_linkage)
+
 
 
 # re-establish connection
@@ -100,18 +147,36 @@ system.time(dbGetQueries(socon, SQL))
 
 message("data_textlines")
 system.time(SQL <- genInsertsDKU("data_textlines", data_lines))
+Encoding(SQL) <- "UTF-8"
+#for ( i in seq_along(SQL) ) {
+#  SQL[[i]] <- str_replace_all(SQL[[i]], "\u0097", "-")
+#  SQL[[i]] <- str_replace_all(SQL[[i]], "\u0084", '"')
+#}
 system.time(dbGetQueries(socon, SQL))
+
+
+## DEV ## >>
+#pb <- progress_time(); pb$init(length(SQL)); 
+#for(i in seqalong(SQL)){
+#  dbGetQuery(socon, SQL[i])
+#  pb$step()
+#}
+## DEV ## <<
+
 
 message("data_linkage")
 system.time(SQL <- genInsertsDKU("data_linelinkage", data_linkage))
 system.time(dbGetQueries(socon, SQL))
 
 
-sqlVersionTag( con=socon,
-               shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
+# make new tag for DB versioning
+# sqlVersionTag( con=socon, shortdesc="")
+get_ready()
+sqlVersionTag( con=socon, shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
 
-# MAKE SURE TO generate new temporary tables in db!!!!!
 
+# MAKE SURE TO generate new temporary tables in db!
+system.time(dbGetQuery(socon, "CALL make_temp_linelinkage_textlines_texts();"))
 
 
 

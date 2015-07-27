@@ -48,6 +48,7 @@ download_textlines_raw <- function(con, saveToFile=F){
   }
   
   # return
+  dbdat <- set_enc_utf8(dbdat)
   invisible(dbdat)
 }
 

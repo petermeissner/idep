@@ -229,6 +229,7 @@ download_linelinkage_view <- function(con, saveToFile=F){
   }
   
   # return
+  linelinkage <- set_enc_utf8( linelinkage )
   invisible(linelinkage)
 }
 

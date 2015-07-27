@@ -3,9 +3,15 @@
 
 sqlEscape <- function(data){
   iffer <- is.na(data)
-  data  <- paste0( "'", dbEscapeStrings(socon, as.character(data)) , "'")
-  data[iffer] <- "NULL"
-  data
+  if ( class(socon)=="MySQLConnection" ) {
+    data  <- paste0( "'", dbEscapeStrings(socon, as.character(data)) , "'")
+    data[iffer] <- "NULL"
+    return(data)
+  }else{
+    data  <- paste0( "'", str_replace_all(as.character(data),"'", "''") , "'")
+    data[iffer] <- "NULL"
+    return(data)
+  }
 }
 
 genUpdate <- function(tablename, columnnames, values){
@@ -30,7 +36,7 @@ genInsert <- function(tablename, columnnames, values){
 
 dbGetQueries <- function(con, SQL){
   dummyfunc <- function(sql){dbGetQuery(con, sql)}
-  res <- unlist(plyr::llply(SQL, dummyfunc, .progress="text"))
+  res <- unlist(plyr::llply(SQL, dummyfunc, .progress="time"))
   res
 }
 
@@ -101,17 +107,34 @@ genUpdates <- function(tablename, data){
 
 
 genInsertsDKU <- function(tablename, data){
-  SQL <- genInserts(tablename, data)
-  SQL <- paste(SQL, " ON DUPLICATE KEY UPDATE ")
-  dataDF <- as.data.frame( data, stringsAsFactors=F )
-  pb <- txtProgressBar(style = 3)
-  for(i in seq_along(names(data)) ){
-    if(i!=1){ SQL <- paste( SQL, "," ) }
-    SQL <- paste(SQL, paste0("`",names(data)[i],"`"), "=", sqlEscape(dataDF[,i]))
-    setTxtProgressBar(pb, i/length(data))
+  if ( class(socon) == "MySQLConnection" ) {
+    SQL <- genInserts(tablename, data)
+    SQL <- paste(SQL, " ON DUPLICATE KEY UPDATE ")
+    dataDF <- as.data.frame( data, stringsAsFactors=F )
+    pb <- progress_time(); pb$init(length(data));
+    for(i in seq_along(names(data)) ){
+      if(i!=1){ SQL <- paste( SQL, "," ) }
+      SQL <- paste(SQL, paste0("`",names(data)[i],"`"), "=", sqlEscape(dataDF[,i]))
+      pb$step()
+    }
+    pb$term()
+    return(SQL)
   }
-  close(pb)
-  SQL
+  if ( class(socon) == "SQLiteConnection" ) {
+    SQL <- genInserts(tablename, data)
+    SQL <- str_replace_all(SQL, "INSERT INTO", "INSERT OR REPLACE INTO")
+
+    #SQL <- paste(SQL, " ON DUPLICATE KEY UPDATE ")
+    #dataDF <- as.data.frame( data, stringsAsFactors=F )
+    #pb <- txtProgressBar(style = 3)
+    #for(i in seq_along(names(data)) ){
+    #  if(i!=1){ SQL <- paste( SQL, "," ) }
+    #  SQL <- paste(SQL, paste0("`",names(data)[i],"`"), "=", sqlEscape(dataDF[,i]))
+    #  setTxtProgressBar(pb, i/length(data))
+    #}
+    #close(pb)
+    return(SQL)
+  }
 }                
 
 

@@ -13,6 +13,7 @@ setwd("Z:/Gesch\u00e4ftsordnungen")
 # select linkage files
 setwd("Z:/Geschäftsordnungen/codingChanges/AUT/R files")
 fnames <- getwd() %.% "/" %.% sort(list.files(pattern="coded"))
+fnames <- fnames[1:2]
 
 
 link_files_select(fnames)
@@ -100,25 +101,33 @@ data_linkage <- tbl_df(data_linkage)
 
 # re-establish connection
 get_ready()
+socon <- sosqlite
 
 # Writing results to database
 message("data_texts")
 system.time(SQL <- genInsertsDKU("data_texts", data_texts))
 system.time(dbGetQueries(socon, SQL))
+dbReadTable(socon, "data_texts")
+
 
 message("data_textlines")
 system.time(SQL <- genInsertsDKU("data_textlines", data_lines))
 system.time(dbGetQueries(socon, SQL))
+dbReadTable(socon, "data_textlines")[996, ]$tl_text
+
 
 message("data_linkage")
 system.time(SQL <- genInsertsDKU("data_linelinkage", data_linkage))
 system.time(dbGetQueries(socon, SQL))
-
+dbReadTable(socon, "data_linelinkage")
 
 sqlVersionTag( con=socon,
                shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
 
 # MAKE SURE TO generate new temporary tables in db!!!!!
+# --> temp table is problem!!!
+
+
 
 
 

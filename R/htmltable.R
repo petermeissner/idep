@@ -6,19 +6,52 @@
 #' @param head should user defined HTML head be used (everything before the table)
 #' @param foot should user defined HTML foot be used (everything after the table)
 
-htmltable <- function(x, file="", standalone=T, names=T, head="", foot="" ){
+htmltable <- function( x, 
+                       file="", 
+                       standalone=T, 
+                       names=T, 
+                       head="", 
+                       foot="" , 
+                       color="",
+                       bgcolor="", 
+                       html=""
+                     ){
   # input check
-  if ( !( class(x) %in% c("matrix", "data.frame") ) ){
+  if ( !any( class(x) %in% c("matrix", "data.frame") ) ){
     stop(paste("df_to_htmltable: I do not know how to transform x =",
                class(x), "into HTML.") )
   }
   # table
-  table <-  paste(
-              paste(  "  <tr>  <td>",
-                apply(cbind(seq_along(x[,1]), x), 1, paste, collapse=" </td> <td> "), 
-                "</td>  </tr>"), 
-              collapse="\n" 
-            )
+  table <-  
+    paste(
+      paste(  
+        ifelse( 
+          bgcolor=="" & color=="",
+          '  <tr><td>',
+          paste("  <tr style='background-color:", bgcolor , "; color:", " '>  <td>")
+        ),
+        apply(
+          cbind(
+            paste0(
+              "<code>[",
+              str_pad(
+                seq_along(x[,1]),
+                width = max(str_length(seq_along(x[,1]))),
+                side  = "left"
+              ),
+              "]</code>"
+            ) , 
+            x
+          ), 
+          1, 
+          paste, 
+          collapse=" </td> <td> "
+        ), 
+        "</td>  </tr>"
+      ), 
+      collapse="\n" 
+    )
+  # column names
   if ( any(names != F) ) {
     if ( all(names == T) ){
       names <- names(x)
@@ -37,22 +70,27 @@ htmltable <- function(x, file="", standalone=T, names=T, head="", foot="" ){
   # standalone
   if ( standalone == T ){
     if ( head=="" ){
-      head <- '
-<html>
-<head>
-<title></title>
-<link rel=stylesheet href="http://mbtnr.net/js/R2HTML.css" type=text/css>
-</head>
-<body bgcolor= FFFFFF >
-'
+      head <- 
+        c( 
+          '<html><head><title></title><style>',
+          readLines( system.file( "helpers/tables.css", package = "idep") ),
+          '</style></head><body bgcolor= FFFFFF >',
+          html
+        )
     }
     if ( foot=="" ){
-      foot <- '
-<script src="http://mbtnr.net/js/R2HTML.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://www.pmeissner.com/js/stickyTableHeaders.js"></script>
-</body></html>
-'
+      foot <- 
+        c(
+          '<script>',
+            readLines( system.file( "helpers/js1.js", package = "idep") ),
+          '</script>',
+          '<script>',
+            readLines( system.file( "helpers/jquery.min.js", package = "idep") ),
+          '</script>',
+          '<script>',
+            readLines( system.file( "helpers/stickyTableHeaders.js", package = "idep") ),
+          '</script></body></html>'
+        )
     }
   }else{
     head <- ""

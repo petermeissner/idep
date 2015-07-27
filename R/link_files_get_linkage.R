@@ -9,5 +9,5 @@ link_files_get_linkage <- function(){
     link_data_get_linkage(res, meta) 
   }
   # data extraction  
-  ldply(linkage_env, worker2, .progress="text")
+  ldply(linkage_env, worker2, .progress="time")
 }

@@ -32,22 +32,27 @@ link_data_get_linkage <- function(res, meta){
   diff         <- linkage_sim(res, "diff")
   diff_wd      <- linkage_sim(res, "diff_wd")
   type         <- type
-  lnr1         <- res$oldline
-  lnr2         <- res$newline
+  lnr1         <- as.numeric(res$oldline)
+  lnr2         <- as.numeric(res$newline)
   textid1      <- meta$id1
   textid2      <- meta$id2
-  minmaj_code  <- res$diff
+  minmaj_code  <- as.numeric(res$diff)
   minmaj_coder <- ifelse( is.null(res$coder2),   NA, res$coder2)
   minmaj_memo  <- ifelse( is.null(res$comments), "", res$comments)
   linkage_coder<- ifelse( is.null(res$coder),    NA, res$coder)
-  tmp          <- data.frame( id1, id2, 
-                              sim, sim_wd, 
-                              diff, diff_wd, 
-                              type, 
-                              textid1, textid2, 
-                              lnr1, lnr2,
-                              minmaj_code, minmaj_coder, 
-                              minmaj_memo, linkage_coder)
+
+  tmp <- 
+    data.frame( 
+      id1, id2, 
+      sim, sim_wd, 
+      diff, diff_wd, 
+      type, 
+      textid1, textid2, 
+      lnr1, lnr2,
+      minmaj_code, minmaj_coder, 
+      minmaj_memo, linkage_coder, 
+      stringsAsFactors = FALSE
+    )
 
   # dropping sim_wd==0 & diff_wd==0 --> (wd1 & wd2) == 0
   tmp <- tmp[ !(sim_wd==0 & diff_wd==0) , ]

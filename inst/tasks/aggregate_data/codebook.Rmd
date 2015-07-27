@@ -1,0 +1,110 @@
+---
+title: "Codebook"
+author: "pm"
+date: "`r Sys.time()`"
+output: 
+  html_document: 
+    number_sections: yes
+---
+
+# Shortcuts 
+
+**SP** is short for subparagraph and in most cases identical to line or textline due to the fact that subparagraphs have been stored in a way that each subparagraph is stored on one line in a plain text file
+
+
+# Datasets 
+
+## reforms
+Dataset based on the IDEP data and aggregated on Standing Orders version level - i.e. each version has its own line in the dataset. 
+
+
+# Variables
+
+## general variable name shortcuts
+
+**wds** and **wd** is short for words, like the number of words within a SP or text
+
+**rel** is short for relevant, like whether or not a SP contains relevant information or can be  dismissed as headline, blankline, comment, appendix or some other not relevant part of the text (the opposite usually is **all**)
+
+**raw** versus **clean** denote whether or not the SP was used as found in the official documents or cleaned up. Cleaned SPs have been stripped by their enumeration, thus pure changes of enumeration are not considered as changes nor are they counted as relevant content. 
+
+**ins**, **del**, **chg**, **none**: denote the type of change that occured for a particular SP - insertion, deletion, change and no-change.
+
+
+## shortcuts indicating their raw data sets 
+
+**db_** and **int_** denote variables that have to do with the databse that serves as basis for all datasets and are most likely not relevant to the user. 
+
+**t_** information on text or Standing Orders version level, e.g. the data when a particular standing order was accepted, the country it belongs to or total number of words of the  version, ... .
+
+**tl_** information on text lines aka SPs, e.g whether or not a SP is relevant, how many words it contains, it's corpus code, ... .
+
+
+**ll_** information on the what happend to SPs from one version to the next - e.g. was it changed or deleted. 
+
+
+
+
+## variable names
+
+**t_id              **
+
+**t_date            **
+
+**t_dplus           **
+
+**t_country         **
+
+**t_daccept         **
+
+**t_dpromul         **
+
+**t_denact          **
+
+**int_dupdate_texts **
+
+**int_id_texts      **
+
+**db_version        **
+
+**db_lastupdate     **
+
+**lines_all         **
+
+**lines_rel         **
+
+**wds_raw_all       **
+
+**wds_raw_rel       **
+
+**wds_clean_all     **
+
+**wds_clean_rel     **
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

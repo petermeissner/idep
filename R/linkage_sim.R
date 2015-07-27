@@ -10,9 +10,17 @@ linkage_sim <- function(res,
     # ensuring Text is CLEANed UP
     ot   <- clean_text( tolower( res$Aorigtext ))
     nt   <- clean_text( tolower( res$Borigtext ))
-      
+    
+    if ( simtype=="sim" )  {
+      return( as.numeric( (( nwords(ot) + nwords(nt) ) - text_dist(ot, nt)) / 
+                            (nwords(ot) + nwords(nt))) 
+      )
+    }       
     if ( simtype=="diff_wd" ) {
       return( as.numeric(text_dist(ot, nt)) )
+    } 
+    if ( simtype=="diff" )  {
+      return( as.numeric(text_dist(ot, nt) / (nwords(ot) + nwords(nt))) )
     } 
     if ( simtype=="sim_wd" )  {
       return( as.numeric(( nwords(ot) + nwords(nt) ) - text_dist(ot, nt)) )
@@ -25,14 +33,6 @@ linkage_sim <- function(res,
     }  
     if ( simtype=="wds" )  {
       return( nwords(ot) + nwords(nt) )
-    } 
-    if ( simtype=="sim" )  {
-      return( as.numeric( (( nwords(ot) + nwords(nt) ) - text_dist(ot, nt)) / 
-                           (nwords(ot) + nwords(nt))) 
-              )
-    } 
-    if ( simtype=="diff" )  {
-      return( as.numeric(text_dist(ot, nt) / (nwords(ot) + nwords(nt))) )
     } 
     stop("linkage_sim says: something went terribly wrong.")
   }
