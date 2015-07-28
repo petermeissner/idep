@@ -1,0 +1,145 @@
+
+R version 3.1.2 (2014-10-31) -- "Pumpkin Helmet"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".",FALSE,FALSE)
+> countries
+ [1] "AUT"      "AUTTEST"  "BEL"      "DEN"      "ESP"      "FRA"     
+ [7] "GER"      "IRE"      "ITA"      "LUX"      "NED"      "NOR"     
+[13] "POR"      "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval(parse(text=grep("ctr",  commandArgs(), value=T)))
+> if( !exists("ctr") ){
++   stop(
++     paste0(
++       "no country given choose one of these:\n", 
++       paste0(countries, collapse = ", "),
++       "\ne.g.: R < file.R > file.rout --args ctr='AUT'"
++     )
++   )
++ }else{
++   message("### ================================== ###")
++   message(ctr)  
++ }
+> 
+> message("preparing data ... ")
+> 
+> # select linkage files
+> # link_files_select()
+> linkage_path <- 
++   ifelse( 
++     file.exists(ctr %.% "/coded"), 
++     ctr %.% "/coded", 
++     ctr %.% "/linked"
++   )
+> link_files_select(
++   list.files(linkage_path, full.names=T )
++ )
+> head(filelist_full,  1)
+[1] "LUX/coded/coded LUX-1965_11_09 VS LUX-1983_11_24.Rdata"
+> head(filelist_fname, 1)
+[1] "coded LUX-1965_11_09 VS LUX-1983_11_24.Rdata"
+> head(filelist_path,  1)
+[1] "LUX/coded"
+> country_path
+[1] "Z:/Geschäftsordnungen/CodingChanges/lux"
+> country
+[1] "LUX"
+> 
+> # load linkage files
+> link_files_load(filelist_full)
+> linkage_env
+ [1] "linkage_env001" "linkage_env002" "linkage_env003" "linkage_env004"
+ [5] "linkage_env005" "linkage_env006" "linkage_env007" "linkage_env008"
+ [9] "linkage_env009" "linkage_env010" "linkage_env011" "linkage_env012"
+[13] "linkage_env013" "linkage_env014" "linkage_env015" "linkage_env016"
+[17] "linkage_env017" "linkage_env018" "linkage_env019" "linkage_env020"
+> ls(linkage_env001)
+[1] "meta"    "RESULTS"
+> 
+> 
+> # select corpus file
+> # corpus_file_select()
+> corpus_file_select(
++   list.files(
++     paste0(ctr,"/corpus"),
++     full.names=T
++   )
++ )
+> corpus_file_full
+[1] "LUX/corpus/CorpusCoding LUX.Rdata"
+> corpus_file_fname
+[1] "CorpusCoding LUX.Rdata"
+> corpus_file_path
+[1] "LUX/corpus"
+> 
+> # load corpus file
+> corpus_file_load()
+> ls(corpus_env)
+[1] "coding"   "dates"    "meta"     "transfer"
+> 
+> # preapre data for matching
+> corpus_data_prepare()
+> 
+> 
+> 
+> # meta data
+> message("preparing meta data")
+> fname_data       <- get_meta_from_fname(filelist_full,T)
+> within_text_data <- link_files_get_date(filelist_full,T)
+> data_texts  <- cbind(fname_data, within_text_data)
+> text_meta   <- data_texts
+> names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")
+> 
+> 
+> # text data for upload
+> message("preparing text data")
+> data_lines      <- link_files_get_text(linkage_env)
+> matcher                <- match(data_lines$id, corpus_env$coding$id)
+> data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
+> data_lines$corpus_memo   <- ifelse( grepl("#Â§# autocode",corpus_env$coding$memo[ matcher ]), 
++                                     "", corpus_env$coding$memo[ matcher ] ) 
+> names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
++                         "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
+> data_lines$tl_text <- enc2utf8(data_lines$tl_text)
+> data_lines$tl_corpus_memo <- enc2utf8(data_lines$tl_corpus_memo)
+> 
+> 
+> # linkage data
+> message("preparing linkage data")
+> system.time(data_linkage <- link_files_get_linkage() )
+  |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%

@@ -32,7 +32,7 @@ if( !exists("ctr") ){
     )
   )
 }else{
-  message("### ================================== ###")
+  message("### ============================================================== ###")
   message(ctr)  
 }
 
@@ -80,7 +80,10 @@ ls(corpus_env)
 # preapre data for matching
 corpus_data_prepare()
 
+
+
 # meta data
+message("preparing meta data")
 fname_data       <- get_meta_from_fname(filelist_full,T)
 within_text_data <- link_files_get_date(filelist_full,T)
 data_texts  <- cbind(fname_data, within_text_data)
@@ -89,6 +92,7 @@ names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t
 
 
 # text data for upload
+message("preparing text data")
 data_lines      <- link_files_get_text(linkage_env)
 matcher                <- match(data_lines$id, corpus_env$coding$id)
 data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
@@ -101,6 +105,11 @@ data_lines$tl_corpus_memo <- enc2utf8(data_lines$tl_corpus_memo)
 
 
 # linkage data
+message("preparing linkage data")
+for(i in seqalong(linkage_env)){
+  tbc <- eval(as.name(linkage_env[i]))$RESULTS
+  check_diff(tbc)
+} 
 system.time(data_linkage <- link_files_get_linkage() )
 names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_diff", 
                          "ll_diff_wd", "ll_type", "ll_t_id1", "ll_t_id2", 
@@ -110,6 +119,7 @@ data_linkage$ll_minmaj_memo <- enc2utf8(data_linkage$ll_minmaj_memo)
 
 
 # text data for testing
+message("running tests")
 text_texts <- link_files_get_text_only(linkage_env,T) 
 link_texts <- link_files_get_text_only(linkage_env,F) 
 
@@ -126,9 +136,6 @@ ltest(text_texts)
 ctest <- ctest(link_texts, filelist_full)
 ctest[[1]]
 
-# ?????????????????????????????
-# tests for linkage
-# ?????????????????????????????
 
 # data.frames to tbl_df
 data_texts   <- tbl_df(data_texts)
@@ -138,6 +145,7 @@ data_linkage <- tbl_df(data_linkage)
 
 
 # re-establish connection
+message("uploading data")
 get_ready()
 
 # Writing results to database
@@ -148,21 +156,7 @@ system.time(dbGetQueries(socon, SQL))
 message("data_textlines")
 system.time(SQL <- genInsertsDKU("data_textlines", data_lines))
 Encoding(SQL) <- "UTF-8"
-#for ( i in seq_along(SQL) ) {
-#  SQL[[i]] <- str_replace_all(SQL[[i]], "\u0097", "-")
-#  SQL[[i]] <- str_replace_all(SQL[[i]], "\u0084", '"')
-#}
 system.time(dbGetQueries(socon, SQL))
-
-
-## DEV ## >>
-#pb <- progress_time(); pb$init(length(SQL)); 
-#for(i in seqalong(SQL)){
-#  dbGetQuery(socon, SQL[i])
-#  pb$step()
-#}
-## DEV ## <<
-
 
 message("data_linkage")
 system.time(SQL <- genInsertsDKU("data_linelinkage", data_linkage))
@@ -170,7 +164,6 @@ system.time(dbGetQueries(socon, SQL))
 
 
 # make new tag for DB versioning
-# sqlVersionTag( con=socon, shortdesc="")
 get_ready()
 sqlVersionTag( con=socon, shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
 

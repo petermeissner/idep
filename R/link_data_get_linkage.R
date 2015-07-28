@@ -8,19 +8,21 @@ link_data_get_linkage <- function(res, meta){
   res <- res[res$relevant==1,]
   res$oldline <- ifelse(is.na(res$oldline),"",res$oldline)
   res$newline <- ifelse(is.na(res$newline),"",res$newline)
+  res$similarity <- as.numeric(unlist(res$similarity))
   
   # set minmaj NA to 0 if relevant==1 and similarity==1
   if ( is.null(res$diff) ) {
     res$diff <- NA
   }else{
-    res$diff <- ifelse( 
+    res$diff <- 
+      ifelse( 
         ( is.na(res$diff) & res$similarity==1 & res$relevant==1 ),
         0,
         res$diff
       )
   }
   
-  
+
   # type 
   type <- linkage_type(res)
   

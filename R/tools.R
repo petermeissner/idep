@@ -33,10 +33,8 @@ na_to_empty <- function(x){
 }
 
 #' function that does a more convenient table, always showing NAs
-tab  <- function(x, y=NULL){
-  if ( is.null(y) ){
-    table(x, useNA = "always")
-  }else{
-    table(x, y, useNA = "always")
-  }
+tab  <- function(...){
+    table(..., useNA = "always")
 }
+
+

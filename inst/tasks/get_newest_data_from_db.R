@@ -1,8 +1,8 @@
 # script for downloading newest data from database and saving it to disk
 
 # set dev options or not 
-DEV          = TRUE
-UPDATE_TEXTS = TRUE
+DEV          = FALSE
+UPDATE_TEXTS = FALSE
 
 
 # setting things up
@@ -10,6 +10,7 @@ require(idep)
 require(foreign)
 require(stringr)
 require(magrittr)
+library(RMySQL)
 
 get_ready <- function(){
   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
@@ -18,7 +19,7 @@ get_ready <- function(){
   #source("~/DBConnections/DBSOconnection.r")
 }
 
-get_ready(1) # 1 = local utf8
+get_ready() # 1 = local utf8
 `%.%` <- function(a,b) paste0(a,b)
 
 # set WD

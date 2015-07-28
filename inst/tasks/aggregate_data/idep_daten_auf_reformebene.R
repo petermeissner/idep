@@ -81,13 +81,6 @@ rm(fname)
 
 #### aggregation of data ====
 
-# logical vectors/functions for subsetting
-iffer_tl     <- function(i) lines$tl_t_id == reforms[i,]$t_id
-iffer_tl_rel <- function(i) iffer_tl(i) & lines$tl_relevant == 1
-iffer_ll1    <- function(i) linkage$ll_t_id1 == reforms[i,]$t_id
-iffer_ll2    <- function(i) linkage$ll_t_id2 == reforms[i,]$t_id
-
-
 reforms <- as_data_frame(texts)
 
 
@@ -133,22 +126,63 @@ tmp <-
     wds_pro_maj_chg = sum((ll_minmaj_code==1)*ll_diff_wd),
     wds_pro_min_chg = sum((ll_minmaj_code==2)*ll_diff_wd),
     wds_pro_non_chg = sum((ll_minmaj_code==0)*ll_diff_wd)
-  ) 
+  )  %>% 
+  rename(t_id = ll_t_id2)
+
+check_
+        sum_of_its_parts <- 
+          tmp$wds_pro_maj_chg + 
+          tmp$wds_pro_min_chg + 
+          tmp$wds_pro_non_chg != 
+          tmp$wds_diff_chg
+        
+        iffer <- 
+          na_to_false( sum_of_its_parts )
+        
+        tmp[iffer,]  %>% select(-(pro_maj_chg:pro_non_chg))
+        tmp[is.na(sum_of_its_parts), ]
+        ## DEV : Some checking <<
+
+reforms <- 
+  join(reforms, tmp) %>% 
+  as_data_frame()
+        
 
 
+
+tmp <- 
+  linkage2  %>% 
+  filter(ll_type=="insertion") %>% 
+  summarize(
+    wds_diff_ins = sum(ll_diff_wd),
+    diff_ins = mean(ll_diff),
+    pro_maj_ins = sum(ll_minmaj_code==1),
+    pro_min_ins = sum(ll_minmaj_code==2),
+    pro_non_ins = sum(ll_minmaj_code==0),
+    wds_pro_maj_ins = sum((ll_minmaj_code==1)*ll_diff_wd),
+    wds_pro_min_ins = sum((ll_minmaj_code==2)*ll_diff_wd),
+    wds_pro_non_ins = sum((ll_minmaj_code==0)*ll_diff_wd)
+  )  %>% 
+  rename(t_id = ll_t_id2)
+        
+
+## DEV : Some checking >>
 sum_of_its_parts <- 
-  tmp$wds_pro_maj_chg + 
-  tmp$wds_pro_min_chg + 
-  tmp$wds_pro_non_chg != 
-  tmp$wds_diff_chg
+  tmp$wds_pro_maj_ins + 
+  tmp$wds_pro_min_ins + 
+  tmp$wds_pro_non_ins != 
+  tmp$wds_diff_ins
 
 iffer <- 
   na_to_false( sum_of_its_parts )
 
-tmp[iffer, ]
-tmp[is.na(sum_of_its_parts), ]
+tmp[iffer,]  %>% select(-(pro_maj_ins:pro_non_ins))
+tmp[is.na(sum_of_its_parts), ]  %>% extract("t_id")  %>% as.data.frame()
+## DEV : Some checking <<
 
 
+                
+        
 # adding difference variables
 system.time(
   {

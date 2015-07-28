@@ -4,7 +4,7 @@
 \alias{tab}
 \title{function that does a more convenient table, always showing NAs}
 \usage{
-tab(x, y = NULL)
+tab(...)
 }
 \description{
 function that does a more convenient table, always showing NAs
