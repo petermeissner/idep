@@ -11,9 +11,7 @@ library(stringr)
 library(dplyr)
 library(magrittr)
 
-data_path  <- "z:/geschäftsordnungen/codingdata/"
-
-
+data_path  <- "z:/geschäftsordnungen/database/extracts/"
 
 
 
@@ -79,12 +77,17 @@ rm(data_path)
 rm(fname)
 
 
+
+
+
 #### aggregation of data ====
 
 reforms <- as_data_frame(texts)
 
 
-# adding length variables
+
+
+## adding length variables
 lines <-  group_by(lines, t_id )
 
 tmp <- 
@@ -110,107 +113,125 @@ reforms <-
   as_data_frame()
 
 
-# adding difference variables
+
+
+## adding difference variables
 linkage1 <-  group_by(linkage, ll_t_id1)
 linkage2 <-  group_by(linkage, ll_t_id2)
-  
-tmp <- 
-  linkage2  %>% 
-  filter(ll_type=="change") %>% 
-  summarize(
-    wds_diff_chg = sum(ll_diff_wd),
-    diff_chg = mean(ll_diff),
-    pro_maj_chg = sum(ll_minmaj_code==1),
-    pro_min_chg = sum(ll_minmaj_code==2),
-    pro_non_chg = sum(ll_minmaj_code==0),
-    wds_pro_maj_chg = sum((ll_minmaj_code==1)*ll_diff_wd),
-    wds_pro_min_chg = sum((ll_minmaj_code==2)*ll_diff_wd),
-    wds_pro_non_chg = sum((ll_minmaj_code==0)*ll_diff_wd)
-  )  %>% 
-  rename(t_id = ll_t_id2)
 
-check_
-        sum_of_its_parts <- 
-          tmp$wds_pro_maj_chg + 
-          tmp$wds_pro_min_chg + 
-          tmp$wds_pro_non_chg != 
-          tmp$wds_diff_chg
-        
-        iffer <- 
-          na_to_false( sum_of_its_parts )
-        
-        tmp[iffer,]  %>% select(-(pro_maj_chg:pro_non_chg))
-        tmp[is.na(sum_of_its_parts), ]
-        ## DEV : Some checking <<
+
+
+# ... change  
+  tmp <- 
+    linkage2  %>% 
+    filter(ll_type=="change") %>% 
+    summarize(
+      wds_diff_chg = sum(ll_diff_wd),
+      diff_chg = mean(ll_diff),
+      wds_sim_chg = sum(ll_sim_wd),
+      sim_chg = mean(ll_sim),
+      pro_maj_chg = sum(ll_minmaj_code==1),
+      pro_min_chg = sum(ll_minmaj_code==2),
+      pro_non_chg = sum(ll_minmaj_code==0),
+      wds_pro_maj_chg = sum((ll_minmaj_code==1)*ll_diff_wd),
+      wds_pro_min_chg = sum((ll_minmaj_code==2)*ll_diff_wd),
+      wds_pro_non_chg = sum((ll_minmaj_code==0)*ll_diff_wd)
+    )  %>% 
+    rename(t_id = ll_t_id2)
+
+  reforms <- 
+    join(reforms, tmp) %>% 
+    as_data_frame()
+
+#   # check : change_summing_up
+#     sum_of_its_parts <- tmp$wds_pro_maj_chg + tmp$wds_pro_min_chg + tmp$wds_pro_non_chg != tmp$wds_diff_chg
+#     iffer <- na_to_false( sum_of_its_parts )
+#     tmp[iffer,]  %>% select(-(pro_maj_chg:pro_non_chg)) # -> should be empty
+#     tmp[is.na(sum_of_its_parts), ] # -> should be only SWI
+
+
+# ... insertion
+  tmp <- 
+    linkage2  %>% 
+    filter(ll_type=="insertion") %>% 
+    summarize(
+      wds_diff_ins = sum(ll_diff_wd),
+      diff_ins = mean(ll_diff),
+      pro_maj_ins = sum(ll_minmaj_code==1),
+      pro_min_ins = sum(ll_minmaj_code==2),
+      pro_non_ins = sum(ll_minmaj_code==0),
+      wds_pro_maj_ins = sum((ll_minmaj_code==1)*ll_diff_wd),
+      wds_pro_min_ins = sum((ll_minmaj_code==2)*ll_diff_wd),
+      wds_pro_non_ins = sum((ll_minmaj_code==0)*ll_diff_wd)
+    )  %>% 
+    rename(t_id = ll_t_id2)
+    
+  reforms <- 
+    join(reforms, tmp) %>% 
+    as_data_frame()
+
+#    # check : insertion_summing_up
+# sum_of_its_parts <-tmp$wds_pro_maj_ins + tmp$wds_pro_min_ins + tmp$wds_pro_non_ins != tmp$wds_diff_ins
+# iffer <- na_to_false( sum_of_its_parts )
+# tmp[iffer,]  %>% select(-(pro_maj_ins:pro_non_ins))
+# tmp[is.na(sum_of_its_parts), ]  %>% extract("t_id")  %>% as.data.frame()
+
+
+# ... deletion
+tmp <- 
+  linkage1  %>% 
+  filter(ll_type=="deletion") %>% 
+  summarize(
+    wds_diff_del = sum(ll_diff_wd),
+    diff_del = mean(ll_diff),
+    pro_maj_del = sum(ll_minmaj_code==1),
+    pro_min_del = sum(ll_minmaj_code==2),
+    pro_non_del = sum(ll_minmaj_code==0),
+    wds_pro_maj_del = sum((ll_minmaj_code==1)*ll_diff_wd),
+    wds_pro_min_del = sum((ll_minmaj_code==2)*ll_diff_wd),
+    wds_pro_non_del = sum((ll_minmaj_code==0)*ll_diff_wd)
+  )  %>% 
+  rename(t_id = ll_t_id1)
 
 reforms <- 
   join(reforms, tmp) %>% 
   as_data_frame()
+
+#    # check : deletion_summing_up
+# sum_of_its_parts <-tmp$wds_pro_maj_del + tmp$wds_pro_min_del + tmp$wds_pro_non_del != tmp$wds_diff_del
+# iffer <- na_to_false( sum_of_its_parts )
+# tmp[iffer,]  %>% select(-(pro_maj_del:pro_non_del))
+# tmp[is.na(sum_of_its_parts), ]  %>% extract("t_id")  %>% as.data.frame()
+  
+  
+# # check : no change hgas no pro-min-maj coding 
+# # ... no-change ... only for checking, does not make sense
+# tmp <- 
+#   linkage2  %>% 
+#   filter(ll_type=="no-change") %>% 
+#   summarize(
+#     wds_diff_non = sum(ll_diff_wd),
+#     diff_non = mean(ll_diff),
+#     pro_maj_non = sum(ll_minmaj_code==1),
+#     pro_min_non = sum(ll_minmaj_code==2),
+#     pro_non_non = sum(ll_minmaj_code==0),
+#     wds_pro_maj_non = sum((ll_minmaj_code==1)*ll_diff_wd),
+#     wds_pro_min_non = sum((ll_minmaj_code==2)*ll_diff_wd),
+#     wds_pro_non_nopn = sum((ll_minmaj_code==0)*ll_diff_wd)
+#   )  %>% 
+#   rename(t_id = ll_t_id2)
+ 
+reforms$pro_maj     <- reforms$pro_maj_chg + reforms$pro_maj_ins + reforms$pro_maj_del
+reforms$pro_min     <- reforms$pro_min_chg + reforms$pro_min_ins + reforms$pro_min_del
+reforms$pro_non     <- reforms$pro_non_chg + reforms$pro_non_ins + reforms$pro_non_del
+reforms$wds_pro_maj <- reforms$wds_pro_maj_chg + reforms$wds_pro_maj_ins +reforms$wds_pro_maj_del
+reforms$wds_pro_min <- reforms$wds_pro_min_chg + reforms$wds_pro_min_ins +reforms$wds_pro_min_del
+reforms$wds_pro_non <- reforms$wds_pro_non_chg + reforms$wds_pro_non_ins +reforms$wds_pro_non_del
+
+setwd(Z:/Ge)
+
         
 
-
-
-tmp <- 
-  linkage2  %>% 
-  filter(ll_type=="insertion") %>% 
-  summarize(
-    wds_diff_ins = sum(ll_diff_wd),
-    diff_ins = mean(ll_diff),
-    pro_maj_ins = sum(ll_minmaj_code==1),
-    pro_min_ins = sum(ll_minmaj_code==2),
-    pro_non_ins = sum(ll_minmaj_code==0),
-    wds_pro_maj_ins = sum((ll_minmaj_code==1)*ll_diff_wd),
-    wds_pro_min_ins = sum((ll_minmaj_code==2)*ll_diff_wd),
-    wds_pro_non_ins = sum((ll_minmaj_code==0)*ll_diff_wd)
-  )  %>% 
-  rename(t_id = ll_t_id2)
-        
-
-## DEV : Some checking >>
-sum_of_its_parts <- 
-  tmp$wds_pro_maj_ins + 
-  tmp$wds_pro_min_ins + 
-  tmp$wds_pro_non_ins != 
-  tmp$wds_diff_ins
-
-iffer <- 
-  na_to_false( sum_of_its_parts )
-
-tmp[iffer,]  %>% select(-(pro_maj_ins:pro_non_ins))
-tmp[is.na(sum_of_its_parts), ]  %>% extract("t_id")  %>% as.data.frame()
-## DEV : Some checking <<
-
-
-                
-        
-# adding difference variables
-system.time(
-  {
-for(i in seqalong(reforms)[1:10])
-{
-  # words different # make sure to get change, del AND ins
-  change <- 
-    linkage %>% 
-    filter(iffer_ll2(i), ll_type=="change") %>% 
-    .$ll_diff_wd %>% 
-    sum()
-  insertion <- 
-    linkage %>% 
-    filter(iffer_ll2(i), ll_type=="insertion") %>% 
-    .$ll_diff_wd %>% 
-    sum()
-  deletion <- 
-    linkage %>% 
-    filter(iffer_ll1(i), ll_type=="deletion") %>% 
-    .$ll_diff_wd %>% 
-    sum()
-  reforms$wds_diff_all[i] <- change + insertion + deletion
-  reforms$wds_diff_chg[i] <- change
-  reforms$wds_diff_ins[i] <- insertion
-  reforms$wds_diff_del[i] <- deletion
-}
-  }
-)
 # adding min_maj variables
 for(i in seqalong(reforms))
 {

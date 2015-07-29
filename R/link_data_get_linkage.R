@@ -63,8 +63,8 @@ link_data_get_linkage <- function(res, meta){
   iffer   <- tmp$type=="insertion" |  tmp$type=="deletion"
   tmp[iffer,"diff_wd"] <- (tmp$diff_wd + tmp$sim_wd)[iffer]
   tmp[iffer,"sim_wd"]  <- 0
-  tmp[iffer,"sim"]     <- 1
-  tmp[iffer,"diff"]    <- 0
+  tmp[iffer,"sim"]     <- 0
+  tmp[iffer,"diff"]    <- 1
   
   # correcting for re-calculation of similarities for type "no-change"
   iffer   <- tmp$type=="no-change" & tmp$sim < 1 

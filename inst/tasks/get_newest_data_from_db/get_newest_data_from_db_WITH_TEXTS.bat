@@ -1,0 +1,1 @@
+R < get_newest_data_from_db.R > get_newest_data_from_db.Rout  --vanilla --args UPDATE_TEXTS=TRUE

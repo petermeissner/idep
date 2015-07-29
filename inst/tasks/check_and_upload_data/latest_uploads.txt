@@ -1,6 +1,198 @@
 
 
 
+*AUT.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*BEL.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
 *clean_up_before_upload.rout*
 
 
@@ -24,7 +216,25 @@ Type 'q()' to quit R.
 >   routs <- list.files(pattern=".*rout")
 >   lapply(routs, file.remove)
 [[1]]
+[1] TRUE
+
+[[2]]
+[1] TRUE
+
+[[3]]
 [1] FALSE
+
+[[4]]
+[1] TRUE
+
+[[5]]
+[1] TRUE
+
+[[6]]
+[1] TRUE
+
+[[7]]
+[1] TRUE
 
 >   
 > 
@@ -48,7 +258,1437 @@ Type 'q()' to quit R.
 >   routs <- list.files(pattern=".*rout")
 >   lapply(routs, file.remove)
 [[1]]
+[1] TRUE
+
+[[2]]
+[1] TRUE
+
+[[3]]
 [1] FALSE
+
+[[4]]
+[1] TRUE
+
+[[5]]
+[1] TRUE
+
+[[6]]
+[1] TRUE
+
+[[7]]
+[1] TRUE
 
 >   
 > 
+
+
+
+*DEN.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*ESP.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*FRA.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*GER.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*IRE.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*ITA.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*latest_uploads.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+>  routs <- list.files(pattern=".*rout")
+>  message <- character(0)
+>  for ( i in seq_along(routs) ) 
++  {
++     text <- readLines(routs[i])
++     text <-  grep("^\\s*\\|", text, invert=T, value=T)
++     message <- 
++       c(
++         message, 
++         paste0("\n\n\n*",routs[i],"*\n\n"),
++         head(text, 50), 
++         tail(text, 50)
++       )
++  }
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+>  routs <- list.files(pattern=".*rout")
+>  message <- character(0)
+>  for ( i in seq_along(routs) ) 
++  {
++     text <- readLines(routs[i])
++     text <-  grep("^\\s*\\|", text, invert=T, value=T)
++     message <- 
++       c(
++         message, 
++         paste0("\n\n\n*",routs[i],"*\n\n"),
++         head(text, 50), 
++         tail(text, 50)
++       )
++  }
+
+
+
+*LUX.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*NED.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*NOR.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*POR.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*SWE.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*SWIGRN.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*SWIPARLG.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+
+
+*UK.rout*
+
+
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # script for checking link data and uploading it to server
+> 
+> # setting things up
+> library(idep)
+> library(dplyr)
+> library(RMySQL)
+> '%.%' <- function(a,b) paste0(a,b)
+> 
+> 
+> # connection function
+> get_ready <- function(){
++   lapply( dbListConnections( dbDriver( drv = "MySQL")), dbDisconnect)
++   source("~/DBConnections/so_local.r")
++   #source("~/DBConnections/so_latin1_local.r")
++   #source("~/DBConnections/DBSOconnection.r")
++ }
+> 
+> # 
+> setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
+> countries <- list.dirs(".", FALSE, FALSE)
+> countries
+ [1] "AUT"      "BEL"      "DEN"      "ESP"      "FRA"      "GER"     
+ [7] "IRE"      "ITA"      "LUX"      "NED"      "NOR"      "POR"     
+[13] "SWE"      "SWIGRN"   "SWIPARLG" "UK"      
+> 
+> 
+> # commandline argument evaluation
+> eval_cl_args()

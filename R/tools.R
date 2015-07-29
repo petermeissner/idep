@@ -37,4 +37,26 @@ tab  <- function(...){
     table(..., useNA = "always")
 }
 
+#' function evaluating command line arguments to R that are in the form of a='value'
+eval_cl_args <- function(){
+  args <- grep(".+=.+", commandArgs(), value = TRUE)
+  eval_globally <- function(x) eval(parse(text=x), envir = globalenv())
+  lapply(args, eval_globally)
+  return(commandArgs())
+}
+
+#' function setting value to object if not existing
+if_not_exists <- function(name, value){
+  obj_name <- deparse(substitute(name))
+  if ( !exists(obj_name, envir = parent.frame()) ) {
+    assign(obj_name, value, envir = parent.frame() )
+    return(TRUE)
+  }else{
+    return(FALSE)
+  }
+}
+
+
+
+
 

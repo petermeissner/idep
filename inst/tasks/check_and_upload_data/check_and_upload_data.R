@@ -17,12 +17,12 @@ get_ready <- function(){
 
 # 
 setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
-countries <- list.dirs(".",FALSE,FALSE)
+countries <- list.dirs(".", FALSE, FALSE)
 countries
 
 
 # commandline argument evaluation
-eval(parse(text=grep("ctr",  commandArgs(), value=T)))
+eval_cl_args()
 if( !exists("ctr") ){
   stop(
     paste0(
@@ -165,7 +165,13 @@ system.time(dbGetQueries(socon, SQL))
 
 # make new tag for DB versioning
 get_ready()
-sqlVersionTag( con=socon, shortdesc=paste0(country,": texts, textlines, linelinkage data upload by check_link_data() [idep package]"))
+eval_cl_args()
+
+if_not_exists(SHORTDESC, "texts, textlines, linelinkage data upload by check_link_data() [idep package]")
+sqlVersionTag( 
+  con       = socon, 
+  shortdesc = paste0( country, " : ", SHORTDESC )
+)
 
 
 # MAKE SURE TO generate new temporary tables in db!
