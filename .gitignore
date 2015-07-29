@@ -38,3 +38,4 @@ inst/doc
 Readme_cache/html/*
 travischeck.svg
 R/pversion_inc.R
+*.rout
