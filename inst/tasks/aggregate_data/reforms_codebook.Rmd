@@ -1,0 +1,147 @@
+---
+title: "Code book"
+author: "pm"
+date: '`r Sys.time()`'
+output:
+  pdf_document:
+    keep_tex: yes
+    number_sections: yes
+  html_document:
+    keep_md: yes
+    number_sections: yes
+    self_contained: no
+---
+
+```{r, include=FALSE}
+library(dplyr)
+library(stringr)
+library(magrittr)
+load("Z:/Gesch\u00e4ftsordnungen/database/aggregats/reforms.Rdata")
+```
+
+```{r include=FALSE}
+# version check 
+data_path  <- "z:/gesch\u00e4ftsordnungen/database/extracts/"
+db_on_disk_version <- 
+  str_extract(list.files(data_path), "\\d+\\.\\d+") %>% 
+  as.numeric()  %>% 
+  max(na.rm=T)
+db_on_disk_version
+```
+
+# The reforms dataset (version `r db_on_disk_version`)
+The data-set is based on the IDEP data - data on Standing Orders versions (*texts*), data on Standing Orders Text (*textlines*) and data on Standing Orders change between versions (*linelinkage*). Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. 
+
+The data set incorporates aggregated data for 
+`r dim(reforms)[1] - length(unique(reforms$t_country))` reforms in
+`r length(unique(substring(reforms$t_country,1,3)))` countries and consists of 
+`r dim(reforms)[2]` variables. 
+
+**Example:**
+
+```{r}
+reforms  %>% 
+  select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_agg_1)
+```
+
+# Shortcuts 
+
+**SP** is short for subparagraph and in most cases identical to **line** or text line due to the fact that sub-paragraphs have in the data gathering process been transfered (from PDFs and Word documents and the like) to simple text files in which each sub-paragraph was put on a single line and on one single line only.
+
+**SO** is short for Standing Orders (rules of procedure) and usually refers to one particular version of Standing Orders in force in a particular country from a particular time point on. 
+
+
+
+# General variable name shortcuts
+
+**wds** is short for words, like the number of words within a SP. 
+
+**lns** is short for lines an equivalent to SP. 
+
+**rel** is short for relevant, like whether or not a SP contains relevant information or can be  dismissed as headline, blank-line, comment, appendix or some other not relevant part of the text (the opposite usually is **all**)
+
+**raw** versus **clean** denote whether or not the SP was used as found in the official documents or cleaned up. Cleaned SPs have been stripped by their enumeration (only at the start of the SP), thus pure changes of enumeration (only at the start of the SP) are not considered as changes nor are they counted as relevant content. 
+
+**ins**, **del**, **mdf**, **non**: denote the type of change that occurred for a particular SP - insertion, deletion, modification and no-change. The shorthand **chg** is for change and refers to all three possible forms that change might come by. 
+
+**pro_...** indicate minority/majority codings, e.g. *pro_min* indicates how many SPs were changed in a way considered minority friendly. 
+
+
+# Shortcuts indicating their raw data sets 
+
+**db_** and **int_** denote variables that have to do with the database that serves as basis for all data-sets and are most likely not relevant to the user. 
+
+**t_** information on text or Standing Orders version level, e.g. the data when a particular standing order was accepted, the country it belongs to or total number of words of the  version, ... .
+
+**tl_** information on text lines aka SPs, e.g whether or not a SP is relevant, how many words it contains, it's corpus code, ... .
+
+
+**ll_** information on the what happened to SPs from one version to the next - e.g. was it changed or deleted. 
+
+Other shortcuts or variable names missing the above mentioned shortcuts indicate that those variables have been computed from other variables and most likely were result from some form of aggregation. See below for more detailed descriptions. 
+
+
+# Variable descriptions
+
+```{r var description, include=FALSE}
+source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description.r")
+desc_missing <- any( !(   names(reforms) %in% description$name ))
+desc_tomuch  <- any( !( description$name %in% names(reforms)   ))
+anymiss <- desc_tomuch | desc_missing
+```
+
+```{r, echo=FALSE, results='asis'}
+if(anymiss){
+  cat("## Missing variable descriptions")
+}else{
+  cat("")
+} 
+```
+
+```{r, include=desc_missing}
+names(reforms)[!(names(reforms) %in% description$name)]
+```
+
+```{r, include=desc_tomuch}
+description$name[!(description$name %in% names(reforms))]
+```
+
+```{r, echo=FALSE, results='asis'}
+for( g in unique(description$group) ){
+  cat(paste0("\n## ", g, "\n\n"))
+  dat <- description  %>% filter(group==g)
+  for( i in seq_len(dim(dat)[1]) ){
+    cat(
+      "\n\n**", dat$name[i], "** (", dat$from[i] ,")", "\n\n",
+      dat$desc[i], "\n\n",
+      sep=""
+    )
+    cat("\n```r\n")
+    print(summary(unlist(reforms[,dat$name[i]])))
+    cat("\n```\n")
+    cat("\n\n<p>&nbsp;</p>\\vspace{1em}")
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

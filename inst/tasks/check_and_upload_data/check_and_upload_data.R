@@ -102,6 +102,7 @@ names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", 
                         "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
 data_lines$tl_text <- enc2utf8(data_lines$tl_text)
 data_lines$tl_corpus_memo <- enc2utf8(data_lines$tl_corpus_memo)
+data_lines$tl_corpus_code[ is.na(data_lines$tl_corpus_code) ] <- 999
 
 
 # linkage data

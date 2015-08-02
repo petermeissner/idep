@@ -1,5 +1,5 @@
-SET SHORTDESC=BUG : ll_diff was not 1 for deletions
-R < clean_up_before_upload.r > clean_up_before_upload.rout --vanilla 
+SET SHORTDESC=
+R < clean_up_before_upload.r --vanilla 
 
 R < check_and_upload_data.R > AUT.rout --vanilla --args ctr='AUT'           SHORTDESC='\"%SHORTDESC%\"'
 R < check_and_upload_data.R > BEL.rout --vanilla --args ctr='BEL'           SHORTDESC='\"%SHORTDESC%\"'

@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>The reforms dataset (version 1.11)</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>The reforms dataset (version 1.11)</h1>
+
+<p>The data-set is based on the IDEP data - data on Standing Orders versions, data on Standing Orders Text and data on Standing Orders change between versions. Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. </p>
+
+<h1>Shortcuts</h1>
+
+<p><strong>SP</strong> is short for subparagraph and in most cases identical to line or text line due to the fact that sub-paragraphs have been stored in a way that each subparagraph is stored on one line in a plain text file</p>
+
+<p><strong>SO</strong> is short for Standing Orders (rules of procedure) and usually refers to one particular version of Standing Orders in force in a particular country from a particular time point on. </p>
+
+<h1>General variable name shortcuts</h1>
+
+<p><strong>wds</strong> is short for words, like the number of words within a SP. </p>
+
+<p><strong>lns</strong> is short for lines an equivalent to SP. </p>
+
+<p><strong>rel</strong> is short for relevant, like whether or not a SP contains relevant information or can be  dismissed as headline, blank-line, comment, appendix or some other not relevant part of the text (the opposite usually is <strong>all</strong>)</p>
+
+<p><strong>raw</strong> versus <strong>clean</strong> denote whether or not the SP was used as found in the official documents or cleaned up. Cleaned SPs have been stripped by their enumeration (only at the start of the SP), thus pure changes of enumeration (only at the start of the SP) are not considered as changes nor are they counted as relevant content. </p>
+
+<p><strong>ins</strong>, <strong>del</strong>, <strong>mdf</strong>, <strong>non</strong>: denote the type of change that occurred for a particular SP - insertion, deletion, modification and no-change. The shorthand <strong>chg</strong> is for change and refers to all three possible forms that change might come by. </p>
+
+<p><strong>pro_&hellip;</strong> indicate minority/majority codings, e.g. <em>pro_min</em> indicates how many SPs were changed in a way considered minority friendly. </p>
+
+<h1>Shortcuts indicating their raw data sets</h1>
+
+<p><strong>db_</strong> and <strong>int_</strong> denote variables that have to do with the database that serves as basis for all data-sets and are most likely not relevant to the user. </p>
+
+<p><strong>t_</strong> information on text or Standing Orders version level, e.g. the data when a particular standing order was accepted, the country it belongs to or total number of words of the  version, &hellip; .</p>
+
+<p><strong>tl_</strong> information on text lines aka SPs, e.g whether or not a SP is relevant, how many words it contains, it&#39;s corpus code, &hellip; .</p>
+
+<p><strong>ll_</strong> information on the what happened to SPs from one version to the next - e.g. was it changed or deleted. </p>
+
+<p>Other shortcuts or variable names missing the above mentioned shortcuts indicate that those variables have been computed from other variables and most likely were result from some form of aggregation. See below for more detailed descriptions. </p>
+
+<h1>Variable descriptions</h1>
+
+<pre><code class="r">names(reforms)[!(names(reforms) %in% description$name)]
+</code></pre>
+
+<pre><code>## [1] &quot;lns_chg&quot; &quot;wds_chg&quot;
+</code></pre>
+
+<pre><code class="r">names(reforms)[!(description$name %in% names(reforms))]
+</code></pre>
+
+<pre><code>## [1] &quot;lns_chg&quot; &quot;wds_chg&quot;
+</code></pre>
+
+<h2>meta</h2>
+
+<p><strong>t_id</strong> (texts)</p>
+
+<p>Unique identifier of a SO version by including country shorthand, date, and version counter.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_date</strong> (texts)</p>
+
+<p>Date of the SO version - equals to (according to availibility) enactment, promulgation, acceptance.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_dplus</strong> (texts)</p>
+
+<p>Version counter that is zero under normal circumstances but might be higher if more than one version got enacted on the same date.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_country</strong> (texts)</p>
+
+<p>Country shorthand. In case of Swiss two seperate shorthands exist because there SO are spread among two bodies.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_daccept</strong> (texts)</p>
+
+<p>Date on which the SO were accepted, voted upon, decided upon, &hellip; .</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_dpromul</strong> (texts)</p>
+
+<p>Date on which the SO were promulgated - made puplic, printed, published, &hellip; .</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_denact</strong> (texts)</p>
+
+<p>Date on which the SO were enacted - came into force / took effect.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>db</h2>
+
+<p><strong>int_dupdate_texts</strong> (db)</p>
+
+<p>Date at which the &#39;texts&#39; table of the database was last updated.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>int_id_texts</strong> (db)</p>
+
+<p>Database internal enumeration of SO - this might change at any time. Do <strong>not</strong> use this as an id variable.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>db_version</strong> (db)</p>
+
+<p>Version of the database from which was used to form the data set. On every change the version number goes up by 0.01 - there is no distinction between major and minor version.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>db_lastupdate</strong> (db)</p>
+
+<p>Date at which the database was last updated.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>length</h2>
+
+<p><strong>lns_all</strong> (textlines)</p>
+
+<p>Number of lines - also known as sub paragraphs - within a particular SO.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_raw_all</strong> (textlines)</p>
+
+<p>Number of words within a particular SO.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_clean_all</strong> (textlines)</p>
+
+<p>Number of words within a particular SO after having striped away enumerations like, a), b), &hellip;, 1., 2., &hellip; I, II, &hellip; and so forth.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_rel</strong> (textlines)</p>
+
+<p>Number of lines that contain relevant content - e.g. no blank lines, no headlines, no appendices.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_raw_rel</strong> (textlines)</p>
+
+<p>Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_clean_rel</strong> (textlines)</p>
+
+<p>Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices - after having striped away enumerations like, a), b), &hellip;, 1., 2., &hellip; I, II, &hellip; and so forth.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>change</h2>
+
+<p><strong>lns_mdf</strong> (textlines)</p>
+
+<p>Number of lines that were mofified - i.e. changed but not deleted or inserted</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_mdf</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj_mdf</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min_mdf</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non_mdf</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj_mdf</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min_mdf</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non_mdf</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non_ins</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non_del</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj</strong> (linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min</strong> (linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non</strong> (linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_changed</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_changed</strong> (textlines, linelinkage)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>raw corpus codes</h2>
+
+<p><strong>lns_corp_8</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_9</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_10</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_21</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_22</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_23</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_25</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_26</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_27</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_28</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_29</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_31</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_32</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_33</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_34</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_43</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_45</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_51</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_52</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_53</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_54</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_55</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_56</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_66</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_67</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_68</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_71</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_72</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_73</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_111</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_112</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_113</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_114</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_121</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_122</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_123</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_124</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_125</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_131</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_132</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_133</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_134</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_141</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_142</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_143</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_144</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_145</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_241</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_242</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_243</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_244</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_411</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_412</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_421</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_422</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_441</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_442</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_611</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_612</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_613</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_631</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_632</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_633</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_634</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_636</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_637</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_638</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_639</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_641</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_642</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_643</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_651</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_652</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_653</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_999</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6211</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6212</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6221</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6222</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6351</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6352</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_8</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_9</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_10</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_21</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_22</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_23</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_25</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_26</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_27</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_28</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_29</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_31</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_32</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_33</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_34</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_43</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_45</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_51</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_52</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_53</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_54</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_55</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_56</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_66</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_67</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_68</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_71</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_72</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_73</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_111</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_112</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_113</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_114</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_121</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_122</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_123</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_124</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_125</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_131</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_132</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_133</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_134</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_141</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_142</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_143</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_144</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_145</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_241</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_242</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_243</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_244</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_411</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_412</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_421</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_422</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_441</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_442</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_611</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_612</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_613</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_631</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_632</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_633</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_634</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_636</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_637</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_638</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_639</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_641</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_642</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_643</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_651</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_652</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_653</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_999</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6211</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6212</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6221</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6222</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6351</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6352</strong> (textlines)</p>
+
+<p>Number of words with corpus code &hellip; . See lns<em>corp</em>&hellip; for more.</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>aggregated corpus codes</h2>
+
+<p><strong>lns_corp_agg_1</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_2</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_3</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_4</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_5</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_6</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_7</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_1</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_2</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_3</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_4</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_5</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_6</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_7</strong> (textlines)</p>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+</body>
+
+</html>

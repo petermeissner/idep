@@ -37,6 +37,14 @@ tab  <- function(...){
     table(..., useNA = "always")
 }
 
+#' function for tabulating one variable 
+tab1 <- function(..., sort=FALSE){
+  if( sort==TRUE ){
+    return( as.matrix(sort(tab(...))) )
+  }
+  as.matrix(tab(...))
+}
+
 #' function evaluating command line arguments to R that are in the form of a='value'
 eval_cl_args <- function(){
   args <- grep(".+=.+", commandArgs(), value = TRUE)
@@ -55,6 +63,36 @@ if_not_exists <- function(name, value){
     return(FALSE)
   }
 }
+
+#' function for moving files via copy / delete (inefficient)
+file.move <- function(from, to){
+  if(length(from)==0) return(TRUE)
+  dummy <- function(from,to){
+    if( file.copy(from, to) ){
+      file.remove(from)
+    }
+  }
+  mapply(dummy, from, to)
+}
+
+#' function that determines if something might be an id (distinct and either integer or character)
+is_id <- function(x){
+  if( !(length(x) == length(unique(x))) )                  return(FALSE)
+  if( !(class(x) %in% "character" | all(x == suppressWarnings(as.integer(x)))) )  return(FALSE)
+  return(TRUE)
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

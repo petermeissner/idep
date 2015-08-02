@@ -9,8 +9,8 @@ library(RMySQL)
 
 # set dev options / unless provided by commandline arguments
 eval_cl_args()
-if( !exists("DEV"))          DEV          = FALSE
-if( !exists("UPDATE_TEXTS")) UPDATE_TEXTS = FALSE
+if_not_exists(DEV, FALSE)
+if_not_exists(UPDATE_TEXTS, FALSE)
 
 
 
@@ -48,6 +48,8 @@ file_version <-
   max(na.rm=T)
 file_version
 
+
+
 db_version   <- 
   dbReadTable(socon, "version") %>% 
   select(versionnumber) %>% 
@@ -76,6 +78,20 @@ tl_raw  <- download_textlines_raw( socon, saveToFile=files_need_update) %>%
   as_data_frame()
 
 
+### moving old files to trash
+file.move(
+  grep(db_version, list.files(), value=T, invert = T),
+  if(
+    length(grep(db_version, list.files(), value=T, invert = T))>0
+  ){
+    "../trash"
+  }else{
+    NULL
+  }
+)
+
+
+
 
 # wirting texts and linkages into need litle HTML files to be looked upon
 ## >> UPDATE_TEXTS==TRUE
@@ -85,6 +101,13 @@ if( UPDATE_TEXTS )
     
   ### >> producing texts # -------------------------------------------------------
   `%.%` <- function(a,b) paste0(a,b)
+  db_on_disc_date <- 
+    file.info(
+      dir(
+        "Z:/Gesch\u00e4ftsordnungen/database/extracts", 
+        full.names = TRUE, 
+        pattern    = "_db_version_")
+    )$ctime %>% max() 
   
   ids <- 
     tl_raw  %>% 
@@ -95,16 +118,17 @@ if( UPDATE_TEXTS )
   countries <- 
     str_extract(ids, "^[A-Z]{2,10}")
   
-  fnames <- 
-    countries  %.% "/"  %.% 
-    ids %.% ".htm"
+  fnames <- countries  %.% "/"  %.% ids %.% ".htm"
   
   # make country folders
   trash <- lapply(unique(countries), dir.create, showWarnings = FALSE)  
   
   # writing texts
-  
+  needs_update <- na_to_true(file.info(fnames)$ctime < db_on_disc_date)
   for( i in seq_along(ids) ) { 
+    if ( !needs_update[i]  ){
+      next 
+    } 
     id      <- ids[i]
     df <- 
       tl_raw  %>% 
@@ -195,7 +219,11 @@ if( UPDATE_TEXTS )
   
   
   # filter by those combinations tl_t_id and write files
+  needs_update <- na_to_true(file.info(ids$fname)$ctime < db_on_disc_date)
   for(i in seq_along(ids$id1) ){
+    if ( !needs_update[i] ) { 
+      next 
+    }
     
     fname      <- ids$fname[i]
     prev_fname <- ids[i-1, ]$fname

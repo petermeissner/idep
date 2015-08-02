@@ -1,0 +1,2760 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>The reforms dataset (version 1.12)</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>The reforms dataset (version 1.12)</h1>
+
+<p>The data-set is based on the IDEP data - data on Standing Orders versions (<em>texts</em>), data on Standing Orders Text (<em>textlines</em>) and data on Standing Orders change between versions (<em>linelinkage</em>). Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. </p>
+
+<p>The data set incorporates aggregated data for 
+770 reforms in
+15 countries and consists of 
+225 variables. </p>
+
+<p><strong>Example:</strong></p>
+
+<pre><code class="r">reforms  %&gt;% 
+  select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_agg_1)
+</code></pre>
+
+<pre><code>## Source: local data frame [786 x 6]
+## 
+##                t_id wds_clean_rel wds_chg pro_min pro_maj wds_corp_agg_1
+## 1  AUT_1928-02-01.0          7802       0      NA      NA           2530
+## 2  AUT_1948-06-04.0          7907     242       0       1           2523
+## 3  AUT_1961-09-01.0          9103    3983      17       5           2832
+## 4  AUT_1975-10-01.0         13558   11307      36      23           4242
+## 5  AUT_1976-07-01.0         13676      78       1       0           4318
+## 6  AUT_1979-10-01.0         13826     454       2       0           4356
+## 7  AUT_1986-09-01.0         14225    1036       3       4           4454
+## 8  AUT_1989-01-01.0         16910    6094      33      24           4772
+## 9  AUT_1993-09-15.0         18295    3002      15      16           4951
+## 10 AUT_1996-10-15.0         20639    5712      20      29           5332
+## ..              ...           ...     ...     ...     ...            ...
+</code></pre>
+
+<h1>Shortcuts</h1>
+
+<p><strong>SP</strong> is short for subparagraph and in most cases identical to <strong>line</strong> or text line due to the fact that sub-paragraphs have in the data gathering process been transfered (from PDFs and Word documents and the like) to simple text files in which each sub-paragraph was put on a single line and on one single line only.</p>
+
+<p><strong>SO</strong> is short for Standing Orders (rules of procedure) and usually refers to one particular version of Standing Orders in force in a particular country from a particular time point on. </p>
+
+<h1>General variable name shortcuts</h1>
+
+<p><strong>wds</strong> is short for words, like the number of words within a SP. </p>
+
+<p><strong>lns</strong> is short for lines an equivalent to SP. </p>
+
+<p><strong>rel</strong> is short for relevant, like whether or not a SP contains relevant information or can be  dismissed as headline, blank-line, comment, appendix or some other not relevant part of the text (the opposite usually is <strong>all</strong>)</p>
+
+<p><strong>raw</strong> versus <strong>clean</strong> denote whether or not the SP was used as found in the official documents or cleaned up. Cleaned SPs have been stripped by their enumeration (only at the start of the SP), thus pure changes of enumeration (only at the start of the SP) are not considered as changes nor are they counted as relevant content. </p>
+
+<p><strong>ins</strong>, <strong>del</strong>, <strong>mdf</strong>, <strong>non</strong>: denote the type of change that occurred for a particular SP - insertion, deletion, modification and no-change. The shorthand <strong>chg</strong> is for change and refers to all three possible forms that change might come by. </p>
+
+<p><strong>pro_&hellip;</strong> indicate minority/majority codings, e.g. <em>pro_min</em> indicates how many SPs were changed in a way considered minority friendly. </p>
+
+<h1>Shortcuts indicating their raw data sets</h1>
+
+<p><strong>db_</strong> and <strong>int_</strong> denote variables that have to do with the database that serves as basis for all data-sets and are most likely not relevant to the user. </p>
+
+<p><strong>t_</strong> information on text or Standing Orders version level, e.g. the data when a particular standing order was accepted, the country it belongs to or total number of words of the  version, &hellip; .</p>
+
+<p><strong>tl_</strong> information on text lines aka SPs, e.g whether or not a SP is relevant, how many words it contains, it&#39;s corpus code, &hellip; .</p>
+
+<p><strong>ll_</strong> information on the what happened to SPs from one version to the next - e.g. was it changed or deleted. </p>
+
+<p>Other shortcuts or variable names missing the above mentioned shortcuts indicate that those variables have been computed from other variables and most likely were result from some form of aggregation. See below for more detailed descriptions. </p>
+
+<h1>Variable descriptions</h1>
+
+<h2>meta</h2>
+
+<p><strong>t_id</strong> (texts)</p>
+
+<p>Unique identifier of a SO version by including country shorthand, date, and version counter.</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_date</strong> (texts)</p>
+
+<p>Date of the SO version - equals to (according to availibility) enactment, promulgation, acceptance.</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_dplus</strong> (texts)</p>
+
+<p>Version counter that is zero under normal circumstances but might be higher if more than one version got enacted on the same date.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.1272  0.0000  4.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_country</strong> (texts)</p>
+
+<p>Country shorthand. In case of Swiss two seperate shorthands exist because there SO are spread among two bodies.</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_daccept</strong> (texts)</p>
+
+<p>Date on which the SO were accepted, voted upon, decided upon, &hellip; .</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_dpromul</strong> (texts)</p>
+
+<p>Date on which the SO were promulgated - made puplic, printed, published, &hellip; .</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>t_denact</strong> (texts)</p>
+
+<p>Date on which the SO were enacted - came into force / took effect.</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>db</h2>
+
+<p><strong>int_dupdate_texts</strong> (db)</p>
+
+<p>Date at which the &#39;texts&#39; table of the database was last updated.</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>int_id_texts</strong> (db)</p>
+
+<p>Database internal enumeration of SO - this might change at any time. Do <strong>not</strong> use this as an id variable.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    1.0   396.2   592.5   564.8   788.8  1010.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>db_version</strong> (db)</p>
+
+<p>Version of the database which was used to create the data set. On every change the version number goes up by 0.01 - there is no distinction between major and minor version.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.11    1.11    1.11    1.11    1.11    1.11 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>db_lastupdate</strong> (db)</p>
+
+<p>Date at which the database was last updated.</p>
+
+<pre><code class="r">   Length     Class      Mode 
+      786 character character 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>length</h2>
+
+<p><strong>lns_all</strong> (textlines)</p>
+
+<p>Number of lines - also known as sub paragraphs - within a particular SO.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   88.0   375.2   618.0   671.8   863.2  2645.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_raw_all</strong> (textlines)</p>
+
+<p>Number of words within a particular SO.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2318   10500   13990   16920   22290   61400 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_clean_all</strong> (textlines)</p>
+
+<p>Number of words within a particular SO after having striped away enumerations like, a), b), &hellip;, 1., 2., &hellip; I, II, &hellip; and so forth.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2236   10170   13600   16300   21490   59630 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_rel</strong> (textlines)</p>
+
+<p>Number of lines that contain relevant content - e.g. no blank lines, no headlines, no appendices.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   38.0   289.2   405.0   472.4   596.0  1242.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_raw_rel</strong> (textlines)</p>
+
+<p>Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2122   10150   13340   16220   21520   43050 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_clean_rel</strong> (textlines)</p>
+
+<p>Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices - after having striped away enumerations like, a), b), &hellip;, 1., 2., &hellip; I, II, &hellip; and so forth.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2122    9918   13030   15750   20900   41490 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>change</h2>
+
+<p><strong>lns_mdf</strong> (textlines)</p>
+
+<p>Number of lines that were mofified - i.e. changed but not deleted or inserted.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    1.00    3.00   16.91   11.00  583.00      16 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_mdf</strong> (textlines)</p>
+
+<p>Number of words modified - i.e. changed but not deleted or inserted.</p>
+
+<pre><code class="r">    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA&#39;s 
+    0.00     7.25    58.00   375.80   234.80 12270.00       16 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of words that were inserted into SO.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0     0.0    67.0   341.0   281.5 11250.0      16 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines that were inserted into SO.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    2.00   11.17    8.00  375.00      16 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of words that were deleted from old SO.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0     0.0     0.0   128.9    44.5  6059.0      16 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines that were deleted from old SO.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  0.000   0.000   0.000   4.253   2.000 229.000      16 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_chg</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines that were changed from the old SO to the current - i.e. the sum of insertions, deletions and modifikations.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     3.0     9.0    31.9    25.0   778.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_chg</strong> (textlines, linelinkage)</p>
+
+<p>Number of words that were changed from the old SO to the current - i.e. the sum of insertions, deletions and modifikations.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    66.0   251.5   837.0   700.8 23370.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>minority/majority</h2>
+
+<p><strong>pro_maj_mdf</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines modified that were coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.0000  0.0000  0.4964  0.0000 32.0000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min_mdf</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines modified that were coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.0000  0.0000  0.5494  0.0000 25.0000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non_mdf</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines modified that were coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0     1.0     3.0    16.4    10.0   583.0      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj_mdf</strong> (textlines, linelinkage)</p>
+
+<p>Number of words modified that were coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    0.00   19.81    0.00 4008.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min_mdf</strong> (textlines, linelinkage)</p>
+
+<p>Number of words modified that were coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    0.00   18.45    0.00 1162.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non_mdf</strong> (textlines, linelinkage)</p>
+
+<p>Number of words modified that were coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0     5.0    57.0   343.3   219.0 11880.0      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines inserted that were coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.0000  0.0000  0.4292  0.0000 38.0000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines inserted that were coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.0000  0.0000  0.3577  0.0000 17.0000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines inserted that were coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  0.000   0.000   1.000   9.811   7.000 317.000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of words inserted that were coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    0.00   15.65    0.00 1439.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of words inserted that were coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    0.00   16.83    0.00  601.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non_ins</strong> (textlines, linelinkage)</p>
+
+<p>Number of words inserted that were coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0     0.0    52.0   308.3   246.5 11110.0      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines deleted that were coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.0000  0.0000  0.0887  0.0000 25.0000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines deleted that were coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+0.00000 0.00000 0.00000 0.05866 0.00000 7.00000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of lines deleted that were coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  0.000   0.000   0.000   3.737   1.000 229.000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of words deleted that were coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  0.000   0.000   0.000   3.914   0.000 980.000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of words deleted that were coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  0.000   0.000   0.000   1.936   0.000 192.000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non_del</strong> (textlines, linelinkage)</p>
+
+<p>Number of words deleted that were coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0     0.0     0.0   118.5    39.0  5992.0      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_maj</strong> (linelinkage)</p>
+
+<p>Number of lines coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+  0.000   0.000   0.000   1.014   0.000  44.000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_min</strong> (linelinkage)</p>
+
+<p>Number of lines coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+ 0.0000  0.0000  0.0000  0.9657  1.0000 37.0000      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>pro_non</strong> (linelinkage)</p>
+
+<p>Number of lines coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    3.00    9.00   29.95   24.00  778.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_maj</strong> (textlines, linelinkage)</p>
+
+<p>Number of words coded as majority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    0.00   39.37    0.00 4022.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_min</strong> (textlines, linelinkage)</p>
+
+<p>Number of words coded as minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+   0.00    0.00    0.00   37.21    6.00 1680.00      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_pro_non</strong> (textlines, linelinkage)</p>
+
+<p>Number of words coded as neither majority nor minority friendly.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+    0.0    62.0   232.0   770.1   662.0 22840.0      87 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>raw corpus codes</h2>
+
+<p><strong>lns_corp_8</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 8   </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   5.000   5.144   8.000  22.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_9</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 9   </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.107   1.000  12.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_10</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 10  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    6.00    9.00   14.97   19.00  162.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_21</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 21  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   4.337   7.000  35.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_22</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 22  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    1.00   13.00   19.53   37.00   65.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_23</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 23  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   2.244   1.000  29.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_25</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 25  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    3.00   11.01   15.00   80.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_26</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 26  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   2.000   6.429   9.000  44.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_27</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 27  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.7748  0.0000  9.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_28</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 28  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.5814  0.0000 32.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_29</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 29  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   23.49   14.75  245.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_31</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 31  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.8779  0.7500 18.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_32</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 32  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   2.724   2.000  27.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_33</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 33  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.004   0.000   9.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_34</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 34  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   4.000   5.592   7.000  37.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_43</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 43  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.274   1.000  16.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_45</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 45  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.8333  0.0000 34.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_51</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 51  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    10.0    14.0    19.6    19.0   110.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_52</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 52  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   2.383   2.000  32.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_53</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 53  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00   11.00   20.00   22.03   28.00   89.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_54</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 54  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   5.000   6.454  10.000  49.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_55</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 55  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    4.00    8.00   10.74   13.00   67.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_56</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 56  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    8.00   12.00   12.86   14.00   61.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_66</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 66  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.1132  0.0000  1.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_67</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 67  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   0.813   0.000   7.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_68</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 68  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   3.000   7.748   8.000  47.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_71</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 71  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.415   2.000  25.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_72</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 72  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   0.617   1.000   6.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_73</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 73  </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   0.883   0.000  20.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_111</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 111 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   2.000   4.191   4.000  32.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_112</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 112 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   2.000   3.000   4.453   6.000  28.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_113</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 113 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    2.00    7.00    8.16   11.00   31.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_114</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 114 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.7176  1.0000 12.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_121</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 121 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   4.000   6.486  10.000  49.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_122</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 122 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   5.000   6.081   8.000  26.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_123</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 123 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2.00   12.00   20.00   23.65   28.75   67.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_124</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 124 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.702   3.000   9.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_125</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 125 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   5.000   7.000   7.435   9.000  22.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_131</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 131 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   1.000   1.953   2.000  13.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_132</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 132 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   1.000   1.536   2.000  10.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_133</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 133 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   1.000   1.969   2.000  11.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_134</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 134 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   4.000   7.000   7.494  10.000  22.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_141</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 141 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.4618  0.0000  6.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_142</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 142 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   2.000   5.545   6.000  47.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_143</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 143 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.8868  0.0000 13.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_144</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 144 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.3461  0.0000  6.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_145</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 145 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.3397  0.0000 15.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_241</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 241 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00    1.84    3.00   24.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_242</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 242 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   5.557   3.000  48.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_243</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 243 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.1298  0.0000  4.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_244</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 244 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   0.841   0.000  29.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_411</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 411 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.771   0.000  46.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_412</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 412 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   2.444   5.000  22.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_421</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 421 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.3715  0.0000 15.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_422</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 422 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.1679  0.0000  6.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_441</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 441 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00000 0.00000 0.00000 0.08397 0.00000 4.00000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_442</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 442 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.2519  0.0000  5.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_611</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 611 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    6.00   15.00   29.04   38.75  200.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_612</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 612 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    5.00   11.00   13.94   16.00   60.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_613</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 613 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   3.000   6.000   6.724   9.000  32.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_631</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 631 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    1.00    2.17    3.00   13.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_632</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 632 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    8.00   25.00   27.01   40.00  164.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_633</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 633 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   2.000   3.000   4.168   6.000  24.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_634</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 634 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    5.00    7.00   12.01   14.00   39.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_636</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 636 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   1.000   3.000   4.253   6.000  21.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_637</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 637 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   5.416   5.000  78.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_638</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 638 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.9949  0.0000 20.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_639</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 639 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     5.0     9.0    28.1    31.0   211.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_641</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 641 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   1.000   2.499   5.000  12.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_642</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 642 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   1.102   1.000  30.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_643</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 643 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.6527  1.0000  6.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_651</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 651 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    4.00    6.00   10.41   13.00   56.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_652</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 652 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   3.000   6.000   7.426   8.000  67.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_653</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 653 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.5267  1.0000  7.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_999</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 999 </p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   7.642   1.000 188.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6211</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6211</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   4.000   7.000   9.383  10.000  36.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6212</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6212</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   2.000   6.000   6.931   8.000  72.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6221</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6221</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   2.000   2.453   4.000  13.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6222</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6222</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   2.000   3.218   4.000  16.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6351</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6351</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.2723  0.0000  6.0000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_6352</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6352</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   1.000   1.559   2.000   7.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_8</strong> (textlines)</p>
+
+<p>Number of words with corpus code 8    - see lns_corp_8    for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    38.0   148.0   179.0   298.8   729.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_9</strong> (textlines)</p>
+
+<p>Number of words with corpus code 9    - see lns_corp_9    for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   33.02   13.00  633.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_10</strong> (textlines)</p>
+
+<p>Number of words with corpus code 10   - see lns_corp_10   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   194.0   358.0   432.2   452.0  3566.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_21</strong> (textlines)</p>
+
+<p>Number of words with corpus code 21   - see lns_corp_21   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0   127.3   258.0   885.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_22</strong> (textlines)</p>
+
+<p>Number of words with corpus code 22   - see lns_corp_22   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   137.0   537.0   815.3  1499.0  2938.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_23</strong> (textlines)</p>
+
+<p>Number of words with corpus code 23   - see lns_corp_23   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   94.98   53.00  777.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_25</strong> (textlines)</p>
+
+<p>Number of words with corpus code 25   - see lns_corp_25   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0       0     190     369     457    1942 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_26</strong> (textlines)</p>
+
+<p>Number of words with corpus code 26   - see lns_corp_26   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0    70.0   254.3   376.0  2217.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_27</strong> (textlines)</p>
+
+<p>Number of words with corpus code 27   - see lns_corp_27   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   32.16    0.00  475.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_28</strong> (textlines)</p>
+
+<p>Number of words with corpus code 28   - see lns_corp_28   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   15.29    0.00  775.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_29</strong> (textlines)</p>
+
+<p>Number of words with corpus code 29   - see lns_corp_29   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0   867.2   495.0  8107.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_31</strong> (textlines)</p>
+
+<p>Number of words with corpus code 31   - see lns_corp_31   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   22.72   20.25  426.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_32</strong> (textlines)</p>
+
+<p>Number of words with corpus code 32   - see lns_corp_32   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   90.25   64.00  861.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_33</strong> (textlines)</p>
+
+<p>Number of words with corpus code 33   - see lns_corp_33   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   33.08    0.00  268.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_34</strong> (textlines)</p>
+
+<p>Number of words with corpus code 34   - see lns_corp_34   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    64.0   106.0   171.8   236.0   860.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_43</strong> (textlines)</p>
+
+<p>Number of words with corpus code 43   - see lns_corp_43   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   36.17   34.00  335.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_45</strong> (textlines)</p>
+
+<p>Number of words with corpus code 45   - see lns_corp_45   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   28.82    0.00 1001.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_51</strong> (textlines)</p>
+
+<p>Number of words with corpus code 51   - see lns_corp_51   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   465.0   560.0   619.1   778.0  1649.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_52</strong> (textlines)</p>
+
+<p>Number of words with corpus code 52   - see lns_corp_52   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0    98.6   170.0  1025.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_53</strong> (textlines)</p>
+
+<p>Number of words with corpus code 53   - see lns_corp_53   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   495.0   749.0   788.9   943.5  2691.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_54</strong> (textlines)</p>
+
+<p>Number of words with corpus code 54   - see lns_corp_54   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0   208.0   228.1   418.0  1106.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_55</strong> (textlines)</p>
+
+<p>Number of words with corpus code 55   - see lns_corp_55   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   146.0   262.0   348.3   464.0  1851.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_56</strong> (textlines)</p>
+
+<p>Number of words with corpus code 56   - see lns_corp_56   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   254.0   370.0   428.2   589.8  1340.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_66</strong> (textlines)</p>
+
+<p>Number of words with corpus code 66   - see lns_corp_66   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   4.642   0.000  41.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_67</strong> (textlines)</p>
+
+<p>Number of words with corpus code 67   - see lns_corp_67   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   16.81    0.00  137.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_68</strong> (textlines)</p>
+
+<p>Number of words with corpus code 68   - see lns_corp_68   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    16.0   112.0   189.1   172.0  1093.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_71</strong> (textlines)</p>
+
+<p>Number of words with corpus code 71   - see lns_corp_71   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   46.43   85.00  588.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_72</strong> (textlines)</p>
+
+<p>Number of words with corpus code 72   - see lns_corp_72   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   21.06   28.00  148.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_73</strong> (textlines)</p>
+
+<p>Number of words with corpus code 73   - see lns_corp_73   for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   18.57    0.00  296.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_111</strong> (textlines)</p>
+
+<p>Number of words with corpus code 111  - see lns_corp_111  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   64.00   99.37  106.00  651.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_112</strong> (textlines)</p>
+
+<p>Number of words with corpus code 112  - see lns_corp_112  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    64.0   167.0   144.6   176.0   522.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_113</strong> (textlines)</p>
+
+<p>Number of words with corpus code 113  - see lns_corp_113  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    96.5   237.0   269.8   368.0   806.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_114</strong> (textlines)</p>
+
+<p>Number of words with corpus code 114  - see lns_corp_114  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0    25.7    23.0   635.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_121</strong> (textlines)</p>
+
+<p>Number of words with corpus code 121  - see lns_corp_121  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0   169.0   229.3   316.8  1536.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_122</strong> (textlines)</p>
+
+<p>Number of words with corpus code 122  - see lns_corp_122  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0       0     139     223     277    1189 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_123</strong> (textlines)</p>
+
+<p>Number of words with corpus code 123  - see lns_corp_123  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   80.0   463.8   659.0   791.2   885.0  2366.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_124</strong> (textlines)</p>
+
+<p>Number of words with corpus code 124  - see lns_corp_124  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0   107.9   264.0   498.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_125</strong> (textlines)</p>
+
+<p>Number of words with corpus code 125  - see lns_corp_125  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   177.0   284.0   343.4   416.0  1073.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_131</strong> (textlines)</p>
+
+<p>Number of words with corpus code 131  - see lns_corp_131  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   35.00   73.17   88.00  636.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_132</strong> (textlines)</p>
+
+<p>Number of words with corpus code 132  - see lns_corp_132  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   43.50   66.71   86.00  435.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_133</strong> (textlines)</p>
+
+<p>Number of words with corpus code 133  - see lns_corp_133  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   22.00   79.38  108.00  489.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_134</strong> (textlines)</p>
+
+<p>Number of words with corpus code 134  - see lns_corp_134  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   177.0   233.0   259.6   333.0   761.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_141</strong> (textlines)</p>
+
+<p>Number of words with corpus code 141  - see lns_corp_141  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   18.49    0.00  187.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_142</strong> (textlines)</p>
+
+<p>Number of words with corpus code 142  - see lns_corp_142  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0    74.0   214.3   274.0  1359.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_143</strong> (textlines)</p>
+
+<p>Number of words with corpus code 143  - see lns_corp_143  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   34.65    0.00  555.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_144</strong> (textlines)</p>
+
+<p>Number of words with corpus code 144  - see lns_corp_144  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   8.571   0.000 136.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_145</strong> (textlines)</p>
+
+<p>Number of words with corpus code 145  - see lns_corp_145  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   16.92    0.00  857.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_241</strong> (textlines)</p>
+
+<p>Number of words with corpus code 241  - see lns_corp_241  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   71.37   96.75 1348.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_242</strong> (textlines)</p>
+
+<p>Number of words with corpus code 242  - see lns_corp_242  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0   157.1    64.0  1310.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_243</strong> (textlines)</p>
+
+<p>Number of words with corpus code 243  - see lns_corp_243  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   4.749   0.000  84.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_244</strong> (textlines)</p>
+
+<p>Number of words with corpus code 244  - see lns_corp_244  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   31.46    0.00  927.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_411</strong> (textlines)</p>
+
+<p>Number of words with corpus code 411  - see lns_corp_411  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   51.68    0.00 1435.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_412</strong> (textlines)</p>
+
+<p>Number of words with corpus code 412  - see lns_corp_412  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   73.03  148.00  629.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_421</strong> (textlines)</p>
+
+<p>Number of words with corpus code 421  - see lns_corp_421  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   14.04    0.00  391.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_422</strong> (textlines)</p>
+
+<p>Number of words with corpus code 422  - see lns_corp_422  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   4.062   0.000 170.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_441</strong> (textlines)</p>
+
+<p>Number of words with corpus code 441  - see lns_corp_441  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   2.156   0.000  99.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_442</strong> (textlines)</p>
+
+<p>Number of words with corpus code 442  - see lns_corp_442  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   7.669   0.000 142.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_611</strong> (textlines)</p>
+
+<p>Number of words with corpus code 611  - see lns_corp_611  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0     191     375    1144    1431    6791 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_612</strong> (textlines)</p>
+
+<p>Number of words with corpus code 612  - see lns_corp_612  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   137.8   455.0   521.0   695.0  2221.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_613</strong> (textlines)</p>
+
+<p>Number of words with corpus code 613  - see lns_corp_613  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    98.0   202.0   226.4   306.0   842.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_631</strong> (textlines)</p>
+
+<p>Number of words with corpus code 631  - see lns_corp_631  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   17.00   71.68  100.00  518.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_632</strong> (textlines)</p>
+
+<p>Number of words with corpus code 632  - see lns_corp_632  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   258.0   497.0   564.8   870.8  1313.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_633</strong> (textlines)</p>
+
+<p>Number of words with corpus code 633  - see lns_corp_633  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    55.0   115.0   134.3   210.0   790.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_634</strong> (textlines)</p>
+
+<p>Number of words with corpus code 634  - see lns_corp_634  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   122.0   222.0   388.2   469.2  1288.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_636</strong> (textlines)</p>
+
+<p>Number of words with corpus code 636  - see lns_corp_636  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    47.0   119.5   153.2   213.0   878.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_637</strong> (textlines)</p>
+
+<p>Number of words with corpus code 637  - see lns_corp_637  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0     0.0   173.5   177.0  2444.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_638</strong> (textlines)</p>
+
+<p>Number of words with corpus code 638  - see lns_corp_638  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   31.17    0.00  649.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_639</strong> (textlines)</p>
+
+<p>Number of words with corpus code 639  - see lns_corp_639  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   180.0   299.0   856.4   956.0  6014.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_641</strong> (textlines)</p>
+
+<p>Number of words with corpus code 641  - see lns_corp_641  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   30.00   80.38  137.00  439.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_642</strong> (textlines)</p>
+
+<p>Number of words with corpus code 642  - see lns_corp_642  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   32.93   42.00  508.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_643</strong> (textlines)</p>
+
+<p>Number of words with corpus code 643  - see lns_corp_643  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   25.67   28.00  202.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_651</strong> (textlines)</p>
+
+<p>Number of words with corpus code 651  - see lns_corp_651  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   108.0   239.0   403.5   372.0  2439.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_652</strong> (textlines)</p>
+
+<p>Number of words with corpus code 652  - see lns_corp_652  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   122.0   183.0   242.4   262.0  2080.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_653</strong> (textlines)</p>
+
+<p>Number of words with corpus code 653  - see lns_corp_653  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   21.17   23.00  328.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_999</strong> (textlines)</p>
+
+<p>Number of words with corpus code 999  - see lns_corp_999  for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   30.48    1.00  757.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6211</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6211 - see lns_corp_6211 for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0   154.0   221.0   331.3   382.0  1308.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6212</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6212 - see lns_corp_6212 for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0    83.0   214.0   229.5   378.2  1060.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6221</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6221 - see lns_corp_6221 for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   51.00   74.87  128.00  312.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6222</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6222 - see lns_corp_6222 for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0    64.0   112.3   149.0   598.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6351</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6351 - see lns_corp_6351 for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   10.39    0.00  179.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_6352</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6352 - see lns_corp_6352 for more information.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00   17.00   52.93   80.00  323.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<h2>aggregated corpus codes</h2>
+
+<p><strong>lns_corp_agg_1</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 1 - lawmaking.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    9.0    59.0    74.0    83.4    99.0   192.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_2</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 2 - special decission rules.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00   20.00   36.00   69.49   88.00  342.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_3</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 3 - elections.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    9.00   17.84   35.00   98.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_4</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 4 - government control.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00   24.00   33.00   40.71   54.00  164.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_5</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 5 - puplicity</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    7.0    61.0    81.0    95.3   123.0   290.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_6</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 6 - not relevant</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.000   0.000   0.000   7.642   1.000 188.000 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>lns_corp_agg_7</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 7 - not applicaple</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     21     104     130     158     185     464 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_1</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 1 - lawmaking.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    638    2020    2596    3006    3555    7885 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_2</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 2 - special decission rules.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0     574    1489    2574    3109   11360 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_3</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 3 - elections.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     0.0   311.0   582.9  1019.0  2478.0 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_4</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 4 - government control.</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     16     940    1340    1421    1701    5511 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_5</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 5 - puplicity</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    223    1837    2636    3385    4598   10350 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_6</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 6 - not relevant</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   0.00    0.00    0.00   30.48    1.00  757.00 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+<p><strong>wds_corp_agg_7</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 7 - not applicaple</p>
+
+<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1010    3066    3995    4746    5970   13980 
+
+</code></pre>
+
+<p><p>&nbsp;</p>\vspace{1em}</p>
+
+</body>
+
+</html>
