@@ -107,7 +107,7 @@ description$name[!(description$name %in% names(reforms))]
 ```
 
 ```{r, echo=FALSE, results='asis'}
-for( g in unique(description$group) ){
+for( g in sort(unique(description$group)) ){
   cat(paste0("\n## ", g, "\n\n"))
   dat <- description  %>% filter(group==g)
   for( i in seq_len(dim(dat)[1]) ){
