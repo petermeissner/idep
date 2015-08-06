@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>The reforms dataset (version 1.12)</title>
+<title>The reforms dataset (version 1.27)</title>
 
 <script type="text/javascript">
 window.onload = function() {
@@ -201,7 +201,7 @@ hr {
 </head>
 
 <body>
-<h1>The reforms dataset (version 1.12)</h1>
+<h1>The reforms dataset (version 1.27)</h1>
 
 <p>The data-set is based on the IDEP data - data on Standing Orders versions (<em>texts</em>), data on Standing Orders Text (<em>textlines</em>) and data on Standing Orders change between versions (<em>linelinkage</em>). Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. </p>
 
@@ -266,288 +266,3098 @@ hr {
 
 <h1>Variable descriptions</h1>
 
-<h2>meta</h2>
+<h2>1 meta</h2>
 
 <p><strong>t_id</strong> (texts)</p>
 
 <p>Unique identifier of a SO version by including country shorthand, date, and version counter.</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  786 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ AUT_1928-02-01.0 ]</em> &hellip; <em>[ UK_2009-06-25.0 ]</em> \
+<br><strong>examples:</strong>  <em>[ SWE_1991-10-01.2 ], [ UK_1953-11-04.0 ], [ SWE_1986-06-15.0 ], [ LUX_1991-01-</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>t_date</strong> (texts)</p>
 
 <p>Date of the SO version - equals to (according to availibility) enactment, promulgation, acceptance.</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  702 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 1903-01-20 ]</em> &hellip; <em>[ 2011-07-01 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1954-11-02 ], [ 1995-03-01 ], [ 1982-03-17 ], [ 2003-05-27 ], [ 1980-01-17 ],</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>t_dplus</strong> (texts)</p>
 
 <p>Version counter that is zero under normal circumstances but might be higher if more than one version got enacted on the same date.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.1272  0.0000  4.0000 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  5 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 4 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>t_country</strong> (texts)</p>
 
 <p>Country shorthand. In case of Swiss two seperate shorthands exist because there SO are spread among two bodies.</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  16 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ AUT ]</em> &hellip; <em>[ UK ]</em> \
+<br><strong>examples:</strong>  <em>[ DEN ], [ DEN ], [ UK ], [ SWE ], [ UK ], [ UK ], [ UK ], [ UK ], [ DEN ], [ G</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>t_daccept</strong> (texts)</p>
 
 <p>Date on which the SO were accepted, voted upon, decided upon, &hellip; .</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  690 \
+<br><strong>NAs:</strong>  38 \
+<br><strong>range:</strong> <em>[ 1902-10-09 ]</em> &hellip; <em>[ 2011-04-28 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2004-12-16 ], [ 1994-06-16 ], [ 1995-04-07 ], [ 1990-07-12 ], [ 1982-03-12 ],</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>t_dpromul</strong> (texts)</p>
 
 <p>Date on which the SO were promulgated - made puplic, printed, published, &hellip; .</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  313 \
+<br><strong>NAs:</strong>  450 \
+<br><strong>range:</strong> <em>[ 1902-10-15 ]</em> &hellip; <em>[ 2011-04-19 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1995-06-01 ], [ 2009-12-11 ], [ NA ], [ 1970-07-03 ], [ NA ], [ NA ], [ NA ],</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>t_denact</strong> (texts)</p>
 
 <p>Date on which the SO were enacted - came into force / took effect.</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  303 \
+<br><strong>NAs:</strong>  418 \
+<br><strong>range:</strong> <em>[ 1903-01-20 ]</em> &hellip; <em>[ 2011-07-01 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2009-12-01 ], [ NA ], [ 2007-10-25 ], [ NA ], [ 1976-07-31 ], [ 1990-05-01 ],</em> &hellip; \
+<br></p>
 
-</code></pre>
+<p>&nbsp;</p>
 
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<h2>db</h2>
+<h2>2 db</h2>
 
 <p><strong>int_dupdate_texts</strong> (db)</p>
 
 <p>Date at which the &#39;texts&#39; table of the database was last updated.</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  16 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2015-07-23 14:47:15 ]</em> &hellip; <em>[ 2015-07-23 22:18:09 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2015-07-23 19:29:06 ], [ 2015-07-23 21:14:36 ], [ 2015-07-23 19:37:33 ], [ 20</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>int_id_texts</strong> (db)</p>
 
 <p>Database internal enumeration of SO - this might change at any time. Do <strong>not</strong> use this as an id variable.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    1.0   396.2   592.5   564.8   788.8  1010.0 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  786 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 1 ]</em> &hellip; <em>[ 1010 ]</em> \
+<br><strong>examples:</strong>  <em>[ 824 ], [ 937 ], [ 381 ], [ 940 ], [ 898 ], [ 905 ], [ 219 ], [ 81 ], [ 382 ],</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>db_version</strong> (db)</p>
 
 <p>Version of the database which was used to create the data set. On every change the version number goes up by 0.01 - there is no distinction between major and minor version.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   1.11    1.11    1.11    1.11    1.11    1.11 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  1 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 1.27 ]</em> &hellip; <em>[ 1.27 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1.27 ], [ 1.27 ], [ 1.27 ], [ 1.27 ], [ 1.27 ], [ 1.27 ], [ 1.27 ], [ 1.27 ],</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>db_lastupdate</strong> (db)</p>
 
 <p>Date at which the database was last updated.</p>
 
-<pre><code class="r">   Length     Class      Mode 
-      786 character character 
+<p><strong>class:</strong>  character \
+<br><strong>unique:</strong>  1 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2015-07-31 18:14:35 ]</em> &hellip; <em>[ 2015-07-31 18:14:35 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2015-07-31 18:14:35 ], [ 2015-07-31 18:14:35 ], [ 2015-07-31 18:14:35 ], [ 20</em> &hellip; \
+<br></p>
 
-</code></pre>
+<p>&nbsp;</p>
 
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<h2>length</h2>
+<h2>3 length</h2>
 
 <p><strong>lns_all</strong> (textlines)</p>
 
 <p>Number of lines - also known as sub paragraphs - within a particular SO.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   88.0   375.2   618.0   671.8   863.2  2645.0 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  473 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 88 ]</em> &hellip; <em>[ 2645 ]</em> \
+<br><strong>examples:</strong>  *[ 1212 ], [ 435 ], [ 306 ], [ 303 ], [ 726 ], [ 975 ], [ 825 ], [ 595 ], [ 576 * &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_raw_all</strong> (textlines)</p>
 
 <p>Number of words within a particular SO.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   2318   10500   13990   16920   22290   61400 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  744 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2318 ]</em> &hellip; <em>[ 61397 ]</em> \
+<br><strong>examples:</strong>  <em>[ 22941 ], [ 6342 ], [ 35360 ], [ 28133 ], [ 12802 ], [ 16076 ], [ 10824 ], [ 2</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_clean_all</strong> (textlines)</p>
 
 <p>Number of words within a particular SO after having striped away enumerations like, a), b), &hellip;, 1., 2., &hellip; I, II, &hellip; and so forth.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   2236   10170   13600   16300   21490   59630 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  739 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2236 ]</em> &hellip; <em>[ 59628 ]</em> \
+<br><strong>examples:</strong>  *[ 14435 ], [ 10209 ], [ 21200 ], [ 16435 ], [ 35037 ], [ 14400 ], [ 11246 ], [ * &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>lns_rel</strong> (textlines)</p>
 
 <p>Number of lines that contain relevant content - e.g. no blank lines, no headlines, no appendices.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   38.0   289.2   405.0   472.4   596.0  1242.0 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  402 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 38 ]</em> &hellip; <em>[ 1242 ]</em> \
+<br><strong>examples:</strong>  <em>[ 285 ], [ 199 ], [ 708 ], [ 279 ], [ 337 ], [ 625 ], [ 862 ], [ 881 ], [ 416 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_raw_rel</strong> (textlines)</p>
 
 <p>Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   2122   10150   13340   16220   21520   43050 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  740 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2122 ]</em> &hellip; <em>[ 43046 ]</em> \
+<br><strong>examples:</strong>  <em>[ 9601 ], [ 22141 ], [ 15093 ], [ 14197 ], [ 9032 ], [ 15683 ], [ 9918 ], [ 186</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_clean_rel</strong> (textlines)</p>
 
 <p>Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices - after having striped away enumerations like, a), b), &hellip;, 1., 2., &hellip; I, II, &hellip; and so forth.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   2122    9918   13030   15750   20900   41490 
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  742 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2122 ]</em> &hellip; <em>[ 41488 ]</em> \
+<br><strong>examples:</strong>  <em>[ 34957 ], [ 7176 ], [ 27035 ], [ 11516 ], [ 14288 ], [ 10564 ], [ 8612 ], [ 71</em> &hellip; \
+<br></p>
 
-</code></pre>
+<p>&nbsp;</p>
 
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<h2>change</h2>
+<h2>4 change</h2>
 
 <p><strong>lns_mdf</strong> (textlines)</p>
 
 <p>Number of lines that were mofified - i.e. changed but not deleted or inserted.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    1.00    3.00   16.91   11.00  583.00      16 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  98 \
+<br><strong>NAs:</strong>  16 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 583 ]</em> \
+<br><strong>examples:</strong>  <em>[ NA ], [ 1 ], [ 1 ], [ 7 ], [ 5 ], [ 87 ], [ 4 ], [ 0 ], [ 11 ], [ 4 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_mdf</strong> (textlines)</p>
 
 <p>Number of words modified - i.e. changed but not deleted or inserted.</p>
 
-<pre><code class="r">    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA&#39;s 
-    0.00     7.25    58.00   375.80   234.80 12270.00       16 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  347 \
+<br><strong>NAs:</strong>  16 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 12273 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1247 ], [ 0 ], [ 11 ], [ 0 ], [ 20 ], [ 61 ], [ 0 ], [ 329 ], [ 99 ], [ 472 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of words that were inserted into SO.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0     0.0    67.0   341.0   281.5 11250.0      16 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  357 \
+<br><strong>NAs:</strong>  16 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 11246 ]</em> \
+<br><strong>examples:</strong>  <em>[ 91 ], [ 0 ], [ 145 ], [ 37 ], [ 85 ], [ 0 ], [ 4226 ], [ 18 ], [ 0 ], [ 58 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>lns_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines that were inserted into SO.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    2.00   11.17    8.00  375.00      16 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  80 \
+<br><strong>NAs:</strong>  16 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 375 ]</em> \
+<br><strong>examples:</strong>  <em>[ 48 ], [ 1 ], [ 0 ], [ 0 ], [ 16 ], [ 1 ], [ 3 ], [ 0 ], [ 0 ], [ 134 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of words that were deleted from old SO.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0     0.0     0.0   128.9    44.5  6059.0      16 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  204 \
+<br><strong>NAs:</strong>  16 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6059 ]</em> \
+<br><strong>examples:</strong>  <em>[ 119 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>lns_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines that were deleted from old SO.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  0.000   0.000   0.000   4.253   2.000 229.000      16 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  51 \
+<br><strong>NAs:</strong>  16 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 229 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 2 ], [ 2 ], [ 4 ], [ 0 ], [ 0 ], [ 8 ], [ 0 ], [ 1 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>lns_chg</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines that were changed from the old SO to the current - i.e. the sum of insertions, deletions and modifikations.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     3.0     9.0    31.9    25.0   778.0 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  134 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 778 ]</em> \
+<br><strong>examples:</strong>  <em>[ 74 ], [ 2 ], [ 11 ], [ 5 ], [ 1 ], [ 70 ], [ 8 ], [ 16 ], [ 3 ], [ 16 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_chg</strong> (textlines, linelinkage)</p>
 
 <p>Number of words that were changed from the old SO to the current - i.e. the sum of insertions, deletions and modifikations.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    66.0   251.5   837.0   700.8 23370.0 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  522 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 23366 ]</em> \
+<br><strong>examples:</strong>  *[ 552 ], [ 5 ], [ 1016 ], [ 309 ], [ 614 ], [ 388 ], [ 864 ], [ 29 ], [ 241 ], * &hellip; \
+<br></p>
 
-</code></pre>
+<p>&nbsp;</p>
 
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<h2>7 raw corpus codes - 1 law making</h2>
+
+<p><strong>lns_corp_111</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 111  </p>
+
+<p>1 Law-Making </p>
+
+<p>11 Bills and motions </p>
+
+<p>111 types of bills and motions; printing and distribution of bills and motions to MPs</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  24 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 33 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 2 ], [ 1 ], [ 17 ], [ 2 ], [ 0 ], [ 2 ], [ 2 ], [ 7 ], [ 2 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_112</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 112  </p>
+
+<p>1 Law-Making </p>
+
+<p>11 Bills and motions </p>
+
+<p>112 right to initiate bills and motions </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  17 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 28 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 0 ], [ 5 ], [ 5 ], [ 3 ], [ 4 ], [ 3 ], [ 3 ], [ 15 ], [ 4 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_113</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 113  </p>
+
+<p>1 Law-Making </p>
+
+<p>11 Bills and motions </p>
+
+<p>113 restrictions and deadlines (if not assignable to more specific category, e.g. code 121; 32; 134)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  26 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 31 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 11 ], [ 9 ], [ 0 ], [ 1 ], [ 3 ], [ 1 ], [ 7 ], [ 8 ], [ 3 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_114</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 114  </p>
+
+<p>1 Law-Making </p>
+
+<p>11 Bills and motions </p>
+
+<p>114 legislative planning (concerns the whole term- general schedule)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  9 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 12 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 9 ], [ 6 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_121</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 121  </p>
+
+<p>1 Law-Making </p>
+
+<p>12 Treatment of Bills and motions in the plenary </p>
+
+<p>121 debate in the plenary</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  34 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 49 ]</em> \
+<br><strong>examples:</strong>  <em>[ 4 ], [ 8 ], [ 5 ], [ 4 ], [ 37 ], [ 5 ], [ 13 ], [ 2 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_122</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 122  </p>
+
+<p>1 Law-Making </p>
+
+<p>12 Treatment of Bills and motions in the plenary </p>
+
+<p>122 right of amendment in the plenary </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  26 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 26 ]</em> \
+<br><strong>examples:</strong>  <em>[ 3 ], [ 0 ], [ 2 ], [ 0 ], [ 5 ], [ 6 ], [ 0 ], [ 0 ], [ 3 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_123</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 123  </p>
+
+<p>1 Law-Making </p>
+
+<p>12 Treatment of Bills and motions in the plenary </p>
+
+<p>123 subject of vote, rules of vote (including quorum), voting technology in the plenary</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  49 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 2 ]</em> &hellip; <em>[ 67 ]</em> \
+<br><strong>examples:</strong>  <em>[ 22 ], [ 56 ], [ 9 ], [ 17 ], [ 22 ], [ 10 ], [ 49 ], [ 13 ], [ 25 ], [ 15 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_124</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 124  </p>
+
+<p>1 Law-Making </p>
+
+<p>12 Treatment of Bills and motions in the plenary </p>
+
+<p>124 the plenary as Committee of the Whole House</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  7 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 9 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 3 ], [ 3 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_125</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 125  </p>
+
+<p>1 Law-Making </p>
+
+<p>12 Treatment of Bills and motions in the plenary </p>
+
+<p>125 referral to committee, withdrawal from committee</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  18 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 22 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2 ], [ 10 ], [ 0 ], [ 5 ], [ 21 ], [ 3 ], [ 7 ], [ 7 ], [ 7 ], [ 7 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_131</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 131  </p>
+
+<p>1 Law-Making </p>
+
+<p>13 Treatment of bills and motions in committee </p>
+
+<p>131 debate in committee (including hearing)  </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  13 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 13 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 0 ], [ 1 ], [ 0 ], [ 5 ], [ 0 ], [ 4 ], [ 0 ], [ 1 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_132</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 132  </p>
+
+<p>1 Law-Making </p>
+
+<p>13 Treatment of bills and motions in committee </p>
+
+<p>132 amendment rights in committee </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  9 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 10 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 2 ], [ 1 ], [ 10 ], [ 1 ], [ 2 ], [ 2 ], [ 2 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_133</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 133  </p>
+
+<p>1 Law-Making </p>
+
+<p>13 Treatment of bills and motions in committee </p>
+
+<p>133 subject of vote, rules of vote (including quorum), voting technology in committee </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  11 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 11 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 1 ], [ 7 ], [ 2 ], [ 1 ], [ 7 ], [ 1 ], [ 2 ], [ 0 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_134</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 134  </p>
+
+<p>1 Law-Making </p>
+
+<p>13 Treatment of bills and motions in committee </p>
+
+<p>134 report to the plenary </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  21 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 22 ]</em> \
+<br><strong>examples:</strong>  <em>[ 5 ], [ 13 ], [ 5 ], [ 8 ], [ 4 ], [ 13 ], [ 4 ], [ 12 ], [ 5 ], [ 4 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_141</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 141  </p>
+
+<p>1 Law-Making </p>
+
+<p>14 Post-parliamentary stage </p>
+
+<p>141 veto right of government actors and head of state ( any case when government actors can oppose themselves to the decisions of parliament) </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 3 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_142</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 142  </p>
+
+<p>1 Law-Making </p>
+
+<p>14 Post-parliamentary stage </p>
+
+<p>142 referral to second chamber, conciliation committee, and renewed decision after intervention  </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  20 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 47 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 1 ], [ 0 ], [ 5 ], [ 0 ], [ 3 ], [ 1 ], [ 6 ], [ 4 ], [ 40 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_143</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 143  </p>
+
+<p>1 Law-Making </p>
+
+<p>14 Post-parliamentary stage </p>
+
+<p>143    direct democratic procedures following the legislative stage  </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  7 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 13 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_144</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 144  </p>
+
+<p>1 Law-Making </p>
+
+<p>14 Post-parliamentary stage </p>
+
+<p>144 promulgation and enactment  </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  5 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 1 ], [ 1 ], [ 0 ], [ 0 ], [ 1 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_145</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 145  </p>
+
+<p>1 Law-Making </p>
+
+<p>14 Post-parliamentary stage </p>
+
+<p>145 referral to the constitutional court/supreme court </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  5 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 15 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 13 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_111</strong> (textlines)</p>
+
+<p>Number of words with corpus code 111  - see lns_corp_111  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  68 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 651 ]</em> \
+<br><strong>examples:</strong>  <em>[ 18 ], [ 0 ], [ 0 ], [ 0 ], [ 255 ], [ 70 ], [ 105 ], [ 70 ], [ 260 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_112</strong> (textlines)</p>
+
+<p>Number of words with corpus code 112  - see lns_corp_112  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  79 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 522 ]</em> \
+<br><strong>examples:</strong>  <em>[ 65 ], [ 397 ], [ 0 ], [ 134 ], [ 277 ], [ 53 ], [ 65 ], [ 120 ], [ 328 ], [ 6</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_113</strong> (textlines)</p>
+
+<p>Number of words with corpus code 113  - see lns_corp_113  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  100 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 806 ]</em> \
+<br><strong>examples:</strong>  *[ 0 ], [ 289 ], [ 122 ], [ 700 ], [ 259 ], [ 184 ], [ 367 ], [ 237 ], [ 378 ], * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_114</strong> (textlines)</p>
+
+<p>Number of words with corpus code 114  - see lns_corp_114  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  23 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 635 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 23 ], [ 0 ], [ 23 ], [ 0 ], [ 24 ], [ 0 ], [ 0 ], [ 256 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_121</strong> (textlines)</p>
+
+<p>Number of words with corpus code 121  - see lns_corp_121  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  109 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1536 ]</em> \
+<br><strong>examples:</strong>  *[ 179 ], [ 0 ], [ 243 ], [ 363 ], [ 589 ], [ 169 ], [ 0 ], [ 179 ], [ 745 ], [ * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_122</strong> (textlines)</p>
+
+<p>Number of words with corpus code 122  - see lns_corp_122  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  91 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1189 ]</em> \
+<br><strong>examples:</strong>  *[ 216 ], [ 172 ], [ 200 ], [ 945 ], [ 240 ], [ 229 ], [ 333 ], [ 54 ], [ 44 ], * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_123</strong> (textlines)</p>
+
+<p>Number of words with corpus code 123  - see lns_corp_123  for more information.</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  182 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 80 ]</em> &hellip; <em>[ 2366 ]</em> \
+<br><strong>examples:</strong>  <em>[ 848 ], [ 565 ], [ 503 ], [ 703 ], [ 1453 ], [ 565 ], [ 703 ], [ 341 ], [ 1688</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_124</strong> (textlines)</p>
+
+<p>Number of words with corpus code 124  - see lns_corp_124  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  18 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 498 ]</em> \
+<br><strong>examples:</strong>  <em>[ 264 ], [ 498 ], [ 0 ], [ 21 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_125</strong> (textlines)</p>
+
+<p>Number of words with corpus code 125  - see lns_corp_125  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  106 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1073 ]</em> \
+<br><strong>examples:</strong>  *[ 268 ], [ 486 ], [ 162 ], [ 961 ], [ 203 ], [ 444 ], [ 299 ], [ 0 ], [ 176 ], * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_131</strong> (textlines)</p>
+
+<p>Number of words with corpus code 131  - see lns_corp_131  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  58 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 636 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 23 ], [ 25 ], [ 0 ], [ 35 ], [ 35 ], [ 130 ], [ 0 ], [ 0 ], [ 200 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_132</strong> (textlines)</p>
+
+<p>Number of words with corpus code 132  - see lns_corp_132  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  46 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 435 ]</em> \
+<br><strong>examples:</strong>  <em>[ 307 ], [ 0 ], [ 0 ], [ 49 ], [ 0 ], [ 0 ], [ 0 ], [ 86 ], [ 0 ], [ 122 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_133</strong> (textlines)</p>
+
+<p>Number of words with corpus code 133  - see lns_corp_133  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  60 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 489 ]</em> \
+<br><strong>examples:</strong>  <em>[ 445 ], [ 18 ], [ 37 ], [ 19 ], [ 37 ], [ 15 ], [ 15 ], [ 37 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_134</strong> (textlines)</p>
+
+<p>Number of words with corpus code 134  - see lns_corp_134  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  126 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 761 ]</em> \
+<br><strong>examples:</strong>  <em>[ 58 ], [ 393 ], [ 334 ], [ 257 ], [ 296 ], [ 337 ], [ 200 ], [ 308 ], [ 260 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_141</strong> (textlines)</p>
+
+<p>Number of words with corpus code 141  - see lns_corp_141  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  9 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 187 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 187 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_142</strong> (textlines)</p>
+
+<p>Number of words with corpus code 142  - see lns_corp_142  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  59 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1359 ]</em> \
+<br><strong>examples:</strong>  *[ 123 ], [ 74 ], [ 0 ], [ 128 ], [ 451 ], [ 0 ], [ 74 ], [ 1076 ], [ 1359 ], [ * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_143</strong> (textlines)</p>
+
+<p>Number of words with corpus code 143  - see lns_corp_143  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  18 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 555 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 546 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_144</strong> (textlines)</p>
+
+<p>Number of words with corpus code 144  - see lns_corp_144  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  10 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 136 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 21 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_145</strong> (textlines)</p>
+
+<p>Number of words with corpus code 145  - see lns_corp_145  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  9 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 857 ]</em> \
+<br><strong>examples:</strong>  <em>[ 76 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - 2 special decision procedures</h2>
+
+<p><strong>lns_corp_21</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 21   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>21 constitutional change and amendment</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  22 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 35 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 1 ], [ 0 ], [ 7 ], [ 7 ], [ 2 ], [ 0 ], [ 1 ], [ 5 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_22</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 22   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>22 financial laws (money bills) and budgeting </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  48 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 65 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 1 ], [ 1 ], [ 16 ], [ 28 ], [ 41 ], [ 19 ], [ 5 ], [ 11 ], [ 64 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_23</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 23   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>23 foreign policy</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  16 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 29 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_25</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 25   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>25 general rules on elections in parliament (if not coded as election of government (31), or election of specific officials (411; 421; 441; 6211; 6221; 632))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  34 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 80 ]</em> \
+<br><strong>examples:</strong>  <em>[ 10 ], [ 2 ], [ 0 ], [ 3 ], [ 77 ], [ 2 ], [ 3 ], [ 0 ], [ 0 ], [ 41 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_26</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 26   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>26 further special decision procedures (leading to a decision, e.g. resolution, or leading to a decree/act/bylaw (not mere debate or question time) but cannot be coded as regular law-making nor special decision procedures (21 - 24) )</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  32 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 44 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 3 ], [ 0 ], [ 6 ], [ 6 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_27</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 27   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>27 procedures concerning laws that are hierarchically situated between regular laws and constitutional laws (above regular laws; e.g. organic laws in Spain)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 9 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_28</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 28   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>28 emergency legislation</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 32 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_29</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 29   </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>29 relationship to sub-national level (law-making, rights of participation of sub-national level)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  36 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 245 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 15 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 20 ], [ 0 ], [ 48 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_241</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 241  </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>24 EU </p>
+
+<p>241 treatment of EU-bills and motions</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  14 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 24 ]</em> \
+<br><strong>examples:</strong>  <em>[ 3 ], [ 0 ], [ 0 ], [ 0 ], [ 5 ], [ 0 ], [ 0 ], [ 0 ], [ 4 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_242</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 242  </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>24 EU </p>
+
+<p>242 EU-committee: election and resignation </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  23 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 48 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 3 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_243</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 243  </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>24 EU </p>
+
+<p>243 instructions to the government concerning EU decisions</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  4 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 4 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_244</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 244  </p>
+
+<p>2 Special Decision Procedures other than Regular Law-Making </p>
+
+<p>24 EU </p>
+
+<p>244 further rights of participation in EU matters (e.g. debates about EU topics not based on EU bills and motions, reaction to violations of subsidiary principle) </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  14 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 29 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 13 ], [ 9 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 24 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_21</strong> (textlines)</p>
+
+<p>Number of words with corpus code 21   - see lns_corp_21   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  54 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 885 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 27 ], [ 0 ], [ 99 ], [ 258 ], [ 258 ], [ 0 ], [ 751 ], [ 18 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_22</strong> (textlines)</p>
+
+<p>Number of words with corpus code 22   - see lns_corp_22   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  155 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2938 ]</em> \
+<br><strong>examples:</strong>  <em>[ 137 ], [ 137 ], [ 0 ], [ 1542 ], [ 297 ], [ 489 ], [ 1096 ], [ 281 ], [ 806 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_23</strong> (textlines)</p>
+
+<p>Number of words with corpus code 23   - see lns_corp_23   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  40 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 777 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 635 ], [ 635 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 107 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_25</strong> (textlines)</p>
+
+<p>Number of words with corpus code 25   - see lns_corp_25   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  94 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1942 ]</em> \
+<br><strong>examples:</strong>  *[ 1419 ], [ 0 ], [ 0 ], [ 565 ], [ 1470 ], [ 0 ], [ 0 ], [ 0 ], [ 1461 ], [ 80 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_26</strong> (textlines)</p>
+
+<p>Number of words with corpus code 26   - see lns_corp_26   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  86 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2217 ]</em> \
+<br><strong>examples:</strong>  <em>[ 501 ], [ 817 ], [ 0 ], [ 0 ], [ 1863 ], [ 0 ], [ 782 ], [ 736 ], [ 203 ], [ 7</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_27</strong> (textlines)</p>
+
+<p>Number of words with corpus code 27   - see lns_corp_27   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  15 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 475 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 195 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_28</strong> (textlines)</p>
+
+<p>Number of words with corpus code 28   - see lns_corp_28   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  8 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 775 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_29</strong> (textlines)</p>
+
+<p>Number of words with corpus code 29   - see lns_corp_29   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  70 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 8107 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1014 ], [ 0 ], [ 7921 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_241</strong> (textlines)</p>
+
+<p>Number of words with corpus code 241  - see lns_corp_241  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  42 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1348 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 128 ], [ 123 ], [ 122 ], [ 0 ], [ 0 ], [ 97 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_242</strong> (textlines)</p>
+
+<p>Number of words with corpus code 242  - see lns_corp_242  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  50 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1310 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1243 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 296 ], [ 1250 ], [ 934 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_243</strong> (textlines)</p>
+
+<p>Number of words with corpus code 243  - see lns_corp_243  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  7 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 84 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 19 ], [ 70 ], [ 70 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_244</strong> (textlines)</p>
+
+<p>Number of words with corpus code 244  - see lns_corp_244  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  28 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 927 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - 3 relationship to government</h2>
+
+<p><strong>lns_corp_31</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 31   </p>
+
+<p>3 Relationship to Government </p>
+
+<p>31 election of government / mandatory investiture vote; entry into office</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  9 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 18 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 15 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 1 ], [ 0 ], [ 13 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_32</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 32   </p>
+
+<p>3 Relationship to Government </p>
+
+<p>32 vote of no confidence / government resignation</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  15 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 27 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 15 ], [ 0 ], [ 0 ], [ 0 ], [ 9 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_33</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 33   </p>
+
+<p>3 Relationship to Government </p>
+
+<p>33 vote of confidence</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  8 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 9 ]</em> \
+<br><strong>examples:</strong>  <em>[ 7 ], [ 9 ], [ 2 ], [ 8 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_34</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 34   </p>
+
+<p>3 Relationship to Government </p>
+
+<p>34 instructions to government, involvement of members of government in parliamentary activities (rights to compel witnesses [usually right of parliament against members of government], right to speak [usually members of government&#39;s right], request of information about state of execution of decisions of parliament)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  27 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 37 ]</em> \
+<br><strong>examples:</strong>  <em>[ 6 ], [ 36 ], [ 8 ], [ 1 ], [ 12 ], [ 6 ], [ 7 ], [ 1 ], [ 12 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_31</strong> (textlines)</p>
+
+<p>Number of words with corpus code 31   - see lns_corp_31   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  17 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 426 ]</em> \
+<br><strong>examples:</strong>  <em>[ 48 ], [ 27 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_32</strong> (textlines)</p>
+
+<p>Number of words with corpus code 32   - see lns_corp_32   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  33 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 861 ]</em> \
+<br><strong>examples:</strong>  <em>[ 859 ], [ 93 ], [ 0 ], [ 55 ], [ 473 ], [ 248 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_33</strong> (textlines)</p>
+
+<p>Number of words with corpus code 33   - see lns_corp_33   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  19 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 268 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 62 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_34</strong> (textlines)</p>
+
+<p>Number of words with corpus code 34   - see lns_corp_34   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  102 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 860 ]</em> \
+<br><strong>examples:</strong>  <em>[ 81 ], [ 348 ], [ 104 ], [ 360 ], [ 75 ], [ 64 ], [ 0 ], [ 64 ], [ 150 ], [ 13</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - 4 relationship to others</h2>
+
+<p><strong>lns_corp_43</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 43   </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>43 second chamber (if not coded as law-making (142))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  10 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 16 ]</em> \
+<br><strong>examples:</strong>  <em>[ 4 ], [ 0 ], [ 2 ], [ 0 ], [ 4 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_45</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 45   </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>45 constitutional courts</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  10 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 34 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 5 ], [ 0 ], [ 21 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_411</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 411  </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>41 parliamentary support bodies (e.g. general accounting office, ombudsman, &hellip;) </p>
+
+<p>411 election and resignation</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  14 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 46 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 1 ], [ 0 ], [ 6 ], [ 6 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_412</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 412  </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>41 parliamentary support bodies (e.g. general accounting office, ombudsman, &hellip;) </p>
+
+<p>412 competences and resources of external offices/institutions; relations to parliament (e.g. reports, questions, &hellip;)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  13 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 22 ]</em> \
+<br><strong>examples:</strong>  <em>[ 17 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 5 ], [ 0 ], [ 0 ], [ 17 ], [ 4 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_421</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 421  </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>42 head of state </p>
+
+<p>421 election and resignation</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 15 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_422</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 422  </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>42 head of state </p>
+
+<p>422 relation to parliament (if not coded as law-making (141, 144))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  4 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_441</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 441  </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>44 constitutional courts </p>
+
+<p>441 election and resignation</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  3 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 4 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 2 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_442</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 442  </p>
+
+<p>4 Relationship to External Offices/Institutions apart from the Government </p>
+
+<p>44 constitutional courts </p>
+
+<p>442 relation to parliament (if not coded as law-making (145))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  4 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 5 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_43</strong> (textlines)</p>
+
+<p>Number of words with corpus code 43   - see lns_corp_43   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  25 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 335 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 163 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 163 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_45</strong> (textlines)</p>
+
+<p>Number of words with corpus code 45   - see lns_corp_45   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  14 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1001 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_411</strong> (textlines)</p>
+
+<p>Number of words with corpus code 411  - see lns_corp_411  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  27 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1435 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 170 ], [ 414 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_412</strong> (textlines)</p>
+
+<p>Number of words with corpus code 412  - see lns_corp_412  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  42 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 629 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 60 ], [ 0 ], [ 0 ], [ 207 ], [ 171 ], [ 53 ], [ 110 ], [ 0 ], [ 148 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_421</strong> (textlines)</p>
+
+<p>Number of words with corpus code 421  - see lns_corp_421  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  13 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 391 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 33 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_422</strong> (textlines)</p>
+
+<p>Number of words with corpus code 422  - see lns_corp_422  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  10 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 170 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 149 ], [ 0 ], [ 18 ], [ 0 ], [ 150 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_441</strong> (textlines)</p>
+
+<p>Number of words with corpus code 441  - see lns_corp_441  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  4 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 99 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_442</strong> (textlines)</p>
+
+<p>Number of words with corpus code 442  - see lns_corp_442  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  10 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 142 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 37 ], [ 0 ], [ 0 ], [ 52 ], [ 142 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - 5 publicity</h2>
+
+<p><strong>lns_corp_51</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 51   </p>
+
+<p>5 Generating Publicity </p>
+
+<p>51 general rules regarding debate (e.g. time allotted for speaking, proportional representation of parties during debate, closure of debate) </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  64 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 111 ]</em> \
+<br><strong>examples:</strong>  <em>[ 8 ], [ 22 ], [ 9 ], [ 19 ], [ 19 ], [ 15 ], [ 71 ], [ 14 ], [ 108 ], [ 24 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_52</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 52   </p>
+
+<p>5 Generating Publicity </p>
+
+<p>52 debates outside of law-making (e.g. topical hours &hellip;)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  19 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 32 ]</em> \
+<br><strong>examples:</strong>  <em>[ 3 ], [ 0 ], [ 0 ], [ 3 ], [ 0 ], [ 0 ], [ 2 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_53</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 53   </p>
+
+<p>5 Generating Publicity </p>
+
+<p>53 question rights</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  55 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 89 ]</em> \
+<br><strong>examples:</strong>  <em>[ 13 ], [ 11 ], [ 5 ], [ 13 ], [ 29 ], [ 50 ], [ 13 ], [ 10 ], [ 33 ], [ 18 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_54</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 54   </p>
+
+<p>5 Generating Publicity </p>
+
+<p>54 petitions and petition committee</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  25 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 49 ]</em> \
+<br><strong>examples:</strong>  <em>[ 15 ], [ 0 ], [ 9 ], [ 12 ], [ 9 ], [ 9 ], [ 0 ], [ 5 ], [ 15 ], [ 7 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_55</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 55   </p>
+
+<p>5 Generating Publicity </p>
+
+<p>55 relationship to media and citizens (e.g. parliamentary TV, accreditation of journalists, publicity of meetings, admissibility of visitors); regulation of matters of confidentiality </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  31 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 67 ]</em> \
+<br><strong>examples:</strong>  <em>[ 27 ], [ 1 ], [ 12 ], [ 9 ], [ 9 ], [ 9 ], [ 9 ], [ 8 ], [ 7 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_56</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 56   </p>
+
+<p>5 Generating Publicity </p>
+
+<p>56 protocols and parliamentary documents; forwarding of documents and decisions to other bodies </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  36 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 61 ]</em> \
+<br><strong>examples:</strong>  <em>[ 9 ], [ 8 ], [ 15 ], [ 6 ], [ 6 ], [ 28 ], [ 5 ], [ 13 ], [ 9 ], [ 9 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_51</strong> (textlines)</p>
+
+<p>Number of words with corpus code 51   - see lns_corp_51   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  171 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1649 ]</em> \
+<br><strong>examples:</strong>  <em>[ 681 ], [ 546 ], [ 660 ], [ 551 ], [ 570 ], [ 498 ], [ 488 ], [ 980 ], [ 560 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_52</strong> (textlines)</p>
+
+<p>Number of words with corpus code 52   - see lns_corp_52   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  43 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1025 ]</em> \
+<br><strong>examples:</strong>  *[ 0 ], [ 275 ], [ 343 ], [ 236 ], [ 295 ], [ 0 ], [ 275 ], [ 0 ], [ 419 ], [ 0 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_53</strong> (textlines)</p>
+
+<p>Number of words with corpus code 53   - see lns_corp_53   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  189 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2691 ]</em> \
+<br><strong>examples:</strong>  <em>[ 622 ], [ 495 ], [ 75 ], [ 1222 ], [ 537 ], [ 279 ], [ 766 ], [ 1019 ], [ 0 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_54</strong> (textlines)</p>
+
+<p>Number of words with corpus code 54   - see lns_corp_54   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  74 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1106 ]</em> \
+<br><strong>examples:</strong>  *[ 457 ], [ 117 ], [ 630 ], [ 509 ], [ 0 ], [ 448 ], [ 0 ], [ 0 ], [ 211 ], [ 0 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_55</strong> (textlines)</p>
+
+<p>Number of words with corpus code 55   - see lns_corp_55   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  128 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1851 ]</em> \
+<br><strong>examples:</strong>  <em>[ 401 ], [ 401 ], [ 201 ], [ 249 ], [ 227 ], [ 146 ], [ 691 ], [ 249 ], [ 309 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_56</strong> (textlines)</p>
+
+<p>Number of words with corpus code 56   - see lns_corp_56   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  147 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1340 ]</em> \
+<br><strong>examples:</strong>  <em>[ 561 ], [ 712 ], [ 472 ], [ 712 ], [ 78 ], [ 464 ], [ 278 ], [ 712 ], [ 711 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - 6 committees</h2>
+
+<p><strong>lns_corp_66</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 66   </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>66 opposition</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  2 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_67</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 67   </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>67 special bodies for emergency situations</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  5 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 7 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 6 ], [ 6 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 6 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_68</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 68   </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>68 parliamentary administration</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  26 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 47 ]</em> \
+<br><strong>examples:</strong>  <em>[ 15 ], [ 3 ], [ 8 ], [ 7 ], [ 0 ], [ 15 ], [ 0 ], [ 3 ], [ 18 ], [ 8 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_611</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 611  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>61 plenary </p>
+
+<p>611 agenda setting and removal of items from the agenda (general rules which are not specifically regulated under 114)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  73 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 200 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 68 ], [ 0 ], [ 5 ], [ 20 ], [ 32 ], [ 0 ], [ 0 ], [ 97 ], [ 17 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_612</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 612  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>61 plenary </p>
+
+<p>612 chairing of meetings and measures to uphold order</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  32 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 60 ]</em> \
+<br><strong>examples:</strong>  <em>[ 5 ], [ 58 ], [ 19 ], [ 6 ], [ 21 ], [ 12 ], [ 4 ], [ 0 ], [ 2 ], [ 24 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_613</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 613  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>61 plenary </p>
+
+<p>613 sitting times</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  21 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 32 ]</em> \
+<br><strong>examples:</strong>  <em>[ 4 ], [ 3 ], [ 6 ], [ 10 ], [ 6 ], [ 6 ], [ 20 ], [ 6 ], [ 10 ], [ 4 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_631</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 631  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>631 general regulations regarding types of committees</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  13 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 13 ]</em> \
+<br><strong>examples:</strong>  <em>[ 7 ], [ 8 ], [ 2 ], [ 0 ], [ 2 ], [ 1 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_632</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 632  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>632 membership and committee jurisdiction (area of influence-control .g. finance, economy, agriculture&hellip;)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  56 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 164 ]</em> \
+<br><strong>examples:</strong>  <em>[ 32 ], [ 1 ], [ 26 ], [ 25 ], [ 42 ], [ 8 ], [ 7 ], [ 7 ], [ 40 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_633</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 633  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>633 formal organizational units of committee (e.g. chair of committee, sub-committees, staff)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  17 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 24 ]</em> \
+<br><strong>examples:</strong>  <em>[ 7 ], [ 7 ], [ 6 ], [ 4 ], [ 2 ], [ 2 ], [ 2 ], [ 2 ], [ 3 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_634</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 634  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>634 agenda and procedures (details on how decisions are taken) within committees (if not coded as law-making (13))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  30 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 39 ]</em> \
+<br><strong>examples:</strong>  <em>[ 8 ], [ 8 ], [ 3 ], [ 33 ], [ 3 ], [ 18 ], [ 5 ], [ 1 ], [ 35 ], [ 6 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_636</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 636  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>636 investigative competencies of regular committees (NOT committees of inquiry (637))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  18 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 21 ]</em> \
+<br><strong>examples:</strong>  <em>[ 6 ], [ 0 ], [ 7 ], [ 0 ], [ 0 ], [ 6 ], [ 0 ], [ 6 ], [ 5 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_637</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 637  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>637 committee of inquiry </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  25 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 78 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 6 ], [ 0 ], [ 0 ], [ 0 ], [ 21 ], [ 1 ], [ 3 ], [ 0 ], [ 21 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_638</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 638  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>638 enquete commission</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  11 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 20 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 3 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_639</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 639  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees (if not coded as more specific category (e.g. 13; 24; 54; 55; 72)) </p>
+
+<p>639 other special committees which are not explicitly referenced in this coding manual  (e.g. oversight committees in Switzerland)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  79 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 211 ]</em> \
+<br><strong>examples:</strong>  <em>[ 48 ], [ 11 ], [ 6 ], [ 0 ], [ 0 ], [ 6 ], [ 68 ], [ 6 ], [ 9 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_641</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 641  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>64 parliamentary party groups </p>
+
+<p>641 formation of parliamentary party groups</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  11 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 12 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 6 ], [ 0 ], [ 6 ], [ 11 ], [ 3 ], [ 0 ], [ 3 ], [ 5 ], [ 3 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_642</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 642  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>64 parliamentary party groups </p>
+
+<p>642 rights and obligations of parliamentary party groups (if not coded more specifically as e.g. 112; 51; 52; 53)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  14 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 55 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 2 ], [ 0 ], [ 2 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_643</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 643  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>64 parliamentary party groups </p>
+
+<p>643 financial and staff resources</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  7 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6 ]</em> \
+<br><strong>examples:</strong>  <em>[ 4 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 2 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_651</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 651  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>65 individual members of parlaiment </p>
+
+<p>651 election, entry into office, resignation, incompatibilities, legal status, immunity, indemnity</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  34 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 56 ]</em> \
+<br><strong>examples:</strong>  <em>[ 23 ], [ 13 ], [ 9 ], [ 56 ], [ 4 ], [ 6 ], [ 2 ], [ 8 ], [ 10 ], [ 6 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_652</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 652  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>65 individual members of parlaiment </p>
+
+<p>652 rights and obligations of individual members of parliament (if not coded more specifically as e.g. 112; 51; 52; 53)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  29 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 67 ]</em> \
+<br><strong>examples:</strong>  <em>[ 8 ], [ 2 ], [ 3 ], [ 0 ], [ 4 ], [ 0 ], [ 3 ], [ 4 ], [ 1 ], [ 6 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_653</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 653  </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>65 individual members of parlaiment </p>
+
+<p>653 salary, financial and staff resources</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 7 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 2 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_6211</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6211 </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>62 parliamentary presiding bodies </p>
+
+<p>621 president of parliament, vice presidents, secretaries and clerks </p>
+
+<p>6211 election, resignation and internal decision rules</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  26 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 36 ]</em> \
+<br><strong>examples:</strong>  <em>[ 18 ], [ 1 ], [ 9 ], [ 7 ], [ 10 ], [ 25 ], [ 4 ], [ 10 ], [ 7 ], [ 7 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_6212</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6212 </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>62 parliamentary presiding bodies </p>
+
+<p>621 president of parliament, vice presidents, secretaries and clerks </p>
+
+<p>6212 responsibilities (if not coded as more specific category  (e.g. 612))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  24 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 72 ]</em> \
+<br><strong>examples:</strong>  <em>[ 8 ], [ 6 ], [ 2 ], [ 1 ], [ 8 ], [ 14 ], [ 2 ], [ 0 ], [ 8 ], [ 2 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_6221</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6221 </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>62 parliamentary presiding bodies </p>
+
+<p>622 council of elders or similar coordination body </p>
+
+<p>6221 composition, election, resignation, internal decision rules</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  12 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 13 ]</em> \
+<br><strong>examples:</strong>  <em>[ 7 ], [ 1 ], [ 3 ], [ 5 ], [ 0 ], [ 2 ], [ 0 ], [ 0 ], [ 5 ], [ 4 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_6222</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6222 </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>62 parliamentary presiding bodies </p>
+
+<p>622 council of elders or similar coordination body </p>
+
+<p>6222 responsibilities (if not coded as more specific category (e.g. 612))</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  16 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 16 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2 ], [ 12 ], [ 0 ], [ 0 ], [ 13 ], [ 0 ], [ 3 ], [ 4 ], [ 2 ], [ 6 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_6351</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6351 </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees </p>
+
+<p>relations to other bodies </p>
+
+<p>6351 relation to plenary (if not coded as 124; 134; 34)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_6352</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 6352 </p>
+
+<p>6 Internal Organization of Parliament </p>
+
+<p>63 committees </p>
+
+<p>relations to other bodies </p>
+
+<p>6352 relation to other committees</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  8 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 7 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2 ], [ 0 ], [ 0 ], [ 6 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ], [ 0 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_66</strong> (textlines)</p>
+
+<p>Number of words with corpus code 66   - see lns_corp_66   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  2 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 41 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 41 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_67</strong> (textlines)</p>
+
+<p>Number of words with corpus code 67   - see lns_corp_67   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  8 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 137 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 124 ], [ 0 ], [ 137 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_68</strong> (textlines)</p>
+
+<p>Number of words with corpus code 68   - see lns_corp_68   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  77 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1093 ]</em> \
+<br><strong>examples:</strong>  *[ 0 ], [ 0 ], [ 98 ], [ 126 ], [ 178 ], [ 90 ], [ 904 ], [ 906 ], [ 196 ], [ 0 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_611</strong> (textlines)</p>
+
+<p>Number of words with corpus code 611  - see lns_corp_611  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  157 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6791 ]</em> \
+<br><strong>examples:</strong>  *[ 3756 ], [ 0 ], [ 301 ], [ 301 ], [ 375 ], [ 0 ], [ 4757 ], [ 169 ], [ 140 ], * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_612</strong> (textlines)</p>
+
+<p>Number of words with corpus code 612  - see lns_corp_612  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  94 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2221 ]</em> \
+<br><strong>examples:</strong>  *[ 136 ], [ 88 ], [ 88 ], [ 695 ], [ 741 ], [ 294 ], [ 0 ], [ 452 ], [ 439 ], [ * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_613</strong> (textlines)</p>
+
+<p>Number of words with corpus code 613  - see lns_corp_613  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  96 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 842 ]</em> \
+<br><strong>examples:</strong>  <em>[ 411 ], [ 98 ], [ 185 ], [ 165 ], [ 275 ], [ 161 ], [ 355 ], [ 166 ], [ 273 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_631</strong> (textlines)</p>
+
+<p>Number of words with corpus code 631  - see lns_corp_631  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  56 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 518 ]</em> \
+<br><strong>examples:</strong>  <em>[ 439 ], [ 0 ], [ 17 ], [ 19 ], [ 200 ], [ 20 ], [ 112 ], [ 0 ], [ 475 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_632</strong> (textlines)</p>
+
+<p>Number of words with corpus code 632  - see lns_corp_632  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  243 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1313 ]</em> \
+<br><strong>examples:</strong>  <em>[ 26 ], [ 735 ], [ 194 ], [ 856 ], [ 371 ], [ 0 ], [ 916 ], [ 493 ], [ 980 ], [</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_633</strong> (textlines)</p>
+
+<p>Number of words with corpus code 633  - see lns_corp_633  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  94 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 790 ]</em> \
+<br><strong>examples:</strong>  <em>[ 145 ], [ 255 ], [ 8 ], [ 219 ], [ 204 ], [ 156 ], [ 13 ], [ 175 ], [ 748 ], [</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_634</strong> (textlines)</p>
+
+<p>Number of words with corpus code 634  - see lns_corp_634  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  129 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1288 ]</em> \
+<br><strong>examples:</strong>  <em>[ 277 ], [ 262 ], [ 1125 ], [ 1087 ], [ 277 ], [ 202 ], [ 381 ], [ 158 ], [ 137</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_636</strong> (textlines)</p>
+
+<p>Number of words with corpus code 636  - see lns_corp_636  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  84 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 878 ]</em> \
+<br><strong>examples:</strong>  <em>[ 88 ], [ 56 ], [ 31 ], [ 80 ], [ 127 ], [ 47 ], [ 0 ], [ 195 ], [ 0 ], [ 264 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_637</strong> (textlines)</p>
+
+<p>Number of words with corpus code 637  - see lns_corp_637  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  55 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2444 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 120 ], [ 120 ], [ 449 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_638</strong> (textlines)</p>
+
+<p>Number of words with corpus code 638  - see lns_corp_638  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  20 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 649 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 183 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_639</strong> (textlines)</p>
+
+<p>Number of words with corpus code 639  - see lns_corp_639  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  207 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6014 ]</em> \
+<br><strong>examples:</strong>  <em>[ 956 ], [ 324 ], [ 323 ], [ 63 ], [ 249 ], [ 248 ], [ 163 ], [ 248 ], [ 264 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_641</strong> (textlines)</p>
+
+<p>Number of words with corpus code 641  - see lns_corp_641  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  45 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 439 ]</em> \
+<br><strong>examples:</strong>  <em>[ 324 ], [ 137 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 137 ], [ 77 ], [ 198 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_642</strong> (textlines)</p>
+
+<p>Number of words with corpus code 642  - see lns_corp_642  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  32 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 643 ]</em> \
+<br><strong>examples:</strong>  <em>[ 49 ], [ 0 ], [ 77 ], [ 0 ], [ 0 ], [ 149 ], [ 0 ], [ 42 ], [ 0 ], [ 30 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_643</strong> (textlines)</p>
+
+<p>Number of words with corpus code 643  - see lns_corp_643  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  22 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 202 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 28 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 28 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_651</strong> (textlines)</p>
+
+<p>Number of words with corpus code 651  - see lns_corp_651  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  121 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2439 ]</em> \
+<br><strong>examples:</strong>  <em>[ 78 ], [ 274 ], [ 78 ], [ 223 ], [ 78 ], [ 201 ], [ 225 ], [ 360 ], [ 274 ], [</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_652</strong> (textlines)</p>
+
+<p>Number of words with corpus code 652  - see lns_corp_652  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  113 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2080 ]</em> \
+<br><strong>examples:</strong>  <em>[ 183 ], [ 224 ], [ 175 ], [ 224 ], [ 163 ], [ 175 ], [ 137 ], [ 86 ], [ 267 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_653</strong> (textlines)</p>
+
+<p>Number of words with corpus code 653  - see lns_corp_653  for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  14 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 328 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 58 ], [ 50 ], [ 0 ], [ 0 ], [ 0 ], [ 58 ], [ 0 ], [ 58 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_6211</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6211 - see lns_corp_6211 for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  96 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1308 ]</em> \
+<br><strong>examples:</strong>  <em>[ 385 ], [ 189 ], [ 308 ], [ 189 ], [ 212 ], [ 204 ], [ 39 ], [ 212 ], [ 142 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_6212</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6212 - see lns_corp_6212 for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  106 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1060 ]</em> \
+<br><strong>examples:</strong>  *[ 440 ], [ 320 ], [ 0 ], [ 407 ], [ 417 ], [ 402 ], [ 13 ], [ 44 ], [ 272 ], [ * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_6221</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6221 - see lns_corp_6221 for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  63 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 312 ]</em> \
+<br><strong>examples:</strong>  *[ 127 ], [ 0 ], [ 0 ], [ 0 ], [ 58 ], [ 128 ], [ 66 ], [ 126 ], [ 136 ], [ 154 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_6222</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6222 - see lns_corp_6222 for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  61 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 598 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 14 ], [ 0 ], [ 209 ], [ 0 ], [ 156 ], [ 0 ], [ 0 ], [ 0 ], [ 257 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_6351</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6351 - see lns_corp_6351 for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  22 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 179 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 128 ], [ 0 ], [ 27 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_6352</strong> (textlines)</p>
+
+<p>Number of words with corpus code 6352 - see lns_corp_6352 for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  42 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 323 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 20 ], [ 20 ], [ 0 ], [ 59 ], [ 0 ], [ 60 ], [ 234 ], [ 234 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - 7 to 999</h2>
+
+<p><strong>lns_corp_8</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 8    </p>
+
+<p>8   General Rules Regarding Formation and Legislative Session; Discontinuity</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  17 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 22 ]</em> \
+<br><strong>examples:</strong>  <em>[ 4 ], [ 10 ], [ 6 ], [ 9 ], [ 7 ], [ 0 ], [ 9 ], [ 10 ], [ 11 ], [ 3 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_9</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 9    </p>
+
+<p>9   Final Provisions</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  13 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 12 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 1 ], [ 1 ], [ 0 ], [ 6 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_10</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 10   </p>
+
+<p>10  Miscellaneous (cannot be coded otherwise)</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  48 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 164 ]</em> \
+<br><strong>examples:</strong>  <em>[ 3 ], [ 7 ], [ 3 ], [ 11 ], [ 4 ], [ 9 ], [ 19 ], [ 4 ], [ 164 ], [ 26 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_71</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 71   </p>
+
+<p>7 Change and Interpretation of the Standing Orders </p>
+
+<p>71 rules regarding changing the standing orders</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  12 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 25 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 6 ], [ 3 ], [ 0 ], [ 0 ], [ 8 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_72</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 72   </p>
+
+<p>7 Change and Interpretation of the Standing Orders </p>
+
+<p>72 rules regarding interpretation of and deviation from standing orders</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  6 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 6 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 1 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_73</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 73   </p>
+
+<p>7 Change and Interpretation of the Standing Orders </p>
+
+<p>73 debate about standing orders and motions regarding the standing orders</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  8 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 20 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_8</strong> (textlines)</p>
+
+<p>Number of words with corpus code 8    - see lns_corp_8    for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  89 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 729 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 39 ], [ 57 ], [ 237 ], [ 255 ], [ 0 ], [ 110 ], [ 111 ], [ 372 ], [ 18</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_9</strong> (textlines)</p>
+
+<p>Number of words with corpus code 9    - see lns_corp_9    for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  45 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 633 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 125 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_10</strong> (textlines)</p>
+
+<p>Number of words with corpus code 10   - see lns_corp_10   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  162 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 3571 ]</em> \
+<br><strong>examples:</strong>  <em>[ 398 ], [ 275 ], [ 813 ], [ 978 ], [ 445 ], [ 467 ], [ 1917 ], [ 398 ], [ 95 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_71</strong> (textlines)</p>
+
+<p>Number of words with corpus code 71   - see lns_corp_71   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  43 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 588 ]</em> \
+<br><strong>examples:</strong>  <em>[ 46 ], [ 0 ], [ 27 ], [ 0 ], [ 185 ], [ 0 ], [ 142 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_72</strong> (textlines)</p>
+
+<p>Number of words with corpus code 72   - see lns_corp_72   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  23 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 148 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 148 ], [ 37 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_73</strong> (textlines)</p>
+
+<p>Number of words with corpus code 73   - see lns_corp_73   for more information.</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  18 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 296 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 91 ], [ 15 ], [ 209 ], [ 0 ], [ 91 ], [ 15 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>7 raw corpus codes - from 7 to 999</h2>
+
+<p><strong>lns_corp_999</strong> (textlines)</p>
+
+<p>Number of lines with corpus code 999  </p>
+
+<p>999 Footnotes and Titles Without Relevant Content</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  265 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 29 ]</em> &hellip; <em>[ 1728 ]</em> \
+<br><strong>examples:</strong>  *[ 214 ], [ 36 ], [ 36 ], [ 410 ], [ 138 ], [ 102 ], [ 93 ], [ 94 ], [ 108 ], [ * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_999</strong> (textlines)</p>
+
+<p>Number of words with corpus code 999  - see lns_corp_999  for more information.</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  333 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 38 ]</em> &hellip; <em>[ 30211 ]</em> \
+<br><strong>examples:</strong>  <em>[ 646 ], [ 1154 ], [ 362 ], [ 280 ], [ 194 ], [ 1064 ], [ 328 ], [ 628 ], [ 643</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>8 aggregated corpus codes</h2>
+
+<p><strong>lns_corp_agg_1</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 1 - lawmaking               </p>
+
+<p>codes: 111, 112, 113, 114, 121, 122, 123, 124, 125, 131, 132, 133, 134, 141, 142, 143, 144, 145 </p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  114 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 9 ]</em> &hellip; <em>[ 192 ]</em> \
+<br><strong>examples:</strong>  *[ 34 ], [ 33 ], [ 66 ], [ 186 ], [ 89 ], [ 52 ], [ 69 ], [ 99 ], [ 52 ], [ 188 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_agg_2</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 2 - special decission rules </p>
+
+<p>codes: 21, 22, 23, 241, 242, 243, 244, 26, 27, 28, 29, 67, 71, 72, 73</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  130 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 342 ]</em> \
+<br><strong>examples:</strong>  <em>[ 21 ], [ 62 ], [ 55 ], [ 3 ], [ 25 ], [ 0 ], [ 32 ], [ 140 ], [ 123 ], [ 5 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_agg_3</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 3 - elections               </p>
+
+<p>codes: 25, 31, 32, 33, 411, 421, 441 </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  45 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 98 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 50 ], [ 0 ], [ 11 ], [ 50 ], [ 46 ], [ 19 ], [ 45 ], [ 4 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_agg_4</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 4 - government control      </p>
+
+<p>codes: 412, 53, 54, 636, 637, 66 </p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  83 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 1 ]</em> &hellip; <em>[ 164 ]</em> \
+<br><strong>examples:</strong>  <em>[ 29 ], [ 56 ], [ 24 ], [ 67 ], [ 30 ], [ 33 ], [ 49 ], [ 85 ], [ 35 ], [ 24 ]</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_agg_5</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 5 - puplicity               </p>
+
+<p>codes: 121, 51, 52, 53, 55, 56, 611, 612, 613 </p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  137 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 7 ]</em> &hellip; <em>[ 290 ]</em> \
+<br><strong>examples:</strong>  <em>[ 77 ], [ 115 ], [ 99 ], [ 102 ], [ 153 ], [ 52 ], [ 17 ], [ 120 ], [ 11 ], [ 6</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_agg_6</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 6 - not used            </p>
+
+<p>codes: 34, 422, 43, 442, 45, 6211, 6212, 6221, 6222, 631, 632, 633, 634, 6351, 6352, 638, 639, 641, 642, 643, 651, 652, 653, 68, 8, 9, 10, 999</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  265 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 29 ]</em> &hellip; <em>[ 1728 ]</em> \
+<br><strong>examples:</strong>  <em>[ 351 ], [ 1728 ], [ 163 ], [ 407 ], [ 207 ], [ 143 ], [ 93 ], [ 108 ], [ 51 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>lns_corp_agg_7</strong> (textlines)</p>
+
+<p>Number of lines with aggregated corpus code 7 - not applicaple</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  205 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 21 ]</em> &hellip; <em>[ 464 ]</em> \
+<br><strong>examples:</strong>  <em>[ 142 ], [ 59 ], [ 136 ], [ 152 ], [ 146 ], [ 168 ], [ 117 ], [ 156 ], [ 274 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_1</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 1 - lawmaking               </p>
+
+<p>codes: 111, 112, 113, 114, 121, 122, 123, 124, 125, 131, 132, 133, 134, 141, 142, 143, 144, 145 </p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  334 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 638 ]</em> &hellip; <em>[ 7885 ]</em> \
+<br><strong>examples:</strong>  <em>[ 3187 ], [ 3049 ], [ 3158 ], [ 2159 ], [ 2363 ], [ 2792 ], [ 3061 ], [ 7196 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_2</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 2 - special decission rules </p>
+
+<p>codes: 21, 22, 23, 241, 242, 243, 244, 26, 27, 28, 29, 67, 71, 72, 73</p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  325 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 11364 ]</em> \
+<br><strong>examples:</strong>  <em>[ 10488 ], [ 551 ], [ 2712 ], [ 554 ], [ 325 ], [ 389 ], [ 391 ], [ 2326 ], [ 6</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_3</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 3 - elections               </p>
+
+<p>codes: 25, 31, 32, 33, 411, 421, 441 </p>
+
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  128 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 2478 ]</em> \
+<br><strong>examples:</strong>  *[ 607 ], [ 260 ], [ 311 ], [ 311 ], [ 824 ], [ 1766 ], [ 337 ], [ 1450 ], [ 64 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_4</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 4 - government control      </p>
+
+<p>codes: 412, 53, 54, 636, 637, 66 </p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  271 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 16 ]</em> &hellip; <em>[ 5511 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1448 ], [ 242 ], [ 916 ], [ 2526 ], [ 135 ], [ 922 ], [ 1785 ], [ 2205 ], [ 1</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_5</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 5 - puplicity               </p>
+
+<p>codes: 121, 51, 52, 53, 55, 56, 611, 612, 613 </p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  368 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 223 ]</em> &hellip; <em>[ 10350 ]</em> \
+<br><strong>examples:</strong>  *[ 1806 ], [ 2723 ], [ 6051 ], [ 1576 ], [ 291 ], [ 3281 ], [ 4314 ], [ 2283 ], * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_6</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 6 - not used            </p>
+
+<p>codes: 34, 422, 43, 442, 45, 6211, 6212, 6221, 6222, 631, 632, 633, 634, 6351, 6352, 638, 639, 641, 642, 643, 651, 652, 653, 68, 8, 9, 10, 999</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  333 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 38 ]</em> &hellip; <em>[ 30211 ]</em> \
+<br><strong>examples:</strong>  *[ 628 ], [ 314 ], [ 191 ], [ 863 ], [ 856 ], [ 301 ], [ 1042 ], [ 619 ], [ 227 * &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>wds_corp_agg_7</strong> (textlines)</p>
+
+<p>Number of words with aggregated corpus code 7 - not applicaple</p>
+
+<p><strong>class:</strong>  integer \
+<br><strong>unique:</strong>  560 \
+<br><strong>NAs:</strong>  0 \
+<br><strong>range:</strong> <em>[ 1010 ]</em> &hellip; <em>[ 13975 ]</em> \
+<br><strong>examples:</strong>  <em>[ 6594 ], [ 4430 ], [ 5978 ], [ 3356 ], [ 3104 ], [ 3366 ], [ 2955 ], [ 3236 ],</em> &hellip; \
+<br></p>
+
+<p>&nbsp;</p>
 
 <h2>minority/majority</h2>
 
@@ -555,2205 +3365,521 @@ hr {
 
 <p>Number of lines modified that were coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
- 0.0000  0.0000  0.0000  0.4964  0.0000 32.0000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  16 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 32 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ NA ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_min_mdf</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines modified that were coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
- 0.0000  0.0000  0.0000  0.5494  0.0000 25.0000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  17 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 25 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ NA ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ 0 ], [ 3 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_non_mdf</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines modified that were coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0     1.0     3.0    16.4    10.0   583.0      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  85 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 583 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 2 ], [ 2 ], [ 1 ], [ 299 ], [ 7 ], [ 1 ], [ 1 ], [ 0 ], [ 5 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_maj_mdf</strong> (textlines, linelinkage)</p>
 
 <p>Number of words modified that were coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    0.00   19.81    0.00 4008.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  83 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 4008 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ NA ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_min_mdf</strong> (textlines, linelinkage)</p>
 
 <p>Number of words modified that were coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    0.00   18.45    0.00 1162.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  83 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1162 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 2 ], [ 0 ], [ 0 ], [ NA ], [ NA ], [ 0 ], [ 0 ], [ 0 ], [ 82 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_non_mdf</strong> (textlines, linelinkage)</p>
 
 <p>Number of words modified that were coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0     5.0    57.0   343.3   219.0 11880.0      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  317 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 11883 ]</em> \
+<br><strong>examples:</strong>  <em>[ 3 ], [ 275 ], [ 112 ], [ 48 ], [ 40 ], [ 39 ], [ 0 ], [ 0 ], [ NA ], [ 75 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_maj_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines inserted that were coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
- 0.0000  0.0000  0.0000  0.4292  0.0000 38.0000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  15 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 38 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_min_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines inserted that were coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
- 0.0000  0.0000  0.0000  0.3577  0.0000 17.0000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  15 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 17 ]</em> \
+<br><strong>examples:</strong>  <em>[ NA ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ 2 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_non_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines inserted that were coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  0.000   0.000   1.000   9.811   7.000 317.000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  73 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 317 ]</em> \
+<br><strong>examples:</strong>  <em>[ 5 ], [ 19 ], [ 1 ], [ 2 ], [ 1 ], [ 0 ], [ 0 ], [ 6 ], [ 0 ], [ 37 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_maj_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of words inserted that were coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    0.00   15.65    0.00 1439.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  77 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1439 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_min_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of words inserted that were coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    0.00   16.83    0.00  601.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  80 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 601 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 305 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_non_ins</strong> (textlines, linelinkage)</p>
 
 <p>Number of words inserted that were coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0     0.0    52.0   308.3   246.5 11110.0      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  313 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 11108 ]</em> \
+<br><strong>examples:</strong>  *[ 621 ], [ 0 ], [ 589 ], [ 7 ], [ NA ], [ 6465 ], [ 282 ], [ 58 ], [ 12 ], [ 8 * &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_maj_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines deleted that were coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
- 0.0000  0.0000  0.0000  0.0887  0.0000 25.0000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  7 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 25 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ 0 ], [ NA ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_min_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines deleted that were coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-0.00000 0.00000 0.00000 0.05866 0.00000 7.00000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  7 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 7 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_non_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of lines deleted that were coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  0.000   0.000   0.000   3.737   1.000 229.000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  46 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 229 ]</em> \
+<br><strong>examples:</strong>  <em>[ 1 ], [ 1 ], [ 0 ], [ 16 ], [ 0 ], [ 0 ], [ NA ], [ 5 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_maj_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of words deleted that were coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  0.000   0.000   0.000   3.914   0.000 980.000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  26 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 980 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 980 ], [ 0 ], [ NA ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_min_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of words deleted that were coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  0.000   0.000   0.000   1.936   0.000 192.000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  26 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 192 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_non_del</strong> (textlines, linelinkage)</p>
 
 <p>Number of words deleted that were coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0     0.0     0.0   118.5    39.0  5992.0      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  179 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 5992 ]</em> \
+<br><strong>examples:</strong>  <em>[ 73 ], [ 0 ], [ 2018 ], [ 504 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ NA ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_maj</strong> (linelinkage)</p>
 
 <p>Number of lines coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  0.000   0.000   0.000   1.014   0.000  44.000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  24 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 44 ]</em> \
+<br><strong>examples:</strong>  <em>[ 2 ], [ 2 ], [ 1 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 3 ], [ 33 ], [ NA ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_min</strong> (linelinkage)</p>
 
 <p>Number of lines coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
- 0.0000  0.0000  0.0000  0.9657  1.0000 37.0000      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  21 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 37 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ NA ], [ 5 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 1 ], [ 0 ], [ 3 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>pro_non</strong> (linelinkage)</p>
 
 <p>Number of lines coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    3.00    9.00   29.95   24.00  778.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  121 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 778 ]</em> \
+<br><strong>examples:</strong>  <em>[ 9 ], [ 40 ], [ 7 ], [ 16 ], [ 186 ], [ 16 ], [ 2 ], [ NA ], [ 41 ], [ 19 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_maj</strong> (textlines, linelinkage)</p>
 
 <p>Number of words coded as majority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    0.00   39.37    0.00 4022.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  123 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 4022 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 0 ], [ 0 ], [ 23 ], [ 0 ], [ 0 ], [ 110 ], [ 0 ], [ NA ], [ 0 ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_min</strong> (textlines, linelinkage)</p>
 
 <p>Number of words coded as minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   0.00    0.00    0.00   37.21    6.00 1680.00      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  124 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 1680 ]</em> \
+<br><strong>examples:</strong>  <em>[ 0 ], [ 40 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ 0 ], [ NA ], [ NA ]</em> &hellip; \
+<br></p>
 
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<p>&nbsp;</p>
 
 <p><strong>wds_pro_non</strong> (textlines, linelinkage)</p>
 
 <p>Number of words coded as neither majority nor minority friendly.</p>
 
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-    0.0    62.0   232.0   770.1   662.0 22840.0      87 
+<p><strong>class:</strong>  numeric \
+<br><strong>unique:</strong>  475 \
+<br><strong>NAs:</strong>  87 \
+<br><strong>range:</strong> <em>[ 0 ]</em> &hellip; <em>[ 22843 ]</em> \
+<br><strong>examples:</strong>  *[ 30 ], [ 1222 ], [ 342 ], [ 209 ], [ 50 ], [ 718 ], [ 799 ], [ 37 ], [ 686 ], * &hellip; \
+<br></p>
 
-</code></pre>
+<p>&nbsp;</p>
 
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<h1>Appendix</h1>
 
-<h2>raw corpus codes</h2>
+<h2>Coding Manual: Categories and Codes for Coding the Content of Parliamentary Standing Orders</h2>
 
-<p><strong>lns_corp_8</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 8   </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   1.000   5.000   5.144   8.000  22.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_9</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 9   </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.107   1.000  12.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_10</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 10  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    6.00    9.00   14.97   19.00  162.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_21</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 21  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   4.337   7.000  35.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_22</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 22  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    1.00   13.00   19.53   37.00   65.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_23</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 23  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   2.244   1.000  29.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_25</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 25  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    3.00   11.01   15.00   80.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_26</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 26  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   2.000   6.429   9.000  44.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_27</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 27  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.7748  0.0000  9.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_28</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 28  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.5814  0.0000 32.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_29</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 29  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   23.49   14.75  245.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_31</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 31  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.8779  0.7500 18.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_32</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 32  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   2.724   2.000  27.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_33</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 33  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.004   0.000   9.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_34</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 34  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   1.000   4.000   5.592   7.000  37.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_43</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 43  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.274   1.000  16.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_45</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 45  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.8333  0.0000 34.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_51</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 51  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    10.0    14.0    19.6    19.0   110.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_52</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 52  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   2.383   2.000  32.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_53</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 53  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00   11.00   20.00   22.03   28.00   89.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_54</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 54  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   5.000   6.454  10.000  49.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_55</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 55  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    4.00    8.00   10.74   13.00   67.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_56</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 56  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    8.00   12.00   12.86   14.00   61.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_66</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 66  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.1132  0.0000  1.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_67</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 67  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   0.813   0.000   7.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_68</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 68  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   1.000   3.000   7.748   8.000  47.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_71</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 71  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.415   2.000  25.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_72</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 72  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   0.617   1.000   6.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_73</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 73  </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   0.883   0.000  20.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_111</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 111 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   2.000   4.191   4.000  32.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_112</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 112 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   2.000   3.000   4.453   6.000  28.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_113</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 113 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    2.00    7.00    8.16   11.00   31.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_114</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 114 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.7176  1.0000 12.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_121</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 121 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   4.000   6.486  10.000  49.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_122</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 122 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   5.000   6.081   8.000  26.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_123</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 123 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   2.00   12.00   20.00   23.65   28.75   67.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_124</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 124 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.702   3.000   9.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_125</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 125 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   5.000   7.000   7.435   9.000  22.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_131</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 131 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   1.000   1.953   2.000  13.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_132</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 132 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   1.000   1.536   2.000  10.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_133</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 133 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   1.000   1.969   2.000  11.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_134</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 134 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   4.000   7.000   7.494  10.000  22.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_141</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 141 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.4618  0.0000  6.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_142</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 142 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   2.000   5.545   6.000  47.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_143</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 143 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.8868  0.0000 13.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_144</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 144 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.3461  0.0000  6.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_145</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 145 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.3397  0.0000 15.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_241</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 241 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00    1.84    3.00   24.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_242</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 242 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   5.557   3.000  48.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_243</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 243 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.1298  0.0000  4.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_244</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 244 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   0.841   0.000  29.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_411</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 411 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.771   0.000  46.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_412</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 412 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   2.444   5.000  22.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_421</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 421 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.3715  0.0000 15.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_422</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 422 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.1679  0.0000  6.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_441</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 441 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-0.00000 0.00000 0.00000 0.08397 0.00000 4.00000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_442</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 442 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.2519  0.0000  5.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_611</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 611 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    6.00   15.00   29.04   38.75  200.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_612</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 612 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    5.00   11.00   13.94   16.00   60.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_613</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 613 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   3.000   6.000   6.724   9.000  32.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_631</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 631 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    1.00    2.17    3.00   13.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_632</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 632 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    8.00   25.00   27.01   40.00  164.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_633</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 633 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   2.000   3.000   4.168   6.000  24.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_634</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 634 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    5.00    7.00   12.01   14.00   39.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_636</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 636 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   1.000   3.000   4.253   6.000  21.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_637</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 637 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   5.416   5.000  78.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_638</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 638 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.9949  0.0000 20.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_639</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 639 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     5.0     9.0    28.1    31.0   211.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_641</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 641 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   1.000   2.499   5.000  12.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_642</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 642 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   1.102   1.000  30.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_643</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 643 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.6527  1.0000  6.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_651</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 651 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    4.00    6.00   10.41   13.00   56.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_652</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 652 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   3.000   6.000   7.426   8.000  67.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_653</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 653 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.5267  1.0000  7.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_999</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 999 </p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   7.642   1.000 188.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_6211</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 6211</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   4.000   7.000   9.383  10.000  36.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_6212</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 6212</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   2.000   6.000   6.931   8.000  72.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_6221</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 6221</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   2.000   2.453   4.000  13.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_6222</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 6222</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   2.000   3.218   4.000  16.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_6351</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 6351</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- 0.0000  0.0000  0.0000  0.2723  0.0000  6.0000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_6352</strong> (textlines)</p>
-
-<p>Number of lines with corpus code 6352</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   1.000   1.559   2.000   7.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_8</strong> (textlines)</p>
-
-<p>Number of words with corpus code 8    - see lns_corp_8    for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    38.0   148.0   179.0   298.8   729.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_9</strong> (textlines)</p>
-
-<p>Number of words with corpus code 9    - see lns_corp_9    for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   33.02   13.00  633.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_10</strong> (textlines)</p>
-
-<p>Number of words with corpus code 10   - see lns_corp_10   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   194.0   358.0   432.2   452.0  3566.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_21</strong> (textlines)</p>
-
-<p>Number of words with corpus code 21   - see lns_corp_21   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0   127.3   258.0   885.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_22</strong> (textlines)</p>
-
-<p>Number of words with corpus code 22   - see lns_corp_22   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   137.0   537.0   815.3  1499.0  2938.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_23</strong> (textlines)</p>
-
-<p>Number of words with corpus code 23   - see lns_corp_23   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   94.98   53.00  777.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_25</strong> (textlines)</p>
-
-<p>Number of words with corpus code 25   - see lns_corp_25   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0       0     190     369     457    1942 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_26</strong> (textlines)</p>
-
-<p>Number of words with corpus code 26   - see lns_corp_26   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0    70.0   254.3   376.0  2217.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_27</strong> (textlines)</p>
-
-<p>Number of words with corpus code 27   - see lns_corp_27   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   32.16    0.00  475.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_28</strong> (textlines)</p>
-
-<p>Number of words with corpus code 28   - see lns_corp_28   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   15.29    0.00  775.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_29</strong> (textlines)</p>
-
-<p>Number of words with corpus code 29   - see lns_corp_29   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0   867.2   495.0  8107.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_31</strong> (textlines)</p>
-
-<p>Number of words with corpus code 31   - see lns_corp_31   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   22.72   20.25  426.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_32</strong> (textlines)</p>
-
-<p>Number of words with corpus code 32   - see lns_corp_32   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   90.25   64.00  861.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_33</strong> (textlines)</p>
-
-<p>Number of words with corpus code 33   - see lns_corp_33   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   33.08    0.00  268.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_34</strong> (textlines)</p>
-
-<p>Number of words with corpus code 34   - see lns_corp_34   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    64.0   106.0   171.8   236.0   860.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_43</strong> (textlines)</p>
-
-<p>Number of words with corpus code 43   - see lns_corp_43   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   36.17   34.00  335.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_45</strong> (textlines)</p>
-
-<p>Number of words with corpus code 45   - see lns_corp_45   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   28.82    0.00 1001.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_51</strong> (textlines)</p>
-
-<p>Number of words with corpus code 51   - see lns_corp_51   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   465.0   560.0   619.1   778.0  1649.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_52</strong> (textlines)</p>
-
-<p>Number of words with corpus code 52   - see lns_corp_52   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0    98.6   170.0  1025.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_53</strong> (textlines)</p>
-
-<p>Number of words with corpus code 53   - see lns_corp_53   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   495.0   749.0   788.9   943.5  2691.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_54</strong> (textlines)</p>
-
-<p>Number of words with corpus code 54   - see lns_corp_54   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0   208.0   228.1   418.0  1106.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_55</strong> (textlines)</p>
-
-<p>Number of words with corpus code 55   - see lns_corp_55   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   146.0   262.0   348.3   464.0  1851.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_56</strong> (textlines)</p>
-
-<p>Number of words with corpus code 56   - see lns_corp_56   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   254.0   370.0   428.2   589.8  1340.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_66</strong> (textlines)</p>
-
-<p>Number of words with corpus code 66   - see lns_corp_66   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   4.642   0.000  41.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_67</strong> (textlines)</p>
-
-<p>Number of words with corpus code 67   - see lns_corp_67   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   16.81    0.00  137.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_68</strong> (textlines)</p>
-
-<p>Number of words with corpus code 68   - see lns_corp_68   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    16.0   112.0   189.1   172.0  1093.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_71</strong> (textlines)</p>
-
-<p>Number of words with corpus code 71   - see lns_corp_71   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   46.43   85.00  588.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_72</strong> (textlines)</p>
-
-<p>Number of words with corpus code 72   - see lns_corp_72   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   21.06   28.00  148.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_73</strong> (textlines)</p>
-
-<p>Number of words with corpus code 73   - see lns_corp_73   for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   18.57    0.00  296.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_111</strong> (textlines)</p>
-
-<p>Number of words with corpus code 111  - see lns_corp_111  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   64.00   99.37  106.00  651.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_112</strong> (textlines)</p>
-
-<p>Number of words with corpus code 112  - see lns_corp_112  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    64.0   167.0   144.6   176.0   522.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_113</strong> (textlines)</p>
-
-<p>Number of words with corpus code 113  - see lns_corp_113  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    96.5   237.0   269.8   368.0   806.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_114</strong> (textlines)</p>
-
-<p>Number of words with corpus code 114  - see lns_corp_114  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0    25.7    23.0   635.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_121</strong> (textlines)</p>
-
-<p>Number of words with corpus code 121  - see lns_corp_121  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0   169.0   229.3   316.8  1536.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_122</strong> (textlines)</p>
-
-<p>Number of words with corpus code 122  - see lns_corp_122  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0       0     139     223     277    1189 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_123</strong> (textlines)</p>
-
-<p>Number of words with corpus code 123  - see lns_corp_123  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   80.0   463.8   659.0   791.2   885.0  2366.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_124</strong> (textlines)</p>
-
-<p>Number of words with corpus code 124  - see lns_corp_124  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0   107.9   264.0   498.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_125</strong> (textlines)</p>
-
-<p>Number of words with corpus code 125  - see lns_corp_125  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   177.0   284.0   343.4   416.0  1073.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_131</strong> (textlines)</p>
-
-<p>Number of words with corpus code 131  - see lns_corp_131  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   35.00   73.17   88.00  636.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_132</strong> (textlines)</p>
-
-<p>Number of words with corpus code 132  - see lns_corp_132  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   43.50   66.71   86.00  435.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_133</strong> (textlines)</p>
-
-<p>Number of words with corpus code 133  - see lns_corp_133  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   22.00   79.38  108.00  489.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_134</strong> (textlines)</p>
-
-<p>Number of words with corpus code 134  - see lns_corp_134  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   177.0   233.0   259.6   333.0   761.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_141</strong> (textlines)</p>
-
-<p>Number of words with corpus code 141  - see lns_corp_141  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   18.49    0.00  187.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_142</strong> (textlines)</p>
-
-<p>Number of words with corpus code 142  - see lns_corp_142  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0    74.0   214.3   274.0  1359.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_143</strong> (textlines)</p>
-
-<p>Number of words with corpus code 143  - see lns_corp_143  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   34.65    0.00  555.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_144</strong> (textlines)</p>
-
-<p>Number of words with corpus code 144  - see lns_corp_144  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   8.571   0.000 136.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_145</strong> (textlines)</p>
-
-<p>Number of words with corpus code 145  - see lns_corp_145  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   16.92    0.00  857.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_241</strong> (textlines)</p>
-
-<p>Number of words with corpus code 241  - see lns_corp_241  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   71.37   96.75 1348.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_242</strong> (textlines)</p>
-
-<p>Number of words with corpus code 242  - see lns_corp_242  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0   157.1    64.0  1310.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_243</strong> (textlines)</p>
-
-<p>Number of words with corpus code 243  - see lns_corp_243  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   4.749   0.000  84.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_244</strong> (textlines)</p>
-
-<p>Number of words with corpus code 244  - see lns_corp_244  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   31.46    0.00  927.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_411</strong> (textlines)</p>
-
-<p>Number of words with corpus code 411  - see lns_corp_411  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   51.68    0.00 1435.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_412</strong> (textlines)</p>
-
-<p>Number of words with corpus code 412  - see lns_corp_412  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   73.03  148.00  629.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_421</strong> (textlines)</p>
-
-<p>Number of words with corpus code 421  - see lns_corp_421  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   14.04    0.00  391.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_422</strong> (textlines)</p>
-
-<p>Number of words with corpus code 422  - see lns_corp_422  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   4.062   0.000 170.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_441</strong> (textlines)</p>
-
-<p>Number of words with corpus code 441  - see lns_corp_441  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   2.156   0.000  99.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_442</strong> (textlines)</p>
-
-<p>Number of words with corpus code 442  - see lns_corp_442  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   7.669   0.000 142.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_611</strong> (textlines)</p>
-
-<p>Number of words with corpus code 611  - see lns_corp_611  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0     191     375    1144    1431    6791 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_612</strong> (textlines)</p>
-
-<p>Number of words with corpus code 612  - see lns_corp_612  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   137.8   455.0   521.0   695.0  2221.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_613</strong> (textlines)</p>
-
-<p>Number of words with corpus code 613  - see lns_corp_613  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    98.0   202.0   226.4   306.0   842.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_631</strong> (textlines)</p>
-
-<p>Number of words with corpus code 631  - see lns_corp_631  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   17.00   71.68  100.00  518.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_632</strong> (textlines)</p>
-
-<p>Number of words with corpus code 632  - see lns_corp_632  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   258.0   497.0   564.8   870.8  1313.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_633</strong> (textlines)</p>
-
-<p>Number of words with corpus code 633  - see lns_corp_633  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    55.0   115.0   134.3   210.0   790.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_634</strong> (textlines)</p>
-
-<p>Number of words with corpus code 634  - see lns_corp_634  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   122.0   222.0   388.2   469.2  1288.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_636</strong> (textlines)</p>
-
-<p>Number of words with corpus code 636  - see lns_corp_636  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    47.0   119.5   153.2   213.0   878.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_637</strong> (textlines)</p>
-
-<p>Number of words with corpus code 637  - see lns_corp_637  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0     0.0   173.5   177.0  2444.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_638</strong> (textlines)</p>
-
-<p>Number of words with corpus code 638  - see lns_corp_638  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   31.17    0.00  649.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_639</strong> (textlines)</p>
-
-<p>Number of words with corpus code 639  - see lns_corp_639  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   180.0   299.0   856.4   956.0  6014.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_641</strong> (textlines)</p>
-
-<p>Number of words with corpus code 641  - see lns_corp_641  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   30.00   80.38  137.00  439.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_642</strong> (textlines)</p>
-
-<p>Number of words with corpus code 642  - see lns_corp_642  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   32.93   42.00  508.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_643</strong> (textlines)</p>
-
-<p>Number of words with corpus code 643  - see lns_corp_643  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   25.67   28.00  202.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_651</strong> (textlines)</p>
-
-<p>Number of words with corpus code 651  - see lns_corp_651  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   108.0   239.0   403.5   372.0  2439.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_652</strong> (textlines)</p>
-
-<p>Number of words with corpus code 652  - see lns_corp_652  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   122.0   183.0   242.4   262.0  2080.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_653</strong> (textlines)</p>
-
-<p>Number of words with corpus code 653  - see lns_corp_653  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   21.17   23.00  328.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_999</strong> (textlines)</p>
-
-<p>Number of words with corpus code 999  - see lns_corp_999  for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   30.48    1.00  757.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_6211</strong> (textlines)</p>
-
-<p>Number of words with corpus code 6211 - see lns_corp_6211 for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0   154.0   221.0   331.3   382.0  1308.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_6212</strong> (textlines)</p>
-
-<p>Number of words with corpus code 6212 - see lns_corp_6212 for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0    83.0   214.0   229.5   378.2  1060.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_6221</strong> (textlines)</p>
-
-<p>Number of words with corpus code 6221 - see lns_corp_6221 for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   51.00   74.87  128.00  312.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_6222</strong> (textlines)</p>
-
-<p>Number of words with corpus code 6222 - see lns_corp_6222 for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0    64.0   112.3   149.0   598.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_6351</strong> (textlines)</p>
-
-<p>Number of words with corpus code 6351 - see lns_corp_6351 for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   10.39    0.00  179.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_6352</strong> (textlines)</p>
-
-<p>Number of words with corpus code 6352 - see lns_corp_6352 for more information.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00   17.00   52.93   80.00  323.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<h2>aggregated corpus codes</h2>
-
-<p><strong>lns_corp_agg_1</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 1 - lawmaking.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    9.0    59.0    74.0    83.4    99.0   192.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_agg_2</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 2 - special decission rules.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00   20.00   36.00   69.49   88.00  342.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_agg_3</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 3 - elections.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    9.00   17.84   35.00   98.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_agg_4</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 4 - government control.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   1.00   24.00   33.00   40.71   54.00  164.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_agg_5</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 5 - puplicity</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    7.0    61.0    81.0    95.3   123.0   290.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_agg_6</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 6 - not relevant</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  0.000   0.000   0.000   7.642   1.000 188.000 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>lns_corp_agg_7</strong> (textlines)</p>
-
-<p>Number of lines with aggregated corpus code 7 - not applicaple</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-     21     104     130     158     185     464 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_1</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 1 - lawmaking.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    638    2020    2596    3006    3555    7885 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_2</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 2 - special decission rules.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-      0     574    1489    2574    3109   11360 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_3</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 3 - elections.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    0.0     0.0   311.0   582.9  1019.0  2478.0 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_4</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 4 - government control.</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-     16     940    1340    1421    1701    5511 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_5</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 5 - puplicity</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    223    1837    2636    3385    4598   10350 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_6</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 6 - not relevant</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00    0.00    0.00   30.48    1.00  757.00 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
-
-<p><strong>wds_corp_agg_7</strong> (textlines)</p>
-
-<p>Number of words with aggregated corpus code 7 - not applicaple</p>
-
-<pre><code class="r">   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   1010    3066    3995    4746    5970   13980 
-
-</code></pre>
-
-<p><p>&nbsp;</p>\vspace{1em}</p>
+<h3>Basic Intuition:</h3>
+
+<p>Each and every code is exclusive, meaning that one subparagraph needs to have one code but one code only. For some codes there are notes on how to decide between multiple codes which may seem appropriate. Sometimes even the coding rules and additional notes will not help to decide between codes. In this case please let us know. Every decision accompanied by doubt should be documented.</p>
+
+<h3>Further rules of the game:</h3>
+
+<ul>
+<li><p>Often sub-paragraphs can be coded differently, depending on whether or not one takes into consideration the overall context of the rule or the more specific regulation. If in doubt, code based on the overall context. Example: Â§14 GOBT: president grants vacation time &#8594; coded as rights and obligations of individual members of parliament if one takes into account the general context (652) and not as responsibility of the president (6212).</p></li>
+<li><p>Rules which concern the interaction of two actors are attributed to the actor which takes the active part if he has discretion regarding this action. Example: Â§62 (2) GOBT: The plenary can request report of committee &#8594; coded as recall through the plenary (124) and not as report of committee to the plenary (134).</p></li>
+<li><p>The right of those initiating a bill or law to be present at the committee meetings is coded as general right of individual members of parliament (652).</p></li>
+</ul>
+
+<h3>Coding Scheme</h3>
+
+<p><strong>(1) Law Making</strong></p>
+
+<p>&nbsp;</p>
+
+<p><em>Note: SPs that refer to both the plenary sessions and committees are coded as 12x; SPs dealing with both law-making and special decision procedures are coded as 1xx.</em></p>
+
+<ul>
+<li><strong>11 Bills and Motions</strong>
+
+<ul>
+<li>111   types of bills and motions; printing and distribution of bills and motions to MPs</li>
+<li>112   right to initiate bills and motions </li>
+<li>113   restrictions and deadlines (if not assignable to more specific category, e.g. code 121; 32; 134)</li>
+<li>114   legislative planning (concerns the whole term- general schedule)</li>
+</ul></li>
+<li><strong>12  Treatment of bills and motions in the plenary</strong> <em>(Note: SPs including all stages of the treatment of bills and motions are coded as votes in the plenary (123); SPs which determine the subject of debate and vote are coded as subject of vote (123).)</em>
+
+<ul>
+<li>121   debate in the plenary</li>
+<li>122   right of amendment in the plenary </li>
+<li>123   subject of vote, rules of vote (including quorum), voting technology in the plenary</li>
+<li>124   the plenary as Committee of the Whole House <em>(Note: SPs referring to both committees and Committee of the Whole House are coded as committees (not 124 but 13x).)</em></li>
+<li>125   referral to committee, withdrawal from committee</li>
+</ul></li>
+<li><strong>13  Treatment of bills and motions in committee</strong> <em>(Note: SPs including all stages of the treatment of bills and motions in committee are coded as votes in committee (133); SPs which determine both the subject of debate and the subject of vote are coded as subject of vote in committee (133).)</em>
+
+<ul>
+<li>131   debate in committee (including hearing) </li>
+<li>132   amendment rights in committee</li>
+<li>133   subject of vote, rules of vote (including quorum), voting technology in committee</li>
+<li>134   report to the plenary</li>
+</ul></li>
+</ul>
+
+<p><strong>(2) Special Decision Procedures other than Regular Law-Making</strong></p>
+
+<p>&nbsp;</p>
+
+<p><em>Note: SPs which concern multiple special decision procedures apart from regular law-making are coded as follows: highest priority is given to constitutional matters, second highest priority is given to financial laws and budgeting, third highest priority is given to EU policy and fourth highest priority is given toforeign policy.</em></p>
+
+<ul>
+<li><strong>21  constitutional change and amendment</strong></li>
+<li><strong>22  financial laws</strong> (money bills) and budgeting</li>
+<li><strong>23  foreign policy</strong>  (e.g. approval of law of nations, declaration of war <em>Note: If foreign policy and EU is treated together, the SP is coded as EU (241, 242, 243 or 244).</em>)</li>
+<li><strong>24  EU</strong> <em>(Note: If foreign policy and EU is treated together, the SP is coded as EU (241, 242, 243 or 244))</em>
+
+<ul>
+<li>241   treatment of EU-bills and motions</li>
+<li>242   EU-committee: election and resignation </li>
+<li>243   instructions to the government concerning EU decisions</li>
+<li>244   further rights of participation in EU matters (e.g. debates about EU topics not based on EU bills and motions, reaction to violations of subsidiary principle) </li>
+</ul></li>
+<li><strong>25  general rules on elections in parliament</strong> (if not coded as election of government (31), or election of specific officials (411; 421; 441; 6211; 6221; 632))</li>
+<li><strong>26  further special decision procedures</strong> leading to a decision, e.g. resolution, or leading to a decree/act/bylaw (not mere debate or question time) but cannot be coded as regular law-making nor special decision procedures (21-24)</li>
+<li><strong>27  procedures concerning laws that are hierarchically situated between regular laws and constitutional laws</strong> (above regular laws; e.g. organic laws in Spain)</li>
+<li><strong>28  emergency legislation</strong></li>
+<li><strong>29  relationship to sub-national level</strong> (law-making, rights of participation of sub-national level)</li>
+</ul>
+
+<p><strong>(3)   Relationship to Government</strong></p>
+
+<p>&nbsp; </p>
+
+<p><em>Note: If vote of no confidence and vote of confidence is treated together, the SP is coded as vote of no confidence (32).</em></p>
+
+<ul>
+<li><strong>31  election of government / mandatory investiture vote; entry into office</strong></li>
+<li><strong>32  vote of no confidence / government resignation</strong></li>
+<li><strong>33  vote of confidence</strong></li>
+<li><strong>34  instructions to government, involvement of members of government in parliamentary activities</strong> (rights to compel witnesses [usually right of parliament against members of government], right to speak [usually members of government&#39;s right], request of information about state of execution of decisions of parliament)</li>
+</ul>
+
+<p><strong>(4)   Relationship to External Offices/Institutions apart from the Government</strong></p>
+
+<ul>
+<li><strong>41  parliamentary support bodies (e.g. general accounting office, ombudsman,&hellip;)</strong>
+
+<ul>
+<li>411   election and resignation</li>
+<li>412   competences and resources of external offices/institutions; relations to parliament (e.g. reports, questions, &hellip;)</li>
+</ul></li>
+<li><strong>42  head of state</strong>
+
+<ul>
+<li>421   election and resignation</li>
+<li>422   relation to parliament (if not coded as law-making (141, 144))</li>
+</ul></li>
+<li><strong>43  second chamber (if not coded as law-making (142))</strong></li>
+<li><strong>44  constitutional courts</strong>
+
+<ul>
+<li>441   election and resignation</li>
+<li>442   relation to parliament (if not coded as law-making (145))</li>
+</ul></li>
+<li><strong>45  other external offices</strong></li>
+</ul>
+
+<p><strong>(5)   Generating Publicity</strong></p>
+
+<ul>
+<li><strong>51  general rules regarding debate</strong> (e.g. time allotted for speaking, proportional representation of parties during debate, closure of debate)</li>
+<li><strong>52  debates outside of law-making</strong> (e.g. topical hours &hellip;)</li>
+<li><strong>53  question rights</strong></li>
+<li><strong>54  petitions and petition committee</strong></li>
+<li><strong>55  relationship to media and citizens</strong> (e.g. parliamentary TV, accreditation of journalists, publicity of meetings, admissibility of visitors); regulation of matters of confidentiality</li>
+<li><strong>56  protocols and parliamentary documents; forwarding of documents and decisions to other bodies</strong></li>
+</ul>
+
+<p><strong>6  Internal Organization of Parliament</strong></p>
+
+<ul>
+<li><strong>61  plenary</strong>
+
+<ul>
+<li>611   agenda setting and removal of items from the agenda (general rules which are not specifically regulated under 114)</li>
+<li>612   chairing of meetings and measures to uphold order</li>
+<li>613   sitting times <em>(Note: When members are to be present inside the parliament)</em></li>
+</ul></li>
+<li><strong>62  parliamentary presiding bodies</strong>
+
+<ul>
+<li>621   president of parliament, vice presidents, secretaries and clerks
+
+<ul>
+<li>6211  election, resignation and internal decision rules</li>
+<li>6212  responsibilities <em>(Note: if not coded as more specific category  (e.g. 612), Try to code in regard to the topic at first - 6212 only when no code corresponds)</em></li>
+</ul></li>
+<li>622   council of elders or similar coordination body <em>(Note: The council of elders can be distinguished from the Presidency of Parliament (621) insofar as representatives of the parliamentary party groups are explicitly included.)</em>
+
+<ul>
+<li>6221  composition, election, resignation, internal decision rules</li>
+<li>6222  responsibilities (if not coded as more specific category (e.g. 612))</li>
+</ul></li>
+</ul></li>
+<li><strong>63  committees</strong> (if not coded as more specific category (e.g. 13; 24; 54; 55; 72))
+
+<ul>
+<li>631   general regulations regarding types of committees</li>
+<li>632   membership and committee jurisdiction (area of influence-control .g. finance, economy, agriculture&hellip;)</li>
+<li>633   formal organizational units of committee <em>(Note: e.g. chair of committee, sub-committees, staff; This is about the appointment and election of the organizational units within committees and NOT about their responsibilities.)</em></li>
+<li>634   agenda and procedures (details on how decisions are taken) within committees (if not coded as law-making (13))</li>
+<li>635   relations to other bodies
+
+<ul>
+<li>6351  relation to plenary (if not coded as 124; 134; 34)</li>
+<li>6352  relation to other committees</li>
+</ul></li>
+<li>636   investigative competencies of regular committees (NOT committees of inquiry (637))
+
+<ul>
+<li>637   committee of inquiry </li>
+<li>638   enquÃªte commission</li>
+</ul></li>
+<li>639   other special committees which are not explicitly referenced in this coding manual  <em>(Note: e.g. oversight committees in Switzerland; Otherwise referenced are: EU-committee (242); committee of inquiry (637); petition committee (54); standing order committee (usually 72); council of elders or similar coordination body (622). Exception: committees which deal exclusively with the confirmation of the elections of members of parliament are coded as 651.)</em></li>
+</ul></li>
+<li><strong>64  parliamentary party groups</strong>
+
+<ul>
+<li>641   formation of parliamentary party groups</li>
+<li>642   rights and obligations of parliamentary party groups (if not coded more specifically as e.g. 112; 51; 52; 53)</li>
+<li>643   financial and staff resources</li>
+</ul></li>
+<li><strong>65  individual members of parliament</strong>
+
+<ul>
+<li>651   election, entry into office, resignation, incompatibilities, legal status, immunity, indemnity</li>
+<li>652   rights and obligations of individual members of parliament (if not coded more specifically as e.g. 112; 51; 52; 53)</li>
+<li>653   salary, financial and staff resources</li>
+</ul></li>
+<li><strong>66  opposition</strong></li>
+<li><strong>67  special bodies for emergency situations</strong></li>
+<li><strong>68  parliamentary administration</strong></li>
+</ul>
+
+<p><strong>7     Change and Interpretation of the Standing Orders</strong></p>
+
+<ul>
+<li><strong>71  rules regarding changing the standing orders</strong></li>
+<li><strong>72  rules regarding interpretation of and deviation from standing orders</strong></li>
+<li><strong>73  debate about standing orders and motions regarding the standing orders</strong></li>
+</ul>
+
+<p><strong>8     General Rules Regarding Formation and Legislative Session; Discontinuity</strong></p>
+
+<p><strong>9     Final Provisions</strong></p>
+
+<p><strong>10    Miscellaneous</strong> (cannot be coded otherwise)</p>
+
+<p><strong>999   Footnotes and Titles Without Relevant Content</strong></p>
 
 </body>
 
