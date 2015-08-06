@@ -13,6 +13,8 @@ library(magrittr)
 library(foreign)
 library(reshape2)
 
+options("digits"=2)
+
 data_path  <- "z:/gesch\u00e4ftsordnungen/database/extracts/"
 setwd(data_path)
 
@@ -256,7 +258,7 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
 reforms[
   reforms$t_id %in% firstids,
   which(colnames(reforms)=="lns_mdf"):
-    which(colnames(reforms)=="wds_pro_non")
+    which(colnames(reforms)=="wds_chg")
   ] <- NA
 
 reforms[
@@ -303,21 +305,110 @@ tmp[is.na(tmp)] <- 0
 reforms <- left_join(reforms, tmp)
 
 
-# lines for code_scheme
+
+
+
+## adding difference variables
+lines_tmp1 <- 
+  lines %>% 
+  select(tl_id, tl_corpus_code) %>% 
+  rename(ll_t_id1 = tl_id)
+
+lines_tmp2 <- 
+  lines %>% 
+  select(tl_id, tl_corpus_code) %>% 
+  rename(ll_t_id1 = tl_id)
+
+linkage1 <-  
+  left_join(lines_tmp1, linkage)  %>% 
+  group_by(ll_t_id1, )
+
+
+linkage2 <-  group_by(linkage, ll_t_id2)
+
+
+
+# ... change  
+tmp <- 
+  linkage2  %>% 
+  filter(ll_type=="change") %>% 
+  summarize(
+    lns_mdf      = n(),
+    wds_mdf = sum(ll_diff_wd),
+    pro_maj_mdf  = sum(ll_minmaj_code==1),
+    pro_min_mdf  = sum(ll_minmaj_code==2),
+    pro_non_mdf  = sum(ll_minmaj_code==0),
+    wds_pro_maj_mdf = sum((ll_minmaj_code==1)*ll_diff_wd),
+    wds_pro_min_mdf = sum((ll_minmaj_code==2)*ll_diff_wd),
+    wds_pro_non_mdf = sum((ll_minmaj_code==0)*ll_diff_wd)
+  )  %>% 
+  rename(t_id = ll_t_id2) %>% 
+  left_join(reforms[,"t_id"], .)
+tmp[is.na(tmp)] <- 0
+
+reforms <- 
+  left_join(reforms, tmp)
+
+#   # check : change_summing_up
+#     sum_of_its_parts <- tmp$wds_pro_maj_chg + tmp$wds_pro_min_chg + tmp$wds_pro_non_chg != tmp$wds_diff_chg
+#     iffer <- na_to_false( sum_of_its_parts )
+#     tmp[iffer,]  %>% select(-(pro_maj_chg:pro_non_chg)) # -> should be empty
+#     tmp[is.na(sum_of_its_parts), ] # -> should be only SWI
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# lines for code_scheme - topics
 tmp <- 
   aggregate(
     lines_agg$tl_wds_clean, 
     by   = list(lines_agg$t_id, ccode_corpus_recode(lines_agg$tl_corpus_code)), 
     FUN  = length
   )
-names(tmp) <- c("t_id","corp_agg","lns_corp_agg")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corp_agg", direction="wide", sep="_")
+names(tmp) <- c("t_id","corp_top","lns_corp_top")
+tmp <- reshape(tmp,  idvar="t_id", timevar="corp_top", direction="wide", sep="_")
 tmp[is.na(tmp)] <- 0
 
 reforms <- left_join(reforms, tmp)
 
 
-# wds for code_scheme
+# wds for code_scheme - topics
 tmp <- 
   aggregate(
     lines_agg$tl_wds_clean, 
@@ -325,8 +416,38 @@ tmp <-
     FUN   = sum,
     na.rm = TRUE
   )
-names(tmp) <- c("t_id","corp_agg","wds_corp_agg")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corp_agg", direction="wide", sep="_")
+names(tmp) <- c("t_id","corp_top","wds_corp_top")
+tmp <- reshape(tmp,  idvar="t_id", timevar="corp_top", direction="wide", sep="_")
+tmp[is.na(tmp)] <- 0
+
+reforms <- left_join(reforms, tmp)
+
+
+
+# lines for code_scheme - actors
+tmp <- 
+  aggregate(
+    lines_agg$tl_wds_clean, 
+    by   = list(lines_agg$t_id, ccode_corpus_recode2(lines_agg$tl_corpus_code)), 
+    FUN  = length
+  )
+names(tmp) <- c("t_id","corp_act","lns_corp_act")
+tmp <- reshape(tmp,  idvar="t_id", timevar="corp_act", direction="wide", sep="_")
+tmp[is.na(tmp)] <- 0
+
+reforms <- left_join(reforms, tmp)
+
+
+# wds for code_scheme - actors
+tmp <- 
+  aggregate(
+    lines_agg$tl_wds_clean, 
+    by    = list(lines_agg$t_id, ccode_corpus_recode2(lines_agg$tl_corpus_code)), 
+    FUN   = sum,
+    na.rm = TRUE
+  )
+names(tmp) <- c("t_id","corp_act","wds_corp_act")
+tmp <- reshape(tmp,  idvar="t_id", timevar="corp_act", direction="wide", sep="_")
 tmp[is.na(tmp)] <- 0
 
 reforms <- left_join(reforms, tmp)
@@ -338,11 +459,18 @@ reforms <- left_join(reforms, tmp)
 #### saving ====================================================================
 
 # save overview HTML
-setwd("Z:/Gesch?ftsordnungen/database/outputs")
+setwd("Z:/Gesch\u00e4ftsordnungen/database/outputs")
 htmltable(reforms, file=paste0("reforms.htm"))
 
 # save reforms dataset
-setwd("Z:/Gesch?ftsordnungen/database/aggregats")
+setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
+htmltable(reforms, file=paste0("reforms.htm"))
+save(reforms, file="reforms.Rdata")
+write.dta(reforms, file="reforms.dta")
+
+# save it to idep as well
+setwd("c/dropbox/idep/data")
+htmltable(reforms, file=paste0("reforms.htm"))
 save(reforms, file="reforms.Rdata")
 write.dta(reforms, file="reforms.dta")
 
