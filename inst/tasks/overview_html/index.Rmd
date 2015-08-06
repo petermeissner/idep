@@ -1,0 +1,129 @@
+---
+title: "Welcome to IDEP"
+date: "`r Sys.time()`"
+output: 
+  html_document: 
+    keep_md: yes
+---
+```{r options, include=FALSE}
+datpath_text    <- "Z:/Gesch\u00e4ftsordnungen/Database/outputs/text_and_corpus/"
+datpath_linkage <- "Z:/Gesch\u00e4ftsordnungen/Database/outputs/linkage_and_minmaj/"
+outpath_text    <- "outputs/text_and_corpus/"
+outpath_linkage <- "outputs/linkage_and_minmaj/"
+library(stringr)
+library(idep)
+```
+
+
+# Welcome
+
+Welcome to Institutional Design in European Parliaments (IDEP) data page. 
+
+# Description
+
+
+# Software
+
+
+# Aggregated Data 
+
+## reforms data set 
+
+
+
+
+# Country Data
+
+```{r texts, echo=FALSE, results='asis'}
+sos <- list.dirs(datpath_text, full.names=FALSE, recursive=FALSE)
+
+for ( ctr in sos ){
+  cat("<details><summary><b>", short_to_coutry(ctr), "</b></summary>")
+
+  files_text    <- list.files(paste0(datpath_text,    ctr))
+  files_linkage <- list.files(paste0(datpath_linkage, ctr))
+  
+  dates <- str_extract(files_text, "\\d*-\\d*-\\d*")
+  
+  cat("<p>texts</p>\n<p>\n")
+  
+  for(i in seqalong(files_text)){
+    cat(
+      " <a target='_blank' href='",
+          paste0(outpath_text,ctr,"/", files_text[i]),
+        "'>",
+          dates[i],
+        "</a> ", 
+      sep=""
+    )
+  }
+  
+  cat("\n</p>\n<p>linkage</p>\n<p>\n")
+  
+  for(i in seqalong(files_linkage)){
+    cat(
+      " <a target='_blank' href='",
+          paste0(outpath_linkage,ctr,"/", files_linkage[i]),
+        "'>",
+          dates[i+1],
+        "</a> ", 
+      sep=""
+    )
+  }
+  
+    cat("\n</p>\n</details>")
+}
+```
+
+
+# Raw Data 
+
+<a href="extracts">link</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

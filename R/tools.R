@@ -40,9 +40,12 @@ tab  <- function(...){
 #' function for tabulating one variable 
 tab1 <- function(..., sort=FALSE){
   if( sort==TRUE ){
-    return( as.matrix(sort(tab(...))) )
+    a   <- as.matrix(sort(tab(...))) 
+  }else{
+    a <- as.matrix(tab(...))
   }
-  as.matrix(tab(...))
+  res <- data.frame(cat=rownames(a), N=a, p=a/(sum(a)-as.integer(tail(a,1))), p_na=a/(sum(a))  , row.names=NULL)
+  return(res)
 }
 
 #' function evaluating command line arguments to R that are in the form of a='value'
@@ -83,9 +86,27 @@ is_id <- function(x){
 }
 
 
+#' country shorthands used throughout the project
+country_short <- 
+  c( "AUT", "BEL", "DEN", "ESP", "FRA", "GER", "IRE", "ITA", "LUX", 
+     "NED", "NOR", "POR", "SWE", "SWIGRN", "SWIPARLG", "UK")
+
+#' country names matching the shorthands
+country_long <- 
+  c( "Austria", "Belgium", "Denmark", "Spain", "France", "Germany", 
+     "Ireland", "Italy", "Luxembourg", "Netherlands", "Norway", 
+     "Portugal", "Sweden", "Switzerland", "Switzerland", "United Kingdom")
 
 
+#' short to country
+short_to_coutry <- function(x){
+  country_long[match(x, country_short)]
+}
 
+#' country to short
+country_to_short <- function(x){
+  country_short[match(x, country_long)]
+}
 
 
 
