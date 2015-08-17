@@ -1,6 +1,6 @@
 # author: pm
 # Script, dass die IDEP Daten aggregiert
-# um Minderheiten und Mehrheiten freundliche Reformen damit analysieren zu k?nnen
+# um Minderheiten und Mehrheiten freundliche Reformen damit analysieren zu koennen
 
 
 
@@ -13,7 +13,7 @@ library(magrittr)
 library(foreign)
 library(reshape2)
 
-options("digits"=2)
+
 
 data_path  <- "z:/gesch\u00e4ftsordnungen/database/extracts/"
 setwd(data_path)
@@ -306,91 +306,9 @@ reforms <- left_join(reforms, tmp)
 
 
 
-
-
-## adding difference variables
-lines_tmp1 <- 
-  lines %>% 
-  select(tl_id, tl_corpus_code) %>% 
-  rename(ll_t_id1 = tl_id)
-
-lines_tmp2 <- 
-  lines %>% 
-  select(tl_id, tl_corpus_code) %>% 
-  rename(ll_t_id1 = tl_id)
-
-linkage1 <-  
-  left_join(lines_tmp1, linkage)  %>% 
-  group_by(ll_t_id1, )
-
-
-linkage2 <-  group_by(linkage, ll_t_id2)
-
-
-
-# ... change  
-tmp <- 
-  linkage2  %>% 
-  filter(ll_type=="change") %>% 
-  summarize(
-    lns_mdf      = n(),
-    wds_mdf = sum(ll_diff_wd),
-    pro_maj_mdf  = sum(ll_minmaj_code==1),
-    pro_min_mdf  = sum(ll_minmaj_code==2),
-    pro_non_mdf  = sum(ll_minmaj_code==0),
-    wds_pro_maj_mdf = sum((ll_minmaj_code==1)*ll_diff_wd),
-    wds_pro_min_mdf = sum((ll_minmaj_code==2)*ll_diff_wd),
-    wds_pro_non_mdf = sum((ll_minmaj_code==0)*ll_diff_wd)
-  )  %>% 
-  rename(t_id = ll_t_id2) %>% 
-  left_join(reforms[,"t_id"], .)
-tmp[is.na(tmp)] <- 0
-
-reforms <- 
-  left_join(reforms, tmp)
-
-#   # check : change_summing_up
-#     sum_of_its_parts <- tmp$wds_pro_maj_chg + tmp$wds_pro_min_chg + tmp$wds_pro_non_chg != tmp$wds_diff_chg
-#     iffer <- na_to_false( sum_of_its_parts )
-#     tmp[iffer,]  %>% select(-(pro_maj_chg:pro_non_chg)) # -> should be empty
-#     tmp[is.na(sum_of_its_parts), ] # -> should be only SWI
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## DEV >>
+## put in here 
+## DEV <<
 
 
 
@@ -453,7 +371,43 @@ tmp[is.na(tmp)] <- 0
 reforms <- left_join(reforms, tmp)
 
 
+
+#### testing ===================================================================
+
+  # general lengths 
+{
+    message("raw > raw_rel        : ", all(reforms$wds_raw_all   >= reforms$wds_raw_rel    ) )
+    message("raw > clean          : ", all(reforms$wds_raw_all   >= reforms$wds_clean_all  ) )
+    message("raw_rel > clean_rel  : ", all(reforms$wds_raw_rel   >= reforms$wds_clean_rel  ) )
+    message("clean > clean_rel    : ", all(reforms$wds_clean_all >= reforms$wds_clean_rel  ) )
+}
   
+  # changes 
+{
+    message("insertions <= length                     : ", all(is_true_or_na(reforms$wds_ins <= reforms$wds_clean_rel)))
+    message("deletions  <= length                     : ", all(is_true_or_na(reforms$wds_del <= reforms$wds_clean_rel)))
+    message(
+            "N_NAs is constant AND equal to N_country : ", 
+      unique( c( 
+        sum(is.na(reforms$wds_mdf)), sum(is.na(reforms$wds_del)), 
+        sum(is.na(reforms$wds_ins)), sum(is.na(reforms$wds_chg))
+      ) ) == length(unique(reforms$t_country))
+    )
+}
+
+  # corpus lengths
+{
+  message(
+    "corpus coded lines sum up to all lines : ", 
+    all(reforms$lns_all == reforms[,grep("lns_corp_\\d+",names(reforms), value=T)] %>% apply(1, sum))
+  )
+  n_corp_rel <- reforms[,grepl("(lns_corp_\\d+)",names(reforms)) & names(reforms)!="lns_corp_999"] %>% apply(1, sum)
+  message(
+    "corpus coded lines rel sum up to all lines rel : ", 
+    all(reforms$lns_rel == n_corp_rel)
+  )
+}  
+
 
 
 #### saving ====================================================================
@@ -469,7 +423,7 @@ save(reforms, file="reforms.Rdata")
 write.dta(reforms, file="reforms.dta")
 
 # save it to idep as well
-setwd("c/dropbox/idep/data")
+setwd("c:/dropbox/idep/data")
 htmltable(reforms, file=paste0("reforms.htm"))
 save(reforms, file="reforms.Rdata")
 write.dta(reforms, file="reforms.dta")

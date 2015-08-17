@@ -1,3 +1,9 @@
+#' wrapper for browseURL()
+goto <- function(x=getwd()){
+  browseURL(URLencode(x))
+}
+
+
 #' get classes
 #' @param x list or data frame
 #' @return returns list with class attributes of length equal to length(x)
@@ -31,6 +37,13 @@ na_to_empty <- function(x){
   x[is.na(x)] <- 0
   x
 }
+
+#' function that tests value for NA | TRUE
+is_true_or_na <- function(x) is.na(x) | x == TRUE
+
+#' function that tests value for NA | FALSE
+is_false_or_na <- function(x) is.na(x) | x == FALSE
+
 
 #' function that does a more convenient table, always showing NAs
 tab  <- function(...){

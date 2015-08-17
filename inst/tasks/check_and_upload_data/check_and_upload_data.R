@@ -1,6 +1,6 @@
 # script for checking link data and uploading it to server
 
-# setting things up
+#### setting things up =========================================================
 library(idep)
 library(dplyr)
 library(RMySQL)
@@ -36,6 +36,8 @@ if( !exists("ctr") ){
   message(ctr)  
 }
 
+
+#### getting data ==============================================================
 message("preparing data ... ")
 
 # select linkage files
@@ -124,6 +126,9 @@ message("running tests")
 text_texts <- link_files_get_text_only(linkage_env,T) 
 link_texts <- link_files_get_text_only(linkage_env,F) 
 
+
+#### checks ====================================================================
+
 # checks : dates were extracted as expected? 
 dtest(text_meta)
 
@@ -137,6 +142,8 @@ ltest(text_texts)
 ctest <- ctest(link_texts, filelist_full)
 ctest[[1]]
 
+# ltest
+
 
 # data.frames to tbl_df
 data_texts   <- tbl_df(data_texts)
@@ -144,6 +151,10 @@ data_lines   <- tbl_df(data_lines)
 data_linkage <- tbl_df(data_linkage)
 
 
+
+
+
+#### data upload================================================================
 
 # re-establish connection
 message("uploading data")
