@@ -1,9 +1,10 @@
 ---
 title: "Welcome to IDEP"
-date: "2015-08-04 17:36:08"
+date: "2015-08-18 08:49:28"
 output: 
   html_document: 
     keep_md: yes
+    css: styles.css
 ---
 
 
@@ -12,17 +13,20 @@ output:
 
 Welcome to Institutional Design in European Parliaments (IDEP) data page. 
 
-# Description
+## Description
 
 
-# aggregated Data 
-
-## reforms data set 
+## Software
 
 
+## Aggregated Data 
+
+### reforms data set 
 
 
-# Country Data
+
+
+## Country Data
 
 <details><summary><b> Austria </b></summary><p>texts</p>
 <p>
@@ -155,7 +159,7 @@ Welcome to Institutional Design in European Parliaments (IDEP) data page.
 </details>
 
 
-# Raw Data 
+## Raw Data 
 
 <a href="extracts">link</a>
 

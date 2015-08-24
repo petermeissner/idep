@@ -3,6 +3,31 @@ goto <- function(x=getwd()){
   browseURL(URLencode(x))
 }
 
+#' make automatically named list 
+#' 
+#' ricardo: \link{http://stackoverflow.com/a/21059868/1144966}
+named_list <- function(...){
+  anonList <- list(...)
+  names(anonList) <- as.character(substitute(list(...)))[-1]
+  anonList
+}
+
+#' email error
+#' @param s subject 
+#' @param body body of email
+#' @param anyways if set to true function will mail also when in non-interactive mode while the default is to no mail 
+email_error <- function(..., s="", body="", anyways=F, to="retep.meissner@gmail.com"){
+  if ( !interactive() | anyways==T ){
+    blatr::blat( 
+      body = paste0(Sys.time(), " \n\n", 
+                    "[ Rerror        ] : ", sys.call(sys.parent())[[1]],", ", s , "\n",
+                    "[ getwd()       ] : ", getwd(), "\n",
+              paste("[ commandArgs() ] : ", commandArgs(), "\n", collapse = "", sep=""),
+                    "\n\n", body) 
+    )
+  }
+}
+
 
 #' get classes
 #' @param x list or data frame
@@ -28,7 +53,11 @@ na_to_true <- function(x){
 
 #' function that transforms NAs to 0
 na_to_zero <- function(x){
-  x[is.na(x)] <- 0
+  if( any(class(x) %in% "POSIXct") ){ 
+    x[is.na(x)] <- as.Date(x, origin = "0000-01-01")
+  }else{
+    x[is.na(x)] <- 0 
+  }
   x
 }
 
@@ -84,7 +113,7 @@ if_not_exists <- function(name, value){
 file.move <- function(from, to){
   if(length(from)==0) return(TRUE)
   dummy <- function(from,to){
-    if( file.copy(from, to) ){
+    if( file.copy(from, to, recursive = TRUE) ){
       file.remove(from)
     }
   }

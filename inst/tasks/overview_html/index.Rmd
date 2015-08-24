@@ -4,6 +4,7 @@ date: "`r Sys.time()`"
 output: 
   html_document: 
     keep_md: yes
+    css: styles.css
 ---
 ```{r options, include=FALSE}
 datpath_text    <- "Z:/Gesch\u00e4ftsordnungen/Database/outputs/text_and_corpus/"
@@ -19,20 +20,20 @@ library(idep)
 
 Welcome to Institutional Design in European Parliaments (IDEP) data page. 
 
-# Description
+## Description
 
 
-# Software
+## Software
 
 
-# Aggregated Data 
+## Aggregated Data 
 
-## reforms data set 
-
-
+### reforms data set 
 
 
-# Country Data
+
+
+## Country Data
 
 ```{r texts, echo=FALSE, results='asis'}
 sos <- list.dirs(datpath_text, full.names=FALSE, recursive=FALSE)
@@ -76,7 +77,7 @@ for ( ctr in sos ){
 ```
 
 
-# Raw Data 
+## Raw Data 
 
 <a href="extracts">link</a>
 

@@ -1,5 +1,7 @@
 # script for checking link data and uploading it to server
 
+if( interactive() & !exists("ctr") ) ctr <- "AUT"
+
 #### setting things up =========================================================
 library(idep)
 library(dplyr)
@@ -82,51 +84,57 @@ ls(corpus_env)
 # preapre data for matching
 corpus_data_prepare()
 
-
-
-# meta data
-message("preparing meta data")
-fname_data       <- get_meta_from_fname(filelist_full,T)
-within_text_data <- link_files_get_date(filelist_full,T)
-data_texts  <- cbind(fname_data, within_text_data)
-text_meta   <- data_texts
-names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")
-
-
-# text data for upload
-message("preparing text data")
-data_lines      <- link_files_get_text(linkage_env)
-matcher                <- match(data_lines$id, corpus_env$coding$id)
-data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
-data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo[ matcher ]), 
-                                    "", corpus_env$coding$memo[ matcher ] ) 
-names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
-                        "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
-data_lines$tl_text <- enc2utf8(data_lines$tl_text)
-data_lines$tl_corpus_memo <- enc2utf8(data_lines$tl_corpus_memo)
-data_lines$tl_corpus_code[ is.na(data_lines$tl_corpus_code) ] <- 999
-
-
-# linkage data
-message("preparing linkage data")
-for(i in seqalong(linkage_env)){
-  tbc <- eval(as.name(linkage_env[i]))$RESULTS
-  check_diff(tbc)
-} 
-system.time(data_linkage <- link_files_get_linkage() )
-names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_diff", 
-                         "ll_diff_wd", "ll_type", "ll_t_id1", "ll_t_id2", 
-                         "ll_tl_lnr1", "ll_tl_lnr2", "ll_minmaj_code", "ll_minmaj_coder",
-                         "ll_minmaj_memo", "ll_linkage_coder")
-data_linkage$ll_minmaj_memo <- enc2utf8(data_linkage$ll_minmaj_memo)
-
-
-# text data for testing
-message("running tests")
-text_texts <- link_files_get_text_only(linkage_env,T) 
-link_texts <- link_files_get_text_only(linkage_env,F) 
-
-
+iffer <- max(file.info(filelist_full)$mtime) > file.info(paste0(ctr,".Rdata"))$mtime | is.na(file.info(paste0(ctr,".Rdata"))$mtime)
+if ( iffer  ){
+    # meta data
+    message("preparing meta data")
+    fname_data       <- get_meta_from_fname(filelist_full,T)
+    within_text_data <- link_files_get_date(filelist_full,T)
+    data_texts  <- cbind(fname_data, within_text_data)
+    text_meta   <- data_texts
+    names(data_texts) <- c("t_id", "t_date", "t_dplus", "t_country", "t_daccept", "t_dpromul", "t_denact")
+    
+    
+    # text data for upload
+    message("preparing text data")
+    data_lines      <- link_files_get_text(linkage_env)
+    matcher                <- match(data_lines$id, corpus_env$coding$id)
+    data_lines$corpus_code <- corpus_env$coding$code[ matcher ]
+    data_lines$corpus_memo   <- ifelse( grepl("#§# autocode",corpus_env$coding$memo[ matcher ]), 
+                                        "", corpus_env$coding$memo[ matcher ] ) 
+    names(data_lines) <- c( "tl_id", "tl_text", "tl_lnr", "tl_t_id", "tl_relevant", "tl_wds_raw",           
+                            "tl_wds_clean", "tl_corpus_code", "tl_corpus_memo")
+    data_lines$tl_text <- enc2utf8(data_lines$tl_text)
+    data_lines$tl_corpus_memo <- enc2utf8(data_lines$tl_corpus_memo)
+    data_lines$tl_corpus_code[ is.na(data_lines$tl_corpus_code) ] <- 999
+    
+    
+    # linkage data
+    message("preparing linkage data")
+    for(i in seqalong(linkage_env)){
+      tbc <- eval(as.name(linkage_env[i]))$RESULTS
+      check_diff(tbc)
+    } 
+    system.time(data_linkage <- link_files_get_linkage() )
+    names(data_linkage) <- c("ll_tl_id1", "ll_tl_id2", "ll_sim", "ll_sim_wd", "ll_diff", 
+                             "ll_diff_wd", "ll_type", "ll_t_id1", "ll_t_id2", 
+                             "ll_tl_lnr1", "ll_tl_lnr2", "ll_minmaj_code", "ll_minmaj_coder",
+                             "ll_minmaj_memo", "ll_linkage_coder")
+    data_linkage$ll_minmaj_memo <- enc2utf8(data_linkage$ll_minmaj_memo)
+    
+    
+    # text data for testing
+    message("running tests")
+    text_texts <- link_files_get_text_only(linkage_env,T) 
+    link_texts <- link_files_get_text_only(linkage_env,F) 
+    
+    # save image
+    save.image(file=paste0(ctr,".Rdata"))
+}else{
+    # laod image
+    load(file=paste0(ctr,".Rdata"))
+}
+    
 #### checks ====================================================================
 
 # checks : dates were extracted as expected? 
@@ -142,14 +150,31 @@ ltest(text_texts)
 ctest <- ctest(link_texts, filelist_full)
 ctest[[1]]
 
-# ltest
-
-
 # data.frames to tbl_df
 data_texts   <- tbl_df(data_texts)
 data_lines   <- tbl_df(data_lines)
 data_linkage <- tbl_df(data_linkage)
 
+
+#### harmonize between different codings =======================================
+
+#### type 1 || ccode = 999 & rel = 1 ====
+#### solution: - relevant <- 0
+####           - delete linkage information
+tmp          <- t1test(data_linkage, data_lines)
+data_linkage <- tmp$data_linkage
+data_lines   <- tmp$data_lines
+
+
+
+#### type 2 || ccode != 999 & rel = 0 ====
+#### solution: - relevant <- 1
+####           - linkage1 <- deletion
+####           - linkage2 <- insertion
+####           - minmaj   <- 0
+tmp          <- t2test(data_linkage, data_lines)
+data_linkage <- tmp$data_linkage
+data_lines   <- tmp$data_lines
 
 
 
@@ -187,10 +212,11 @@ sqlVersionTag(
 
 
 # MAKE SURE TO generate new temporary tables in db!
+message("regenerate temp tables")
 system.time(dbGetQuery(socon, "CALL make_temp_linelinkage_textlines_texts();"))
 
 
-
+message("\nOK -- DONE -- OK\n\n")
 
 
 
