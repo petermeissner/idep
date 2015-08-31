@@ -1,7 +1,16 @@
 #' function that checks whether text b of linkage 1 and text a of linkage 2 are identical
 
 link_data_check_textconsistency <- function(link_texts, filelist_full){
- 
+  # helper
+  text_not_equal <- function(text1,text2){
+    text1 <- str_replace_all(text1, "  ", " ")
+    text2 <- str_replace_all(text2, "  ", " ")
+    not_equal <- text1 != text2
+    not_equal[(text1 == "" | text1 == " ") & text2 == "-- NA --"] <- FALSE
+    not_equal[(text2 == "" | text2 == " ") & text1 == "-- NA --"] <- FALSE
+    return(not_equal)
+  }
+  
   ids <- NULL
   for ( i in seq_along(filelist_full[-1]) ) {
     ids[i] <- paste(basename(filelist_full)[(i):(i+1)], collapse=" // ")
@@ -35,22 +44,39 @@ link_data_check_textconsistency <- function(link_texts, filelist_full){
     ll2 <- c(l2, rep(NA, ldiff2))
     ll1 <- c(l1, rep(NA, ldiff1))
     
-    res[i,"N_texts_differ"] <- sum(tt1 != tt2)
+    res[i,"N_texts_differ"] <- sum(text_not_equal(tt1, tt2))
     problems[[i]]$t1 <- paste("[",
-                              unlist(lapply(ll1[tt1 != tt2], null_to_na)), 
+                              unlist(lapply(ll1[text_not_equal(tt1, tt2)], null_to_na)), 
                               "]", ":",
-                              unlist(lapply(tt1[tt1 != tt2], null_to_na)))
+                              unlist(lapply(tt1[text_not_equal(tt1, tt2)], null_to_na)))
     problems[[i]]$t2 <- paste("[",
-                              unlist(lapply(ll2[tt1 != tt2], null_to_na)), 
+                              unlist(lapply(ll2[text_not_equal(tt1, tt2)], null_to_na)), 
                               "]", ":",
-                              unlist(lapply(tt2[tt1 != tt2], null_to_na)))
-    if( is.null(unlist(lapply(tt2[tt1 != tt2], null_to_na))) ) del <- c(del,i)
+                              unlist(lapply(tt2[text_not_equal(tt1, tt2)], null_to_na)))
+    if( is.null(unlist(lapply(tt2[text_not_equal(tt1, tt2)], null_to_na))) ){
+      del <- c(del,i)
+    } 
   }
   
   problems[del] <- NULL
   
   return(list(res=res, problems=problems))
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

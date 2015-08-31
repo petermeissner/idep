@@ -12,8 +12,14 @@ library(dplyr)
 library(magrittr)
 library(foreign)
 library(reshape2)
+library(testthat)
 
-
+if(!interactive()){
+  options(error = quote({
+    email_error("make reforms failed")
+    q(save = "no")
+  }))
+}
 
 data_path  <- "z:/gesch\u00e4ftsordnungen/database/extracts/"
 setwd(data_path)
@@ -374,39 +380,62 @@ reforms <- left_join(reforms, tmp)
 
 #### testing ===================================================================
 
-  # general lengths 
-{
-    message("raw > raw_rel        : ", all(reforms$wds_raw_all   >= reforms$wds_raw_rel    ) )
-    message("raw > clean          : ", all(reforms$wds_raw_all   >= reforms$wds_clean_all  ) )
-    message("raw_rel > clean_rel  : ", all(reforms$wds_raw_rel   >= reforms$wds_clean_rel  ) )
-    message("clean > clean_rel    : ", all(reforms$wds_clean_all >= reforms$wds_clean_rel  ) )
-}
-  
-  # changes 
-{
-    message("insertions <= length                     : ", all(is_true_or_na(reforms$wds_ins <= reforms$wds_clean_rel)))
-    message("deletions  <= length                     : ", all(is_true_or_na(reforms$wds_del <= reforms$wds_clean_rel)))
-    message(
-            "N_NAs is constant AND equal to N_country : ", 
+test_that(
+  "general lengths have reasonable values",
+  {
+  expect_true( all(reforms$wds_raw_all   >= reforms$wds_raw_rel    ) )
+  expect_true( all(reforms$wds_raw_all   >= reforms$wds_clean_all  ) )
+  expect_true( all(reforms$wds_raw_rel   >= reforms$wds_clean_rel  ) )
+  expect_true( all(reforms$wds_clean_all >= reforms$wds_clean_rel  ) )
+  }
+)
+
+test_that(
+  "change counts have reasonable values", 
+  {
+  expect_true( all(is_true_or_na(reforms$wds_ins <= reforms$wds_clean_rel)) )
+  expect_true( all(is_true_or_na(reforms$wds_del <= reforms$wds_clean_rel)) )
+  expect_true( all(is_true_or_na(reforms$wds_mdf <= reforms$wds_clean_rel)) )
+  expect_true( all(is_true_or_na(with(reforms, wds_ins+wds_del+wds_mdf == wds_chg))) )
+  }
+)
+
+test_that(
+  "N_NAs is constant AND equal to N_country",
+  {
+    expect_true(
       unique( c( 
         sum(is.na(reforms$wds_mdf)), sum(is.na(reforms$wds_del)), 
         sum(is.na(reforms$wds_ins)), sum(is.na(reforms$wds_chg))
-      ) ) == length(unique(reforms$t_country))
+      ) ) == 
+      length(unique(reforms$t_country))
     )
-}
+  }
+)
 
-  # corpus lengths
-{
-  message(
-    "corpus coded lines sum up to all lines : ", 
-    all(reforms$lns_all == reforms[,grep("lns_corp_\\d+",names(reforms), value=T)] %>% apply(1, sum))
-  )
-  n_corp_rel <- reforms[,grepl("(lns_corp_\\d+)",names(reforms)) & names(reforms)!="lns_corp_999"] %>% apply(1, sum)
-  message(
-    "corpus coded lines rel sum up to all lines rel : ", 
-    all(reforms$lns_rel == n_corp_rel)
-  )
-}  
+
+test_that(
+  "corpus coded lines sum up to all lines",
+  {
+    all(reforms$lns_all == reforms[,grep("lns_corp_\\d+", names(reforms), value=T)] %>% apply(1, sum)) 
+  }
+)
+
+test_that(
+  "corpus coded words sum up overall lengths",
+  {
+    wds_corp_rel <- 
+      (grepl("(wds_corp_\\d+)",names(reforms)) & names(reforms)!="wds_corp_999")  %>% 
+      reforms[, .] %>% 
+      apply(1, sum)
+    wds_corp_all <- 
+      (grepl("(wds_corp_\\d+)",names(reforms)))  %>% 
+      reforms[, .] %>% 
+      apply(1, sum)
+    expect_true( all(reforms$wds_clean_all == wds_corp_all) )
+    expect_true( all(reforms$wds_clean_rel == wds_corp_rel) )
+  }
+)
 
 
 

@@ -1,6 +1,6 @@
 # script for checking link data and uploading it to server
 
-if( interactive() & !exists("ctr") ) ctr <- "AUT"
+if( interactive() & !exists("ctr") ) ctr <- "SWIPARLG"
 
 #### setting things up =========================================================
 library(idep)
@@ -8,6 +8,10 @@ library(dplyr)
 library(RMySQL)
 '%.%' <- function(a,b) paste0(a,b)
 
+# error handling
+if( !interactive() ){
+  options(error = quote({email_error("undefined error in check and upload" , s=ctr, anyways=T); q(save = "no")}) )
+}
 
 # connection function
 get_ready <- function(){
@@ -35,7 +39,7 @@ if( !exists("ctr") ){
   )
 }else{
   message("### ============================================================== ###")
-  message(ctr)  
+  message("\n",ctr,"\n")  
 }
 
 
@@ -124,7 +128,6 @@ if ( iffer  ){
     
     
     # text data for testing
-    message("running tests")
     text_texts <- link_files_get_text_only(linkage_env,T) 
     link_texts <- link_files_get_text_only(linkage_env,F) 
     
@@ -136,6 +139,7 @@ if ( iffer  ){
 }
     
 #### checks ====================================================================
+message("running tests")
 
 # checks : dates were extracted as expected? 
 dtest(text_meta)
@@ -158,20 +162,20 @@ data_linkage <- tbl_df(data_linkage)
 
 #### harmonize between different codings =======================================
 
-#### type 1 || ccode = 999 & rel = 1 ====
-#### solution: - relevant <- 0
-####           - delete linkage information
+# type 1 || ccode = 999 & rel = 1 
+# solution: - relevant <- 0
+#           - delete linkage information
 tmp          <- t1test(data_linkage, data_lines)
 data_linkage <- tmp$data_linkage
 data_lines   <- tmp$data_lines
 
 
 
-#### type 2 || ccode != 999 & rel = 0 ====
-#### solution: - relevant <- 1
-####           - linkage1 <- deletion
-####           - linkage2 <- insertion
-####           - minmaj   <- 0
+# type 2 || ccode != 999 & rel = 0 
+# solution: - relevant <- 1
+#           - linkage1 <- deletion
+#           - linkage2 <- insertion
+#           - minmaj   <- 0
 tmp          <- t2test(data_linkage, data_lines)
 data_linkage <- tmp$data_linkage
 data_lines   <- tmp$data_lines
@@ -211,11 +215,7 @@ sqlVersionTag(
 )
 
 
-# MAKE SURE TO generate new temporary tables in db!
-message("regenerate temp tables")
-system.time(dbGetQuery(socon, "CALL make_temp_linelinkage_textlines_texts();"))
-
-
+# done
 message("\nOK -- DONE -- OK\n\n")
 
 

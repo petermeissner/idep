@@ -75,7 +75,7 @@
     by  pm.</p>
 
 <div class="chunk" id="auto-report"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># Script, dass die IDEP Daten aggregiert</span>
-<span class="hl com"># um Minderheiten und Mehrheiten freundliche Reformen damit analysieren zu k?nnen</span>
+<span class="hl com"># um Minderheiten und Mehrheiten freundliche Reformen damit analysieren zu koennen</span>
 
 
 
@@ -88,6 +88,8 @@
 <span class="hl kwd">library</span><span class="hl std">(foreign)</span>
 <span class="hl kwd">library</span><span class="hl std">(reshape2)</span>
 
+
+
 <span class="hl std">data_path</span>  <span class="hl kwb">&lt;-</span> <span class="hl str">&quot;z:/gesch\u00e4ftsordnungen/database/extracts/&quot;</span>
 <span class="hl kwd">setwd</span><span class="hl std">(data_path)</span>
 
@@ -99,7 +101,7 @@
   <span class="hl kwd">max</span><span class="hl std">(</span><span class="hl kwc">na.rm</span><span class="hl std">=T)</span>
 <span class="hl std">db_on_disk_version</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] 1.27
+<div class="output"><pre class="knitr r">## [1] 1.71
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl com">#### loading data ==============================================================</span>
 
@@ -160,7 +162,7 @@
 <span class="hl com"># echo db version in use</span>
 <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl kwd">str_extract</span><span class="hl std">(fname,</span> <span class="hl str">&quot;db_version_\\d*\\.\\d*&quot;</span><span class="hl std">))</span>
 </pre></div>
-<div class="message"><pre class="knitr r">## db_version_1.27
+<div class="message"><pre class="knitr r">## db_version_1.71
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl com"># remove stuff</span>
 <span class="hl kwd">rm</span><span class="hl std">(data_path)</span>
@@ -349,7 +351,7 @@
 <span class="hl std">reforms[</span>
   <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">t_id</span> <span class="hl opt">%in%</span> <span class="hl std">firstids,</span>
   <span class="hl kwd">which</span><span class="hl std">(</span><span class="hl kwd">colnames</span><span class="hl std">(reforms)</span><span class="hl opt">==</span><span class="hl str">&quot;lns_mdf&quot;</span><span class="hl std">)</span><span class="hl opt">:</span>
-    <span class="hl kwd">which</span><span class="hl std">(</span><span class="hl kwd">colnames</span><span class="hl std">(reforms)</span><span class="hl opt">==</span><span class="hl str">&quot;wds_pro_non&quot;</span><span class="hl std">)</span>
+    <span class="hl kwd">which</span><span class="hl std">(</span><span class="hl kwd">colnames</span><span class="hl std">(reforms)</span><span class="hl opt">==</span><span class="hl str">&quot;wds_chg&quot;</span><span class="hl std">)</span>
   <span class="hl std">]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">NA</span>
 
 <span class="hl std">reforms[</span>
@@ -402,22 +404,28 @@
 </pre></div>
 <div class="message"><pre class="knitr r">## Joining by: &quot;t_id&quot;
 </pre></div>
-<div class="source"><pre class="knitr r"><span class="hl com"># lines for code_scheme</span>
+<div class="source"><pre class="knitr r"><span class="hl com">## DEV &gt;&gt;</span>
+<span class="hl com">## put in here </span>
+<span class="hl com">## DEV &lt;&lt;</span>
+
+
+
+<span class="hl com"># lines for code_scheme - topics</span>
 <span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span>
   <span class="hl kwd">aggregate</span><span class="hl std">(</span>
     <span class="hl std">lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_wds_clean,</span>
     <span class="hl kwc">by</span>   <span class="hl std">=</span> <span class="hl kwd">list</span><span class="hl std">(lines_agg</span><span class="hl opt">$</span><span class="hl std">t_id,</span> <span class="hl kwd">ccode_corpus_recode</span><span class="hl std">(lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_corpus_code)),</span>
     <span class="hl kwc">FUN</span>  <span class="hl std">= length</span>
   <span class="hl std">)</span>
-<span class="hl kwd">names</span><span class="hl std">(tmp)</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span><span class="hl str">&quot;corp_agg&quot;</span><span class="hl std">,</span><span class="hl str">&quot;lns_corp_agg&quot;</span><span class="hl std">)</span>
-<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reshape</span><span class="hl std">(tmp,</span>  <span class="hl kwc">idvar</span><span class="hl std">=</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span> <span class="hl kwc">timevar</span><span class="hl std">=</span><span class="hl str">&quot;corp_agg&quot;</span><span class="hl std">,</span> <span class="hl kwc">direction</span><span class="hl std">=</span><span class="hl str">&quot;wide&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;_&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">names</span><span class="hl std">(tmp)</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span><span class="hl str">&quot;corp_top&quot;</span><span class="hl std">,</span><span class="hl str">&quot;lns_corp_top&quot;</span><span class="hl std">)</span>
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reshape</span><span class="hl std">(tmp,</span>  <span class="hl kwc">idvar</span><span class="hl std">=</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span> <span class="hl kwc">timevar</span><span class="hl std">=</span><span class="hl str">&quot;corp_top&quot;</span><span class="hl std">,</span> <span class="hl kwc">direction</span><span class="hl std">=</span><span class="hl str">&quot;wide&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;_&quot;</span><span class="hl std">)</span>
 <span class="hl std">tmp[</span><span class="hl kwd">is.na</span><span class="hl std">(tmp)]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0</span>
 
 <span class="hl std">reforms</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">left_join</span><span class="hl std">(reforms, tmp)</span>
 </pre></div>
 <div class="message"><pre class="knitr r">## Joining by: &quot;t_id&quot;
 </pre></div>
-<div class="source"><pre class="knitr r"><span class="hl com"># wds for code_scheme</span>
+<div class="source"><pre class="knitr r"><span class="hl com"># wds for code_scheme - topics</span>
 <span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span>
   <span class="hl kwd">aggregate</span><span class="hl std">(</span>
     <span class="hl std">lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_wds_clean,</span>
@@ -425,13 +433,92 @@
     <span class="hl kwc">FUN</span>   <span class="hl std">= sum,</span>
     <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span>
   <span class="hl std">)</span>
-<span class="hl kwd">names</span><span class="hl std">(tmp)</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span><span class="hl str">&quot;corp_agg&quot;</span><span class="hl std">,</span><span class="hl str">&quot;wds_corp_agg&quot;</span><span class="hl std">)</span>
-<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reshape</span><span class="hl std">(tmp,</span>  <span class="hl kwc">idvar</span><span class="hl std">=</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span> <span class="hl kwc">timevar</span><span class="hl std">=</span><span class="hl str">&quot;corp_agg&quot;</span><span class="hl std">,</span> <span class="hl kwc">direction</span><span class="hl std">=</span><span class="hl str">&quot;wide&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;_&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">names</span><span class="hl std">(tmp)</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span><span class="hl str">&quot;corp_top&quot;</span><span class="hl std">,</span><span class="hl str">&quot;wds_corp_top&quot;</span><span class="hl std">)</span>
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reshape</span><span class="hl std">(tmp,</span>  <span class="hl kwc">idvar</span><span class="hl std">=</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span> <span class="hl kwc">timevar</span><span class="hl std">=</span><span class="hl str">&quot;corp_top&quot;</span><span class="hl std">,</span> <span class="hl kwc">direction</span><span class="hl std">=</span><span class="hl str">&quot;wide&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;_&quot;</span><span class="hl std">)</span>
 <span class="hl std">tmp[</span><span class="hl kwd">is.na</span><span class="hl std">(tmp)]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0</span>
 
 <span class="hl std">reforms</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">left_join</span><span class="hl std">(reforms, tmp)</span>
 </pre></div>
 <div class="message"><pre class="knitr r">## Joining by: &quot;t_id&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># lines for code_scheme - actors</span>
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">aggregate</span><span class="hl std">(</span>
+    <span class="hl std">lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_wds_clean,</span>
+    <span class="hl kwc">by</span>   <span class="hl std">=</span> <span class="hl kwd">list</span><span class="hl std">(lines_agg</span><span class="hl opt">$</span><span class="hl std">t_id,</span> <span class="hl kwd">ccode_corpus_recode2</span><span class="hl std">(lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_corpus_code)),</span>
+    <span class="hl kwc">FUN</span>  <span class="hl std">= length</span>
+  <span class="hl std">)</span>
+<span class="hl kwd">names</span><span class="hl std">(tmp)</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span><span class="hl str">&quot;corp_act&quot;</span><span class="hl std">,</span><span class="hl str">&quot;lns_corp_act&quot;</span><span class="hl std">)</span>
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reshape</span><span class="hl std">(tmp,</span>  <span class="hl kwc">idvar</span><span class="hl std">=</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span> <span class="hl kwc">timevar</span><span class="hl std">=</span><span class="hl str">&quot;corp_act&quot;</span><span class="hl std">,</span> <span class="hl kwc">direction</span><span class="hl std">=</span><span class="hl str">&quot;wide&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;_&quot;</span><span class="hl std">)</span>
+<span class="hl std">tmp[</span><span class="hl kwd">is.na</span><span class="hl std">(tmp)]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0</span>
+
+<span class="hl std">reforms</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">left_join</span><span class="hl std">(reforms, tmp)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Joining by: &quot;t_id&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com"># wds for code_scheme - actors</span>
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span>
+  <span class="hl kwd">aggregate</span><span class="hl std">(</span>
+    <span class="hl std">lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_wds_clean,</span>
+    <span class="hl kwc">by</span>    <span class="hl std">=</span> <span class="hl kwd">list</span><span class="hl std">(lines_agg</span><span class="hl opt">$</span><span class="hl std">t_id,</span> <span class="hl kwd">ccode_corpus_recode2</span><span class="hl std">(lines_agg</span><span class="hl opt">$</span><span class="hl std">tl_corpus_code)),</span>
+    <span class="hl kwc">FUN</span>   <span class="hl std">= sum,</span>
+    <span class="hl kwc">na.rm</span> <span class="hl std">=</span> <span class="hl num">TRUE</span>
+  <span class="hl std">)</span>
+<span class="hl kwd">names</span><span class="hl std">(tmp)</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span><span class="hl str">&quot;corp_act&quot;</span><span class="hl std">,</span><span class="hl str">&quot;wds_corp_act&quot;</span><span class="hl std">)</span>
+<span class="hl std">tmp</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reshape</span><span class="hl std">(tmp,</span>  <span class="hl kwc">idvar</span><span class="hl std">=</span><span class="hl str">&quot;t_id&quot;</span><span class="hl std">,</span> <span class="hl kwc">timevar</span><span class="hl std">=</span><span class="hl str">&quot;corp_act&quot;</span><span class="hl std">,</span> <span class="hl kwc">direction</span><span class="hl std">=</span><span class="hl str">&quot;wide&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span><span class="hl std">=</span><span class="hl str">&quot;_&quot;</span><span class="hl std">)</span>
+<span class="hl std">tmp[</span><span class="hl kwd">is.na</span><span class="hl std">(tmp)]</span> <span class="hl kwb">&lt;-</span> <span class="hl num">0</span>
+
+<span class="hl std">reforms</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">left_join</span><span class="hl std">(reforms, tmp)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Joining by: &quot;t_id&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl com">#### testing ===================================================================</span>
+
+  <span class="hl com"># general lengths </span>
+<span class="hl std">{</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl str">&quot;raw &gt; raw_rel        : &quot;</span><span class="hl std">,</span> <span class="hl kwd">all</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_raw_all</span>   <span class="hl opt">&gt;=</span> <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">wds_raw_rel    ) )</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl str">&quot;raw &gt; clean          : &quot;</span><span class="hl std">,</span> <span class="hl kwd">all</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_raw_all</span>   <span class="hl opt">&gt;=</span> <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">wds_clean_all  ) )</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl str">&quot;raw_rel &gt; clean_rel  : &quot;</span><span class="hl std">,</span> <span class="hl kwd">all</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_raw_rel</span>   <span class="hl opt">&gt;=</span> <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">wds_clean_rel  ) )</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl str">&quot;clean &gt; clean_rel    : &quot;</span><span class="hl std">,</span> <span class="hl kwd">all</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_clean_all</span> <span class="hl opt">&gt;=</span> <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">wds_clean_rel  ) )</span>
+<span class="hl std">}</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## raw &gt; raw_rel        : TRUE
+## raw &gt; clean          : TRUE
+## raw_rel &gt; clean_rel  : TRUE
+## clean &gt; clean_rel    : TRUE
+</pre></div>
+<div class="source"><pre class="knitr r">  <span class="hl com"># changes </span>
+<span class="hl std">{</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl str">&quot;insertions &lt;= length                     : &quot;</span><span class="hl std">,</span> <span class="hl kwd">all</span><span class="hl std">(</span><span class="hl kwd">is_true_or_na</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_ins</span> <span class="hl opt">&lt;=</span> <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">wds_clean_rel)))</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span><span class="hl str">&quot;deletions  &lt;= length                     : &quot;</span><span class="hl std">,</span> <span class="hl kwd">all</span><span class="hl std">(</span><span class="hl kwd">is_true_or_na</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_del</span> <span class="hl opt">&lt;=</span> <span class="hl std">reforms</span><span class="hl opt">$</span><span class="hl std">wds_clean_rel)))</span>
+    <span class="hl kwd">message</span><span class="hl std">(</span>
+            <span class="hl str">&quot;N_NAs is constant AND equal to N_country : &quot;</span><span class="hl std">,</span>
+      <span class="hl kwd">unique</span><span class="hl std">(</span> <span class="hl kwd">c</span><span class="hl std">(</span>
+        <span class="hl kwd">sum</span><span class="hl std">(</span><span class="hl kwd">is.na</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_mdf)),</span> <span class="hl kwd">sum</span><span class="hl std">(</span><span class="hl kwd">is.na</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_del)),</span>
+        <span class="hl kwd">sum</span><span class="hl std">(</span><span class="hl kwd">is.na</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_ins)),</span> <span class="hl kwd">sum</span><span class="hl std">(</span><span class="hl kwd">is.na</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">wds_chg))</span>
+      <span class="hl std">) )</span> <span class="hl opt">==</span> <span class="hl kwd">length</span><span class="hl std">(</span><span class="hl kwd">unique</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">t_country))</span>
+    <span class="hl std">)</span>
+<span class="hl std">}</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## insertions &lt;= length                     : TRUE
+## deletions  &lt;= length                     : TRUE
+## N_NAs is constant AND equal to N_country : TRUE
+</pre></div>
+<div class="source"><pre class="knitr r">  <span class="hl com"># corpus lengths</span>
+<span class="hl std">{</span>
+  <span class="hl kwd">message</span><span class="hl std">(</span>
+    <span class="hl str">&quot;corpus coded lines sum up to all lines : &quot;</span><span class="hl std">,</span>
+    <span class="hl kwd">all</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">lns_all</span> <span class="hl opt">==</span> <span class="hl std">reforms[,</span><span class="hl kwd">grep</span><span class="hl std">(</span><span class="hl str">&quot;lns_corp_\\d+&quot;</span><span class="hl std">,</span><span class="hl kwd">names</span><span class="hl std">(reforms),</span> <span class="hl kwc">value</span><span class="hl std">=T)]</span> <span class="hl opt">%&gt;%</span> <span class="hl kwd">apply</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">, sum))</span>
+  <span class="hl std">)</span>
+  <span class="hl std">n_corp_rel</span> <span class="hl kwb">&lt;-</span> <span class="hl std">reforms[,</span><span class="hl kwd">grepl</span><span class="hl std">(</span><span class="hl str">&quot;(lns_corp_\\d+)&quot;</span><span class="hl std">,</span><span class="hl kwd">names</span><span class="hl std">(reforms))</span> <span class="hl opt">&amp;</span> <span class="hl kwd">names</span><span class="hl std">(reforms)</span><span class="hl opt">!=</span><span class="hl str">&quot;lns_corp_999&quot;</span><span class="hl std">]</span> <span class="hl opt">%&gt;%</span> <span class="hl kwd">apply</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">, sum)</span>
+  <span class="hl kwd">message</span><span class="hl std">(</span>
+    <span class="hl str">&quot;corpus coded lines rel sum up to all lines rel : &quot;</span><span class="hl std">,</span>
+    <span class="hl kwd">all</span><span class="hl std">(reforms</span><span class="hl opt">$</span><span class="hl std">lns_rel</span> <span class="hl opt">==</span> <span class="hl std">n_corp_rel)</span>
+  <span class="hl std">)</span>
+<span class="hl std">}</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## corpus coded lines sum up to all lines : TRUE
+## corpus coded lines rel sum up to all lines rel : FALSE
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl com">#### saving ====================================================================</span>
 
@@ -443,7 +530,20 @@
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl com"># save reforms dataset</span>
 <span class="hl kwd">setwd</span><span class="hl std">(</span><span class="hl str">&quot;Z:/Gesch\u00e4ftsordnungen/database/aggregats&quot;</span><span class="hl std">)</span>
-<span class="hl kwd">save</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl str">&quot;reforms.Rdata&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">htmltable</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl kwd">paste0</span><span class="hl std">(</span><span class="hl str">&quot;reforms.htm&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Writing output to file: reforms.htm
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">save</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl str">&quot;reforms.Rdata&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">write.dta</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl str">&quot;reforms.dta&quot;</span><span class="hl std">)</span>
+
+<span class="hl com"># save it to idep as well</span>
+<span class="hl kwd">setwd</span><span class="hl std">(</span><span class="hl str">&quot;c:/dropbox/idep/data&quot;</span><span class="hl std">)</span>
+<span class="hl kwd">htmltable</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl kwd">paste0</span><span class="hl std">(</span><span class="hl str">&quot;reforms.htm&quot;</span><span class="hl std">))</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Writing output to file: reforms.htm
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">save</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl str">&quot;reforms.Rdata&quot;</span><span class="hl std">)</span>
 <span class="hl kwd">write.dta</span><span class="hl std">(reforms,</span> <span class="hl kwc">file</span><span class="hl std">=</span><span class="hl str">&quot;reforms.dta&quot;</span><span class="hl std">)</span>
 </pre></div>
 </div></div>
@@ -467,7 +567,7 @@
 ## 
 ## other attached packages:
 ## [1] reshape2_1.4.1    foreign_0.8-65    magrittr_1.5      stringr_1.0.0    
-## [5] lubridate_1.3.3   dplyr_0.4.2       plyr_1.8.3        idep_1.0.0.900229
+## [5] lubridate_1.3.3   dplyr_0.4.2       plyr_1.8.3        idep_1.0.0.900362
 ## [9] knitr_1.10.5     
 ## 
 ## loaded via a namespace (and not attached):
@@ -478,7 +578,7 @@
 </pre></div>
 <div class="source"><pre class="knitr r">    <span class="hl kwd">Sys.time</span><span class="hl std">()</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] &quot;2015-08-04 15:02:05 CEST&quot;
+<div class="output"><pre class="knitr r">## [1] &quot;2015-08-26 12:14:20 CEST&quot;
 </pre></div>
 </div></div>
 

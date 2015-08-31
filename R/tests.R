@@ -9,7 +9,7 @@ dtest <- function(text_meta){
     if(!interactive()){
       message("--- NOT all dates extracted")
       #email_error(s=ctr)
-      #stop("dtest: failed")
+      warning("dtest: failed")
     }
     return(text_meta)
   }
@@ -23,7 +23,7 @@ ltest <- function(text_texts){
     message("--- OK length test OK ---")
   }else{
     if(!interactive()){
-      email_error(s=ctr)
+      email_error(s=paste(ctr, "ltest: failed"))
       stop("ltest: failed")
     }
     return(ltest)
@@ -47,7 +47,7 @@ ctest <- function(link_texts, filelist_full){
     return(NULL)
   }else{
     if(!interactive()){
-      email_error(s=ctr)
+      email_error(s=paste(ctr,"ctest: failed"))
       stop("ctest: failed")
     }
     return(res)
@@ -107,6 +107,12 @@ return(NULL)
 #' - delete linkage information for this line because it is not relevant!
 #' @seealso \link{check_type_one} \link{check_type_two} \link{solve_type_one} \link{solve_type_two}
 solve_type_one <- function(check_type_one_results){
+  
+  # check necessity of solving anything
+  if( is.null(check_type_one_results) ){
+    return(NULL)
+  }
+  
   data_lines     <- check_type_one_results$data_lines
   data_linkage   <- check_type_one_results$data_linkage
   type_one       <- check_type_one_results$type_one
@@ -127,10 +133,21 @@ t1test <- function(data_linkage, data_lines){
     solve_type_one(
       check_type_one(data_linkage, data_lines)
     )
-  if ( is.null(check_type_one(tmp)) ){
-    message("--- OK no type one errors (relevant==1 and ccode==999) OK---")
-    res <- named_list(data_linkage, data_lines) 
-    return(res)
+  
+  # success ? 
+  chk <- try(check_type_one(tmp$data_linkage, tmp$data_lines), silent=TRUE)
+  chk <- ifelse(class(chk)=="try-error", FALSE, is.null(chk))
+  
+  if ( is.null(tmp) | chk ){ # success ? 
+    # sucess after corrections ? 
+      if( !is.null(tmp) ){     
+        data_linkage <- tmp$data_linkage
+        data_lines   <- tmp$data_lines
+      }
+    # return 
+      message("--- OK no type one errors (relevant==1 and ccode==999) OK---")
+      res <- named_list(data_linkage, data_lines) 
+      return(res)
   }else{
     if(!interactive()){
       email_error(s=ctr)
@@ -215,28 +232,34 @@ solve_type_two <- function(check_type_two_results){
       select(tl_id) %>% rename(ll_tl_id1=tl_id) %>% 
       anti_join(data_linkage) 
   )
+  # make sure, last version is not included in missing deletions
+  ctr                <- unique(str_extract(type_two$tl_id,"[[:alpha:]]*"))
+  last_version       <- max(str_extract(grep(ctr, data_lines$tl_id, value = T), "\\w*_\\d*-\\d*-\\d*.\\d"))
+  missing_deletions <- missing_deletions[!grepl(last_version, missing_deletions$ll_tl_id1),]
   
   tmp_text <- left_join(missing_deletions, data_lines, by=c(ll_tl_id1="tl_id"))$tl_text
   tmp_id2  <- str_c(text_meta$id[match(str_extract(missing_deletions$ll_tl_id1,"\\w*_\\d*-\\d*-\\d*.\\d"), text_meta$id)+1], "_____")
-  tmp <- 
-    data_frame(
-      ll_tl_id1        = missing_deletions$ll_tl_id1,
-      ll_tl_id2        = tmp_id2,
-      ll_sim           = 0,
-      ll_sim_wd        = 0, 
-      ll_diff          = 1,
-      ll_diff_wd       = linkage_sim(data.frame( Aorigtext = tmp_text, Borigtext = "" ), simtype = "diff_wd" ), 
-      ll_type          = "deletion", 
-      ll_t_id1         = str_extract(missing_deletions$ll_tl_id1, "\\w*_\\d*-\\d*-\\d*.\\d"),
-      ll_t_id2         = str_extract(tmp_id2,"\\w*_\\d*-\\d*-\\d*.\\d"),
-      ll_tl_lnr1       = as.numeric(str_extract(missing_deletions$ll_tl_id1, "\\d*$")),
-      ll_tl_lnr2       = NA, 
-      ll_minmaj_code   = 0, 
-      ll_minmaj_coder  = ifelse(str_detect(ctr, "^SWI"), NA, "Peter Auto Correct"),
-      ll_minmaj_memo   = ifelse(str_detect(ctr, "^SWI"), "", "Peter Auto Correct"),
-      ll_linkage_coder = ifelse(str_detect(ctr, "^SWI"), NA, "Peter Auto Correct")
-    )  %>% filter( !is.na(ll_tl_id2) )
-  data_linkage <- rbind(data_linkage, tmp)
+  if ( all(dim(missing_deletions)!=0) ){
+    tmp <- 
+      data_frame(
+        ll_tl_id1        = missing_deletions$ll_tl_id1,
+        ll_tl_id2        = tmp_id2,
+        ll_sim           = 0,
+        ll_sim_wd        = 0, 
+        ll_diff          = 1,
+        ll_diff_wd       = linkage_sim(data.frame( Aorigtext = tmp_text, Borigtext = "" ), simtype = "diff_wd" ), 
+        ll_type          = "deletion", 
+        ll_t_id1         = str_extract(missing_deletions$ll_tl_id1, "\\w*_\\d*-\\d*-\\d*.\\d"),
+        ll_t_id2         = str_extract(tmp_id2,"\\w*_\\d*-\\d*-\\d*.\\d"),
+        ll_tl_lnr1       = as.numeric(str_extract(missing_deletions$ll_tl_id1, "\\d*$")),
+        ll_tl_lnr2       = NA, 
+        ll_minmaj_code   = 0, 
+        ll_minmaj_coder  = ifelse(str_detect(ctr, "^SWI"), NA, "Peter Auto Correct"),
+        ll_minmaj_memo   = ifelse(str_detect(ctr, "^SWI"), "", "Peter Auto Correct"),
+        ll_linkage_coder = ifelse(str_detect(ctr, "^SWI"), NA, "Peter Auto Correct")
+      )  %>% filter( !is.na(ll_tl_id2) )
+    data_linkage <- rbind(data_linkage, tmp)
+  }
   
   suppressMessages(
   missing_insertions <- 
@@ -244,29 +267,33 @@ solve_type_two <- function(check_type_two_results){
     select(tl_id) %>% rename(ll_tl_id2=tl_id) %>% 
     anti_join(data_linkage) 
   )
-  
+  # make sure, first version is not included in missing insertion 
+  first_version      <- min(str_extract(grep(ctr, data_lines$tl_id, value = T), "\\w*_\\d*-\\d*-\\d*.\\d"))
+  missing_insertions <- missing_insertions[!grepl(first_version, missing_insertions$ll_tl_id2),]
   
   tmp_text <- left_join(missing_insertions, data_lines, by=c(ll_tl_id2="tl_id"))$tl_text
   tmp_id1  <- str_c(text_meta$id[match(str_extract(missing_insertions$ll_tl_id2,"\\w*_\\d*-\\d*-\\d*.\\d"), text_meta$id)-1], "_____")
-  tmp <- 
-    data_frame(
-      ll_tl_id1        = tmp_id1,
-      ll_tl_id2        = missing_insertions$ll_tl_id2,
-      ll_sim           = 0,
-      ll_sim_wd        = 0, 
-      ll_diff          = 1,
-      ll_diff_wd       = linkage_sim(data.frame( Aorigtext = "", Borigtext = tmp_text ), simtype = "diff_wd" ), 
-      ll_type          = "insertion", 
-      ll_t_id1         = str_extract(tmp_id1,"\\w*_\\d*-\\d*-\\d*.\\d"),
-      ll_t_id2         = str_extract(missing_insertions$ll_tl_id2, "\\w*_\\d*-\\d*-\\d*.\\d"),
-      ll_tl_lnr1       = NA,
-      ll_tl_lnr2       = as.numeric(str_extract(missing_insertions$ll_tl_id2, "\\d*$")), 
-      ll_minmaj_code   = 0, 
-      ll_minmaj_coder  = "Peter Auto Correct",
-      ll_minmaj_memo   = "Peter Auto Correct",
-      ll_linkage_coder = "Peter Auto Correct"
-    )  %>% filter( !is.na(ll_tl_id2) )
-  data_linkage <- rbind(data_linkage, tmp)
+  if ( all(dim(missing_insertions)!=0) ){
+    tmp <- 
+      data_frame(
+        ll_tl_id1        = tmp_id1,
+        ll_tl_id2        = missing_insertions$ll_tl_id2,
+        ll_sim           = 0,
+        ll_sim_wd        = 0, 
+        ll_diff          = 1,
+        ll_diff_wd       = linkage_sim(data.frame( Aorigtext = "", Borigtext = tmp_text ), simtype = "diff_wd" ), 
+        ll_type          = "insertion", 
+        ll_t_id1         = str_extract(tmp_id1,"\\w*_\\d*-\\d*-\\d*.\\d"),
+        ll_t_id2         = str_extract(missing_insertions$ll_tl_id2, "\\w*_\\d*-\\d*-\\d*.\\d"),
+        ll_tl_lnr1       = NA,
+        ll_tl_lnr2       = as.numeric(str_extract(missing_insertions$ll_tl_id2, "\\d*$")), 
+        ll_minmaj_code   = 0, 
+        ll_minmaj_coder  = "Peter Auto Correct",
+        ll_minmaj_memo   = "Peter Auto Correct",
+        ll_linkage_coder = "Peter Auto Correct"
+      )  %>% filter( !is.na(ll_tl_id2) )
+    data_linkage <- rbind(data_linkage, tmp)
+  }
   
   # return
   res <- named_list(data_linkage, data_lines)
@@ -285,9 +312,15 @@ t2test <- function(data_linkage, data_lines){
   chk <- try(check_type_two(tmp$data_linkage, tmp$data_lines), silent=TRUE)
   chk <- ifelse(class(chk)=="try-error", FALSE, is.null(chk))
   if ( is.null(tmp) | chk ){
-    message("--- OK no type two errors (relevant==0 and ccode!=999) OK---")
-    res <- named_list(data_linkage, data_lines) 
-    return(res)
+    # sucess after corrections ? 
+      if( !is.null(tmp) ){     
+        data_linkage <- tmp$data_linkage
+        data_lines   <- tmp$data_lines
+      }
+    # return 
+      message("--- OK no type two errors (relevant==0 and ccode!=999) OK---")
+      res <- named_list(data_linkage, data_lines) 
+      return(res)
   }else{
     if(!interactive()){
       email_error(s=ctr)

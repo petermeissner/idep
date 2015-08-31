@@ -27,6 +27,7 @@ db_on_disk_version <-
   as.numeric()  %>% 
   max(na.rm=T)
 db_on_disk_version
+set.seed(7787)
 ```
 
 # The reforms dataset (version `r db_on_disk_version`)
@@ -41,7 +42,7 @@ The data set incorporates aggregated data for
 
 ```{r}
 reforms  %>% 
-  select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_agg_1)
+  select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_top_1)
 ```
 
 **ADDING FURTHER DESCRIPTION OF REFORM AND TEXT DATA**

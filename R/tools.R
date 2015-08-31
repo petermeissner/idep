@@ -12,20 +12,49 @@ named_list <- function(...){
   anonList
 }
 
+#' function for handling function calls
+function_call <- function(){
+  res <- list()
+  call_info       <- sys.call(sys.parent())
+    res$info <- call_info
+  call_function   <- call_info[[1]]
+    res$func <- as.character(call_function )
+  call_par_names  <- names(as.list(call_info)[-1])
+    res$par_names <- call_par_names
+  call_par_names  <- ifelse(nchar(call_par_names)>0, paste(call_par_names, "=", sep=""), call_par_names)
+  call_par_values <- call_info[-1]
+    res$par_values <- as.character(call_par_values)
+  call_par        <- paste(call_par_names, call_par_values, collapse=", ", sep="")
+  full_call       <- paste0(call_function, "(", call_par, ")")
+    res$call <- full_call
+  return(res)
+}
+
+
 #' email error
 #' @param s subject 
 #' @param body body of email
 #' @param anyways if set to true function will mail also when in non-interactive mode while the default is to no mail 
 email_error <- function(..., s="", body="", anyways=F, to="retep.meissner@gmail.com"){
   if ( !interactive() | anyways==T ){
+      fc <- function_call()
     blatr::blat( 
+      to   = to,
+      s    = paste0("[Rerror] : ", fc$func,", ", s),
       body = paste0(Sys.time(), " \n\n", 
-                    "[ Rerror        ] : ", sys.call(sys.parent())[[1]],", ", s , "\n",
+                    "[ Rerror        ] : ", fc$call,", ", "\n",
                     "[ getwd()       ] : ", getwd(), "\n",
               paste("[ commandArgs() ] : ", commandArgs(), "\n", collapse = "", sep=""),
-                    "\n\n", body) 
+                    "\n\n", paste(body, collapse = "\n"), paste(..., collapse = "\n")) 
     )
   }
+}
+
+#' function for getting the history
+get_history <- function(){
+  tmpf <- tempfile()
+  savehistory(tmpf)
+  rev(readLines(tmpf))
 }
 
 

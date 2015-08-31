@@ -1,2 +1,2 @@
-REM R < get_newest_data_from_db.R > get_newest_data_from_db.Rout  --vanilla --args UPDATE_TEXTS=TRUE
-Rscript -e "library(knitr);knitr::stitch_rhtml(commandArgs(TRUE)[1])" get_newest_data_from_db.R --vanilla --args UPDATE_TEXTS=TRUE
+R < get_newest_data_from_db.R > get_newest_data_from_db.Rout  --vanilla --args UPDATE_TEXTS=TRUE
+:: Rscript -e "library(knitr);knitr::stitch_rhtml(commandArgs(TRUE)[1])" get_newest_data_from_db.R --vanilla --args UPDATE_TEXTS=TRUE
