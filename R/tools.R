@@ -58,6 +58,35 @@ get_history <- function(){
 }
 
 
+#' factors to character
+
+factors_to_character <- function(x){
+  if( "list" %in% class(x) ){
+    for( i in seq_along(x) ){
+      x[[i]] <- factors_to_character(x[[i]])
+    }
+    return(x)
+  }
+  if( "tbl_df" %in% class(x) ){
+    x <- as.data.frame(x)
+    for( i in seq_along(x) ){
+      x[[i]] <- factors_to_character(x[[i]])
+    }
+    return(as_data_frame(x))
+  }
+  if( "data.frame" %in% class(x) ){
+    for( i in seq_along(x) ){
+      x[,i] <- factors_to_character(x[,i])
+    }
+    return(x)
+  }
+  if( "factor" %in% class(x) ){
+    x <- as.character(x)
+    return(x)
+  }
+  return(x)
+}
+
 #' get classes
 #' @param x list or data frame
 #' @return returns list with class attributes of length equal to length(x)
@@ -101,6 +130,54 @@ is_true_or_na <- function(x) is.na(x) | x == TRUE
 
 #' function that tests value for NA | FALSE
 is_false_or_na <- function(x) is.na(x) | x == FALSE
+
+
+#' function transforming NULL (non-values) to NA
+#' 
+null_to_na <-function(x) {
+  if( is.null(x) | length(x)==0 ){
+    return(NA)
+  }
+  return(x)
+}
+
+#' function transforming NULL (non-values) to FALSE
+#' 
+null_to_false  <-function(x) {
+  if( is.null(x) | length(x)==0 ){
+    return(FALSE)
+  }
+  return(x)
+}
+
+#' function transforming NULL (non-values) to TRUE
+#' 
+null_to_true   <-function(x) {
+  if( is.null(x) | length(x)==0 ){
+    return(TRUE)
+  }
+  return(x)
+}
+
+
+
+#' function transforming NULL and NA (non-values) to TRUE
+#' 
+empty_to_true <- function(x){ 
+  na_to_true(null_to_true(x))
+}
+
+
+#' function transforming NULL and NA (non-values) to FALSE
+#' 
+empty_to_false <- function(x){ 
+  na_to_false(null_to_false(x))
+}
+
+
+
+
+
 
 
 #' function that does a more convenient table, always showing NAs

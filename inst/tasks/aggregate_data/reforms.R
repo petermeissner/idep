@@ -144,7 +144,7 @@ linkage2 <-  group_by(linkage, ll_t_id2)
 
 
 
-# ... change  
+# ... modifikation  
   tmp <- 
     linkage2  %>% 
     filter(ll_type=="change") %>% 
@@ -160,8 +160,9 @@ linkage2 <-  group_by(linkage, ll_t_id2)
     )  %>% 
     rename(t_id = ll_t_id2) %>% 
     left_join(reforms[,"t_id"], .)
-  tmp[is.na(tmp)] <- 0
 
+  tmp[is.na(tmp)]<-0
+  
   reforms <- 
     left_join(reforms, tmp)
 
@@ -188,7 +189,8 @@ linkage2 <-  group_by(linkage, ll_t_id2)
     )  %>% 
     rename(t_id = ll_t_id2) %>% 
     left_join(reforms[,"t_id"], .)
-  tmp[is.na(tmp)] <- 0
+  
+  tmp[is.na(tmp)]<-0
   
   reforms <- 
     left_join(reforms, tmp) 
@@ -201,25 +203,32 @@ linkage2 <-  group_by(linkage, ll_t_id2)
 
 
 # ... deletion
-tmp <- 
-  linkage1  %>% 
-  filter(ll_type=="deletion") %>% 
-  summarize(
-    wds_del = sum(ll_diff_wd),
-    lns_del = n(),
-    pro_maj_del = sum(ll_minmaj_code==1),
-    pro_min_del = sum(ll_minmaj_code==2),
-    pro_non_del = sum(ll_minmaj_code==0),
-    wds_pro_maj_del = sum((ll_minmaj_code==1)*ll_diff_wd),
-    wds_pro_min_del = sum((ll_minmaj_code==2)*ll_diff_wd),
-    wds_pro_non_del = sum((ll_minmaj_code==0)*ll_diff_wd)
-  )  %>% 
-  rename(t_id = ll_t_id1) %>% 
-  left_join(reforms[,"t_id"], .)
-tmp[is.na(tmp)] <- 0
+  tmp <- 
+    linkage1  %>% 
+    filter(ll_type=="deletion") %>% 
+    summarize(
+      wds_del = sum(ll_diff_wd),
+      lns_del = n(),
+      pro_maj_del = sum(ll_minmaj_code==1),
+      pro_min_del = sum(ll_minmaj_code==2),
+      pro_non_del = sum(ll_minmaj_code==0),
+      wds_pro_maj_del = sum((ll_minmaj_code==1)*ll_diff_wd),
+      wds_pro_min_del = sum((ll_minmaj_code==2)*ll_diff_wd),
+      wds_pro_non_del = sum((ll_minmaj_code==0)*ll_diff_wd)
+    ) 
 
-reforms <- 
-  left_join(reforms, tmp)
+  tmp <- 
+    left_join(tmp, distinct(select(linkage, ll_t_id1, ll_t_id2), ll_t_id2) )  %>% 
+    select(-ll_t_id1)  %>% 
+    rename(t_id = ll_t_id2) %>% 
+    left_join(reforms[,"t_id"], .)
+  tmp[is.na(tmp)]<-0
+  
+  reforms <- 
+    left_join(reforms, tmp)
+
+
+
 
 #    # check : deletion_summing_up
 # sum_of_its_parts <-tmp$wds_pro_maj_del + tmp$wds_pro_min_del + tmp$wds_pro_non_del != tmp$wds_diff_del
@@ -258,126 +267,276 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
 
 
 
-#### setting NA ================================================================
-# names(reforms)
-
-reforms[
-  reforms$t_id %in% firstids,
-  which(colnames(reforms)=="lns_mdf"):
-    which(colnames(reforms)=="wds_chg")
-  ] <- NA
-
-reforms[
-  grep("^SWI", reforms$t_id),
-  grep("pro_", colnames(reforms))
-  ] <- NA
-
-
-
 #### corpus codes ==============================================================
 
 # lines 
-lines_agg <- 
-  group_by(lines, t_id, tl_corpus_code ) 
-
-tmp <- 
-  aggregate(
-    lines_agg$tl_wds_clean, 
-    by  = list(lines_agg$t_id, lines_agg$tl_corpus_code), 
-    FUN = length 
-  ) 
-names(tmp) <- c("t_id","corpus","lns_corp")
-tmp <- 
-  reshape(tmp,  idvar="t_id", timevar="corpus", direction="wide", sep="_")  %>% 
-  as_data_frame()
-tmp <- 
-  left_join(reforms[, "t_id"], tmp)
-tmp[is.na(tmp)] <- 0
-
-reforms <- left_join(reforms, tmp)
+  lines_agg <- 
+    group_by(lines, t_id, tl_corpus_code ) 
+  
+  tmp <- 
+    aggregate(
+      lines_agg$tl_wds_clean, 
+      by  = list(lines_agg$t_id, lines_agg$tl_corpus_code), 
+      FUN = length 
+    ) 
+  names(tmp) <- c("t_id","corpus","lns_corp")
+  tmp <- 
+    reshape(tmp,  idvar="t_id", timevar="corpus", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  tmp <- 
+    left_join(reforms[, "t_id"], tmp)
+  tmp[is.na(tmp)] <- 0
+  
+  reforms <- left_join(reforms, tmp) 
 
 # words 
-tmp <- 
-  aggregate(
-    lines_agg$tl_wds_clean, 
-    by  = list(lines_agg$t_id, lines_agg$tl_corpus_code), 
-    FUN = sum, 
-    na.rm = TRUE
-  ) 
-names(tmp) <- c("t_id","corpus","wds_corp")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corpus", direction="wide", sep="_")
-tmp[is.na(tmp)] <- 0
+  tmp <- 
+    aggregate(
+      lines_agg$tl_wds_clean, 
+      by  = list(lines_agg$t_id, lines_agg$tl_corpus_code), 
+      FUN = sum, 
+      na.rm = TRUE
+    ) 
+  names(tmp) <- c("t_id","corpus","wds_corp")
+  tmp <- reshape(tmp,  idvar="t_id", timevar="corpus", direction="wide", sep="_")
+  tmp[is.na(tmp)] <- 0
+  
+  reforms <- left_join(reforms, tmp)
 
-reforms <- left_join(reforms, tmp)
-
-
-
-## DEV >>
-## put in here 
-## DEV <<
 
 
 
 # lines for code_scheme - topics
-tmp <- 
-  aggregate(
-    lines_agg$tl_wds_clean, 
-    by   = list(lines_agg$t_id, ccode_corpus_recode(lines_agg$tl_corpus_code)), 
-    FUN  = length
-  )
-names(tmp) <- c("t_id","corp_top","lns_corp_top")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corp_top", direction="wide", sep="_")
-tmp[is.na(tmp)] <- 0
-
-reforms <- left_join(reforms, tmp)
-
-
-# wds for code_scheme - topics
-tmp <- 
-  aggregate(
-    lines_agg$tl_wds_clean, 
-    by    = list(lines_agg$t_id, ccode_corpus_recode(lines_agg$tl_corpus_code)), 
-    FUN   = sum,
-    na.rm = TRUE
-  )
-names(tmp) <- c("t_id","corp_top","wds_corp_top")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corp_top", direction="wide", sep="_")
-tmp[is.na(tmp)] <- 0
-
-reforms <- left_join(reforms, tmp)
+  agg_list <- 
+    data.frame(ccode_top(lines_agg$tl_corpus_code), t_id=lines_agg$t_id)
+  
+  agg <- 
+    aggregate(
+      lines_agg$tl_wds_clean, 
+      by   = as.list(agg_list) , 
+      FUN  = length
+    )
+  
+    agg_names <- grep("\\d",names(agg), value = TRUE)
+  tmp <-
+    reforms[,"t_id"]
+    tmp[, agg_names] <- 0
+  
+  for (id in reforms$t_id ) {
+    part <- agg[agg$t_id==id ,]
+    for(an in agg_names){
+      tmp[tmp$t_id == id, an] <- sum(part[part[,an], ]$x)
+    } 
+  }
+  names(tmp) <- c("t_id", paste0("lns_corp_",names(tmp[-1])) )
+  
+  reforms <- left_join(reforms, tmp)
 
 
+# words for code_scheme - topics
+  agg_list <- 
+    data.frame(ccode_top(lines_agg$tl_corpus_code), t_id=lines_agg$t_id)
+  
+  agg <- 
+    aggregate(
+      lines_agg$tl_wds_clean, 
+      by    = as.list(agg_list) , 
+      FUN   = sum,
+      na.rm = TRUE
+    )
+  
+    agg_names <- grep("\\d",names(agg), value = TRUE)
+  tmp <-
+    reforms[,"t_id"]
+    tmp[, agg_names] <- 0
+  
+  for (id in reforms$t_id ) {
+    part <- agg[agg$t_id==id ,]
+    for(an in agg_names){
+      tmp[tmp$t_id == id, an] <- sum(part[part[,an], ]$x)
+    } 
+  }
+  names(tmp) <- c("t_id", paste0("wds_corp_",names(tmp[-1])) )
+  
+  reforms <- left_join(reforms, tmp)
 
 # lines for code_scheme - actors
-tmp <- 
-  aggregate(
-    lines_agg$tl_wds_clean, 
-    by   = list(lines_agg$t_id, ccode_corpus_recode2(lines_agg$tl_corpus_code)), 
-    FUN  = length
-  )
-names(tmp) <- c("t_id","corp_act","lns_corp_act")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corp_act", direction="wide", sep="_")
-tmp[is.na(tmp)] <- 0
-
-reforms <- left_join(reforms, tmp)
-
-
-# wds for code_scheme - actors
-tmp <- 
-  aggregate(
-    lines_agg$tl_wds_clean, 
-    by    = list(lines_agg$t_id, ccode_corpus_recode2(lines_agg$tl_corpus_code)), 
-    FUN   = sum,
-    na.rm = TRUE
-  )
-names(tmp) <- c("t_id","corp_act","wds_corp_act")
-tmp <- reshape(tmp,  idvar="t_id", timevar="corp_act", direction="wide", sep="_")
-tmp[is.na(tmp)] <- 0
-
-reforms <- left_join(reforms, tmp)
-
+  agg_list <- 
+    data.frame(ccode_act(lines_agg$tl_corpus_code), t_id=lines_agg$t_id)
+  
+  agg <- 
+    aggregate(
+      lines_agg$tl_wds_clean, 
+      by   = as.list(agg_list) , 
+      FUN  = length
+    )
+  
+  agg_names <- grep("\\d",names(agg), value = TRUE)
+  tmp <-
+    reforms[,"t_id"]
+  tmp[, agg_names] <- 0
+  
+  
+  for (id in reforms$t_id ) {
+    part <- agg[agg$t_id==id ,]
+    for(an in agg_names){
+      tmp[tmp$t_id == id, an] <- sum(part[part[,an], ]$x)
+    } 
+  }
+  names(tmp) <- c("t_id", paste0("lns_corp_",names(tmp[-1])) )
+  
+  reforms <- left_join(reforms, tmp)
 
 
+# words for code_scheme - actors
+  agg_list <- 
+    data.frame(ccode_act(lines_agg$tl_corpus_code), t_id=lines_agg$t_id)
+  
+  agg <- 
+    aggregate(
+      lines_agg$tl_wds_clean, 
+      by    = as.list(agg_list) , 
+      FUN   = sum,
+      na.rm = TRUE
+    )
+  
+  agg_names <- grep("\\d",names(agg), value = TRUE)
+  tmp <-
+    reforms[,"t_id"]
+  tmp[, agg_names] <- 0
+  
+  for (id in reforms$t_id ) {
+    part <- agg[agg$t_id==id ,]
+    for(an in agg_names){
+      tmp[tmp$t_id == id, an] <- sum(part[part[,an], ]$x)
+    } 
+  }
+  names(tmp) <- c("t_id", paste0("wds_corp_",names(tmp[-1])) )
+  
+  reforms <- left_join(reforms, tmp)
+  
+
+  
+    
+#### modification types per corpus code ========================================
+
+  
+  # ... modification
+  tmp <- 
+    linkage  %>% 
+    filter(ll_type=="change") %>% 
+    select(ll_diff_wd, ll_tl_id2) %>%
+    rename(tl_id = ll_tl_id2) %>% 
+    left_join(select(lines, tl_id, t_id, tl_corpus_code)) %>% 
+    group_by(t_id, tl_corpus_code) %>% 
+    summarize(
+      sum(ll_diff_wd)
+    )
+  
+  names(tmp) <- c("t_id", "ccode", "mdf")
+  
+  tmp <- 
+    reshape(as.data.frame(tmp),  idvar="t_id", timevar="ccode", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  
+  tmp[is.na(tmp)] <- 0
+  names(tmp)[-1] <- paste0("wds_corp_",names(tmp)[-1])
+  
+  reforms <- 
+    left_join(reforms, tmp)
+  
+  
+  
+  # ... insertion
+  tmp <- 
+    linkage  %>% 
+    filter(ll_type=="insertion") %>% 
+    select(ll_diff_wd, ll_tl_id2) %>%
+    rename(tl_id = ll_tl_id2) %>% 
+    left_join(select(lines, tl_id, t_id, tl_corpus_code)) %>% 
+    group_by(t_id, tl_corpus_code) %>% 
+    summarize(
+      sum(ll_diff_wd)
+    )
+  
+  names(tmp) <- c("t_id", "ccode", "ins")
+  
+  tmp <- 
+    reshape(as.data.frame(tmp),  idvar="t_id", timevar="ccode", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  
+  tmp[is.na(tmp)] <- 0
+  
+  names(tmp)[-1] <- paste0("wds_corp_", names(tmp)[-1] )
+  reforms <- 
+    left_join(reforms, tmp)
+  
+  
+  # ... deletion
+  tmp <- 
+    linkage  %>% 
+    filter(ll_type=="deletion") %>% 
+    select(ll_diff_wd, ll_tl_id1, ll_t_id2) %>%
+    rename(tl_id = ll_tl_id1) %>% 
+    left_join(select(lines, tl_id, t_id, tl_corpus_code)) 
+  
+  tmp <- 
+    tmp  %>% 
+    select(ll_t_id2, ll_diff_wd, tl_corpus_code) %>% 
+    rename(t_id = ll_t_id2) %>% 
+    group_by(t_id, tl_corpus_code) %>% 
+    summarize(
+      sum(ll_diff_wd)
+    )
+  
+  names(tmp) <- c("t_id", "ccode", "del")
+
+  tmp <- 
+    reshape(as.data.frame(tmp),  idvar="t_id", timevar="ccode", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  
+  tmp[is.na(tmp)] <- 0
+  names(tmp)[-1] <- paste0("wds_corp_",names(tmp)[-1])
+  
+  reforms <- 
+    left_join(reforms, tmp)
+  
+  
+  
+#### some cleanup ==============================================================
+  
+  
+  # ensuring all corpus variables exist
+  for (code in ccodes) {
+    if ( is.null(unlist( reforms[,paste0("wds_corp_mdf_",code)] )) ) reforms[,paste0("wds_corp_mdf_",code)] <- 0
+    if ( is.null(unlist( reforms[,paste0("wds_corp_ins_",code)] )) ) reforms[,paste0("wds_corp_ins_",code)] <- 0
+    if ( is.null(unlist( reforms[,paste0("wds_corp_del_",code)] )) ) reforms[,paste0("wds_corp_del_",code)] <- 0
+    if ( is.null(unlist( reforms[,paste0("lns_corp_mdf_",code)] )) ) reforms[,paste0("lns_corp_mdf_",code)] <- 0
+    if ( is.null(unlist( reforms[,paste0("lns_corp_ins_",code)] )) ) reforms[,paste0("lns_corp_ins_",code)] <- 0
+    if ( is.null(unlist( reforms[,paste0("lns_corp_del_",code)] )) ) reforms[,paste0("lns_corp_del_",code)] <- 0
+    if ( is.null(unlist( reforms[,paste0("wds_corp_",code)] )) ) reforms[,paste0("wds_corp_",code)]         <- 0
+    if ( is.null(unlist( reforms[,paste0("wds_corp_",code)] )) ) reforms[,paste0("wds_corp_",code)]         <- 0
+  }
+  
+  # ensuring all change variables have either value or 0 
+  for (var in grep("pro_|chg|mdf|ins|del",names(reforms)) ) {
+    reforms[ is.na(reforms[, var] ) , var] <- 0
+  }
+  
+  
+  # ensuring all change varaibales are NA for first versions of SO
+  reforms[ reforms$t_id %in% firstids,  grep("ins",colnames(reforms),value = T)  ] <- NA
+  reforms[ reforms$t_id %in% firstids,  grep("del",colnames(reforms),value = T)  ] <- NA
+  reforms[ reforms$t_id %in% firstids,  grep("mdf",colnames(reforms),value = T)  ] <- NA
+  reforms[ reforms$t_id %in% firstids,  grep("chg",colnames(reforms),value = T)  ] <- NA
+  reforms[ reforms$t_id %in% firstids,  grep("pro",colnames(reforms),value = T)  ] <- NA
+  
+  
+  # ensuring that for Swiss there are no information on MinMaj Coding
+  reforms[ grep("^SWI", reforms$t_id),  grep("pro_", colnames(reforms))          ] <- NA
+
+  
+  
 #### testing ===================================================================
 
 test_that(

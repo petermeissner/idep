@@ -7,9 +7,11 @@ output:
     keep_tex: yes
     number_sections: yes
   html_document:
+    highlight: espresso
     keep_md: yes
     number_sections: yes
     self_contained: no
+    toc: yes
 ---
 
 ```{r, include=FALSE}
@@ -97,76 +99,8 @@ Since all coding and analysis was only pursued on the basis of relevant and clea
 
 
 
-# Variable descriptions
 
-```{r var description, include=FALSE}
-source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description.r")
-desc_missing <- any( !(   names(reforms) %in% description$name ))
-desc_tomuch  <- any( !( description$name %in% names(reforms)   ))
-anymiss <- desc_tomuch | desc_missing
-```
-
-```{r, echo=FALSE, results='asis'}
-if(anymiss){
-  cat("## Missing variable descriptions")
-}else{
-  cat("")
-} 
-```
-
-```{r, include=desc_missing}
-names(reforms)[!(names(reforms) %in% description$name)]
-```
-
-```{r, include=desc_tomuch}
-description$name[!(description$name %in% names(reforms))]
-```
-
-```{r, echo=FALSE, results='asis'}
-sumvar <- function(x){
-  cat("**class:** ",   class(x)          ,"\\\n<br>")
-  cat("**unique:** ",  length(unique(x)) ,"\\\n<br>")
-  cat("**NAs:** ",     sum(is.na(x))     ,"\\\n<br>")
-  cat(
-    "**range:** *[", 
-    range(x, na.rm=T)[1], 
-    "]* ... *[",
-    range(x, na.rm=T)[2],
-    "]*",
-    "\\\n<br>"
-  )
-  cat(
-    "**examples:** ", 
-    paste0(substring(
-      paste0("*[ ",  paste(sample(x,10), collapse=" ], [ ", sep="") ,   " ]"),
-    0,80),"*"),
-    "...",
-    "\\\n<br>"
-  )
-  
-}
-
-for( g in sort(unique(description$group)) ){
-  cat(paste0("\n## ", g, "\n\n"))
-  dat <- description  %>% filter(group==g)
-  for( i in seq_len(dim(dat)[1]) ){
-    cat(
-      "\n\n**", dat$name[i], "** (", dat$from[i] ,")", "\n\n",
-      dat$desc[i], "\n\n",
-      sep=""
-    )
-    sumvar(unlist(reforms[,dat$name[i]]))
-    cat("\n\n<p>&nbsp;</p>")
-  }
-}
-```
-
-
-
-# Appendix
-
-
-## Coding Manual: Categories and Codes for Coding the Content of Parliamentary Standing Orders
+# Coding Manual: Categories and Codes for Coding the Content of Parliamentary Standing Orders
 
 ### Basic Intuition:
 
@@ -321,6 +255,101 @@ Each and every code is exclusive, meaning that one subparagraph needs to have on
 **10	Miscellaneous** (cannot be coded otherwise)
 
 **999 	Footnotes and Titles Without Relevant Content**
+
+
+
+
+
+# Variable descriptions
+
+```{r var description, include=FALSE}
+source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description.r")
+desc_missing <- any( !(   names(reforms) %in% description$name ))
+desc_tomuch  <- any( !( description$name %in% names(reforms)   ))
+anymiss <- desc_tomuch | desc_missing
+```
+
+```{r, echo=FALSE, results='asis'}
+if(anymiss){
+  cat("## Missing variable descriptions")
+}else{
+  cat("")
+} 
+```
+
+```{r, include=desc_missing}
+names(reforms)[!(names(reforms) %in% description$name)]
+```
+
+```{r, include=desc_tomuch}
+description$name[!(description$name %in% names(reforms))]
+```
+
+```{r, echo=FALSE, results='asis'}
+sumdummy<-function(x)
+{
+  ifelse(
+    class(x) == "character", 
+    "-", 
+    format(sum(x, na.rm=TRUE), scientific = F, big.mark = "\xA0") 
+  )
+}
+sumvar <- function(x){
+  cat("**`class    :`** `", 
+      str_pad(class(x)               , 
+              12, "left", "\u00A0") ,"`\\\n<br>")
+  cat("**`unique   :`** `", 
+      str_pad(length(unique(x))      , 
+              12, "left", "\u00A0") ,"`\\\n<br>")
+  cat("**`NAs      :`** `", 
+      str_pad(sum(is.na(x))          , 
+              12, "left", "\u00A0") ,"`\\\n<br>")
+  cat("**`not-NA   :`** `", 
+      str_pad(sum(!is.na(x))         , 
+              12, "left", "\u00A0") ,"`\\\n<br>")
+  cat("**`not-0-NA :`** `", 
+      str_pad(sum(!is.na(x) & x!=0 ) , 
+              12, "left", "\u00A0") ,"`\\\n<br>")
+  cat("**`sum      :`** `", 
+      str_pad(sumdummy(x)            , 
+              12, "left", "\u00A0") ,"`\\\n<br>")
+  cat(
+      "**`range    :`** `[", 
+    range(x, na.rm=T)[1], 
+    "] ... [",
+    range(x, na.rm=T)[2],
+    "]",
+    "`\\\n<br>"
+  )
+  cat(
+      "**`examples :`** `", 
+    paste0(substring(
+      paste0("[",  paste(sample(x,10), collapse="], [", sep="") ,   "]"),
+    0,80),""),
+    "...",
+    "`\\\n<br>"
+  )
+  
+}
+
+for( g in sort(unique(description$group)) ){
+  cat(paste0("\n## ", g, "\n\n"))
+  dat <- description  %>% filter(group==g)
+  for( i in seq_len(dim(dat)[1]) ){
+    cat(
+      "\n\n**", dat$name[i], "** (", dat$from[i] ,")", "\n\n",
+      dat$desc[i], "\n\n",
+      sep=""
+    )
+    sumvar(unlist(reforms[,dat$name[i]]))
+    cat("\n\n<p>&nbsp;</p>")
+  }
+}
+```
+
+
+
+
 
 
 
