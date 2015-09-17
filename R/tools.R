@@ -257,7 +257,14 @@ country_to_short <- function(x){
 }
 
 
-
+#' function for keeping only selected objects
+keep <- function(...){
+  if ( !interactive() ) stop("mgiht only be used interactively")
+  fpvs <- function_call()$par_values
+  ls_tmp <- ls(envir=globalenv())[!(ls(envir=globalenv()) %in% function_call()$par_values)]
+  rm( list = ls_tmp , envir = globalenv())
+  return(ls_tmp)
+}
 
 
 
