@@ -10,26 +10,38 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+
 # =========================
 # Operating System Files
 # OSX
 .DS_Store
 .AppleDouble
 .LSOverride
+
 # Icon must end with two \r
 Icon
+
+# =========================
 # Thumbnails
+
 ._*
+
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+# =========================
 # Directories potentially created on remote AFP share
+
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# =========================
 # rstudio / rpackage specific
+
 *.Rproj
 .Rproj.user
 devel/
@@ -39,3 +51,6 @@ Readme_cache/html/*
 travischeck.svg
 R/pversion_inc.R
 *.rout
+
+
+
