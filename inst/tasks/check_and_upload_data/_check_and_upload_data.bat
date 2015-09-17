@@ -1,6 +1,10 @@
-SET SHORTDESC=redo words counting
+:: set up description
+SET SHORTDESC=
+
+:: clean up
 R < clean_up_before_upload.r --vanilla 
 
+:: execute uploads
 R < check_and_upload_data.R > AUT.rout --vanilla --args ctr='AUT'           SHORTDESC='\"%SHORTDESC%\"'
 R < check_and_upload_data.R > BEL.rout --vanilla --args ctr='BEL'           SHORTDESC='\"%SHORTDESC%\"'
 R < check_and_upload_data.R > DEN.rout --vanilla --args ctr='DEN'           SHORTDESC='\"%SHORTDESC%\"'
@@ -18,10 +22,12 @@ R < check_and_upload_data.R > UK.rout --vanilla --args ctr='UK'             SHOR
 R < check_and_upload_data.R > SWIGRN.rout --vanilla --args ctr='SWIGRN'     SHORTDESC='\"%SHORTDESC%\"'
 R < check_and_upload_data.R > SWIPARLG.rout --vanilla --args ctr='SWIPARLG' SHORTDESC='\"%SHORTDESC%\"' 
 
-
+:: regenerate temporary database tables
 R < check_and_upload_data_regen_temp_tables.R --vanilla
 
+:: send email notification
 R < latest_uploads.r > latest_uploads.rout --vanilla 
 blat latest_uploads.txt -to retep.meissner@gmail.com -s "IDEP data upload finished" 
 
+:: clean up 
 R < clean_up_before_upload.r --vanilla & pause

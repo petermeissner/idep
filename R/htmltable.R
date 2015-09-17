@@ -7,15 +7,20 @@
 #' @param foot should user defined HTML foot be used (everything after the table)
 
 htmltable <- function( x, 
-                       file="", 
-                       standalone=T, 
-                       names=T, 
-                       head="", 
-                       foot="" , 
-                       color="",
-                       bgcolor="", 
-                       html=""
+                       file = "", 
+                       standalone = TRUE, 
+                       names = TRUE, 
+                       head = "", 
+                       foot = "" , 
+                       color = "",
+                       bgcolor = "", 
+                       html = "",
+                       browse = file=="",
+                       width = rep("", dim(x)[2])
                      ){
+  # save function call for later
+  FC <- function_call()$call
+  
   # input check
   if ( !any( class(x) %in% c("matrix", "data.frame") ) ){
     stop(paste("df_to_htmltable: I do not know how to transform x =",
@@ -27,8 +32,8 @@ htmltable <- function( x,
       paste(  
         ifelse( 
           bgcolor=="" & color=="",
-          '  <tr><td>',
-          paste("  <tr style='background-color:", bgcolor , "; color:", " '>  <td>")
+          '    <tr><td>',
+          paste("    <tr style='background-color:", bgcolor , "; color:", " '>  <td>")
         ),
         apply(
           cbind(
@@ -57,16 +62,22 @@ htmltable <- function( x,
       names <- names(x)
     }
     names <- c("#", names)
-    table <- paste(
-                paste( "<tr class= firstline><th>", 
-                    paste(names, collapse=" </th> <th> "), 
-                    "</th></tr>"), 
-                table
-              , collapse="\n")
+    ths   <-  paste0(
+                " </th>\n  <th",
+                ifelse(width=="", "", paste0(" style='width: ",width, "'")),
+                "> ")
+    ths   <-
+    tablehead <- paste( " <tr class= firstline>\n  <th>", 
+                        str_replace(paste(names, ths, collapse=""), "\n.*?<th>.*?$", ""), 
+                        "\n </tr>\n")
+    table <- paste( tablehead, table, collapse = "\n")
   }
-  table <- paste("<table border=0 class=innerTable>", 
-                 paste(table, collapse="\n"), 
-                 "</table>")
+  table <- paste(
+            "\n<!--\n", FC, "\n-->\n",
+            "<table style='vertical-align: top;' border=0 class=innerTable>\n", 
+            paste(table, collapse="\n"), 
+            "\n</table>"
+            )
   # standalone
   if ( standalone == T ){
     if ( head=="" ){
@@ -102,7 +113,8 @@ htmltable <- function( x,
   if ( file!="" ){
     writeLines(html, file)
     message(paste("Writing output to file:", file))
-  } else {
+  } 
+  if(file=="" & browse == TRUE){
     file <- tempfile(fileext=".html")
     writeLines(html, file)
     browseURL(file)

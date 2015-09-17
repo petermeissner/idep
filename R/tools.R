@@ -121,7 +121,7 @@ na_to_zero <- function(x){
 
 #' function that transforms NAs to empty string
 na_to_empty <- function(x){
-  x[is.na(x)] <- 0
+  x[is.na(x)] <- ""
   x
 }
 

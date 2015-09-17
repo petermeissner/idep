@@ -6,12 +6,17 @@ library(foreign)
 library(stringr)
 library(magrittr)
 library(RMySQL)
+library(car)
+
+
+# convenience paste function 
+`%.%` <- function(a,b) paste0(a,b)
+
 
 # set dev options / unless provided by commandline arguments
 eval_cl_args()
 if_not_exists(DEV, FALSE)
 if_not_exists(UPDATE_TEXTS, FALSE)
-
 
 
 get_ready <- function(){
@@ -90,31 +95,46 @@ file.move(
   }
 )
 
+### time when data extracts were written to disk 
+db_on_disc_date <- 
+  file.info(
+    dir(
+      "Z:/Gesch\u00e4ftsordnungen/database/extracts", 
+      full.names = TRUE, 
+      pattern    = "_db_version_")
+  )$ctime %>% max() 
+
+
+### list of ids of texts 
+ids <- 
+  tl_raw  %>% 
+  distinct(tl_t_id) %>% 
+  select(tl_t_id) %>% 
+  unlist()
+
+
+### list of countries 
+countries <- 
+  str_extract(ids, "^[A-Z]{2,10}")
 
 
 
 # wirting texts and linkages into need litle HTML files to be looked upon
-## >> UPDATE_TEXTS==TRUE
+
+  ### >> producing texts # -------------------------------------------------------
 if( UPDATE_TEXTS )
 {
   setwd("Z:/Gesch\u00e4ftsordnungen/database/outputs/text_and_corpus")
-    
-  ### >> producing texts # -------------------------------------------------------
-  `%.%` <- function(a,b) paste0(a,b)
-  db_on_disc_date <- 
-    file.info(
-      dir(
-        "Z:/Gesch\u00e4ftsordnungen/database/extracts", 
-        full.names = TRUE, 
-        pattern    = "_db_version_")
-    )$ctime %>% max() 
   
+  ### list of ids of texts 
   ids <- 
     tl_raw  %>% 
     distinct(tl_t_id) %>% 
     select(tl_t_id) %>% 
     unlist()
   
+  
+  ### list of countries 
   countries <- 
     str_extract(ids, "^[A-Z]{2,10}")
   
@@ -125,8 +145,10 @@ if( UPDATE_TEXTS )
   
   # writing texts
   needs_update <- na_to_true(file.info(fnames)$ctime < db_on_disc_date)
+  
+  # loop
   for( i in seq_along(ids) ) { 
-    if ( !needs_update[i]  ){
+    if ( !needs_update[i] & DEV == FALSE ){
       next 
     } 
     id      <- ids[i]
@@ -167,15 +189,17 @@ if( UPDATE_TEXTS )
     htmltable(
       df, 
       file = fnames[i],
-      bgcolor = ccode_color_scheme2[df$corpus_cat],
+      bgcolor = ifelse(df$corpus_code==999, "#EFEFEF","#FFFFFF"),
       html = html
     )
   }
+}
   ### << producing texts # -------------------------------------------------------
 
 
   ### >> producing linkage texts # -----------------------------------------------
-  
+if( UPDATE_TEXTS )
+{ 
   setwd("Z:/Gesch\u00e4ftsordnungen/database/outputs/linkage_and_minmaj")
   
   # make country folders
@@ -220,86 +244,105 @@ if( UPDATE_TEXTS )
   
   # filter by those combinations tl_t_id and write files
   needs_update <- na_to_true(file.info(ids$fname)$ctime < db_on_disc_date)
-  for(i in seq_along(ids$id1) ){
-    if ( !needs_update[i] ) { 
-      next 
-    }
-    
-    fname      <- ids$fname[i]
-    prev_fname <- ids[i-1, ]$fname
-    next_fname <- ids[i+1, ]$fname
-    id1   <- ids$id1[i]
-    id2   <- ids$id2[i]
-    
-    # text output
-    tl1 <- tl_raw %>% 
-      filter( tl_t_id == id1 )  %>% 
-      select(tl_id, tl_corpus_code, tl_relevant, tl_lnr, tl_text)  %>% 
-      rename(rel=tl_relevant, ccode=tl_corpus_code, text=tl_text)
-    names(tl1) <-paste0(names(tl1), 1)
-    
-    tl2 <- tl_raw %>% 
-      filter( tl_t_id == id2 )  %>% 
-      select(tl_id, tl_corpus_code, tl_relevant, tl_lnr, tl_text)  %>% 
-      rename(rel=tl_relevant, ccode=tl_corpus_code, text=tl_text)
-    names(tl2) <-paste0(names(tl2), 2)
-    
-    ll <- ll_raw  %>% 
-      filter( ll_t_id1 == id1 | ll_tl_id2 == id2 ) %>% 
-      select(ll_tl_id1, ll_tl_id2, ll_tl_lnr1, ll_tl_lnr2, ll_type,
-             ll_sim, ll_sim_wd, ll_diff, ll_diff_wd)  %>% 
-      rename(
-        tl_id1     = ll_tl_id1,  
-        tl_id2     = ll_tl_id2, 
-        lnr1       = ll_tl_lnr1, 
-        lnr2       = ll_tl_lnr2, 
-        type       = ll_type, 
-        sim        = ll_sim, 
-        sim_words  = ll_sim_wd, 
-        diff       = ll_diff, 
-        diff_words = ll_diff_wd
-      )
-    
-    linkage <- full_join( ll, tl1) %>% full_join(tl2) 
-    linkage$lnr1 <- apply(linkage[,c("lnr1","tl_lnr1")], 1, max, na.rm=T, showWarnings=F)
-    linkage$lnr1 <- ifelse(is.infinite(linkage$lnr1), NA, linkage$lnr1)
-    linkage$lnr2 <- apply(linkage[,c("lnr2","tl_lnr2")], 1, max, na.rm=T, showWarnings=F)
-    linkage$lnr2 <- ifelse(is.infinite(linkage$lnr2), NA, linkage$lnr2)
-    linkage <- 
-      linkage  %>% 
-      select(-tl_lnr1, -tl_lnr2)  %>% 
-      mutate(
-        lnr1 = ifelse(lnr1==0, NA, lnr1),
-        lnr2 = ifelse(lnr2==0, NA, lnr2)
-      )
-    linkage <- 
-      linkage  %>% 
-      sort_align_df("lnr1", "lnr2")  %>% 
-      select(lnr1, lnr2, text1, rel1, text2, rel2, type, sim, diff, sim_words, diff_words)
-    linkage <- as_data_frame(lapply(linkage, function(x) ifelse(is.na(x), "", x)) )
-    
-    country <- 
-      str_extract(tl1$tl_id1[1], "^[A-Z]{3,7}")
-    
-    versus <- 
-      str_extract(tl1$tl_id1[1], ".*\\.\\d")  %.% 
-      "&nbsp; &nbsp; &nbsp; &nbsp;  <i>versus</i> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " %.% 
-      str_extract(tl2$tl_id2[1], ".*\\.\\d")
-    
-    info  <-
-      "<h1>" %.% 
-      ahref(prev_fname) %.% 
-      versus  %.% 
-      ahref(next_fname)  %.% 
-      "</h1><br>"
-    
-    htmltable(
-      file    = ids$fname[i],
-      x       = as.data.frame(linkage),
-      bgcolor = linkage_type_colors(linkage$type),
-      html    = info 
-    )
-  }
+  
+  
+  
+      # loop 
+      for(i in seq_along(ids$id1) ){
+        if ( !needs_update[i] & DEV == FALSE ) { 
+          next 
+        }
+        
+        fname      <- ids$fname[i]
+        prev_fname <- ids[i-1, ]$fname
+        next_fname <- ids[i+1, ]$fname
+        id1   <- ids$id1[i]
+        id2   <- ids$id2[i]
+        
+        # text output
+        tl1 <- tl_raw %>% 
+          filter( tl_t_id == id1 )  %>% 
+          select(tl_id, tl_corpus_code, tl_relevant, tl_lnr, tl_text)  %>% 
+          rename(rel=tl_relevant, ccode=tl_corpus_code, text=tl_text)
+        names(tl1) <-paste0(names(tl1), 1)
+        
+        tl2 <- tl_raw %>% 
+          filter( tl_t_id == id2 )  %>% 
+          select(tl_id, tl_corpus_code, tl_relevant, tl_lnr, tl_text)  %>% 
+          rename(rel=tl_relevant, ccode=tl_corpus_code, text=tl_text)
+        names(tl2) <-paste0(names(tl2), 2)
+        
+        ll <- ll_raw  %>% 
+          filter( ll_t_id1 == id1 | ll_tl_id2 == id2 ) %>% 
+          select(ll_tl_id1, ll_tl_id2, ll_tl_lnr1, ll_tl_lnr2, ll_type,
+                 ll_sim, ll_sim_wd, ll_diff, ll_diff_wd, ll_minmaj_code)  %>% 
+          rename(
+            tl_id1     = ll_tl_id1,  
+            tl_id2     = ll_tl_id2, 
+            lnr1       = ll_tl_lnr1, 
+            lnr2       = ll_tl_lnr2, 
+            type       = ll_type, 
+            sim        = ll_sim, 
+            sim_words  = ll_sim_wd, 
+            diff       = ll_diff, 
+            diff_words = ll_diff_wd
+          )
+        
+        linkage <- full_join( ll, tl1) %>% full_join(tl2) 
+        linkage$lnr1 <- apply(linkage[,c("lnr1","tl_lnr1")], 1, max, na.rm=T, showWarnings=F)
+        linkage$lnr1 <- ifelse(is.infinite(linkage$lnr1), NA, linkage$lnr1)
+        linkage$lnr2 <- apply(linkage[,c("lnr2","tl_lnr2")], 1, max, na.rm=T, showWarnings=F)
+        linkage$lnr2 <- ifelse(is.infinite(linkage$lnr2), NA, linkage$lnr2)
+        linkage <- 
+          linkage  %>% 
+          select(-tl_lnr1, -tl_lnr2)  %>% 
+          mutate(
+            lnr1 = ifelse(lnr1==0, NA, lnr1),
+            lnr2 = ifelse(lnr2==0, NA, lnr2)
+          )
+        linkage <- 
+          linkage  %>% 
+          select(lnr1, lnr2, text1, rel1, text2, rel2, type, sim_words, diff_words,ll_minmaj_code) %>% 
+          rename(pro_minmaj=ll_minmaj_code)
+        linkage <-
+          within(linkage, 
+            {
+              pro_minmaj[pro_minmaj==0]     <- "-"; 
+              pro_minmaj[pro_minmaj==1]     <- "< pro maj."; 
+              pro_minmaj[pro_minmaj==2]     <- "pro min. >"; 
+              pro_minmaj[is.na(pro_minmaj)] <- ""
+            }
+          )
+        linkage <- as_data_frame(lapply(linkage, function(x) ifelse(is.na(x), "", x)) )
+        
+        country <- 
+          str_extract(tl1$tl_id1[1], "^[A-Z]{3,7}")
+        
+        versus <- 
+          str_extract(tl1$tl_id1[1], ".*\\.\\d")  %.% 
+          "&nbsp; &nbsp; &nbsp; &nbsp;  <i>versus</i> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " %.% 
+          str_extract(tl2$tl_id2[1], ".*\\.\\d")
+        
+        info  <-
+          "<h1>" %.% 
+          ahref(prev_fname) %.% 
+          versus  %.% 
+          ahref(next_fname)  %.% 
+          "</h1><br>"
+        
+        width <- rep("", dim(linkage)[2])
+        width[names(linkage) %in%  c("text1","text2")] <- "30%"
+        
+        x <- sort_align_dev(linkage, "lnr1", "lnr2", dnlb = linkage$type=="insertion" )
+        htmltable(
+          file    = ids$fname[i],
+          x       = x,
+          bgcolor = linkage_type_colors(x$type),
+          html    = info ,
+          width   = width
+        )
+        
+      }
   
   ### << producing linkage texts # -----------------------------------------------
 } ## << UPDATE_TEXTS==TRUE

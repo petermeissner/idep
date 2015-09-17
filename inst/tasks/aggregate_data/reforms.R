@@ -508,14 +508,14 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
   
   # ensuring all corpus variables exist
   for (code in ccodes) {
-    if ( is.null(unlist( reforms[,paste0("wds_corp_mdf_",code)] )) ) reforms[,paste0("wds_corp_mdf_",code)] <- 0
-    if ( is.null(unlist( reforms[,paste0("wds_corp_ins_",code)] )) ) reforms[,paste0("wds_corp_ins_",code)] <- 0
-    if ( is.null(unlist( reforms[,paste0("wds_corp_del_",code)] )) ) reforms[,paste0("wds_corp_del_",code)] <- 0
-    if ( is.null(unlist( reforms[,paste0("lns_corp_mdf_",code)] )) ) reforms[,paste0("lns_corp_mdf_",code)] <- 0
-    if ( is.null(unlist( reforms[,paste0("lns_corp_ins_",code)] )) ) reforms[,paste0("lns_corp_ins_",code)] <- 0
-    if ( is.null(unlist( reforms[,paste0("lns_corp_del_",code)] )) ) reforms[,paste0("lns_corp_del_",code)] <- 0
-    if ( is.null(unlist( reforms[,paste0("wds_corp_",code)] )) ) reforms[,paste0("wds_corp_",code)]         <- 0
-    if ( is.null(unlist( reforms[,paste0("wds_corp_",code)] )) ) reforms[,paste0("wds_corp_",code)]         <- 0
+    if ( !(paste0("wds_corp_mdf_",code) %in% names(reforms)) ) reforms[,paste0("wds_corp_mdf_",code)] <- 0
+    if ( !(paste0("wds_corp_ins_",code) %in% names(reforms)) ) reforms[,paste0("wds_corp_ins_",code)] <- 0
+    if ( !(paste0("wds_corp_del_",code) %in% names(reforms)) ) reforms[,paste0("wds_corp_del_",code)] <- 0
+    if ( !(paste0("lns_corp_mdf_",code) %in% names(reforms)) ) reforms[,paste0("lns_corp_mdf_",code)] <- 0
+    if ( !(paste0("lns_corp_ins_",code) %in% names(reforms)) ) reforms[,paste0("lns_corp_ins_",code)] <- 0
+    if ( !(paste0("lns_corp_del_",code) %in% names(reforms)) ) reforms[,paste0("lns_corp_del_",code)] <- 0
+    if ( !(paste0("wds_corp_",code)     %in% names(reforms)) ) reforms[,paste0("wds_corp_",code)]     <- 0
+    if ( !(paste0("wds_corp_",code)     %in% names(reforms)) ) reforms[,paste0("wds_corp_",code)]     <- 0
   }
   
   # ensuring all change variables have either value or 0 
@@ -600,19 +600,14 @@ test_that(
 
 #### saving ====================================================================
 
-# save overview HTML
-setwd("Z:/Gesch\u00e4ftsordnungen/database/outputs")
-htmltable(reforms, file=paste0("reforms.htm"))
 
 # save reforms dataset
 setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
-htmltable(reforms, file=paste0("reforms.htm"))
 save(reforms, file="reforms.Rdata")
 write.dta(reforms, file="reforms.dta")
 
 # save it to idep as well
 setwd("c:/dropbox/idep/data")
-htmltable(reforms, file=paste0("reforms.htm"))
 save(reforms, file="reforms.Rdata")
 write.dta(reforms, file="reforms.dta")
 

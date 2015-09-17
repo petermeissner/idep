@@ -4,7 +4,7 @@
 \name{ccode_color_scheme2}
 \alias{ccode_color_scheme2}
 \title{coler scheme}
-\format{\preformatted{ chr [1:7] "#E6FFCC" "#FFE6B2" "#D191BC" "#B8B8FF" "#D6C299" ...
+\format{\preformatted{ chr [1:7] "#F3FFE8" "#FFFAEF" "#F6E9F2" "#F4F4FF" "#FEFBE8" ...
 }}
 \usage{
 ccode_color_scheme2

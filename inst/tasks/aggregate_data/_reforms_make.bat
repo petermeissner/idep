@@ -4,9 +4,16 @@ REM CLEANING UP
   Rscript -e "unlink(list.files(pattern='tex2pdf'), recursive=T)"
 
 
-REM GENERATING HTML AND PDF VERSION
+REM GENERATING reforms data set
 
-REM Rscript -e "library(knitr); knitr::knit2html('reforms_codebook.Rmd')" 
+R < reforms.R                > reforms.rout --vanilla 
+R < reforms_ext_tsebelis.R   > reforms_ext_tsebelis.rout --vanilla 
+R < reforms_ext_pro_minmaj.R > reforms_ext_pro_minmaj.rout --vanilla 
+
+
+REM building codebook HTML 
+
+Rscript -e "library(knitr); knitr::knit2html('reforms_codebook.Rmd')" 
 
 
 REM MOVING FILES
