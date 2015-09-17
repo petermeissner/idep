@@ -501,6 +501,76 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
   reforms <- 
     left_join(reforms, tmp)
   
+
+  
+#### add correct country variables =============================================
+  
+  # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3 
+  reforms$country <- NA
+  reforms$ctr     <- reforms$t_country
+  reforms$ctr[reforms$ctr=="DEN"] <- "DNK"
+  reforms$ctr[reforms$ctr=="GER"] <- "DEU"
+  reforms$ctr[reforms$ctr=="IRE"] <- "IRL"
+  reforms$ctr[reforms$ctr=="NED"] <- "NLD"
+  reforms$ctr[reforms$ctr=="POR"] <- "PRT"
+  reforms$ctr[reforms$ctr=="SWIGRN"]   <- "CHEGRN"
+  reforms$ctr[reforms$ctr=="SWIPARLG"] <- "CHEPARLG"
+  reforms$ctr[reforms$ctr=="UK"] <- "GBR"
+  
+  reforms$country[reforms$ctr=="AUT"      ] <- "Austria"
+  reforms$country[reforms$ctr=="BEL"      ] <- "Belgium"
+  reforms$country[reforms$ctr=="DNK"      ] <- "Denmark"
+  reforms$country[reforms$ctr=="ESP"      ] <- "Spain"
+  reforms$country[reforms$ctr=="FRA"      ] <- "France"
+  reforms$country[reforms$ctr=="DEU"      ] <- "Germany"
+  reforms$country[reforms$ctr=="IRL"      ] <- "Ireland"
+  reforms$country[reforms$ctr=="ITA"      ] <- "Italy"
+  reforms$country[reforms$ctr=="LUX"      ] <- "Luxembourg"
+  reforms$country[reforms$ctr=="NLD"      ] <- "Netherlands"
+  reforms$country[reforms$ctr=="NOR"      ] <- "Norway"
+  reforms$country[reforms$ctr=="PRT"      ] <- "Portugal"
+  reforms$country[reforms$ctr=="SWE"      ] <- "Sweden"
+  reforms$country[reforms$ctr=="CHEGRN"   ] <- "Swiss (GRN)"
+  reforms$country[reforms$ctr=="CHEPARLG" ] <- "Swiss (Parlg)"
+  reforms$country[reforms$ctr=="GBR"      ] <- "United Kingdom"
+  
+#### add wordiness variables ===================================================
+  
+  reforms$lang <- NA
+  reforms$lang[reforms$ctr=="AUT"      ] <- "German"
+  reforms$lang[reforms$ctr=="BEL"      ] <- "French"
+  reforms$lang[reforms$ctr=="DNK"      ] <- "Danish"
+  reforms$lang[reforms$ctr=="ESP"      ] <- "Spanish"
+  reforms$lang[reforms$ctr=="FRA"      ] <- "French"
+  reforms$lang[reforms$ctr=="DEU"      ] <- "German"
+  reforms$lang[reforms$ctr=="IRL"      ] <- "English"
+  reforms$lang[reforms$ctr=="ITA"      ] <- "Italien"
+  reforms$lang[reforms$ctr=="LUX"      ] <- "French"
+  reforms$lang[reforms$ctr=="NLD"      ] <- "Dutch"
+  reforms$lang[reforms$ctr=="NOR"      ] <- "Norwegian"
+  reforms$lang[reforms$ctr=="PRT"      ] <- "Portuguese"
+  reforms$lang[reforms$ctr=="SWE"      ] <- "Swedish"
+  reforms$lang[reforms$ctr=="CHEGRN"   ] <- "German"
+  reforms$lang[reforms$ctr=="CHEPARLG" ] <- "German"
+  reforms$lang[reforms$ctr=="GBR"      ] <- "English"
+  
+  reforms$wdns <- NA
+  reforms$wdns[reforms$lang=="German"]     <- 0.9
+  reforms$wdns[reforms$lang=="French"]     <- 1.01
+  reforms$wdns[reforms$lang=="Danish"]     <- 1.05
+  reforms$wdns[reforms$lang=="Spanish"]    <- 1.05
+  reforms$wdns[reforms$lang=="English"]    <- 1
+  reforms$wdns[reforms$lang=="Italien"]    <- 0.95
+  reforms$wdns[reforms$lang=="Dutch"]      <- 1
+  reforms$wdns[reforms$lang=="Norwegian"]  <- 0.86
+  reforms$wdns[reforms$lang=="Portuguese"] <- 0.98
+  reforms$wdns[reforms$lang=="Swedish"]    <- 0.86
+  
+  reforms$wdns_corr <- NA
+  reforms$wdns_corr <- 1 / reforms$wdns
+  
+  reforms$wds_clean_rel_wdns_corr <- reforms$wds_clean_rel * reforms$wdns_corr
+  
   
   
 #### some cleanup ==============================================================

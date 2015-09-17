@@ -22,6 +22,12 @@ rbind(
   list(name="lns_rel"          , from="textlines",              group="03 length", description="Number of lines that contain relevant content - e.g. no blank lines, no headlines, no appendices."),
   list(name="wds_raw_rel"      , from="textlines",              group="03 length", description="Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices."),
   list(name="wds_clean_rel"    , from="textlines",              group="03 length", description="Number of words that are not from irrelevant lines - e.g. no blank lines, no headlines, no appendices - after having striped away enumerations like, a), b), ..., 1., 2., ... I, II, ... and so forth."),
+
+  # Wordiness
+  list(name="lang"                     , from="own research / EU documents",   group="035 wordiness", description="Language in which SO are written down."),
+  list(name="wdns"                     , from="own research / EU documents",   group="035 wordiness", description="The wordiness of a language. Different languages have different wordiness meaning that they need different amounts of words to express the same concept, sentence, regulation, ... . The variable gives the factor of wordiness compared to English based on the translations of EU documents. These are availible in English but also in all other EU languages. LAnguages that need more words than English have values above 1, languages that need less have values below 1."),
+  list(name="wdns_corr"                , from="own research / EU documents",   group="035 wordiness", description="Wordiness correction factor which can be used to transform word counts into English equivalent word counts by multiplying the word count with the value of this variable."),
+  list(name="wds_clean_rel_wdns_corr"  , from="own research / EU documents",   group="035 wordiness", description="The variable `wds_clean_rel` corrected by its wordiness to English equivalent word counts. See `wds_clean_rel` and `wdns_corr`."),
   
   # Change / MinMaj
   list(name="lns_mdf"          , from="textlines",              group="04 change", description="Number of lines that were mofified - i.e. changed but not deleted or inserted."),

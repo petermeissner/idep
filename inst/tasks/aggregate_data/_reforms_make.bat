@@ -21,7 +21,9 @@ REM MOVING FILES
   Rscript -e "files <- grep('codebook', list.files(pattern='codebook.*pdf$|codebook.*html$'), value=T)" ^
           -e "file.copy(files, 'Z:/Gesch\u00e4ftsordnungen/Database/aggregats', overwrite=TRUE)" ^
           -e "file.copy(files, 'Z:/Gesch\u00e4ftsordnungen/Database/outputs',   overwrite=TRUE)" ^
-          -e "file.copy(files, 'C:/Dropbox/idep/data', overwrite=TRUE)"
-
+          -e "file.copy(files, 'C:/Dropbox/idep/data', overwrite=TRUE)" ^
+          -e "files <- list.files(pattern='.rout')" ^
+          -e "library(idep); file.move(files, 'old')" 
+   
 echo done & pause
         

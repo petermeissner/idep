@@ -7,7 +7,7 @@ library(idep)
 library(ggplot2)
 library(foreign)
 
-setwd("Z:/Geschäftsordnungen/Database/aggregats")
+setwd("Z:/Gesch\xe4ftsordnungen/Database/aggregats")
 
 
 
@@ -15,9 +15,9 @@ setwd("Z:/Geschäftsordnungen/Database/aggregats")
 
 #### load data =================================================================
 
-load("Z:/Geschäftsordnungen/Database/aggregats/reforms.Rdata")
+load("Z:/Gesch\xe4ftsordnungen/Database/aggregats/reforms.Rdata")
 tsebelis <- 
-  read.csv2("Z:/Geschäftsordnungen/Database/external_data/Tsebelis agenda Control p105/tsebelis.csv" ) %>% 
+  read.csv2("Z:/Gesch\xe4ftsordnungen/Database/external_data/Tsebelis agenda Control p105/tsebelis.csv" ) %>% 
   as_data_frame() %>% 
   factors_to_character()  %>% 
   filter(cntrshort!="" & cntrshort!="ICE") 

@@ -81,6 +81,7 @@
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
 \newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -111,7 +112,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2015-09-01 16:25:11}
+  \date{2015-09-15 14:50:30}
 
 
 % Redefines (sub)paragraphs to behave more like sections
@@ -128,7 +129,7 @@
 \maketitle
 
 \section{The reforms dataset (version
-1.92)}\label{the-reforms-dataset-version-1.92}
+2.08)}\label{the-reforms-dataset-version-2.08}
 
 The data-set is based on the IDEP data - data on Standing Orders
 versions (\emph{texts}), data on Standing Orders Text (\emph{textlines})
@@ -139,7 +140,7 @@ the data-set. This aggregation allows for studying what happened - in an
 aggregate - at each reform of Standing Orders.
 
 The data set incorporates aggregated data for 770 reforms in 15
-countries and consists of 723 variables.
+countries and consists of 732 variables.
 
 \textbf{Example:}
 
@@ -154,12 +155,13 @@ countries and consists of 723 variables.
 ## Source: local data frame [786 x 6]
 ## 
 ##                t_id wds_clean_rel wds_chg pro_min pro_maj wds_corp_top_1
+##               (chr)         (int)   (dbl)   (dbl)   (dbl)          (dbl)
 ## 1  AUT_1928-02-01.0          7802      NA      NA      NA           2530
-## 2  AUT_1948-06-04.0          7882     139       0       1           2523
+## 2  AUT_1948-06-04.0          7882     164       0       1           2523
 ## 3  AUT_1961-09-01.0          9151    2825      13       4           2832
 ## 4  AUT_1975-10-01.0         13600   12706      40      24           4242
 ## 5  AUT_1976-07-01.0         13676      78       1       0           4318
-## 6  AUT_1979-10-01.0         13826     412       2       0           4356
+## 6  AUT_1979-10-01.0         13826     454       2       0           4356
 ## 7  AUT_1986-09-01.0         14225     771       2       3           4454
 ## 8  AUT_1989-01-01.0         16910    6343      34      25           4772
 ## 9  AUT_1993-09-15.0         18295    2529      12      12           4951
@@ -243,9 +245,435 @@ coding and analysis was only pursued on the basis of relevant and
 cleaned SPs all change measures refer to SPs that were relevant and
 cleansed from enumerations.
 
+\section{Coding Manual: Categories and Codes for Coding the Content of
+Parliamentary Standing
+Orders}\label{coding-manual-categories-and-codes-for-coding-the-content-of-parliamentary-standing-orders}
+
+\subsubsection{Basic Intuition:}\label{basic-intuition}
+
+Each and every code is exclusive, meaning that one subparagraph needs to
+have one code but one code only. For some codes there are notes on how
+to decide between multiple codes which may seem appropriate. Sometimes
+even the coding rules and additional notes will not help to decide
+between codes. In this case please let us know. Every decision
+accompanied by doubt should be documented.
+
+\subsubsection{Further rules of the
+game:}\label{further-rules-of-the-game}
+
+\begin{itemize}
+\item
+  Often sub-paragraphs can be coded differently, depending on whether or
+  not one takes into consideration the overall context of the rule or
+  the more specific regulation. If in doubt, code based on the overall
+  context. Example: §14 GOBT: president grants vacation time → coded as
+  rights and obligations of individual members of parliament if one
+  takes into account the general context (652) and not as responsibility
+  of the president (6212).
+\item
+  Rules which concern the interaction of two actors are attributed to
+  the actor which takes the active part if he has discretion regarding
+  this action. Example: §62 (2) GOBT: The plenary can request report of
+  committee → coded as recall through the plenary (124) and not as
+  report of committee to the plenary (134).
+\item
+  The right of those initiating a bill or law to be present at the
+  committee meetings is coded as general right of individual members of
+  parliament (652).
+\end{itemize}
+
+\subsubsection{Coding Scheme}\label{coding-scheme}
+
+\textbf{(1) Law Making}
+
+~
+
+\emph{Note: SPs that refer to both the plenary sessions and committees
+are coded as 12x; SPs dealing with both law-making and special decision
+procedures are coded as 1xx.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{11 Bills and Motions}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    111 types of bills and motions; printing and distribution of bills
+    and motions to MPs
+  \item
+    112 right to initiate bills and motions
+  \item
+    113 restrictions and deadlines (if not assignable to more specific
+    category, e.g.~code 121; 32; 134)
+  \item
+    114 legislative planning (concerns the whole term- general schedule)
+  \end{itemize}
+\item
+  \textbf{12 Treatment of bills and motions in the plenary} \emph{(Note:
+  SPs including all stages of the treatment of bills and motions are
+  coded as votes in the plenary (123); SPs which determine the subject
+  of debate and vote are coded as subject of vote (123).)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    121 debate in the plenary
+  \item
+    122 right of amendment in the plenary
+  \item
+    123 subject of vote, rules of vote (including quorum), voting
+    technology in the plenary
+  \item
+    124 the plenary as Committee of the Whole House \emph{(Note: SPs
+    referring to both committees and Committee of the Whole House are
+    coded as committees (not 124 but 13x).)}
+  \item
+    125 referral to committee, withdrawal from committee
+  \end{itemize}
+\item
+  \textbf{13 Treatment of bills and motions in committee} \emph{(Note:
+  SPs including all stages of the treatment of bills and motions in
+  committee are coded as votes in committee (133); SPs which determine
+  both the subject of debate and the subject of vote are coded as
+  subject of vote in committee (133).)}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    131 debate in committee (including hearing)
+  \item
+    132 amendment rights in committee
+  \item
+    133 subject of vote, rules of vote (including quorum), voting
+    technology in committee
+  \item
+    134 report to the plenary
+  \end{itemize}
+\end{itemize}
+
+\textbf{(2) Special Decision Procedures other than Regular Law-Making}
+
+~
+
+\emph{Note: SPs which concern multiple special decision procedures apart
+from regular law-making are coded as follows: highest priority is given
+to constitutional matters, second highest priority is given to financial
+laws and budgeting, third highest priority is given to EU policy and
+fourth highest priority is given toforeign policy.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{21 constitutional change and amendment}
+\item
+  \textbf{22 financial laws} (money bills) and budgeting
+\item
+  \textbf{23 foreign policy} (e.g.~approval of law of nations,
+  declaration of war \emph{Note: If foreign policy and EU is treated
+  together, the SP is coded as EU (241, 242, 243 or 244).})
+\item
+  \textbf{24 EU} \emph{(Note: If foreign policy and EU is treated
+  together, the SP is coded as EU (241, 242, 243 or 244))}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    241 treatment of EU-bills and motions
+  \item
+    242 EU-committee: election and resignation
+  \item
+    243 instructions to the government concerning EU decisions
+  \item
+    244 further rights of participation in EU matters (e.g.~debates
+    about EU topics not based on EU bills and motions, reaction to
+    violations of subsidiary principle)
+  \end{itemize}
+\item
+  \textbf{25 general rules on elections in parliament} (if not coded as
+  election of government (31), or election of specific officials (411;
+  421; 441; 6211; 6221; 632))
+\item
+  \textbf{26 further special decision procedures} leading to a decision,
+  e.g.~resolution, or leading to a decree/act/bylaw (not mere debate or
+  question time) but cannot be coded as regular law-making nor special
+  decision procedures (21-24)
+\item
+  \textbf{27 procedures concerning laws that are hierarchically situated
+  between regular laws and constitutional laws} (above regular laws;
+  e.g.~organic laws in Spain)
+\item
+  \textbf{28 emergency legislation}
+\item
+  \textbf{29 relationship to sub-national level} (law-making, rights of
+  participation of sub-national level)
+\end{itemize}
+
+\textbf{(3) Relationship to Government}
+
+~
+
+\emph{Note: If vote of no confidence and vote of confidence is treated
+together, the SP is coded as vote of no confidence (32).}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{31 election of government / mandatory investiture vote; entry
+  into office}
+\item
+  \textbf{32 vote of no confidence / government resignation}
+\item
+  \textbf{33 vote of confidence}
+\item
+  \textbf{34 instructions to government, involvement of members of
+  government in parliamentary activities} (rights to compel witnesses
+  {[}usually right of parliament against members of government{]}, right
+  to speak {[}usually members of government's right{]}, request of
+  information about state of execution of decisions of parliament)
+\end{itemize}
+
+\textbf{(4) Relationship to External Offices/Institutions apart from the
+Government}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{41 parliamentary support bodies (e.g.~general accounting
+  office, ombudsman,\ldots{})}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    411 election and resignation
+  \item
+    412 competences and resources of external offices/institutions;
+    relations to parliament (e.g.~reports, questions, \ldots{})
+  \end{itemize}
+\item
+  \textbf{42 head of state}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    421 election and resignation
+  \item
+    422 relation to parliament (if not coded as law-making (141, 144))
+  \end{itemize}
+\item
+  \textbf{43 second chamber (if not coded as law-making (142))}
+\item
+  \textbf{44 constitutional courts}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    441 election and resignation
+  \item
+    442 relation to parliament (if not coded as law-making (145))
+  \end{itemize}
+\item
+  \textbf{45 other external offices}
+\end{itemize}
+
+\textbf{(5) Generating Publicity}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{51 general rules regarding debate} (e.g.~time allotted for
+  speaking, proportional representation of parties during debate,
+  closure of debate)
+\item
+  \textbf{52 debates outside of law-making} (e.g.~topical hours
+  \ldots{})
+\item
+  \textbf{53 question rights}
+\item
+  \textbf{54 petitions and petition committee}
+\item
+  \textbf{55 relationship to media and citizens} (e.g.~parliamentary TV,
+  accreditation of journalists, publicity of meetings, admissibility of
+  visitors); regulation of matters of confidentiality
+\item
+  \textbf{56 protocols and parliamentary documents; forwarding of
+  documents and decisions to other bodies}
+\end{itemize}
+
+\textbf{6 Internal Organization of Parliament}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{61 plenary}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    611 agenda setting and removal of items from the agenda (general
+    rules which are not specifically regulated under 114)
+  \item
+    612 chairing of meetings and measures to uphold order
+  \item
+    613 sitting times \emph{(Note: When members are to be present inside
+    the parliament)}
+  \end{itemize}
+\item
+  \textbf{62 parliamentary presiding bodies}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    621 president of parliament, vice presidents, secretaries and clerks
+
+    \begin{itemize}
+    \tightlist
+    \item
+      6211 election, resignation and internal decision rules
+    \item
+      6212 responsibilities \emph{(Note: if not coded as more specific
+      category (e.g.~612), Try to code in regard to the topic at first -
+      6212 only when no code corresponds)}
+    \end{itemize}
+  \item
+    622 council of elders or similar coordination body \emph{(Note: The
+    council of elders can be distinguished from the Presidency of
+    Parliament (621) insofar as representatives of the parliamentary
+    party groups are explicitly included.)}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      6221 composition, election, resignation, internal decision rules
+    \item
+      6222 responsibilities (if not coded as more specific category
+      (e.g.~612))
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{63 committees} (if not coded as more specific category
+  (e.g.~13; 24; 54; 55; 72))
+
+  \begin{itemize}
+  \tightlist
+  \item
+    631 general regulations regarding types of committees
+  \item
+    632 membership and committee jurisdiction (area of influence-control
+    .g. finance, economy, agriculture\ldots{})
+  \item
+    633 formal organizational units of committee \emph{(Note: e.g.~chair
+    of committee, sub-committees, staff; This is about the appointment
+    and election of the organizational units within committees and NOT
+    about their responsibilities.)}
+  \item
+    634 agenda and procedures (details on how decisions are taken)
+    within committees (if not coded as law-making (13))
+  \item
+    635 relations to other bodies
+
+    \begin{itemize}
+    \tightlist
+    \item
+      6351 relation to plenary (if not coded as 124; 134; 34)
+    \item
+      6352 relation to other committees
+    \end{itemize}
+  \item
+    636 investigative competencies of regular committees (NOT committees
+    of inquiry (637))
+
+    \begin{itemize}
+    \tightlist
+    \item
+      637 committee of inquiry
+    \item
+      638 enquête commission
+    \end{itemize}
+  \item
+    639 other special committees which are not explicitly referenced in
+    this coding manual \emph{(Note: e.g.~oversight committees in
+    Switzerland; Otherwise referenced are: EU-committee (242); committee
+    of inquiry (637); petition committee (54); standing order committee
+    (usually 72); council of elders or similar coordination body (622).
+    Exception: committees which deal exclusively with the confirmation
+    of the elections of members of parliament are coded as 651.)}
+  \end{itemize}
+\item
+  \textbf{64 parliamentary party groups}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    641 formation of parliamentary party groups
+  \item
+    642 rights and obligations of parliamentary party groups (if not
+    coded more specifically as e.g.~112; 51; 52; 53)
+  \item
+    643 financial and staff resources
+  \end{itemize}
+\item
+  \textbf{65 individual members of parliament}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    651 election, entry into office, resignation, incompatibilities,
+    legal status, immunity, indemnity
+  \item
+    652 rights and obligations of individual members of parliament (if
+    not coded more specifically as e.g.~112; 51; 52; 53)
+  \item
+    653 salary, financial and staff resources
+  \end{itemize}
+\item
+  \textbf{66 opposition}
+\item
+  \textbf{67 special bodies for emergency situations}
+\item
+  \textbf{68 parliamentary administration}
+\end{itemize}
+
+\textbf{7 Change and Interpretation of the Standing Orders}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{71 rules regarding changing the standing orders}
+\item
+  \textbf{72 rules regarding interpretation of and deviation from
+  standing orders}
+\item
+  \textbf{73 debate about standing orders and motions regarding the
+  standing orders}
+\end{itemize}
+
+\textbf{8 General Rules Regarding Formation and Legislative Session;
+Discontinuity}
+
+\textbf{9 Final Provisions}
+
+\textbf{10 Miscellaneous} (cannot be coded otherwise)
+
+\textbf{999 Footnotes and Titles Without Relevant Content}
+
+\section{Missing variable
+descriptions}\label{missing-variable-descriptions}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(reforms)[!(}\KeywordTok{names}\NormalTok{(reforms) %in%}\StringTok{ }\NormalTok{description$name)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ext_tsb_agc" "minmaj_wds2" "minmaj_wds4"
+\end{verbatim}
+
 \section{Variable descriptions}\label{variable-descriptions}
 
-\subsection{01 meta}\label{meta}
+\subsection{meta}\label{meta}
 
 \textbf{t\_id} (texts)
 
@@ -270,16 +698,16 @@ and version counter.
 Date of the SO version - equals to (according to availibility)
 enactment, promulgation, acceptance.
 
-\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~character}\\
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
 \textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~702}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~0}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~786}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~786}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~-}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{428~041~044~000}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 1903-01-20\ {]}\ ...\ {[}\ 2011-07-01\ {]}}\\
+\texttt{{[}\ -2112742800\ {]}\ ...\ {[}\ 1309471200\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}2003-01-09{]},\ {[}1988-02-01{]},\ {[}1995-05-17{]},\ {[}1982-07-01{]},\ {[}1995-09-30{]},\ {[}1990-05-0\ ...}\\
+\texttt{{[}1042066800{]},\ {[}570668400{]},\ {[}800661600{]},\ {[}394322400{]},\ {[}812415600{]},\ {[}641858400{]},\ {[}\ ...}\\
 
 ~
 
@@ -371,22 +799,22 @@ Date on which the SO were enacted - came into force / took effect.
 
 ~
 
-\subsection{02 db}\label{db}
+\subsection{db}\label{db}
 
 \textbf{int\_dupdate\_texts} (db)
 
 Date at which the `texts' table of the database was last updated.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~character}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~16}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~17}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~0}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~786}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~786}\\
 \textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~-}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 2015-08-27\ 13:20:49\ {]}\ ...\ {[}\ 2015-08-28\ 11:48:07\ {]}}\\
+\texttt{{[}\ 2015-09-14\ 14:23:06\ {]}\ ...\ {[}\ 2015-09-14\ 15:01:07\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}2015-08-27\ 14:05:44{]},\ {[}2015-08-27\ 17:24:51{]},\ {[}2015-08-27\ 16:12:55{]},\ {[}2015-08-27\ ...}\\
+\texttt{{[}2015-09-14\ 14:26:54{]},\ {[}2015-09-14\ 15:00:25{]},\ {[}2015-09-14\ 14:41:45{]},\ {[}2015-09-14\ ...}\\
 
 ~
 
@@ -400,11 +828,11 @@ Database internal enumeration of SO - this might change at any time. Do
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~0}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~786}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~786}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~322~979}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~309~291}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 1\ {]}\ ...\ {[}\ 860\ {]}}\\
+\texttt{{[}\ 1\ {]}\ ...\ {[}\ 786\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}456{]},\ {[}573{]},\ {[}619{]},\ {[}839{]},\ {[}225{]},\ {[}549{]},\ {[}822{]},\ {[}381{]},\ {[}321{]},\ {[}111{]}\ ...}\\
+\texttt{{[}442{]},\ {[}559{]},\ {[}605{]},\ {[}765{]},\ {[}211{]},\ {[}535{]},\ {[}748{]},\ {[}367{]},\ {[}307{]},\ {[}97{]}\ ...}\\
 
 ~
 
@@ -419,11 +847,11 @@ between major and minor version.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~0}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~786}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~786}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~1~509.12}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~1~634.88}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 1.92\ {]}\ ...\ {[}\ 1.92\ {]}}\\
+\texttt{{[}\ 2.08\ {]}\ ...\ {[}\ 2.08\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]},\ {[}1.92{]}\ ...}\\
+\texttt{{[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]},\ {[}2.08{]}\ ...}\\
 
 ~
 
@@ -438,13 +866,13 @@ Date at which the database was last updated.
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~786}\\
 \textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~~-}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 2015-08-28\ 11:49:48\ {]}\ ...\ {[}\ 2015-08-28\ 11:49:48\ {]}}\\
+\texttt{{[}\ 2015-09-14\ 15:02:29\ {]}\ ...\ {[}\ 2015-09-14\ 15:02:29\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}2015-08-28\ 11:49:48{]},\ {[}2015-08-28\ 11:49:48{]},\ {[}2015-08-28\ 11:49:48{]},\ {[}2015-08-28\ ...}\\
+\texttt{{[}2015-09-14\ 15:02:29{]},\ {[}2015-09-14\ 15:02:29{]},\ {[}2015-09-14\ 15:02:29{]},\ {[}2015-09-14\ ...}\\
 
 ~
 
-\subsection{03 length}\label{length}
+\subsection{length}\label{length}
 
 \textbf{lns\_all} (textlines)
 
@@ -555,7 +983,7 @@ and so forth.
 
 ~
 
-\subsection{04 change}\label{change}
+\subsection{change}\label{change}
 
 \textbf{lns\_mdf} (textlines)
 
@@ -597,13 +1025,13 @@ Number of words modified - i.e.~changed but not deleted or inserted.
 Number of words that were inserted into SO.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~358}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~357}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~562}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~264~238}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~264~322}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 11246\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 11320\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}95{]},\ {[}21{]},\ {[}145{]},\ {[}855{]},\ {[}0{]},\ {[}0{]},\ {[}2186{]},\ {[}NA{]},\ {[}99{]},\ {[}185{]}\ ...}\\
 
@@ -618,7 +1046,7 @@ Number of lines that were inserted into SO.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~562}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~8~665}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~8~674}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 381\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -631,11 +1059,11 @@ Number of lines that were inserted into SO.
 Number of words that were deleted from old SO.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~207}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~210}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~307}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~106~063}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~319}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~107~765}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 6059\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -648,15 +1076,15 @@ Number of words that were deleted from old SO.
 Number of lines that were deleted from old SO.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~51}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~50}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~308}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~3~478}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~321}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~3~558}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 229\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}0{]},\ {[}0{]},\ {[}1{]},\ {[}2{]},\ {[}0{]},\ {[}0{]},\ {[}176{]},\ {[}0{]},\ {[}NA{]},\ {[}0{]}\ ...}\\
+\texttt{{[}0{]},\ {[}0{]},\ {[}1{]},\ {[}2{]},\ {[}0{]},\ {[}0{]},\ {[}176{]},\ {[}0{]},\ {[}NA{]},\ {[}1{]}\ ...}\\
 
 ~
 
@@ -666,15 +1094,15 @@ Number of lines that were changed from the old SO to the current -
 i.e.~the sum of insertions, deletions and modifikations.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~124}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~127}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~765}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~25~113}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~25~202}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 1049\ {]}}\\
 \textbf{\texttt{examples\ :}}
-\texttt{{[}30{]},\ {[}4{]},\ {[}16{]},\ {[}2{]},\ {[}15{]},\ {[}1{]},\ {[}5{]},\ {[}1{]},\ {[}4{]},\ {[}2{]}\ ...}\\
+\texttt{{[}30{]},\ {[}4{]},\ {[}16{]},\ {[}2{]},\ {[}15{]},\ {[}1{]},\ {[}5{]},\ {[}1{]},\ {[}4{]},\ {[}3{]}\ ...}\\
 
 ~
 
@@ -684,19 +1112,19 @@ Number of words that were changed from the old SO to the current -
 i.e.~the sum of insertions, deletions and modifikations.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~490}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~492}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~763}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~657~519}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~659~305}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 28711\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 28785\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}12{]},\ {[}240{]},\ {[}182{]},\ {[}6095{]},\ {[}1302{]},\ {[}125{]},\ {[}5{]},\ {[}43{]},\ {[}3172{]},\ {[}52{]}\ ...}\\
 
 ~
 
-\subsection{05 minority/majority}\label{minoritymajority}
+\subsection{minority/majority}\label{minoritymajority}
 
 \textbf{pro\_maj\_mdf} (textlines, linelinkage)
 
@@ -846,9 +1274,9 @@ minority friendly.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~487}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~6~910}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~6~919}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 317\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 318\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}NA{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}25{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}15{]}\ ...}\\
 
@@ -894,13 +1322,13 @@ Number of words inserted that were coded as neither majority nor
 minority friendly.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~319}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~318}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~487}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~216~896}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~216~980}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 11108\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 11182\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}2292{]},\ {[}299{]},\ {[}NA{]},\ {[}0{]},\ {[}633{]},\ {[}12{]},\ {[}1467{]},\ {[}273{]},\ {[}241{]},\ {[}54{]}\ ...}\\
 
@@ -946,11 +1374,11 @@ Number of lines deleted that were coded as neither majority nor minority
 friendly.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~46}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~48}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~276}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~815}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~289}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~893}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 229\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -998,11 +1426,11 @@ Number of words deleted that were coded as neither majority nor minority
 friendly.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~184}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~188}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~275}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~89~609}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~287}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~91~237}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 5992\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -1053,7 +1481,7 @@ Number of lines coded as neither majority nor minority friendly.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~673}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~21~154}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~21~241}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 1049\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -1100,19 +1528,19 @@ Number of words coded as minority friendly.
 Number of words coded as neither majority nor minority friendly.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~441}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~444}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~671}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~546~016}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~547~728}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 28188\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 28262\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}NA{]},\ {[}426{]},\ {[}0{]},\ {[}1113{]},\ {[}435{]},\ {[}355{]},\ {[}74{]},\ {[}1104{]},\ {[}1458{]},\ {[}303{]}\ ...}\\
 
 ~
 
-\subsection{07 raw corpus codes - 1 law
+\subsection{raw corpus codes - 1 law
 making}\label{raw-corpus-codes---1-law-making}
 
 \textbf{lns\_corp\_111} (textlines)
@@ -1859,7 +2287,7 @@ information.
 
 ~
 
-\subsection{07 raw corpus codes - 2 special decision
+\subsection{raw corpus codes - 2 special decision
 procedures}\label{raw-corpus-codes---2-special-decision-procedures}
 
 \textbf{lns\_corp\_21} (textlines)
@@ -2348,7 +2776,7 @@ information.
 
 ~
 
-\subsection{07 raw corpus codes - 3 relationship to
+\subsection{raw corpus codes - 3 relationship to
 government}\label{raw-corpus-codes---3-relationship-to-government}
 
 \textbf{lns\_corp\_31} (textlines)
@@ -2512,7 +2940,7 @@ information.
 
 ~
 
-\subsection{07 raw corpus codes - 4 relationship to
+\subsection{raw corpus codes - 4 relationship to
 others}\label{raw-corpus-codes---4-relationship-to-others}
 
 \textbf{lns\_corp\_43} (textlines)
@@ -2850,7 +3278,7 @@ information.
 
 ~
 
-\subsection{07 raw corpus codes - 5
+\subsection{raw corpus codes - 5
 publicity}\label{raw-corpus-codes---5-publicity}
 
 \textbf{lns\_corp\_51} (textlines)
@@ -3091,7 +3519,7 @@ information.
 
 ~
 
-\subsection{07 raw corpus codes - 6
+\subsection{raw corpus codes - 6
 committees}\label{raw-corpus-codes---6-committees}
 
 \textbf{lns\_corp\_66} (textlines)
@@ -4185,7 +4613,7 @@ information.
 
 ~
 
-\subsection{07 raw corpus codes - 7 to
+\subsection{raw corpus codes - 7 to
 999}\label{raw-corpus-codes---7-to-999}
 
 \textbf{lns\_corp\_8} (textlines)
@@ -4455,7 +4883,7 @@ information.
 
 ~
 
-\subsection{08 aggregated corpus codes -
+\subsection{aggregated corpus codes -
 topics}\label{aggregated-corpus-codes---topics}
 
 \textbf{lns\_corp\_top\_1} (textlines)
@@ -4730,7 +5158,7 @@ codes: 999
 
 ~
 
-\subsection{09 aggregated corpus codes -
+\subsection{aggregated corpus codes -
 actors}\label{aggregated-corpus-codes---actors}
 
 \textbf{lns\_corp\_act\_1} (textlines)
@@ -4971,7 +5399,7 @@ codes: 999
 
 ~
 
-\subsection{10 corpus code changes}\label{corpus-code-changes}
+\subsection{corpus code changes}\label{corpus-code-changes}
 
 \textbf{wds\_corp\_mdf\_8} (textlines, linelinkage)
 
@@ -6479,11 +6907,11 @@ Number of words with corpus code 10 which have changed from last version
 to this - see lns\_corp\_10 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~64}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~63}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~73}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~11~162}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~11~172}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 2330\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -6713,11 +7141,11 @@ Number of words with corpus code 43 which have changed from last version
 to this - see lns\_corp\_43 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~11}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~12}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~10}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~573}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~11}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~647}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 171\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -7925,13 +8353,13 @@ Number of words with corpus code 9 which have changed from last version
 to this - see lns\_corp\_9 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~13}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~19}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~11}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~510}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~18}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~1~544}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 147\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 564\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]}\ ...}\\
 
@@ -7943,11 +8371,11 @@ Number of words with corpus code 10 which have changed from last version
 to this - see lns\_corp\_10 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~36}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~37}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~35}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~931}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~37}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~976}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 413\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -7979,11 +8407,11 @@ Number of words with corpus code 22 which have changed from last version
 to this - see lns\_corp\_22 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~42}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~43}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~44}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~7~490}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~45}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~7~534}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 1032\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8091,7 +8519,7 @@ to this - see lns\_corp\_29 also wds\_mdf for more information.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~14}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~591}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~609}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 991\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8213,11 +8641,11 @@ Number of words with corpus code 51 which have changed from last version
 to this - see lns\_corp\_51 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~41}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~43}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~46}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~3~018}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~51}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~3~147}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 294\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8249,11 +8677,11 @@ Number of words with corpus code 53 which have changed from last version
 to this - see lns\_corp\_53 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~45}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~46}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~56}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~6~111}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~58}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~6~165}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 918\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8289,7 +8717,7 @@ to this - see lns\_corp\_55 also wds\_mdf for more information.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~24}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~539}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~2~540}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 485\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8447,11 +8875,11 @@ Number of words with corpus code 112 which have changed from last
 version to this - see lns\_corp\_112 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~12}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~13}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~16}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~560}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~17}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~578}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 94\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8519,11 +8947,11 @@ Number of words with corpus code 122 which have changed from last
 version to this - see lns\_corp\_122 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~22}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~24}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~22}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~1~920}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~24}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~1~944}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 377\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8537,11 +8965,11 @@ Number of words with corpus code 123 which have changed from last
 version to this - see lns\_corp\_123 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~37}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~39}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~39}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~3~774}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~41}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~3~861}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 300\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8559,9 +8987,9 @@ version to this - see lns\_corp\_124 also wds\_mdf for more information.
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~~2}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~473}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~506}\\
 \textbf{\texttt{range\ \ \ \ :}}
-\texttt{{[}\ 0\ {]}\ ...\ {[}\ 376\ {]}}\\
+\texttt{{[}\ 0\ {]}\ ...\ {[}\ 409\ {]}}\\
 \textbf{\texttt{examples\ :}}
 \texttt{{[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}0{]}\ ...}\\
 
@@ -8771,11 +9199,11 @@ Number of words with corpus code 242 which have changed from last
 version to this - see lns\_corp\_242 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~12}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~13}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~11}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~738}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~12}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~751}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 376\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -8951,11 +9379,11 @@ Number of words with corpus code 612 which have changed from last
 version to this - see lns\_corp\_612 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~18}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~19}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
 \textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~18}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~907}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~923}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 95\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -9008,8 +9436,8 @@ version to this - see lns\_corp\_632 also wds\_mdf for more information.
 \textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~55}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~72}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~5~172}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~73}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~5~196}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 590\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -9062,8 +9490,8 @@ version to this - see lns\_corp\_636 also wds\_mdf for more information.
 \textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~12}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~11}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~845}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~12}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~859}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 219\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -9113,11 +9541,11 @@ Number of words with corpus code 639 which have changed from last
 version to this - see lns\_corp\_639 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~39}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~41}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~39}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~6~246}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~42}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~6~303}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 840\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -9203,11 +9631,11 @@ Number of words with corpus code 652 which have changed from last
 version to this - see lns\_corp\_652 also wds\_mdf for more information.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
-\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~23}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~24}\\
 \textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~16}\\
 \textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~770}\\
-\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~25}\\
-\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~1~738}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~~26}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~1~747}\\
 \textbf{\texttt{range\ \ \ \ :}}
 \texttt{{[}\ 0\ {]}\ ...\ {[}\ 640\ {]}}\\
 \textbf{\texttt{examples\ :}}
@@ -13757,419 +14185,330 @@ information.
 
 ~
 
-\section{Appendix}\label{appendix}
+\subsection{external variables and
+extensions}\label{external-variables-and-extensions}
 
-\subsection{Coding Manual: Categories and Codes for Coding the Content
-of Parliamentary Standing
-Orders}\label{coding-manual-categories-and-codes-for-coding-the-content-of-parliamentary-standing-orders}
+\textbf{ext\_tsb\_agc1} (Tsebelis )
 
-\subsubsection{Basic Intuition:}\label{basic-intuition}
+This variable is based on \emph{George Tsebelis (2002): Veto Players:
+How Political Institutions Work, Princeton} table 7.3 at page 182 and
+measures governenment control of the legislative agenda.
 
-Each and every code is exclusive, meaning that one subparagraph needs to
-have one code but one code only. For some codes there are notes on how
-to decide between multiple codes which may seem appropriate. Sometimes
-even the coding rules and additional notes will not help to decide
-between codes. In this case please let us know. Every decision
-accompanied by doubt should be documented.
+The cross section values found in the table were assigned to those SO
+versions that were enacted in 1985 (when the agenda control measure was
+gathered). To extrapolate the measure over time it was: 1) multiplied by
+the number of words for those 1985 versions, 2) the change in majority
+prone and minority prone words was added (majority words as positives,
+minority words as negatives) 3) these text lengths were again divided by
+the lengths of the 1985 versions.
 
-\subsubsection{Further rules of the
-game:}\label{further-rules-of-the-game}
+Because it is unclear which numeric relation the agenda control measure
+and the change of pro majority / pro minority words might hold (one
+would need a second time point to determine that) the varaible exists in
+three variations: ext\_tsb\_agc1, ext\_tsb\_agc2 and ext\_tsb\_agc4. The
+numbers indicate by which factor the change in majority/minority
+friendly words was multiplied to give it an higher impact (1, 2, 4) thus
+increasing the variance of the agenda control extrapolation.
 
-\begin{itemize}
-\item
-  Often sub-paragraphs can be coded differently, depending on whether or
-  not one takes into consideration the overall context of the rule or
-  the more specific regulation. If in doubt, code based on the overall
-  context. Example: §14 GOBT: president grants vacation time → coded as
-  rights and obligations of individual members of parliament if one
-  takes into account the general context (652) and not as responsibility
-  of the president (6212).
-\item
-  Rules which concern the interaction of two actors are attributed to
-  the actor which takes the active part if he has discretion regarding
-  this action. Example: §62 (2) GOBT: The plenary can request report of
-  committee → coded as recall through the plenary (124) and not as
-  report of committee to the plenary (134).
-\item
-  The right of those initiating a bill or law to be present at the
-  committee meetings is coded as general right of individual members of
-  parliament (652).
-\end{itemize}
-
-\subsubsection{Coding Scheme}\label{coding-scheme}
-
-\textbf{(1) Law Making}
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~64}\\
+\textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~71}\\
+\textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~715}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~715}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~36.36}\\
+\textbf{\texttt{range\ \ \ \ :}}
+\texttt{{[}\ -0.57\ {]}\ ...\ {[}\ 0.7\ {]}}\\
+\textbf{\texttt{examples\ :}}
+\texttt{{[}0.35{]},\ {[}-0.42{]},\ {[}0.55{]},\ {[}-0.11{]},\ {[}0.35{]},\ {[}-0.16{]},\ {[}-0.04{]},\ {[}0.52{]},\ {[}NA{]},\ {[}-0.22\ ...}\\
 
 ~
 
-\emph{Note: SPs that refer to both the plenary sessions and committees
-are coded as 12x; SPs dealing with both law-making and special decision
-procedures are coded as 1xx.}
+\textbf{ext\_tsb\_agc2} (Tsebelis )
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{11 Bills and Motions}
+See ext\_tsb\_agc1.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    111 types of bills and motions; printing and distribution of bills
-    and motions to MPs
-  \item
-    112 right to initiate bills and motions
-  \item
-    113 restrictions and deadlines (if not assignable to more specific
-    category, e.g.~code 121; 32; 134)
-  \item
-    114 legislative planning (concerns the whole term- general schedule)
-  \end{itemize}
-\item
-  \textbf{12 Treatment of bills and motions in the plenary} \emph{(Note:
-  SPs including all stages of the treatment of bills and motions are
-  coded as votes in the plenary (123); SPs which determine the subject
-  of debate and vote are coded as subject of vote (123).)}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    121 debate in the plenary
-  \item
-    122 right of amendment in the plenary
-  \item
-    123 subject of vote, rules of vote (including quorum), voting
-    technology in the plenary
-  \item
-    124 the plenary as Committee of the Whole House \emph{(Note: SPs
-    referring to both committees and Committee of the Whole House are
-    coded as committees (not 124 but 13x).)}
-  \item
-    125 referral to committee, withdrawal from committee
-  \end{itemize}
-\item
-  \textbf{13 Treatment of bills and motions in committee} \emph{(Note:
-  SPs including all stages of the treatment of bills and motions in
-  committee are coded as votes in committee (133); SPs which determine
-  both the subject of debate and the subject of vote are coded as
-  subject of vote in committee (133).)}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    131 debate in committee (including hearing)
-  \item
-    132 amendment rights in committee
-  \item
-    133 subject of vote, rules of vote (including quorum), voting
-    technology in committee
-  \item
-    134 report to the plenary
-  \end{itemize}
-\end{itemize}
-
-\textbf{(2) Special Decision Procedures other than Regular Law-Making}
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~85}\\
+\textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~71}\\
+\textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~715}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~710}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~41.43}\\
+\textbf{\texttt{range\ \ \ \ :}}
+\texttt{{[}\ -0.62\ {]}\ ...\ {[}\ 0.7\ {]}}\\
+\textbf{\texttt{examples\ :}}
+\texttt{{[}0.69{]},\ {[}-0.18{]},\ {[}-0.4{]},\ {[}0.51{]},\ {[}-0.08{]},\ {[}-0.06{]},\ {[}0.56{]},\ {[}-0.05{]},\ {[}-0.43{]},\ {[}-0\ ...}\\
 
 ~
 
-\emph{Note: SPs which concern multiple special decision procedures apart
-from regular law-making are coded as follows: highest priority is given
-to constitutional matters, second highest priority is given to financial
-laws and budgeting, third highest priority is given to EU policy and
-fourth highest priority is given toforeign policy.}
+\textbf{ext\_tsb\_agc4} (Tsebelis )
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{21 constitutional change and amendment}
-\item
-  \textbf{22 financial laws} (money bills) and budgeting
-\item
-  \textbf{23 foreign policy} (e.g.~approval of law of nations,
-  declaration of war \emph{Note: If foreign policy and EU is treated
-  together, the SP is coded as EU (241, 242, 243 or 244).})
-\item
-  \textbf{24 EU} \emph{(Note: If foreign policy and EU is treated
-  together, the SP is coded as EU (241, 242, 243 or 244))}
+See ext\_tsb\_agc1.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    241 treatment of EU-bills and motions
-  \item
-    242 EU-committee: election and resignation
-  \item
-    243 instructions to the government concerning EU decisions
-  \item
-    244 further rights of participation in EU matters (e.g.~debates
-    about EU topics not based on EU bills and motions, reaction to
-    violations of subsidiary principle)
-  \end{itemize}
-\item
-  \textbf{25 general rules on elections in parliament} (if not coded as
-  election of government (31), or election of specific officials (411;
-  421; 441; 6211; 6221; 632))
-\item
-  \textbf{26 further special decision procedures} leading to a decision,
-  e.g.~resolution, or leading to a decree/act/bylaw (not mere debate or
-  question time) but cannot be coded as regular law-making nor special
-  decision procedures (21-24)
-\item
-  \textbf{27 procedures concerning laws that are hierarchically situated
-  between regular laws and constitutional laws} (above regular laws;
-  e.g.~organic laws in Spain)
-\item
-  \textbf{28 emergency legislation}
-\item
-  \textbf{29 relationship to sub-national level} (law-making, rights of
-  participation of sub-national level)
-\end{itemize}
-
-\textbf{(3) Relationship to Government}
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~104}\\
+\textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~71}\\
+\textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~715}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~712}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~52.01}\\
+\textbf{\texttt{range\ \ \ \ :}}
+\texttt{{[}\ -0.71\ {]}\ ...\ {[}\ 1.25\ {]}}\\
+\textbf{\texttt{examples\ :}}
+\texttt{{[}-0.43{]},\ {[}-0.36{]},\ {[}-0.53{]},\ {[}0.69{]},\ {[}0.61{]},\ {[}-0.18{]},\ {[}0.21{]},\ {[}-0.36{]},\ {[}-0.16{]},\ {[}0\ ...}\\
 
 ~
 
-\emph{Note: If vote of no confidence and vote of confidence is treated
-together, the SP is coded as vote of no confidence (32).}
+\textbf{pro\_minmaj\_qual} (textlines, linelinkage, manual coding)
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{31 election of government / mandatory investiture vote; entry
-  into office}
-\item
-  \textbf{32 vote of no confidence / government resignation}
-\item
-  \textbf{33 vote of confidence}
-\item
-  \textbf{34 instructions to government, involvement of members of
-  government in parliamentary activities} (rights to compel witnesses
-  {[}usually right of parliament against members of government{]}, right
-  to speak {[}usually members of government's right{]}, request of
-  information about state of execution of decisions of parliament)
-\end{itemize}
+Whether or not the reform in general was pro majority (1), pro minority
+(-1) or neither (0), the decission was made by comparing the number of
+sub-paragraphs/lines changed in each direction. If there was no change
+in favor of majority but changes in favor of minority it was considered
+minority friendly and vice versa. If changes in both directions took
+place there the differences in the SO texts were cosidered.
 
-\textbf{(4) Relationship to External Offices/Institutions apart from the
-Government}
+Find below the coding of all non-trivial cases \ldots{}
+\[ diff = pro\_maj - pro\_min \]
+\[ ratio\_pro = (pro\_maj - pro\_min) / (pro\_maj + pro\_min) \]
+\[ ratio\_all = (pro\_maj - pro\_min) / (pro\_maj + pro\_min + pro\_none) \]
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{41 parliamentary support bodies (e.g.~general accounting
-  office, ombudsman,\ldots{})}
+\begin{longtable}[c]{@{}lrrrrrrr@{}}
+\toprule
+t\_id & pro\_maj & pro\_min & pro\_non & pro\_minmaj\_qual & diff &
+ratio\_pro & ratio\_all\tabularnewline
+\midrule
+\endhead
+\texttt{FRA\_1994-03-12.0} & 29 & 1 & 134 & 1 & 28 & 0.93 &
+0.17\tabularnewline
+\texttt{LUX\_2003-11-27.0} & 14 & 1 & 88 & 1 & 13 & 0.87 &
+0.13\tabularnewline
+\texttt{ITA\_1983-11-30.0} & 13 & 1 & 26 & 1 & 12 & 0.86 &
+0.30\tabularnewline
+\texttt{DEN\_1976-10-05.0} & 12 & 1 & 21 & 1 & 11 & 0.85 &
+0.32\tabularnewline
+\texttt{NED\_1947-07-08.0} & 8 & 1 & 22 & 1 & 7 & 0.78 &
+0.23\tabularnewline
+\texttt{BEL\_1985-04-25.0} & 8 & 1 & 157 & 1 & 7 & 0.78 &
+0.04\tabularnewline
+\texttt{NED\_1994-05-17.0} & 21 & 3 & 347 & 1 & 18 & 0.75 &
+0.05\tabularnewline
+\texttt{LUX\_2000-07-01.0} & 24 & 4 & 150 & 1 & 20 & 0.71 &
+0.11\tabularnewline
+\texttt{DEN\_1981-06-01.0} & 9 & 2 & 54 & 1 & 7 & 0.64 &
+0.11\tabularnewline
+\texttt{SWE\_2007-01-01.1} & 4 & 1 & 16 & 1 & 3 & 0.60 &
+0.14\tabularnewline
+\texttt{SWE\_1949-04-06.0} & 10 & 3 & 53 & -1 & 7 & 0.54 &
+0.11\tabularnewline
+\texttt{LUX\_2007-03-15.0} & 6 & 2 & 43 & 1 & 4 & 0.50 &
+0.08\tabularnewline
+\texttt{LUX\_2010-07-15.0} & 3 & 1 & 6 & 0 & 2 & 0.50 &
+0.20\tabularnewline
+\texttt{ITA\_1982-01-12.0} & 3 & 1 & 9 & 0 & 2 & 0.50 &
+0.15\tabularnewline
+\texttt{SWE\_1998-10-01.0} & 3 & 1 & 23 & 1 & 2 & 0.50 &
+0.07\tabularnewline
+\texttt{NED\_1986-06-24.0} & 3 & 1 & 53 & 1 & 2 & 0.50 &
+0.04\tabularnewline
+\texttt{NOR\_2009-10-01.4} & 3 & 1 & 96 & 1 & 2 & 0.50 &
+0.02\tabularnewline
+\texttt{ITA\_1986-09-01.2} & 11 & 5 & 16 & 1 & 6 & 0.38 &
+0.19\tabularnewline
+\texttt{GER\_1952-01-01.0} & 12 & 6 & 208 & -1 & 6 & 0.33 &
+0.03\tabularnewline
+\texttt{ESP\_1982-03-06.0} & 8 & 4 & 705 & -1 & 4 & 0.33 &
+0.01\tabularnewline
+\texttt{SWE\_2003-07-01.0} & 8 & 4 & 476 & 1 & 4 & 0.33 &
+0.01\tabularnewline
+\texttt{UK\_2005-10-10.0} & 6 & 3 & 29 & 1 & 3 & 0.33 &
+0.08\tabularnewline
+\texttt{POR\_1984-03-16.0} & 6 & 3 & 83 & -1 & 3 & 0.33 &
+0.03\tabularnewline
+\texttt{BEL\_2003-10-12.0} & 6 & 3 & 111 & 1 & 3 & 0.33 &
+0.02\tabularnewline
+\texttt{DEN\_1959-04-29.0} & 4 & 2 & 14 & 1 & 2 & 0.33 &
+0.10\tabularnewline
+\texttt{ITA\_1982-01-29.0} & 2 & 1 & 5 & 1 & 1 & 0.33 &
+0.12\tabularnewline
+\texttt{GER\_1986-12-18.0} & 2 & 1 & 31 & 1 & 1 & 0.33 &
+0.03\tabularnewline
+\texttt{NED\_1953-07-09.0} & 2 & 1 & 35 & -1 & 1 & 0.33 &
+0.03\tabularnewline
+\texttt{BEL\_1990-07-12.0} & 2 & 1 & 68 & 1 & 1 & 0.33 &
+0.01\tabularnewline
+\texttt{IRE\_2010-12-02.0} & 2 & 1 & 135 & -1 & 1 & 0.33 &
+0.01\tabularnewline
+\texttt{NED\_1966-07-12.0} & 14 & 8 & 432 & 1 & 6 & 0.27 &
+0.01\tabularnewline
+\texttt{BEL\_1962-02-08.0} & 12 & 7 & 383 & 1 & 5 & 0.26 &
+0.01\tabularnewline
+\texttt{DEN\_1997-05-27.0} & 5 & 3 & 69 & 0 & 2 & 0.25 &
+0.03\tabularnewline
+\texttt{SWE\_1974-02-28.0} & 8 & 5 & 381 & 1 & 3 & 0.23 &
+0.01\tabularnewline
+\texttt{SWE\_1996-01-01.0} & 9 & 6 & 10 & 0 & 3 & 0.20 &
+0.12\tabularnewline
+\texttt{BEL\_1998-10-13.0} & 6 & 4 & 313 & 1 & 2 & 0.20 &
+0.01\tabularnewline
+\texttt{NED\_2006-06-29.0} & 3 & 2 & 21 & -1 & 1 & 0.20 &
+0.04\tabularnewline
+\texttt{AUT\_1986-09-01.0} & 3 & 2 & 34 & -1 & 1 & 0.20 &
+0.03\tabularnewline
+\texttt{BEL\_1995-06-08.0} & 3 & 2 & 71 & -1 & 1 & 0.20 &
+0.01\tabularnewline
+\texttt{AUT\_1996-10-15.0} & 32 & 23 & 90 & 1 & 9 & 0.16 &
+0.06\tabularnewline
+\texttt{DEN\_2004-01-01.0} & 4 & 3 & 31 & 1 & 1 & 0.14 &
+0.03\tabularnewline
+\texttt{SWE\_1995-01-01.1} & 4 & 3 & 60 & 1 & 1 & 0.14 &
+0.01\tabularnewline
+\texttt{DEN\_1966-01-01.0} & 10 & 8 & 69 & 0 & 2 & 0.11 &
+0.02\tabularnewline
+\texttt{DEN\_1989-05-12.0} & 5 & 4 & 48 & 1 & 1 & 0.11 &
+0.02\tabularnewline
+\texttt{LUX\_1991-01-01.0} & 44 & 40 & 271 & -1 & 4 & 0.05 &
+0.01\tabularnewline
+\texttt{AUT\_1993-09-15.0} & 12 & 12 & 52 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{BEL\_1973-04-26.0} & 1 & 1 & 11 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{BEL\_1982-10-26.0} & 1 & 1 & 13 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{BEL\_2005-05-19.0} & 1 & 1 & 6 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{DEN\_1969-10-07.0} & 2 & 2 & 20 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{DEN\_1986-12-17.0} & 1 & 1 & 6 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{DEN\_2004-12-16.0} & 1 & 1 & 20 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{GER\_1972-10-19.0} & 1 & 1 & 17 & -1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{IRE\_1996-10-15.0} & 2 & 2 & 181 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{ITA\_1983-12-14.0} & 1 & 1 & 9 & -1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{LUX\_1998-03-01.0} & 3 & 3 & 10 & -1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{NED\_1952-04-01.0} & 2 & 2 & 14 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{NED\_1956-05-03.0} & 2 & 2 & 12 & -1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{NOR\_1989-10-02.0} & 3 & 3 & 60 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{NOR\_1996-10-01.0} & 2 & 2 & 15 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{SWE\_1988-09-01.0} & 2 & 2 & 12 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{SWE\_1993-01-01.0} & 1 & 1 & 16 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{SWE\_2009-12-01.0} & 1 & 1 & 23 & 0 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{UK\_1991-01-29.0} & 1 & 1 & 4 & 1 & 0 & 0.00 &
+0.00\tabularnewline
+\texttt{SWE\_1971-01-01.0} & 3 & 4 & 180 & -1 & -1 & -0.14 &
+-0.01\tabularnewline
+\texttt{DEN\_1972-10-03.0} & 3 & 4 & 48 & 0 & -1 & -0.14 &
+-0.02\tabularnewline
+\texttt{AUT\_1989-01-01.0} & 25 & 34 & 156 & -1 & -9 & -0.15 &
+-0.04\tabularnewline
+\texttt{GER\_1970-05-22.0} & 2 & 3 & 46 & -1 & -1 & -0.20 &
+-0.02\tabularnewline
+\texttt{NED\_2004-03-31.0} & 2 & 3 & 39 & -1 & -1 & -0.20 &
+-0.02\tabularnewline
+\texttt{DEN\_2007-06-01.0} & 2 & 3 & 16 & -1 & -1 & -0.20 &
+-0.05\tabularnewline
+\texttt{BEL\_1993-10-27.0} & 3 & 5 & 87 & -1 & -2 & -0.25 &
+-0.02\tabularnewline
+\texttt{AUT\_1975-10-01.0} & 24 & 40 & 316 & -1 & -16 & -0.25 &
+-0.04\tabularnewline
+\texttt{FRA\_1969-11-30.0} & 9 & 16 & 151 & -1 & -7 & -0.28 &
+-0.04\tabularnewline
+\texttt{POR\_2003-01-17.0} & 1 & 2 & 443 & -1 & -1 & -0.33 &
+0.00\tabularnewline
+\texttt{IRE\_1997-11-13.0} & 1 & 2 & 161 & -1 & -1 & -0.33 &
+-0.01\tabularnewline
+\texttt{FRA\_1995-11-11.0} & 1 & 2 & 53 & -1 & -1 & -0.33 &
+-0.02\tabularnewline
+\texttt{DEN\_1971-10-05.0} & 1 & 2 & 17 & 0 & -1 & -0.33 &
+-0.05\tabularnewline
+\texttt{ITA\_1971-04-30.0} & 7 & 15 & 539 & -1 & -8 & -0.36 &
+-0.01\tabularnewline
+\texttt{ITA\_1998-01-01.0} & 3 & 7 & 92 & -1 & -4 & -0.40 &
+-0.04\tabularnewline
+\texttt{POR\_1985-03-06.0} & 2 & 5 & 821 & -1 & -3 & -0.43 &
+0.00\tabularnewline
+\texttt{BEL\_1987-01-28.0} & 2 & 5 & 102 & -1 & -3 & -0.43 &
+-0.03\tabularnewline
+\texttt{DEN\_1999-05-25.0} & 2 & 5 & 34 & -1 & -3 & -0.43 &
+-0.07\tabularnewline
+\texttt{DEN\_1953-12-17.0} & 10 & 27 & 118 & -1 & -17 & -0.46 &
+-0.11\tabularnewline
+\texttt{SWE\_1996-02-01.0} & 3 & 9 & 18 & -1 & -6 & -0.50 &
+-0.20\tabularnewline
+\texttt{AUT\_1961-09-01.0} & 4 & 13 & 95 & -1 & -9 & -0.53 &
+-0.08\tabularnewline
+\texttt{DEN\_1947-10-07.0} & 2 & 7 & 88 & -1 & -5 & -0.56 &
+-0.05\tabularnewline
+\texttt{AUT\_1998-01-01.0} & 1 & 4 & 78 & -1 & -3 & -0.60 &
+-0.04\tabularnewline
+\texttt{ITA\_1982-01-16.0} & 1 & 6 & 3 & -1 & -5 & -0.71 &
+-0.50\tabularnewline
+\texttt{FRA\_2009-06-25.0} & 4 & 34 & 385 & -1 & -30 & -0.79 &
+-0.07\tabularnewline
+\texttt{GER\_1980-10-01.0} & 1 & 9 & 253 & -1 & -8 & -0.80 &
+-0.03\tabularnewline
+\bottomrule
+\end{longtable}
 
-  \begin{itemize}
-  \tightlist
-  \item
-    411 election and resignation
-  \item
-    412 competences and resources of external offices/institutions;
-    relations to parliament (e.g.~reports, questions, \ldots{})
-  \end{itemize}
-\item
-  \textbf{42 head of state}
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~~4}\\
+\textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
+\textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~238}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~-22}\\
+\textbf{\texttt{range\ \ \ \ :}}
+\texttt{{[}\ -1\ {]}\ ...\ {[}\ 1\ {]}}\\
+\textbf{\texttt{examples\ :}}
+\texttt{{[}0{]},\ {[}0{]},\ {[}-1{]},\ {[}0{]},\ {[}-1{]},\ {[}-1{]},\ {[}0{]},\ {[}0{]},\ {[}0{]},\ {[}NA{]}\ ...}\\
 
-  \begin{itemize}
-  \tightlist
-  \item
-    421 election and resignation
-  \item
-    422 relation to parliament (if not coded as law-making (141, 144))
-  \end{itemize}
-\item
-  \textbf{43 second chamber (if not coded as law-making (142))}
-\item
-  \textbf{44 constitutional courts}
+~
 
-  \begin{itemize}
-  \tightlist
-  \item
-    441 election and resignation
-  \item
-    442 relation to parliament (if not coded as law-making (145))
-  \end{itemize}
-\item
-  \textbf{45 other external offices}
-\end{itemize}
+\textbf{pro\_minmaj\_auto1} (textlines, linelinkage, manual coding)
 
-\textbf{(5) Generating Publicity}
+Whether or not the reform in general was pro majority (1), pro minority
+(-1) or neither (0), the decission was made autoamitcally by comparing
+the number of words changed in each direction.
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{51 general rules regarding debate} (e.g.~time allotted for
-  speaking, proportional representation of parties during debate,
-  closure of debate)
-\item
-  \textbf{52 debates outside of law-making} (e.g.~topical hours
-  \ldots{})
-\item
-  \textbf{53 question rights}
-\item
-  \textbf{54 petitions and petition committee}
-\item
-  \textbf{55 relationship to media and citizens} (e.g.~parliamentary TV,
-  accreditation of journalists, publicity of meetings, admissibility of
-  visitors); regulation of matters of confidentiality
-\item
-  \textbf{56 protocols and parliamentary documents; forwarding of
-  documents and decisions to other bodies}
-\end{itemize}
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~~4}\\
+\textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
+\textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~252}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~-6}\\
+\textbf{\texttt{range\ \ \ \ :}}
+\texttt{{[}\ -1\ {]}\ ...\ {[}\ 1\ {]}}\\
+\textbf{\texttt{examples\ :}}
+\texttt{{[}0{]},\ {[}0{]},\ {[}1{]},\ {[}0{]},\ {[}0{]},\ {[}-1{]},\ {[}-1{]},\ {[}1{]},\ {[}NA{]},\ {[}0{]}\ ...}\\
 
-\textbf{6 Internal Organization of Parliament}
+~
 
-\begin{itemize}
-\tightlist
-\item
-  \textbf{61 plenary}
+\textbf{pro\_minmaj\_auto2} (textlines, linelinkage, manual coding)
 
-  \begin{itemize}
-  \tightlist
-  \item
-    611 agenda setting and removal of items from the agenda (general
-    rules which are not specifically regulated under 114)
-  \item
-    612 chairing of meetings and measures to uphold order
-  \item
-    613 sitting times \emph{(Note: When members are to be present inside
-    the parliament)}
-  \end{itemize}
-\item
-  \textbf{62 parliamentary presiding bodies}
+Whether or not the reform in general was pro majority (1), pro minority
+(-1) or neither (0), the decission was made autoamitcally by comparing
+the number of lines changed in each direction.
 
-  \begin{itemize}
-  \tightlist
-  \item
-    621 president of parliament, vice presidents, secretaries and clerks
+\textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
+\textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~~4}\\
+\textbf{\texttt{NAs\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~87}\\
+\textbf{\texttt{not-NA\ \ \ :}} \texttt{~~~~~~~~~699}\\
+\textbf{\texttt{not-0-NA\ :}} \texttt{~~~~~~~~~234}\\
+\textbf{\texttt{sum\ \ \ \ \ \ :}} \texttt{~~~~~~~~~~-2}\\
+\textbf{\texttt{range\ \ \ \ :}}
+\texttt{{[}\ -1\ {]}\ ...\ {[}\ 1\ {]}}\\
+\textbf{\texttt{examples\ :}}
+\texttt{{[}0{]},\ {[}1{]},\ {[}0{]},\ {[}-1{]},\ {[}0{]},\ {[}-1{]},\ {[}-1{]},\ {[}1{]},\ {[}1{]},\ {[}0{]}\ ...}\\
 
-    \begin{itemize}
-    \tightlist
-    \item
-      6211 election, resignation and internal decision rules
-    \item
-      6212 responsibilities \emph{(Note: if not coded as more specific
-      category (e.g.~612), Try to code in regard to the topic at first -
-      6212 only when no code corresponds)}
-    \end{itemize}
-  \item
-    622 council of elders or similar coordination body \emph{(Note: The
-    council of elders can be distinguished from the Presidency of
-    Parliament (621) insofar as representatives of the parliamentary
-    party groups are explicitly included.)}
-
-    \begin{itemize}
-    \tightlist
-    \item
-      6221 composition, election, resignation, internal decision rules
-    \item
-      6222 responsibilities (if not coded as more specific category
-      (e.g.~612))
-    \end{itemize}
-  \end{itemize}
-\item
-  \textbf{63 committees} (if not coded as more specific category
-  (e.g.~13; 24; 54; 55; 72))
-
-  \begin{itemize}
-  \tightlist
-  \item
-    631 general regulations regarding types of committees
-  \item
-    632 membership and committee jurisdiction (area of influence-control
-    .g. finance, economy, agriculture\ldots{})
-  \item
-    633 formal organizational units of committee \emph{(Note: e.g.~chair
-    of committee, sub-committees, staff; This is about the appointment
-    and election of the organizational units within committees and NOT
-    about their responsibilities.)}
-  \item
-    634 agenda and procedures (details on how decisions are taken)
-    within committees (if not coded as law-making (13))
-  \item
-    635 relations to other bodies
-
-    \begin{itemize}
-    \tightlist
-    \item
-      6351 relation to plenary (if not coded as 124; 134; 34)
-    \item
-      6352 relation to other committees
-    \end{itemize}
-  \item
-    636 investigative competencies of regular committees (NOT committees
-    of inquiry (637))
-
-    \begin{itemize}
-    \tightlist
-    \item
-      637 committee of inquiry
-    \item
-      638 enquête commission
-    \end{itemize}
-  \item
-    639 other special committees which are not explicitly referenced in
-    this coding manual \emph{(Note: e.g.~oversight committees in
-    Switzerland; Otherwise referenced are: EU-committee (242); committee
-    of inquiry (637); petition committee (54); standing order committee
-    (usually 72); council of elders or similar coordination body (622).
-    Exception: committees which deal exclusively with the confirmation
-    of the elections of members of parliament are coded as 651.)}
-  \end{itemize}
-\item
-  \textbf{64 parliamentary party groups}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    641 formation of parliamentary party groups
-  \item
-    642 rights and obligations of parliamentary party groups (if not
-    coded more specifically as e.g.~112; 51; 52; 53)
-  \item
-    643 financial and staff resources
-  \end{itemize}
-\item
-  \textbf{65 individual members of parliament}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    651 election, entry into office, resignation, incompatibilities,
-    legal status, immunity, indemnity
-  \item
-    652 rights and obligations of individual members of parliament (if
-    not coded more specifically as e.g.~112; 51; 52; 53)
-  \item
-    653 salary, financial and staff resources
-  \end{itemize}
-\item
-  \textbf{66 opposition}
-\item
-  \textbf{67 special bodies for emergency situations}
-\item
-  \textbf{68 parliamentary administration}
-\end{itemize}
-
-\textbf{7 Change and Interpretation of the Standing Orders}
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{71 rules regarding changing the standing orders}
-\item
-  \textbf{72 rules regarding interpretation of and deviation from
-  standing orders}
-\item
-  \textbf{73 debate about standing orders and motions regarding the
-  standing orders}
-\end{itemize}
-
-\textbf{8 General Rules Regarding Formation and Legislative Session;
-Discontinuity}
-
-\textbf{9 Final Provisions}
-
-\textbf{10 Miscellaneous} (cannot be coded otherwise)
-
-\textbf{999 Footnotes and Titles Without Relevant Content}
+~
 
 \end{document}
