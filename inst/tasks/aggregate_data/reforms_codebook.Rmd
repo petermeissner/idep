@@ -259,9 +259,6 @@ Each and every code is exclusive, meaning that one subparagraph needs to have on
 
 
 
-
-# Variable descriptions
-
 ```{r var description, include=FALSE}
 source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description.r")
 desc_missing <- any( !(   names(reforms) %in% description$name ))
@@ -270,8 +267,8 @@ anymiss <- desc_tomuch | desc_missing
 ```
 
 ```{r, echo=FALSE, results='asis'}
-if(anymiss){
-  cat("## Missing variable descriptions")
+if(desc_missing){
+  cat("# Missing variable descriptions")
 }else{
   cat("")
 } 
@@ -281,9 +278,23 @@ if(anymiss){
 names(reforms)[!(names(reforms) %in% description$name)]
 ```
 
+```{r, echo=FALSE, results='asis'}
+if(desc_tomuch){
+  cat("# Surplus variable descriptions")
+}else{
+  cat("")
+} 
+```
+
 ```{r, include=desc_tomuch}
 description$name[!(description$name %in% names(reforms))]
+description <- description[(description$name %in% names(reforms)),]
 ```
+
+
+
+# Variable descriptions
+
 
 ```{r, echo=FALSE, results='asis'}
 sumdummy<-function(x)
@@ -333,7 +344,8 @@ sumvar <- function(x){
 }
 
 for( g in sort(unique(description$group)) ){
-  cat(paste0("\n## ", g, "\n\n"))
+  gtitle <- str_replace(g, "^\\d* ", "")
+  cat(paste0("\n## ", gtitle, "\n\n"))
   dat <- description  %>% filter(group==g)
   for( i in seq_len(dim(dat)[1]) ){
     cat(

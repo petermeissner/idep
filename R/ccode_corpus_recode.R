@@ -13,8 +13,8 @@ ccode_color_scheme  <- c("#ec7014","#fcbba1", "#D94801", "#41ab5d", "#e7298a",
                          "#C0C0C0", "#FFFFFF")
 
 #' coler scheme 
-ccode_color_scheme2 <- c("#E6FFCC","#FFE6B2", "#D191BC", "#B8B8FF", "#D6C299", 
-                         "#ECECEC", "#FFFFFF")
+ccode_color_scheme2 <- c("#F3FFE8","#FFFAEF", "#F6E9F2", "#F4F4FF", "#FEFBE8", 
+                         "#F9F9F9", "#FFFFFF")
 
 #' function for aggregating corpus codes into topic categories
 ccode_corpus_recode <- function(ccode){

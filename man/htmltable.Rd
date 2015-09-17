@@ -4,8 +4,9 @@
 \alias{htmltable}
 \title{function for making html table}
 \usage{
-htmltable(x, file = "", standalone = T, names = T, head = "",
-  foot = "", color = "", bgcolor = "", html = "")
+htmltable(x, file = "", standalone = TRUE, names = TRUE, head = "",
+  foot = "", color = "", bgcolor = "", html = "", browse = file == "",
+  width = rep("", dim(x)[2]))
 }
 \arguments{
 \item{x}{data.frame or matrix to be transformed}

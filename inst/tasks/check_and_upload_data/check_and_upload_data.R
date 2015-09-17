@@ -1,12 +1,15 @@
 # script for checking link data and uploading it to server
 
-if( interactive() & !exists("ctr") ) ctr <- "SWIPARLG"
+if( interactive() & !exists("ctr") ) ctr <- "IRE"
+
 
 #### setting things up =========================================================
+message("\n")
 library(idep)
 library(dplyr)
 library(RMySQL)
 '%.%' <- function(a,b) paste0(a,b)
+message("\n")
 
 # error handling
 if( !interactive() ){
@@ -26,6 +29,7 @@ setwd("Z:/Gesch\u00e4ftsordnungen/database/rawdata")
 countries <- list.dirs(".", FALSE, FALSE)
 countries
 
+ctr <- countries[2]
 
 # commandline argument evaluation
 eval_cl_args()
@@ -139,7 +143,7 @@ if ( iffer  ){
 }
     
 #### checks ====================================================================
-message("running tests")
+message("\nrunning tests")
 
 # checks : dates were extracted as expected? 
 dtest(text_meta)
@@ -183,23 +187,112 @@ data_lines   <- tmp$data_lines
 
 
 
+
+#### resolve missing linkage errors ============================================
+
+
+# lines that should be in data_linkage
+id_seq <- sort(unique(substring(data_lines$tl_id, 1, 16)))
+max_id <- max(substring(data_lines$tl_id, 1, 16))
+min_id <- min(substring(data_lines$tl_id, 1, 16)) 
+
+
+# forward linking is missing 
+fwd_missing <- 
+  data_lines  %>% 
+  filter(tl_relevant==1) %>%  
+  left_join(data_linkage, by=c(tl_id="ll_tl_id1"))   %>% 
+  filter(is.na(ll_sim))   %>% 
+  filter(!grepl(max_id, tl_id))
+
+fwd_missing$tl_id
+
+res <- data.frame(Aorigtext=fwd_missing$tl_text, Borigtext=rep("", length(fwd_missing$tl_text)))
+if ( dim(res)[1]!=0 ){
+  fwd_missing$ll_sim      <- linkage_sim( res, "sim")
+  fwd_missing$ll_diff     <- linkage_sim( res, "diff")
+  fwd_missing$ll_sim_wd   <- linkage_sim( res, "sim_wd")
+  fwd_missing$ll_diff_wd  <- linkage_sim( res, "diff_wd")
+  fwd_missing$ll_minmaj_code   <- 0
+  fwd_missing$ll_minmaj_coder  <- "peter auto correction"
+  fwd_missing$ll_minmaj_memo   <- ""
+  fwd_missing$ll_linkage_coder <- "peter auto correction"
+  fwd_missing$ll_type          <- "deletion"
+  fwd_missing$ll_tl_id1  <- fwd_missing$tl_id
+  fwd_missing$ll_t_id1   <- str_extract(fwd_missing$ll_tl_id1, "^\\w.*\\.\\d")
+  fwd_missing$ll_tl_lnr1 <- as.numeric(str_extract(fwd_missing$ll_tl_id1, "\\d*$"))
+  fwd_missing$ll_t_id2   <- id_seq[ match(fwd_missing$ll_t_id1, id_seq)+1 ]
+  fwd_missing$ll_tl_lnr2 <- NA
+  fwd_missing$ll_tl_id2  <- paste0(fwd_missing$ll_t_id2,"_____")
+  
+  tmp <- 
+    fwd_missing %>% 
+    select(tl_id, tl_text, tl_lnr, tl_t_id, grep("^ll", names(fwd_missing)) ) %>% 
+    select( match( names(data_linkage), names(.) ) ) 
+  
+  data_linkage <- rbind(tmp, data_linkage)
+}
+
+
+
+# backward linking is missing
+bwd_missing <- 
+  data_lines  %>% 
+  filter(tl_relevant==1) %>%  
+  left_join(data_linkage, by=c(tl_id="ll_tl_id2"))   %>% 
+  filter(is.na(ll_sim))   %>% 
+  filter(!grepl(min_id, tl_id))
+
+bwd_missing$tl_id
+
+res <- data.frame(Aorigtext=bwd_missing$tl_text, Borigtext=rep("", length(bwd_missing$tl_text)))
+if ( dim(res)[1]!=0 ){
+  bwd_missing$ll_sim      <- linkage_sim( res, "sim")
+  bwd_missing$ll_diff     <- linkage_sim( res, "diff")
+  bwd_missing$ll_sim_wd   <- linkage_sim( res, "sim_wd")
+  bwd_missing$ll_diff_wd  <- linkage_sim( res, "diff_wd")
+  bwd_missing$ll_minmaj_code   <- 0
+  bwd_missing$ll_minmaj_coder  <- "peter auto correction"
+  bwd_missing$ll_minmaj_memo   <- ""
+  bwd_missing$ll_linkage_coder <- "peter auto correction"
+  bwd_missing$ll_type          <- "insertion"
+  bwd_missing$ll_tl_id2  <- bwd_missing$tl_id
+  bwd_missing$ll_t_id2   <- str_extract(bwd_missing$ll_tl_id2, "^\\w.*\\.\\d")
+  bwd_missing$ll_tl_lnr2 <- as.numeric(str_extract(bwd_missing$ll_tl_id2, "\\d*$"))
+  bwd_missing$ll_t_id1   <- id_seq[ match(bwd_missing$ll_t_id2, id_seq)-1 ]
+  bwd_missing$ll_tl_lnr1 <- NA
+  bwd_missing$ll_tl_id1  <- paste0(bwd_missing$ll_t_id1,"_____")
+  
+  tmp <- 
+    bwd_missing %>% 
+    select(tl_id, tl_text, tl_lnr, tl_t_id, grep("^ll", names(bwd_missing)) ) %>% 
+    select( match( names(data_linkage), names(.) ) ) 
+  
+  data_linkage <- rbind(tmp, data_linkage)
+}
+
+
+
+
+
+
+
 #### data upload================================================================
 
 # re-establish connection
-message("uploading data")
 get_ready()
 
 # Writing results to database
-message("data_texts")
+message("\nuploading data: data_texts")
 system.time(SQL <- genInsertsDKU("data_texts", data_texts))
 system.time(dbGetQueries(socon, SQL))
 
-message("data_textlines")
+message("uploading data: data_textlines")
 system.time(SQL <- genInsertsDKU("data_textlines", data_lines))
 Encoding(SQL) <- "UTF-8"
 system.time(dbGetQueries(socon, SQL))
 
-message("data_linkage")
+message("uploading data: data_linkage")
 system.time(SQL <- genInsertsDKU("data_linelinkage", data_linkage))
 system.time(dbGetQueries(socon, SQL))
 
