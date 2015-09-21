@@ -7,12 +7,12 @@ clear all
 set linesize 80
 
 **** open dataset =========================================================================
-cd  "Z:/Geschäftsordnungen/Database/external_data/Manifesto Project and ParlGov/"
+cd  "Z:/Geschäftsordnungen/Database/external_data/"
 use "cmp_parlgov_parties.dta"
 
 
 
-**** task 1: calculate ideological ideal position and polarization of government ==========
+**** calculate ideological ideal position and polarization of government ==========
 
 sort cabinet_id
 by cabinet_id: egen seats_gov_b = total(seats) if cabinet_party == 1
@@ -40,7 +40,7 @@ by cabinet_id: generate polar_gov = sqrt(polar_gov_2)
 
 
 
-**** task 2: calculate ideological range and polarization of opposition ===================================
+**** calculate ideological range and polarization of opposition ===================================
 
 
 * ideological range of opposition
@@ -67,7 +67,7 @@ by cabinet_id: generate polar_opp = sqrt(polar_opp_2)
 
 
 
-**** task 3: calculate distance between ideal position of opposition and government ========================
+**** calculate distance between ideal position of opposition and government ========================
 
 * version a: calculate ideal position of opposition just like the ideological position of government,
 *	then take difference between the two positions
@@ -94,9 +94,20 @@ corr opp_gov_dist_a opp_gov_dist_b // correlation of -0.27 --> both variables do
 
 
 
+*** some renaming ==============================================================
+
+* label variables
+label variable polar_gov 		"polarization government"
+label variable polar_opp 		"polarization opposition"
+label variable opp_gov_dist_b 	"weighted distance gov - opp"
+label variable range_opp		"ideological range opposition"
+label variable ideal_gov_tot	"ideal position of government"
+label variable ideal_opp_tot 	"ideal position of opposition"
+rename ideal_opp_tot ideal_opp
 
 
-**** task 4: saving =========================================================================================
+
+**** saving ====================================================================
 
 save "cmp_parlgov_parties_ideo_confl.dta", replace
 

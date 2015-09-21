@@ -4,7 +4,7 @@
 
 library(idep)
 library(dplyr)
-
+library(foreign)
 
 
 setwd("Z:/Gesch\xe4ftsordnungen/Database/aggregats")
@@ -45,38 +45,53 @@ for ( i in seq_along(reforms$t_id) ) {
 
 #   1 # aut 1928-02-01 --> no data in erd         --> should be ok
 
-# 179 # deu 2005-10-31 --> between two cabinets
+# 179 # deu 2005-10-31 --> between two cabinets   --> Merkel I (628)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="deu" & t_date=="2005-10-31")] <- 628
 
 # 183 # irl 1943-05-26 --> no data in erd         --> should be ok
 
-# 268 # ita 1987-03-24 --> between cabinets
-# 269 # ita 1987-07-18 --> between cabinets
-# 270 # ita 1987-07-25 --> between cabinets
+# 268 # ita 1987-03-24 --> between cabinets       --> Craxi (1038)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="ita" & t_date=="1987-03-24")] <- 1038
+
+# 269 # ita 1987-07-18 --> between cabinets       --> Goria (1040)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="ita" & t_date=="1987-07-18")] <- 1040
+
+# 270 # ita 1987-07-25 --> between cabinets       --> Goria (1040)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="ita" & t_date=="1987-07-25")] <- 1040
 
 # 309 # nld 1938-03-10 --> no data in erd         --> should be ok
-# 327 # nld 1977-09-18 --> between cabinets
-# 339 # nld 1986-06-24 --> between cabinets
-# 352 # nld 2002-07-04 --> between cabinets
-# 353 # nld 2003-04-15 --> between cabinets
-# 371 # nld 2010-07-01 --> between cabinets
 
-# 398 # nor 1972-10-10 --> between cabinets
+# 327 # nld 1977-09-18 --> between cabinets       --> van Agt I (1215)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="nld" & t_date=="1977-09-18")] <- 1215
+
+# 339 # nld 1986-06-24 --> between cabinets       --> Luebbers II (1219)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="nld" & t_date=="1986-06-24")] <- 1219
+
+# 352 # nld 2002-07-04 --> between cabinets       --> Balkenende I (1223)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="nld" & t_date=="2002-07-04")] <- 1223
+
+# 353 # nld 2003-04-15 --> between cabinets       --> Balkenende II (1224)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="nld" & t_date=="2003-04-15")] <- 1224
+
+# 371 # nld 2010-07-01 --> between cabinets       --> Ruette (1228)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="nld" & t_date=="2010-07-01")] <- 1228
+
+# 398 # nor 1972-10-10 --> between cabinets       --> Bratteli I (1312)
+reforms$erd_cab_id[with(reforms, is.na(erd_cab_id) & ctr=="nor" & t_date=="1972-10-10")] <- 1312
 
 
-#### DEV >>>>
+#### reforms without cabinet id of erd dataset
 
-# reforms  %>%
-#   mutate(lnr = seq_along(reforms$t_id) )  %>%
-#   select(lnr, ctr, t_date, erd_cab_id)  %>%
-#   filter(is.na(erd_cab_id),  !grepl("che",ctr) )
-# 
-# i <- 564
-# reform_country <- "swe"
+reforms  %>%
+  mutate(lnr = seq_along(reforms$t_id) )  %>%
+  select(lnr, ctr, t_date, erd_cab_id)  %>%
+  filter(is.na(erd_cab_id),  !grepl("che",ctr) )
+
+# i <- 179
+# reform_country <- "deu"
 # 
 # reforms[i, c("t_date", "t_daccept", "t_dpromul", "t_denact")]
 # data.frame(cab_id=erd$cab_id, erd$ctr, erd$cab_pm, erd$cab_in , erd$cab_out )[erd$ctr == reform_country,]
-
-#### DEV <<<<
 
 
 

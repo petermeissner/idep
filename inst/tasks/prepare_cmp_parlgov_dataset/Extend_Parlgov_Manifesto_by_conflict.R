@@ -9,13 +9,13 @@ library(stringr)
 library(foreign)
 library(dplyr)
 
-setwd("Z:/Gesch\xe4ftsordnungen/Database/external_data/Manifesto Project and ParlGov/")
+setwd("Z:/Geschäftsordnungen/Database/external_data")
 
 
 #### generating variables ======================================================
 
 # execute stata file 
-fname <- system.file("tasks/merge_reforms_dataset_with_MP_Parlgov/Extend_Parlgov_Manifesto_by_conflict.do", package = "idep")
+fname <- system.file("tasks/prepare_cmp_parlgov_dataset/Extend_Parlgov_Manifesto_by_conflict.do", package = "idep")
 system(paste0('"C:/Program Files (x86)/Stata11/Stata-64" /e do ', fname))
 
 

@@ -8,7 +8,7 @@ library(stringr)
 library(dplyr)
 
 
-setwd("Z:/Gesch\xe4ftsordnungen/Database/external_data/Manifesto Project and ParlGov/")
+setwd("Z:/Geschäftsordnungen/Database/external_data")
 
 
 
