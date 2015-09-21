@@ -247,7 +247,7 @@ rename v708e el_perf_cab
 label variable el_perf_cab "cabinet electoral performance"
 
 
-
+rename  v010e cab_comp
 
 
 
