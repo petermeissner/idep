@@ -105,6 +105,11 @@ rm(fname)
 
 reforms <- as_data_frame(texts)
 
+reforms$t_date    <- as.Date(reforms$t_date)
+reforms$t_denact  <- as.Date(reforms$t_denact)
+reforms$t_daccept <- as.Date(reforms$t_daccept)
+reforms$t_dpromul <- as.Date(reforms$t_dpromul)
+
 
 firstids <- character()
 for( i in unique(reforms$t_country) ) {
@@ -533,6 +538,8 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
   reforms$country[reforms$ctr=="CHEGRN"   ] <- "Swiss (GRN)"
   reforms$country[reforms$ctr=="CHEPARLG" ] <- "Swiss (Parlg)"
   reforms$country[reforms$ctr=="GBR"      ] <- "United Kingdom"
+  
+  reforms$ctr <- tolower(reforms$ctr)
   
 #### add wordiness variables ===================================================
   

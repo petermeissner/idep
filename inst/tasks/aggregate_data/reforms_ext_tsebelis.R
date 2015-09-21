@@ -22,7 +22,7 @@ tsebelis <-
   factors_to_character()  %>% 
   filter(cntrshort!="" & cntrshort!="ICE") 
 
-reforms$ext_tsb_agc  <- NULL
+reforms$tsb_agc  <- NULL
 reforms$ext_tsb_agc1 <- NULL
 reforms$ext_tsb_agc2 <- NULL
 reforms$ext_tsb_agc4 <- NULL
@@ -43,7 +43,7 @@ if ( exists("DEV") ){
 
 #### adjust data ===============================================================
 
-reforms$t_date <- as.POSIXct(reforms$t_date)
+#reforms$t_date <- as.POSIXct(reforms$t_date)
 
 tsebelis <- 
   tsebelis %>% 
@@ -57,8 +57,8 @@ tsebelis[  tsebelis$cntrshort=="GBR",  ]$cntrshort <- "UK"
 
 #### merge data ================================================================
 
-tdate <- as.POSIXct("1985-01-01 00:00:00")
-reforms$ext_tsb_agc <- NA
+tdate <- as.Date("1985-01-01")
+reforms$tsb_agc <- NA
 
 countries <- unique(reforms$t_country)
 
@@ -66,7 +66,7 @@ for(ctr in countries){
   iffer <- reforms$t_country==ctr & reforms$t_date <= tdate
   date  <- max(reforms[iffer,]$t_date)
   iffer <- reforms$t_country==ctr & reforms$t_date == date
-  reforms$ext_tsb_agc[iffer] <-   as.numeric(tsebelis$agenda_control[tsebelis$cntrshort==ctr])
+  reforms$tsb_agc[iffer] <-   as.numeric(tsebelis$agenda_control[tsebelis$cntrshort==ctr])
 }
 
 
@@ -82,9 +82,9 @@ for(ctr in countries){
 #   overall text lengths instead of by amount of regulations in the on or other direction
 
 
-reforms$minmaj_wds1 <- reforms$ext_tsb_agc * reforms$wds_clean_rel / 1
-reforms$minmaj_wds2 <- reforms$ext_tsb_agc * reforms$wds_clean_rel / 2
-reforms$minmaj_wds4 <- reforms$ext_tsb_agc * reforms$wds_clean_rel / 4
+reforms$minmaj_wds1 <- reforms$tsb_agc * reforms$wds_clean_rel / 1
+reforms$minmaj_wds2 <- reforms$tsb_agc * reforms$wds_clean_rel / 2
+reforms$minmaj_wds4 <- reforms$tsb_agc * reforms$wds_clean_rel / 4
 
 anchors_index <- which(!is.na(reforms$minmaj_wds1))
 anchors       <- reforms$t_id[anchors_index]
@@ -126,24 +126,24 @@ reforms$ext_tsb_agc2 <- round(reforms$ext_tsb_agc2, 2)
 reforms$ext_tsb_agc4 <- round(reforms$ext_tsb_agc4, 2)
 
 # drop minmaj_wds variable
-reforms <- reforms  %>% select(-minmaj_wds1, minmaj_wds2, minmaj_wds4)
+reforms <- reforms  %>% select(-minmaj_wds1, -minmaj_wds2, -minmaj_wds4)
 
 
 
 #### plot new variable =========================================================
 
 
-p <- ggplot( reforms ,  aes(x=t_date, y=ext_tsb_agc1, group=t_country, color=t_country, label = ifelse(duplicated(t_country),"",t_country) ) )
+p <- ggplot( reforms ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc1, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
 p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE) + 
   ggtitle(paste("extrapolated Tsebelis Agenda Control")) + 
   xlim(as.POSIXct("1920-01-01"), as.POSIXct("2010-01-01"))
 
-p <- ggplot( reforms ,  aes(x=t_date, y=ext_tsb_agc2, group=t_country, color=t_country, label = ifelse(duplicated(t_country),"",t_country) ) )
+p <- ggplot( reforms ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc2, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
 p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE) + 
   ggtitle(paste("extrapolated Tsebelis Agenda Control")) + 
   xlim(as.POSIXct("1920-01-01"), as.POSIXct("2010-01-01"))
 
-p <- ggplot( reforms ,  aes(x=t_date, y=ext_tsb_agc4, group=t_country, color=t_country, label = ifelse(duplicated(t_country),"",t_country) ) )
+p <- ggplot( reforms ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc4, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
 p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE) + 
   ggtitle(paste("extrapolated Tsebelis Agenda Control")) + 
   xlim(as.POSIXct("1920-01-01"), as.POSIXct("2010-01-01"))

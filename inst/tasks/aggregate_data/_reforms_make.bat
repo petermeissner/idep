@@ -9,6 +9,7 @@ REM GENERATING reforms data set
 R < reforms.R                > reforms.rout --vanilla 
 R < reforms_ext_tsebelis.R   > reforms_ext_tsebelis.rout --vanilla 
 R < reforms_ext_pro_minmaj.R > reforms_ext_pro_minmaj.rout --vanilla 
+R < reforms_ext_erd_cabinett_ids.R > reforms_ext_erd_cabinett_ids.rout --vanilla 
 
 
 REM building codebook HTML 

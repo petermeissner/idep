@@ -4,7 +4,9 @@ rbind(
   list(name="t_id"             , from="texts", group="01 meta", description="Unique identifier of a SO version by including country shorthand, date, and version counter."),
   list(name="t_date"           , from="texts", group="01 meta", description="Date of the SO version - equals to (according to availibility) enactment, promulgation, acceptance."),
   list(name="t_dplus"          , from="texts", group="01 meta", description="Version counter that is zero under normal circumstances but might be higher if more than one version got enacted on the same date."),
-  list(name="t_country"        , from="texts", group="01 meta", description="Country shorthand. In case of Swiss two seperate shorthands exist because there SO are spread among two bodies."),
+  list(name="t_country"        , from="texts", group="01 meta", description="Country shorthand (as used internal). In case of Swiss two seperate shorthands exist because there SO are spread among two bodies."),
+  list(name="country"          , from="texts", group="01 meta", description="Name of the country."),
+  list(name="ctr"              , from="texts", group="01 meta", description="Country shorthand adhering to ISO 3166-1 alpha-3 https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3"),
   list(name="t_daccept"        , from="texts", group="01 meta", description="Date on which the SO were accepted, voted upon, decided upon, ... ."),
   list(name="t_dpromul"        , from="texts", group="01 meta", description="Date on which the SO were promulgated - made puplic, printed, published, ... ."),
   list(name="t_denact"         , from="texts", group="01 meta", description="Date on which the SO were enacted - came into force / took effect."),
@@ -765,6 +767,7 @@ rbind(
   list(name="wds_corp_act_77"   , from="textlines", group="09 aggregated corpus codes - actors", description="Number of words with aggregated corpus code 77 - not relevant \n\n codes: 999"),
   
   # External Variables and Extensions
+  list(name="tsb_agc"            , from="Tsebelis ",                             group="11 external variables and extensions", description="Tsebelis original 2002, page 182 governenment control of the legislative agenda measure. See ext_tsb_agc1 for further description."),
   list(name="ext_tsb_agc1"       , from="Tsebelis ",                             group="11 external variables and extensions", 
     description=
     "This variable is based on *George Tsebelis (2002): Veto Players: How Political Institutions Work, Princeton* table 7.3 at page 182 and 
@@ -886,7 +889,8 @@ Find below the coding of all non-trivial cases ... $$ diff = pro\\_maj - pro\\_m
 
     "),
   list(name="pro_minmaj_auto1" , from="textlines, linelinkage, manual coding", group="11 external variables and extensions",  description="Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of words changed in each direction."),
-  list(name="pro_minmaj_auto2" , from="textlines, linelinkage, manual coding", group="11 external variables and extensions",  description="Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of lines changed in each direction.")
+  list(name="pro_minmaj_auto2" , from="textlines, linelinkage, manual coding", group="11 external variables and extensions",  description="Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of lines changed in each direction."),
+  list(name="erd_cab_id" , from="European Representative Democracy http://www.erdda.se/", group="11 external variables and extensions",  description="")
 )
 
 

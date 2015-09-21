@@ -32,6 +32,7 @@ db_on_disk_version
 set.seed(7787)
 ```
 
+
 # The reforms dataset (version `r db_on_disk_version`)
 The data-set is based on the IDEP data - data on Standing Orders versions (*texts*), data on Standing Orders Text (*textlines*) and data on Standing Orders change between versions (*linelinkage*). Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. 
 
@@ -296,11 +297,11 @@ description <- description[(description$name %in% names(reforms)),]
 # Variable descriptions
 
 
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, results='asis', warning=FALSE}
 sumdummy<-function(x)
 {
   ifelse(
-    class(x) == "character", 
+    class(x) == "character" | class(x) == "Date", 
     "-", 
     format(sum(x, na.rm=TRUE), scientific = F, big.mark = "\xA0") 
   )
@@ -326,9 +327,9 @@ sumvar <- function(x){
               12, "left", "\u00A0") ,"`\\\n<br>")
   cat(
       "**`range    :`** `[", 
-    range(x, na.rm=T)[1], 
+    as.character(range(x, na.rm=T)[1]), 
     "] ... [",
-    range(x, na.rm=T)[2],
+    as.character(range(x, na.rm=T)[2]),
     "]",
     "`\\\n<br>"
   )
@@ -353,7 +354,7 @@ for( g in sort(unique(description$group)) ){
       dat$desc[i], "\n\n",
       sep=""
     )
-    sumvar(unlist(reforms[,dat$name[i]]))
+    sumvar(as.data.frame(reforms, stringsAsFactors=F)[ , dat$name[i] ])
     cat("\n\n<p>&nbsp;</p>")
   }
 }
