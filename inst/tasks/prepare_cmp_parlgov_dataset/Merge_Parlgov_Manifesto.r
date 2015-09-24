@@ -105,11 +105,54 @@ parties <-
   arrange(country_name.x, election_date, start_date, -cabinet_party) 
 
 
+#### cleaning up the mess ======================================================
+
+parties <- 
+  parties  %>%
+  select(-country)  %>% 
+  rename_(
+    ctr            = "country_name_short.x",
+    country        = "country_name.x",
+    party_id       = "party_id.x",
+    party_name     = "party_name_short.x", 
+    country_id     = "country_id.x",
+    seats_total    = "election_seats_total",
+    left_right_cmp = "rile",
+    votes_percent  = "pervote"
+  )  %>% 
+  select(
+    ctr, country, party_id,            election_date,  start_date, 
+    cabinet_name, cabinet_party,       prime_minister, seats,         
+    seats_total,  country_id,          election_id, 
+    cabinet_id,   previous_cabinet_id, cmp,            votes_percent, 
+    left_right_cmp
+  )
+
+  
+
 #### saving data ===============================================================
 
 save(parties, file='cmp_parlgov_parties.Rdata')
 write.csv(parties, 'cmp_parlgov_parties.csv')
 write.dta(parties, file='cmp_parlgov_parties.dta', convert.dates = FALSE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

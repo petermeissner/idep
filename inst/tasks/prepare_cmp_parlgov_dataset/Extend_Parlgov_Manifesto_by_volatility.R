@@ -10,7 +10,7 @@ library(dplyr)
 library(foreign)
 
 
-setwd("Z:/Geschäftsordnungen/Database/external_data")
+setwd("Z:/Gesch\xe4ftsordnungen/Database/external_data")
 
 
 #### load data =================================================================
@@ -45,17 +45,16 @@ parties <- as_data_frame(parties)
 # calculate seats_percentage and change in seats_percentage
 tmp <- 
   parties  %>% 
-  arrange(party_id_x ,election_date, start_date) %>% 
-  group_by(party_id_x) %>% 
+  arrange(party_id ,election_date, start_date) %>% 
+  group_by(party_id) %>% 
   mutate(
-    seats_percentage  = 100 * (seats / election_seats_total), 
-    volatility_pi = abs(seats_percentage - ifelse(is.na(lag(seats_percentage)), 0, lag(seats_percentage)) )
+    volatility_pi = abs(seats_percent - ifelse(is.na(lag(seats_percent)), 0, lag(seats_percent)) )
   )  
 
 # ensure values to be equal per party and election
 tmp <- 
   tmp  %>% 
-  group_by(party_id_x, election_date) %>% 
+  group_by(party_id, election_date) %>% 
   mutate(
     volatility_pi = max(volatility_pi)
   )

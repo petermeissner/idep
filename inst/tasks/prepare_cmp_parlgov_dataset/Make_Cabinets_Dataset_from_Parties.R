@@ -10,7 +10,7 @@ library(dplyr)
 library(foreign)
 
 
-setwd("Z:/Geschäftsordnungen/Database/external_data")
+setwd("Z:/Gesch\xe4ftsordnungen/Database/external_data")
 
 
 #### load data =================================================================
@@ -25,59 +25,29 @@ parties <- as_data_frame(parties)
 
 cabinets <- 
   parties  %>% 
-  select(
-    countryname          ,
-    election_date        ,
-    start_date           ,
-    cabinet_name         ,
-    cabinet_id           ,
-    previous_cabinet_id  ,
-    #election_seats_total ,
-    #pervote              ,
-    #voteest              ,
-    #presvote             ,
-    #absseat              ,
-    #totseats             ,
-    #seats_gov_b          ,
-    seats,
-    seats, 
-    seats_gov            ,
-    seat_share_gov       ,
-    #seats_opp_b          ,
-    seats_opp            ,
-    seat_share_opp       ,
-    ideal_gov            ,
-    #ideal_gov_2          ,
-    #polar_gov_1          ,
-    #polar_gov_2          ,
-    polar_gov            ,
-    #range_opp_2          ,
-    range_opp            ,
-    #ideal_opp_2          ,
-    #polar_opp_1          ,
-    #polar_opp_2          ,
-    polar_opp            ,
-    ideal_gov_tot        ,
-    ideal_opp_tot        ,
-    #opp_gov_dist_a       ,
-    #ideal_gov_b          ,
-    #opp_gov_dist_b    ,   
-    #dist_b ,
-    volatility, 
-    first_election
-  )
-
-
-
-
-cabinets <- 
-  cabinets %>% 
   group_by(cabinet_id) %>%
   slice(1) %>% 
   group_by() %>% 
-  arrange(countryname, election_date, start_date)
-
-cabinets  %>% head(20)
+  arrange(country, election_date, start_date) %>% 
+  rename(
+    cab_name_pg    = cabinet_name,
+    cab_id_pg      = cabinet_id,
+    cab_id_prev_pg = previous_cabinet_id,
+    el_id_pg       = election_id,
+    el_first_pg    = first_election,
+    sts_tot_pg     = seats_total,
+    cab_start_pg   = start_date, 
+    el_date_pg     = election_date
+  ) %>% 
+  select(
+    -prime_minister, -seats, -cmp, -cabinet_party, 
+    -country_id, -seats_share, -seats_percent, votes_percent,
+    -party_id, -volatility_pi, -left_right_cmp, -votes_percent
+  ) %>% 
+  mutate(
+    ctr = tolower(ctr)
+  )
+cabinets <- cabinets[ , sort(names(cabinets)) ]
 
 
 
