@@ -3,13 +3,14 @@ REM CLEANING UP
   Rscript -e "library(idep); file.move(grep('Rmd$|bat$|r$|pdf$', list.files(pattern='.*\\..*'), invert=T, value=T, ignore.case=T),'old')"
   Rscript -e "unlink(list.files(pattern='tex2pdf'), recursive=T)"
 
-
 REM GENERATING reforms data set
 
-R < reforms.R                > reforms.rout --vanilla 
-R < reforms_ext_tsebelis.R   > reforms_ext_tsebelis.rout --vanilla 
-R < reforms_ext_pro_minmaj.R > reforms_ext_pro_minmaj.rout --vanilla 
-R < reforms_ext_erd_cabinett_ids.R > reforms_ext_erd_cabinett_ids.rout --vanilla 
+R < reforms.R                                        > reforms.rout                                        --vanilla 
+
+R < aggregate_data/reforms_ext_parlgov_cabinet_ids.R > aggregate_data/reforms_ext_parlgov_cabinet_ids.Rout --vanilla
+R < aggregate_data/reforms_ext_pro_minmaj.R          > aggregate_data/reforms_ext_pro_minmaj.Rout          --vanilla
+R < aggregate_data/reforms_ext_tsebelis.R            > aggregate_data/reforms_ext_tsebelis.Rout            --vanilla        
+R < aggregate_data/reforms_ext_erd_cabinet_ids.R     > aggregate_data/reforms_ext_erd_cabinet_ids.Rout     --vanilla
 
 
 REM building codebook HTML 

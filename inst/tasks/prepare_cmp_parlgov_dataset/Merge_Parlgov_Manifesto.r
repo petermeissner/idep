@@ -8,7 +8,7 @@ library(stringr)
 library(dplyr)
 
 
-setwd("Z:/Geschäftsordnungen/Database/external_data")
+setwd("Z:/Gesch\xe4ftsordnungen/Database/external_data")
 
 
 

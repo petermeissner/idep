@@ -18,8 +18,8 @@ Notes:
       1.  (/m# option or -set memory-) 300.00 MB allocated to data
       2.  Stata running in batch mode
 
-. do C:/Users/Admin/Documents/R/win-library/3.2/idep/tasks/prepare_dataset_for_pr
-> o_min_maj_analysis/prepare_erd_dataset.do 
+. do C:/Users/Admin/Documents/R/win-library/3.2/idep//tasks/prepare_erd_dataset/p
+> repare_erd_dataset.do 
 
 . // script for preparing ERD dataset
 . //      - variable selection
@@ -429,7 +429,8 @@ Notes:
 
 . 
 . 
-. 
+. rename  v010e cab_comp
+
 . 
 . 
 . 

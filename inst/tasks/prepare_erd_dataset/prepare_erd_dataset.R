@@ -1,10 +1,11 @@
 # script for preparing erd data for usage
 
 library(foreign)
-
+library(idep)
 #### make sure ERD data is prepared ============================================
 
-fname <- system.file("tasks/prepare_dataset_for_pro_min_maj_analysis/prepare_erd_dataset.do", package = "idep")
+fname <- system.file("/tasks/prepare_erd_dataset/prepare_erd_dataset.do", package = "idep")
+if(fname=="") stop("fname for do file empty .... do file to do duty not found!")
 system(paste0('"C:/Program Files (x86)/Stata11/Stata-64" /e do ', fname))
 
 
