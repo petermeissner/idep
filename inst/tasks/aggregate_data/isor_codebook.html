@@ -57,6 +57,9 @@ var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/<
 hljs.initHighlightingOnLoad();
 </script>
 
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <style type="text/css">
@@ -208,7 +211,7 @@ hr {
 <p>The data set incorporates aggregated data for 
 770 reforms in
 15 countries and consists of 
-729 variables. </p>
+737 variables. </p>
 
 <p><strong>Example:</strong></p>
 
@@ -479,19 +482,6 @@ Since all coding and analysis was only pursued on the basis of relevant and clea
 <p><strong>10    Miscellaneous</strong> (cannot be coded otherwise)</p>
 
 <p><strong>999   Footnotes and Titles Without Relevant Content</strong></p>
-
-<h1>Surplus variable descriptions</h1>
-
-<pre><code class="r">description$name[!(description$name %in% names(reforms))]
-</code></pre>
-
-<pre><code>## [1] &quot;tsb_agc&quot;          &quot;ext_tsb_agc1&quot;     &quot;ext_tsb_agc2&quot;    
-## [4] &quot;ext_tsb_agc4&quot;     &quot;pro_minmaj_qual&quot;  &quot;pro_minmaj_auto1&quot;
-## [7] &quot;pro_minmaj_auto2&quot; &quot;erd_cab_id&quot;
-</code></pre>
-
-<pre><code class="r">description &lt;- description[(description$name %in% names(reforms)),]
-</code></pre>
 
 <h1>Variable descriptions</h1>
 
@@ -12669,6 +12659,1065 @@ Since all coding and analysis was only pursued on the basis of relevant and clea
 <br>**<code>sum      :</code>** <code>           0</code>\
 <br>**<code>range    :</code>** <code>[ 0 ] ... [ 0 ]</code>\
 <br>**<code>examples :</code>** <code>[0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<h2>external variables and extensions</h2>
+
+<p><strong>tsb_agc</strong> (Tsebelis )</p>
+
+<p>Tsebelis original 2002, page 182 governenment control of the legislative agenda measure. See ext_tsb_agc1 for further description.</p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>          16</code>\
+<br>**<code>NAs      :</code>** <code>         770</code>\
+<br>**<code>not-NA   :</code>** <code>          16</code>\
+<br>**<code>not-0-NA :</code>** <code>          16</code>\
+<br>**<code>sum      :</code>** <code>      -0.095</code>\
+<br>**<code>range    :</code>** <code>[ -0.527 ] ... [ 0.69 ]</code>\
+<br>**<code>examples :</code>** <code>[NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>ext_tsb_agc1</strong> (Tsebelis )</p>
+
+<p>This variable is based on <em>George Tsebelis (2002): Veto Players: How Political Institutions Work, Princeton</em> table 7.3 at page 182 and 
+    measures governenment control of the legislative agenda. </p>
+
+<p>The cross section values found in the table were assigned to those SO versions that were enacted in 1985 (when the agenda control measure was gathered).
+To extrapolate the measure over time it was: 
+1) multiplied by the number of words for those 1985 versions, 
+2) the change in majority prone and minority prone words was added (majority words as positives, minority words as negatives)
+3) these text lengths were again divided by the lengths of the 1985 versions.</p>
+
+<p>Because it is unclear which numeric relation the agenda control measure and the change of pro majority / pro minority words might hold 
+(one would need a second time point to determine that) the varaible exists in three variations: ext_tsb_agc1, ext_tsb_agc2 and ext_tsb_agc4.
+The numbers indicate by which factor the change in majority/minority friendly words was multiplied to give it an higher impact (1, 2, 4) thus increasing the variance
+of the agenda control extrapolation. </p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>          64</code>\
+<br>**<code>NAs      :</code>** <code>          71</code>\
+<br>**<code>not-NA   :</code>** <code>         715</code>\
+<br>**<code>not-0-NA :</code>** <code>         715</code>\
+<br>**<code>sum      :</code>** <code>       36.36</code>\
+<br>**<code>range    :</code>** <code>[ -0.57 ] ... [ 0.7 ]</code>\
+<br>**<code>examples :</code>** <code>[-0.05], [-0.05], [0.69], [0.14], [0.52], [-0.27], [-0.06], [-0.06], [0.69], [-0 ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>ext_tsb_agc2</strong> (Tsebelis )</p>
+
+<p>See ext_tsb_agc1.</p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>          85</code>\
+<br>**<code>NAs      :</code>** <code>          71</code>\
+<br>**<code>not-NA   :</code>** <code>         715</code>\
+<br>**<code>not-0-NA :</code>** <code>         710</code>\
+<br>**<code>sum      :</code>** <code>       41.43</code>\
+<br>**<code>range    :</code>** <code>[ -0.62 ] ... [ 0.7 ]</code>\
+<br>**<code>examples :</code>** <code>[0.68], [0.69], [0.68], [0.69], [-0.4], [0.32], [-0.13], [-0.21], [0.22], [-0.4] ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>ext_tsb_agc4</strong> (Tsebelis )</p>
+
+<p>See ext_tsb_agc1.</p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>         104</code>\
+<br>**<code>NAs      :</code>** <code>          71</code>\
+<br>**<code>not-NA   :</code>** <code>         715</code>\
+<br>**<code>not-0-NA :</code>** <code>         712</code>\
+<br>**<code>sum      :</code>** <code>       52.01</code>\
+<br>**<code>range    :</code>** <code>[ -0.71 ] ... [ 1.25 ]</code>\
+<br>**<code>examples :</code>** <code>[0.53], [0.12], [-0.22], [-0.41], [-0.18], [0.68], [-0.29], [-0.1], [-0.06], [NA ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>pro_minmaj_qual</strong> (textlines, linelinkage, manual coding)</p>
+
+<p>Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), 
+the decission was made by comparing the number of sub-paragraphs/lines changed in each direction.
+If there was no change in favor of majority but changes in favor of minority it was considered minority friendly and vice versa.
+If changes in both directions took place there the differences in the SO texts were cosidered. </p>
+
+<p>Find below the coding of all non-trivial cases &hellip; \[ diff = pro\_maj - pro\_min \] \[ ratio\_pro = (pro\_maj - pro\_min) / (pro\_maj + pro\_min) \] \[ ratio\_all = (pro\_maj - pro\_min) / (pro\_maj + pro\_min + pro\_none) \] </p>
+
+<table><thead>
+<tr>
+<th align="left">t_id</th>
+<th align="right">pro_maj</th>
+<th align="right">pro_min</th>
+<th align="right">pro_non</th>
+<th align="right">pro_minmaj_qual</th>
+<th align="right">diff</th>
+<th align="right">ratio_pro</th>
+<th align="right">ratio_all</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left"><code>FRA_1994-03-12.0</code></td>
+<td align="right">29</td>
+<td align="right">1</td>
+<td align="right">134</td>
+<td align="right">1</td>
+<td align="right">28</td>
+<td align="right">0.93</td>
+<td align="right">0.17</td>
+</tr>
+<tr>
+<td align="left"><code>LUX_2003-11-27.0</code></td>
+<td align="right">14</td>
+<td align="right">1</td>
+<td align="right">88</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">0.87</td>
+<td align="right">0.13</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1983-11-30.0</code></td>
+<td align="right">13</td>
+<td align="right">1</td>
+<td align="right">26</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">0.86</td>
+<td align="right">0.30</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1976-10-05.0</code></td>
+<td align="right">12</td>
+<td align="right">1</td>
+<td align="right">21</td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">0.85</td>
+<td align="right">0.32</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1947-07-08.0</code></td>
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="right">22</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0.78</td>
+<td align="right">0.23</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1985-04-25.0</code></td>
+<td align="right">8</td>
+<td align="right">1</td>
+<td align="right">157</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0.78</td>
+<td align="right">0.04</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1994-05-17.0</code></td>
+<td align="right">21</td>
+<td align="right">3</td>
+<td align="right">347</td>
+<td align="right">1</td>
+<td align="right">18</td>
+<td align="right">0.75</td>
+<td align="right">0.05</td>
+</tr>
+<tr>
+<td align="left"><code>LUX_2000-07-01.0</code></td>
+<td align="right">24</td>
+<td align="right">4</td>
+<td align="right">150</td>
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="right">0.71</td>
+<td align="right">0.11</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1981-06-01.0</code></td>
+<td align="right">9</td>
+<td align="right">2</td>
+<td align="right">54</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0.64</td>
+<td align="right">0.11</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_2007-01-01.1</code></td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">16</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.60</td>
+<td align="right">0.14</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1949-04-06.0</code></td>
+<td align="right">10</td>
+<td align="right">3</td>
+<td align="right">53</td>
+<td align="right">-1</td>
+<td align="right">7</td>
+<td align="right">0.54</td>
+<td align="right">0.11</td>
+</tr>
+<tr>
+<td align="left"><code>LUX_2007-03-15.0</code></td>
+<td align="right">6</td>
+<td align="right">2</td>
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">0.50</td>
+<td align="right">0.08</td>
+</tr>
+<tr>
+<td align="left"><code>LUX_2010-07-15.0</code></td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.50</td>
+<td align="right">0.20</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1982-01-12.0</code></td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.50</td>
+<td align="right">0.15</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1998-10-01.0</code></td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.50</td>
+<td align="right">0.07</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1986-06-24.0</code></td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">53</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.50</td>
+<td align="right">0.04</td>
+</tr>
+<tr>
+<td align="left"><code>NOR_2009-10-01.4</code></td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">96</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.50</td>
+<td align="right">0.02</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1986-09-01.2</code></td>
+<td align="right">11</td>
+<td align="right">5</td>
+<td align="right">16</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">0.38</td>
+<td align="right">0.19</td>
+</tr>
+<tr>
+<td align="left"><code>GER_1952-01-01.0</code></td>
+<td align="right">12</td>
+<td align="right">6</td>
+<td align="right">208</td>
+<td align="right">-1</td>
+<td align="right">6</td>
+<td align="right">0.33</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>ESP_1982-03-06.0</code></td>
+<td align="right">8</td>
+<td align="right">4</td>
+<td align="right">705</td>
+<td align="right">-1</td>
+<td align="right">4</td>
+<td align="right">0.33</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_2003-07-01.0</code></td>
+<td align="right">8</td>
+<td align="right">4</td>
+<td align="right">476</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">0.33</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>UK_2005-10-10.0</code></td>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">29</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.33</td>
+<td align="right">0.08</td>
+</tr>
+<tr>
+<td align="left"><code>POR_1984-03-16.0</code></td>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">83</td>
+<td align="right">-1</td>
+<td align="right">3</td>
+<td align="right">0.33</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_2003-10-12.0</code></td>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">111</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.33</td>
+<td align="right">0.02</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1959-04-29.0</code></td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">14</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.33</td>
+<td align="right">0.10</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1982-01-29.0</code></td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.33</td>
+<td align="right">0.12</td>
+</tr>
+<tr>
+<td align="left"><code>GER_1986-12-18.0</code></td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">31</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.33</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1953-07-09.0</code></td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">35</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">0.33</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1990-07-12.0</code></td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">68</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.33</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>IRE_2010-12-02.0</code></td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">135</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">0.33</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1966-07-12.0</code></td>
+<td align="right">14</td>
+<td align="right">8</td>
+<td align="right">432</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">0.27</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1962-02-08.0</code></td>
+<td align="right">12</td>
+<td align="right">7</td>
+<td align="right">383</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">0.26</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1997-05-27.0</code></td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">69</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.25</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1974-02-28.0</code></td>
+<td align="right">8</td>
+<td align="right">5</td>
+<td align="right">381</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.23</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1996-01-01.0</code></td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0.20</td>
+<td align="right">0.12</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1998-10-13.0</code></td>
+<td align="right">6</td>
+<td align="right">4</td>
+<td align="right">313</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.20</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>NED_2006-06-29.0</code></td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">21</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">0.20</td>
+<td align="right">0.04</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1986-09-01.0</code></td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">34</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">0.20</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1995-06-08.0</code></td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">71</td>
+<td align="right">-1</td>
+<td align="right">1</td>
+<td align="right">0.20</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1996-10-15.0</code></td>
+<td align="right">32</td>
+<td align="right">23</td>
+<td align="right">90</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">0.16</td>
+<td align="right">0.06</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_2004-01-01.0</code></td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">31</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.14</td>
+<td align="right">0.03</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1995-01-01.1</code></td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">60</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.14</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1966-01-01.0</code></td>
+<td align="right">10</td>
+<td align="right">8</td>
+<td align="right">69</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.11</td>
+<td align="right">0.02</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1989-05-12.0</code></td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">48</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.11</td>
+<td align="right">0.02</td>
+</tr>
+<tr>
+<td align="left"><code>LUX_1991-01-01.0</code></td>
+<td align="right">44</td>
+<td align="right">40</td>
+<td align="right">271</td>
+<td align="right">-1</td>
+<td align="right">4</td>
+<td align="right">0.05</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1993-09-15.0</code></td>
+<td align="right">12</td>
+<td align="right">12</td>
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1973-04-26.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1982-10-26.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_2005-05-19.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1969-10-07.0</code></td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1986-12-17.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_2004-12-16.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">20</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>GER_1972-10-19.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">17</td>
+<td align="right">-1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>IRE_1996-10-15.0</code></td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">181</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1983-12-14.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">-1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>LUX_1998-03-01.0</code></td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="right">-1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1952-04-01.0</code></td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>NED_1956-05-03.0</code></td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="right">-1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>NOR_1989-10-02.0</code></td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">60</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>NOR_1996-10-01.0</code></td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">15</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1988-09-01.0</code></td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1993-01-01.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">16</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_2009-12-01.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>UK_1991-01-29.0</code></td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1971-01-01.0</code></td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">180</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.14</td>
+<td align="right">-0.01</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1972-10-03.0</code></td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">48</td>
+<td align="right">0</td>
+<td align="right">-1</td>
+<td align="right">-0.14</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1989-01-01.0</code></td>
+<td align="right">25</td>
+<td align="right">34</td>
+<td align="right">156</td>
+<td align="right">-1</td>
+<td align="right">-9</td>
+<td align="right">-0.15</td>
+<td align="right">-0.04</td>
+</tr>
+<tr>
+<td align="left"><code>GER_1970-05-22.0</code></td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">46</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.20</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="left"><code>NED_2004-03-31.0</code></td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">39</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.20</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_2007-06-01.0</code></td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">16</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.20</td>
+<td align="right">-0.05</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1993-10-27.0</code></td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">87</td>
+<td align="right">-1</td>
+<td align="right">-2</td>
+<td align="right">-0.25</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1975-10-01.0</code></td>
+<td align="right">24</td>
+<td align="right">40</td>
+<td align="right">316</td>
+<td align="right">-1</td>
+<td align="right">-16</td>
+<td align="right">-0.25</td>
+<td align="right">-0.04</td>
+</tr>
+<tr>
+<td align="left"><code>FRA_1969-11-30.0</code></td>
+<td align="right">9</td>
+<td align="right">16</td>
+<td align="right">151</td>
+<td align="right">-1</td>
+<td align="right">-7</td>
+<td align="right">-0.28</td>
+<td align="right">-0.04</td>
+</tr>
+<tr>
+<td align="left"><code>POR_2003-01-17.0</code></td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">443</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.33</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>IRE_1997-11-13.0</code></td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">161</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.33</td>
+<td align="right">-0.01</td>
+</tr>
+<tr>
+<td align="left"><code>FRA_1995-11-11.0</code></td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">53</td>
+<td align="right">-1</td>
+<td align="right">-1</td>
+<td align="right">-0.33</td>
+<td align="right">-0.02</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1971-10-05.0</code></td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">17</td>
+<td align="right">0</td>
+<td align="right">-1</td>
+<td align="right">-0.33</td>
+<td align="right">-0.05</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1971-04-30.0</code></td>
+<td align="right">7</td>
+<td align="right">15</td>
+<td align="right">539</td>
+<td align="right">-1</td>
+<td align="right">-8</td>
+<td align="right">-0.36</td>
+<td align="right">-0.01</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1998-01-01.0</code></td>
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="right">92</td>
+<td align="right">-1</td>
+<td align="right">-4</td>
+<td align="right">-0.40</td>
+<td align="right">-0.04</td>
+</tr>
+<tr>
+<td align="left"><code>POR_1985-03-06.0</code></td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">821</td>
+<td align="right">-1</td>
+<td align="right">-3</td>
+<td align="right">-0.43</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td align="left"><code>BEL_1987-01-28.0</code></td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">102</td>
+<td align="right">-1</td>
+<td align="right">-3</td>
+<td align="right">-0.43</td>
+<td align="right">-0.03</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1999-05-25.0</code></td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">34</td>
+<td align="right">-1</td>
+<td align="right">-3</td>
+<td align="right">-0.43</td>
+<td align="right">-0.07</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1953-12-17.0</code></td>
+<td align="right">10</td>
+<td align="right">27</td>
+<td align="right">118</td>
+<td align="right">-1</td>
+<td align="right">-17</td>
+<td align="right">-0.46</td>
+<td align="right">-0.11</td>
+</tr>
+<tr>
+<td align="left"><code>SWE_1996-02-01.0</code></td>
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="right">18</td>
+<td align="right">-1</td>
+<td align="right">-6</td>
+<td align="right">-0.50</td>
+<td align="right">-0.20</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1961-09-01.0</code></td>
+<td align="right">4</td>
+<td align="right">13</td>
+<td align="right">95</td>
+<td align="right">-1</td>
+<td align="right">-9</td>
+<td align="right">-0.53</td>
+<td align="right">-0.08</td>
+</tr>
+<tr>
+<td align="left"><code>DEN_1947-10-07.0</code></td>
+<td align="right">2</td>
+<td align="right">7</td>
+<td align="right">88</td>
+<td align="right">-1</td>
+<td align="right">-5</td>
+<td align="right">-0.56</td>
+<td align="right">-0.05</td>
+</tr>
+<tr>
+<td align="left"><code>AUT_1998-01-01.0</code></td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">78</td>
+<td align="right">-1</td>
+<td align="right">-3</td>
+<td align="right">-0.60</td>
+<td align="right">-0.04</td>
+</tr>
+<tr>
+<td align="left"><code>ITA_1982-01-16.0</code></td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">-1</td>
+<td align="right">-5</td>
+<td align="right">-0.71</td>
+<td align="right">-0.50</td>
+</tr>
+<tr>
+<td align="left"><code>FRA_2009-06-25.0</code></td>
+<td align="right">4</td>
+<td align="right">34</td>
+<td align="right">385</td>
+<td align="right">-1</td>
+<td align="right">-30</td>
+<td align="right">-0.79</td>
+<td align="right">-0.07</td>
+</tr>
+<tr>
+<td align="left"><code>GER_1980-10-01.0</code></td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">253</td>
+<td align="right">-1</td>
+<td align="right">-8</td>
+<td align="right">-0.80</td>
+<td align="right">-0.03</td>
+</tr>
+</tbody></table>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>           4</code>\
+<br>**<code>NAs      :</code>** <code>          87</code>\
+<br>**<code>not-NA   :</code>** <code>         699</code>\
+<br>**<code>not-0-NA :</code>** <code>         238</code>\
+<br>**<code>sum      :</code>** <code>         -22</code>\
+<br>**<code>range    :</code>** <code>[ -1 ] ... [ 1 ]</code>\
+<br>**<code>examples :</code>** <code>[NA], [-1], [0], [0], [0], [0], [0], [-1], [NA], [0] ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>pro_minmaj_auto1</strong> (textlines, linelinkage, manual coding)</p>
+
+<p>Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of words changed in each direction.</p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>           4</code>\
+<br>**<code>NAs      :</code>** <code>          87</code>\
+<br>**<code>not-NA   :</code>** <code>         699</code>\
+<br>**<code>not-0-NA :</code>** <code>         252</code>\
+<br>**<code>sum      :</code>** <code>          -6</code>\
+<br>**<code>range    :</code>** <code>[ -1 ] ... [ 1 ]</code>\
+<br>**<code>examples :</code>** <code>[1], [0], [0], [0], [NA], [-1], [0], [0], [0], [0] ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>pro_minmaj_auto2</strong> (textlines, linelinkage, manual coding)</p>
+
+<p>Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of lines changed in each direction.</p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>           4</code>\
+<br>**<code>NAs      :</code>** <code>          87</code>\
+<br>**<code>not-NA   :</code>** <code>         699</code>\
+<br>**<code>not-0-NA :</code>** <code>         234</code>\
+<br>**<code>sum      :</code>** <code>          -2</code>\
+<br>**<code>range    :</code>** <code>[ -1 ] ... [ 1 ]</code>\
+<br>**<code>examples :</code>** <code>[0], [0], [0], [1], [-1], [0], [0], [0], [0], [0] ...</code>\
+<br></p>
+
+<p>&nbsp;</p>
+
+<p><strong>erd_cab_id</strong> (European Representative Democracy <a href="http://www.erdda.se/">http://www.erdda.se/</a>)</p>
+
+<p>**<code>class    :</code>** <code>     numeric</code>\
+<br>**<code>unique   :</code>** <code>         232</code>\
+<br>**<code>NAs      :</code>** <code>          76</code>\
+<br>**<code>not-NA   :</code>** <code>         710</code>\
+<br>**<code>not-0-NA :</code>** <code>         710</code>\
+<br>**<code>sum      :</code>** <code>     827 513</code>\
+<br>**<code>range    :</code>** <code>[ 102 ] ... [ 1723 ]</code>\
+<br>**<code>examples :</code>** <code>[1721], [1622], [234], [1629], [1329], [114], [228], [1222], [1622], [1324] ...</code>\
 <br></p>
 
 <p>&nbsp;</p>

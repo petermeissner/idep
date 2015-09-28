@@ -35,6 +35,8 @@ erd <- as_data_frame(erd)
 erd <- 
   erd  %>% 
   filter(substr(ctr, 1, 3) %in% ctrs)
+erd$cab_in  <- as.Date(erd$cab_in,  origin = "1960-01-01")
+erd$cab_out <- as.Date(erd$cab_out, origin = "1960-01-01")
 
 
 #### add erd cabinet id to parlgov_manifesto data ==============================
@@ -137,23 +139,23 @@ cabinets$erd_pg_mp_matcher[cabinets$erd_pg_mp_matcher=="gbr_2005_05_06"] <- "gbr
 
 
 # DEV >>>>
-cabinets %>%
-  select(ctr, cab_name_pg, erd_pg_mp_matcher) %>%
-  mutate(
-    found = ifelse(cabinets$erd_pg_mp_matcher %in% erd$erd_pg_mp_matcher, "", "not_found")
-  ) %>%
-  #filter(ctr==ctrs[15]) %>%
-  filter(found!="") %>% 
-  head(5000)
-
-erd %>%
-  select(ctr, cab_pm, erd_pg_mp_matcher, cab_out) %>%
-  mutate(
-    match = ifelse(erd$erd_pg_mp_matcher %in% cabinets$erd_pg_mp_matcher, "", "no_match")
-  )  %>%
-  #filter(ctr==ctrs[15]) %>%
-  filter(match!="") %>% 
-  head(5000)
+# cabinets %>%
+#   select(ctr, cab_name_pg, erd_pg_mp_matcher) %>%
+#   mutate(
+#     found = ifelse(cabinets$erd_pg_mp_matcher %in% erd$erd_pg_mp_matcher, "", "not_found")
+#   ) %>%
+#   #filter(ctr==ctrs[15]) %>%
+#   filter(found!="") %>% 
+#   head(5000)
+# 
+# erd %>%
+#   select(ctr, cab_pm, erd_pg_mp_matcher, cab_out) %>%
+#   mutate(
+#     match = ifelse(erd$erd_pg_mp_matcher %in% cabinets$erd_pg_mp_matcher, "", "no_match")
+#   )  %>%
+#   #filter(ctr==ctrs[15]) %>%
+#   filter(match!="") %>% 
+#   head(5000)
 # <<<< DEV
 
 
@@ -165,12 +167,12 @@ message("\n",paste("no match found for erd cabinet in parlgov:", tmp$erd_pg_mp_m
 #### save data set extensions 
 
 save(      cabinets, file="../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")
-write.dta( cabinets, file="../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")
-write.csv( cabinets, file="../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")
+write.dta( cabinets, file="../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.dta")
+write.csv( cabinets, file="../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.csv")
 
 save(      erd, file="../external_data/erd_cleaned_up.Rdata")
-write.dta( erd, file="../external_data/erd_cleaned_up.Rdata")
-write.csv( erd, file="../external_data/erd_cleaned_up.Rdata")
+write.dta( erd, file="../external_data/erd_cleaned_up.dta")
+write.csv( erd, file="../external_data/erd_cleaned_up.csv")
 
 
 

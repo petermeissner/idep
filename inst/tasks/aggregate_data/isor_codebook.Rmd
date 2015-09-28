@@ -101,6 +101,8 @@ Since all coding and analysis was only pursued on the basis of relevant and clea
 
 
 
+
+
 # Coding Manual: Categories and Codes for Coding the Content of Parliamentary Standing Orders
 
 ### Basic Intuition:

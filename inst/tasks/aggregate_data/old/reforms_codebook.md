@@ -1,7 +1,7 @@
 ---
 title: "Code book"
 author: "pm"
-date: '2015-09-17 15:47:56'
+date: '2015-09-29 14:25:15'
 output:
   pdf_document:
     keep_tex: yes
@@ -18,13 +18,14 @@ output:
 
 
 
+
 # The reforms dataset (version 2.08)
 The data-set is based on the IDEP data - data on Standing Orders versions (*texts*), data on Standing Orders Text (*textlines*) and data on Standing Orders change between versions (*linelinkage*). Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. 
 
 The data set incorporates aggregated data for 
 770 reforms in
 15 countries and consists of 
-738 variables. 
+736 variables. 
 
 **Example:**
 
@@ -266,20 +267,24 @@ Each and every code is exclusive, meaning that one subparagraph needs to have on
 
 
 
-# Missing variable descriptions
+
+
+
+
+# Surplus variable descriptions
 
 
 ```r
-names(reforms)[!(names(reforms) %in% description$name)]
+description$name[!(description$name %in% names(reforms))]
 ```
 
 ```
-## [1] "country"     "ctr"         "ext_tsb_agc" "minmaj_wds2" "minmaj_wds4"
+## [1] "erd_cab_id"
 ```
 
-
-
-
+```r
+description <- description[(description$name %in% names(reforms)),]
+```
 
 
 
@@ -311,14 +316,14 @@ Unique identifier of a SO version by including country shorthand, date, and vers
 
 Date of the SO version - equals to (according to availibility) enactment, promulgation, acceptance.
 
-**`class    :`** `      numeric `\
+**`class    :`** `         Date `\
 <br>**`unique   :`** `          702 `\
 <br>**`NAs      :`** `            0 `\
 <br>**`not-NA   :`** `          786 `\
 <br>**`not-0-NA :`** `          786 `\
-<br>**`sum      :`** ` 428 041 044 000 `\
-<br>**`range    :`** `[ -2112742800 ] ... [ 1309471200 ] `\
-<br>**`examples :`** ` [1042066800], [570668400], [800661600], [394322400], [812415600], [641858400], [ ... `\
+<br>**`sum      :`** `            - `\
+<br>**`range    :`** `[ 1903-01-20 ] ... [ 2011-07-01 ] `\
+<br>**`examples :`** ` [2003-01-09], [1988-02-01], [1995-05-17], [1982-07-01], [1995-09-30], [1990-05-0 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -341,7 +346,7 @@ Version counter that is zero under normal circumstances but might be higher if m
 
 **t_country** (texts)
 
-Country shorthand. In case of Swiss two seperate shorthands exist because there SO are spread among two bodies.
+Country shorthand (as used internal). In case of Swiss two seperate shorthands exist because there SO are spread among two bodies.
 
 **`class    :`** `    character `\
 <br>**`unique   :`** `           16 `\
@@ -355,18 +360,50 @@ Country shorthand. In case of Swiss two seperate shorthands exist because there 
 
 <p>&nbsp;</p>
 
+**country** (texts)
+
+Name of the country.
+
+**`class    :`** `    character `\
+<br>**`unique   :`** `           16 `\
+<br>**`NAs      :`** `            0 `\
+<br>**`not-NA   :`** `          786 `\
+<br>**`not-0-NA :`** `          786 `\
+<br>**`sum      :`** `            - `\
+<br>**`range    :`** `[ Austria ] ... [ United Kingdom ] `\
+<br>**`examples :`** ` [Norway], [United Kingdom], [Austria], [Norway], [United Kingdom], [Norway], [Ne ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**ctr** (texts)
+
+Country shorthand adhering to ISO 3166-1 alpha-3 https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+
+**`class    :`** `    character `\
+<br>**`unique   :`** `           16 `\
+<br>**`NAs      :`** `            0 `\
+<br>**`not-NA   :`** `          786 `\
+<br>**`not-0-NA :`** `          786 `\
+<br>**`sum      :`** `            - `\
+<br>**`range    :`** `[ aut ] ... [ swe ] `\
+<br>**`examples :`** ` [nor], [nld], [nld], [gbr], [deu], [cheparlg], [irl], [gbr], [swe], [swe] ... `\
+<br>
+
+<p>&nbsp;</p>
+
 **t_daccept** (texts)
 
 Date on which the SO were accepted, voted upon, decided upon, ... .
 
-**`class    :`** `    character `\
+**`class    :`** `         Date `\
 <br>**`unique   :`** `          690 `\
 <br>**`NAs      :`** `           38 `\
 <br>**`not-NA   :`** `          748 `\
 <br>**`not-0-NA :`** `          748 `\
 <br>**`sum      :`** `            - `\
 <br>**`range    :`** `[ 1902-10-09 ] ... [ 2011-04-28 ] `\
-<br>**`examples :`** ` [1948-04-10], [1975-12-03], [1979-07-04], [2007-11-30], [1990-02-21], [1977-06-1 ... `\
+<br>**`examples :`** ` [1989-12-13], [1974-10-23], [1982-12-21], [1979-07-04], [1976-12-22], [NA], [199 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -375,14 +412,14 @@ Date on which the SO were accepted, voted upon, decided upon, ... .
 
 Date on which the SO were promulgated - made puplic, printed, published, ... .
 
-**`class    :`** `    character `\
+**`class    :`** `         Date `\
 <br>**`unique   :`** `          307 `\
 <br>**`NAs      :`** `          456 `\
 <br>**`not-NA   :`** `          330 `\
 <br>**`not-0-NA :`** `          330 `\
 <br>**`sum      :`** `            - `\
 <br>**`range    :`** `[ 1928-12-26 ] ... [ 2011-04-19 ] `\
-<br>**`examples :`** ` [NA], [NA], [NA], [NA], [2001-05-30], [1997-02-26], [NA], [1957-12-18], [1992-06 ... `\
+<br>**`examples :`** ` [NA], [NA], [1992-06-24], [2011-04-19], [1976-06-17], [NA], [NA], [NA], [2002-12 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -391,14 +428,14 @@ Date on which the SO were promulgated - made puplic, printed, published, ... .
 
 Date on which the SO were enacted - came into force / took effect.
 
-**`class    :`** `    character `\
+**`class    :`** `         Date `\
 <br>**`unique   :`** `          303 `\
 <br>**`NAs      :`** `          418 `\
 <br>**`not-NA   :`** `          368 `\
 <br>**`not-0-NA :`** `          368 `\
 <br>**`sum      :`** `            - `\
 <br>**`range    :`** `[ 1903-01-20 ] ... [ 2011-07-01 ] `\
-<br>**`examples :`** ` [NA], [NA], [NA], [1979-10-01], [NA], [NA], [NA], [NA], [2000-07-01], [NA] ... `\
+<br>**`examples :`** ` [NA], [2009-04-01], [NA], [1996-03-01], [NA], [1996-09-15], [1974-06-20], [2009- ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -417,7 +454,7 @@ Date at which the 'texts' table of the database was last updated.
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `            - `\
 <br>**`range    :`** `[ 2015-09-14 14:23:06 ] ... [ 2015-09-14 15:01:07 ] `\
-<br>**`examples :`** ` [2015-09-14 14:26:54], [2015-09-14 15:00:25], [2015-09-14 14:41:45], [2015-09-14 ... `\
+<br>**`examples :`** ` [2015-09-14 14:28:18], [2015-09-14 14:26:54], [2015-09-14 14:49:16], [2015-09-14 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -433,7 +470,7 @@ Database internal enumeration of SO - this might change at any time. Do **not** 
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      309 291 `\
 <br>**`range    :`** `[ 1 ] ... [ 786 ] `\
-<br>**`examples :`** ` [442], [559], [605], [765], [211], [535], [748], [367], [307], [97] ... `\
+<br>**`examples :`** ` [483], [346], [717], [642], [398], [488], [427], [192], [774], [308] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -484,7 +521,7 @@ Number of lines - also known as sub paragraphs - within a particular SO.
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      528 002 `\
 <br>**`range    :`** `[ 88 ] ... [ 2645 ] `\
-<br>**`examples :`** ` [284], [292], [566], [420], [1319], [959], [832], [574], [388], [265] ... `\
+<br>**`examples :`** ` [376], [982], [1246], [871], [284], [304], [601], [348], [2645], [312] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -500,7 +537,7 @@ Number of words within a particular SO.
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `   13 299 515 `\
 <br>**`range    :`** `[ 2318 ] ... [ 61397 ] `\
-<br>**`examples :`** ` [10712], [8189], [44569], [12911], [4739], [16218], [8212], [12645], [11210], [1 ... `\
+<br>**`examples :`** ` [32700], [15303], [35705], [16810], [9010], [14032], [10869], [27272], [9704], [ ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -516,7 +553,7 @@ Number of words within a particular SO after having striped away enumerations li
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `   12 807 889 `\
 <br>**`range    :`** `[ 2236 ] ... [ 59628 ] `\
-<br>**`examples :`** ` [14754], [20189], [15547], [31648], [8478], [8960], [23051], [16346], [59628], [ ... `\
+<br>**`examples :`** ` [7817], [6215], [22570], [9394], [22425], [10455], [11282], [11418], [18421], [9 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -532,7 +569,7 @@ Number of lines that contain relevant content - e.g. no blank lines, no headline
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      365 434 `\
 <br>**`range    :`** `[ 38 ] ... [ 1239 ] `\
-<br>**`examples :`** ` [842], [323], [862], [537], [339], [636], [349], [1088], [232], [423] ... `\
+<br>**`examples :`** ` [248], [669], [715], [1174], [277], [595], [300], [340], [322], [199] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -548,7 +585,7 @@ Number of words that are not from irrelevant lines - e.g. no blank lines, no hea
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `   12 714 053 `\
 <br>**`range    :`** `[ 2122 ] ... [ 43031 ] `\
-<br>**`examples :`** ` [8086], [6216], [22860], [9413], [22713], [10760], [10361], [11388], [18787], [9 ... `\
+<br>**`examples :`** ` [24512], [4468], [15839], [9471], [30158], [9172], [9113], [14966], [13853], [12 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -564,7 +601,7 @@ Number of words that are not from irrelevant lines - e.g. no blank lines, no hea
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `   12 354 641 `\
 <br>**`range    :`** `[ 2122 ] ... [ 41476 ] `\
-<br>**`examples :`** ` [7709], [22739], [21461], [40472], [12751], [17643], [13534], [10340], [14226],  ... `\
+<br>**`examples :`** ` [8612], [23381], [34785], [8372], [18868], [11822], [34962], [20854], [15493], [ ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -577,13 +614,13 @@ Number of words that are not from irrelevant lines - e.g. no blank lines, no hea
 Language in which SO are written down.
 
 **`class    :`** `    character `\
-<br>**`unique   :`** `           10 `\
-<br>**`NAs      :`** `            0 `\
-<br>**`not-NA   :`** `          786 `\
-<br>**`not-0-NA :`** `          786 `\
+<br>**`unique   :`** `            1 `\
+<br>**`NAs      :`** `          786 `\
+<br>**`not-NA   :`** `            0 `\
+<br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            - `\
-<br>**`range    :`** `[ Danish ] ... [ Swedish ] `\
-<br>**`examples :`** ` [Portuguese], [German], [English], [Danish], [French], [French], [French], [Swed ... `\
+<br>**`range    :`** `[ NA ] ... [ NA ] `\
+<br>**`examples :`** ` [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -593,13 +630,13 @@ Language in which SO are written down.
 The wordiness of a language. Different languages have different wordiness meaning that they need different amounts of words to express the same concept, sentence, regulation, ... . The variable gives the factor of wordiness compared to English based on the translations of EU documents. These are availible in English but also in all other EU languages. LAnguages that need more words than English have values above 1, languages that need less have values below 1.
 
 **`class    :`** `      numeric `\
-<br>**`unique   :`** `            7 `\
-<br>**`NAs      :`** `            0 `\
-<br>**`not-NA   :`** `          786 `\
-<br>**`not-0-NA :`** `          786 `\
-<br>**`sum      :`** `       748.88 `\
-<br>**`range    :`** `[ 0.86 ] ... [ 1.05 ] `\
-<br>**`examples :`** ` [0.86], [1], [1], [0.9], [1], [0.9], [1], [1], [1.01], [0.9] ... `\
+<br>**`unique   :`** `            1 `\
+<br>**`NAs      :`** `          786 `\
+<br>**`not-NA   :`** `            0 `\
+<br>**`not-0-NA :`** `            0 `\
+<br>**`sum      :`** `            0 `\
+<br>**`range    :`** `[ Inf ] ... [ -Inf ] `\
+<br>**`examples :`** ` [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -609,13 +646,13 @@ The wordiness of a language. Different languages have different wordiness meanin
 Wordiness correction factor which can be used to transform word counts into English equivalent word counts by multiplying the word count with the value of this variable.
 
 **`class    :`** `      numeric `\
-<br>**`unique   :`** `            7 `\
-<br>**`NAs      :`** `            0 `\
-<br>**`not-NA   :`** `          786 `\
-<br>**`not-0-NA :`** `          786 `\
-<br>**`sum      :`** `     828.8936 `\
-<br>**`range    :`** `[ 0.952381 ] ... [ 1.162791 ] `\
-<br>**`examples :`** ` [0.99009900990099], [1], [1.05263157894737], [1], [1.11111111111111], [1.1627906 ... `\
+<br>**`unique   :`** `            1 `\
+<br>**`NAs      :`** `          786 `\
+<br>**`not-NA   :`** `            0 `\
+<br>**`not-0-NA :`** `            0 `\
+<br>**`sum      :`** `            0 `\
+<br>**`range    :`** `[ Inf ] ... [ -Inf ] `\
+<br>**`examples :`** ` [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -625,13 +662,13 @@ Wordiness correction factor which can be used to transform word counts into Engl
 The variable `wds_clean_rel` corrected by its wordiness to English equivalent word counts. See `wds_clean_rel` and `wdns_corr`.
 
 **`class    :`** `      numeric `\
-<br>**`unique   :`** `          748 `\
-<br>**`NAs      :`** `            0 `\
-<br>**`not-NA   :`** `          786 `\
-<br>**`not-0-NA :`** `          786 `\
-<br>**`sum      :`** `   12 796 118 `\
-<br>**`range    :`** `[ 2357.778 ] ... [ 41476 ] `\
-<br>**`examples :`** ` [10980.2325581395], [11779.0697674419], [7383.80952380952], [20159.4059405941],  ... `\
+<br>**`unique   :`** `            1 `\
+<br>**`NAs      :`** `          786 `\
+<br>**`not-NA   :`** `            0 `\
+<br>**`not-0-NA :`** `            0 `\
+<br>**`sum      :`** `            0 `\
+<br>**`range    :`** `[ Inf ] ... [ -Inf ] `\
+<br>**`examples :`** ` [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -650,7 +687,7 @@ Number of lines that were mofified - i.e. changed but not deleted or inserted.
 <br>**`not-0-NA :`** `          655 `\
 <br>**`sum      :`** `       12 970 `\
 <br>**`range    :`** `[ 0 ] ... [ 583 ] `\
-<br>**`examples :`** ` [1], [13], [7], [6], [3], [22], [0], [6], [0], [0] ... `\
+<br>**`examples :`** ` [22], [4], [13], [1], [15], [1], [1], [0], [0], [2] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -666,7 +703,7 @@ Number of words modified - i.e. changed but not deleted or inserted.
 <br>**`not-0-NA :`** `          652 `\
 <br>**`sum      :`** `      287 218 `\
 <br>**`range    :`** `[ 0 ] ... [ 12273 ] `\
-<br>**`examples :`** ` [0], [0], [373], [727], [0], [13], [4377], [182], [NA], [0] ... `\
+<br>**`examples :`** ` [12], [192], [182], [3008], [597], [43], [5], [0], [538], [52] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -682,7 +719,7 @@ Number of words that were inserted into SO.
 <br>**`not-0-NA :`** `          562 `\
 <br>**`sum      :`** `      264 322 `\
 <br>**`range    :`** `[ 0 ] ... [ 11320 ] `\
-<br>**`examples :`** ` [85], [0], [62], [43], [0], [0], [19], [7], [109], [0] ... `\
+<br>**`examples :`** ` [2634], [4496], [111], [0], [52], [705], [78], [0], [39], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -698,7 +735,7 @@ Number of lines that were inserted into SO.
 <br>**`not-0-NA :`** `          562 `\
 <br>**`sum      :`** `        8 674 `\
 <br>**`range    :`** `[ 0 ] ... [ 381 ] `\
-<br>**`examples :`** ` [0], [1], [0], [22], [31], [3], [0], [2], [62], [0] ... `\
+<br>**`examples :`** ` [18], [2], [2], [0], [0], [1], [7], [1], [0], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -714,7 +751,7 @@ Number of words that were deleted from old SO.
 <br>**`not-0-NA :`** `          319 `\
 <br>**`sum      :`** `      107 765 `\
 <br>**`range    :`** `[ 0 ] ... [ 6059 ] `\
-<br>**`examples :`** ` [5185], [1889], [0], [57], [0], [171], [31], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [204], [183], [29], [0], [0], [0], [0], [136] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -730,7 +767,7 @@ Number of lines that were deleted from old SO.
 <br>**`not-0-NA :`** `          321 `\
 <br>**`sum      :`** `        3 558 `\
 <br>**`range    :`** `[ 0 ] ... [ 229 ] `\
-<br>**`examples :`** ` [5], [1], [0], [0], [1], [0], [2], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [2], [0], [0], [0], [0], [0], [7], [2] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -746,7 +783,7 @@ Number of lines that were changed from the old SO to the current - i.e. the sum 
 <br>**`not-0-NA :`** `          765 `\
 <br>**`sum      :`** `       25 202 `\
 <br>**`range    :`** `[ 0 ] ... [ 1049 ] `\
-<br>**`examples :`** ` [16], [12], [85], [39], [1], [19], [22], [10], [9], [22] ... `\
+<br>**`examples :`** ` [29], [NA], [30], [17], [12], [66], [5], [16], [1], [263] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -762,7 +799,7 @@ Number of words that were changed from the old SO to the current - i.e. the sum 
 <br>**`not-0-NA :`** `          763 `\
 <br>**`sum      :`** `      659 305 `\
 <br>**`range    :`** `[ 0 ] ... [ 28785 ] `\
-<br>**`examples :`** ` [2], [28], [54], [244], [332], [18], [255], [120], [585], [137] ... `\
+<br>**`examples :`** ` [706], [29], [51], [128], [415], [823], [16336], [58], [96], [6657] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -781,7 +818,7 @@ Number of lines modified that were coded as majority friendly.
 <br>**`not-0-NA :`** `          108 `\
 <br>**`sum      :`** `          335 `\
 <br>**`range    :`** `[ 0 ] ... [ 20 ] `\
-<br>**`examples :`** ` [1], [NA], [0], [0], [0], [3], [0], [2], [0], [0] ... `\
+<br>**`examples :`** ` [0], [1], [0], [0], [0], [0], [0], [0], [NA], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -797,7 +834,7 @@ Number of lines modified that were coded as minority friendly.
 <br>**`not-0-NA :`** `          128 `\
 <br>**`sum      :`** `          384 `\
 <br>**`range    :`** `[ 0 ] ... [ 25 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [NA], [5], [2], [0], [0], [9] ... `\
+<br>**`examples :`** ` [0], [1], [NA], [3], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -813,7 +850,7 @@ Number of lines modified that were coded as neither majority nor minority friend
 <br>**`not-0-NA :`** `          581 `\
 <br>**`sum      :`** `       11 429 `\
 <br>**`range    :`** `[ 0 ] ... [ 583 ] `\
-<br>**`examples :`** ` [4], [1], [0], [9], [1], [1], [1], [2], [NA], [12] ... `\
+<br>**`examples :`** ` [NA], [2], [1], [1], [1], [1], [5], [1], [8], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -829,7 +866,7 @@ Number of words modified that were coded as majority friendly.
 <br>**`not-0-NA :`** `          108 `\
 <br>**`sum      :`** `       12 191 `\
 <br>**`range    :`** `[ 0 ] ... [ 2355 ] `\
-<br>**`examples :`** ` [0], [39], [NA], [2355], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [341], [0], [0], [0], [0], [116], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -845,7 +882,7 @@ Number of words modified that were coded as minority friendly.
 <br>**`not-0-NA :`** `          128 `\
 <br>**`sum      :`** `       12 897 `\
 <br>**`range    :`** `[ 0 ] ... [ 1162 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [188], [65], [0], [77], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -861,7 +898,7 @@ Number of words modified that were coded as neither majority nor minority friend
 <br>**`not-0-NA :`** `          578 `\
 <br>**`sum      :`** `      239 511 `\
 <br>**`range    :`** `[ 0 ] ... [ 11883 ] `\
-<br>**`examples :`** ` [157], [0], [108], [486], [911], [94], [0], [1], [1056], [14] ... `\
+<br>**`examples :`** ` [18], [78], [NA], [13], [341], [60], [1073], [18], [50], [18] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -877,7 +914,7 @@ Number of lines inserted that were coded as majority friendly.
 <br>**`not-0-NA :`** `           95 `\
 <br>**`sum      :`** `          300 `\
 <br>**`range    :`** `[ 0 ] ... [ 38 ] `\
-<br>**`examples :`** ` [0], [4], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -893,7 +930,7 @@ Number of lines inserted that were coded as minority friendly.
 <br>**`not-0-NA :`** `          100 `\
 <br>**`sum      :`** `          249 `\
 <br>**`range    :`** `[ 0 ] ... [ 17 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [1], [0], [1], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -909,7 +946,7 @@ Number of lines inserted that were coded as neither majority nor minority friend
 <br>**`not-0-NA :`** `          487 `\
 <br>**`sum      :`** `        6 919 `\
 <br>**`range    :`** `[ 0 ] ... [ 318 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [20], [7], [0], [2], [0], [0] ... `\
+<br>**`examples :`** ` [73], [2], [1], [8], [0], [NA], [63], [0], [NA], [11] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -925,7 +962,7 @@ Number of words inserted that were coded as majority friendly.
 <br>**`not-0-NA :`** `           95 `\
 <br>**`sum      :`** `       10 939 `\
 <br>**`range    :`** `[ 0 ] ... [ 1439 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -941,7 +978,7 @@ Number of words inserted that were coded as minority friendly.
 <br>**`not-0-NA :`** `          100 `\
 <br>**`sum      :`** `       11 759 `\
 <br>**`range    :`** `[ 0 ] ... [ 601 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [154], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [171], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -957,7 +994,7 @@ Number of words inserted that were coded as neither majority nor minority friend
 <br>**`not-0-NA :`** `          487 `\
 <br>**`sum      :`** `      216 980 `\
 <br>**`range    :`** `[ 0 ] ... [ 11182 ] `\
-<br>**`examples :`** ` [0], [83], [NA], [276], [260], [48], [0], [11], [0], [116] ... `\
+<br>**`examples :`** ` [0], [85], [20], [0], [0], [NA], [148], [1024], [0], [122] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -973,7 +1010,7 @@ Number of lines deleted that were coded as majority friendly.
 <br>**`not-0-NA :`** `           25 `\
 <br>**`sum      :`** `           62 `\
 <br>**`range    :`** `[ 0 ] ... [ 25 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -989,7 +1026,7 @@ Number of lines deleted that were coded as minority friendly.
 <br>**`not-0-NA :`** `           25 `\
 <br>**`sum      :`** `           41 `\
 <br>**`range    :`** `[ 0 ] ... [ 7 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [1], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1005,7 +1042,7 @@ Number of lines deleted that were coded as neither majority nor minority friendl
 <br>**`not-0-NA :`** `          289 `\
 <br>**`sum      :`** `        2 893 `\
 <br>**`range    :`** `[ 0 ] ... [ 229 ] `\
-<br>**`examples :`** ` [0], [4], [NA], [0], [NA], [0], [49], [0], [0], [0] ... `\
+<br>**`examples :`** ` [5], [0], [0], [1], [0], [7], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1021,7 +1058,7 @@ Number of words deleted that were coded as majority friendly.
 <br>**`not-0-NA :`** `           25 `\
 <br>**`sum      :`** `        2 736 `\
 <br>**`range    :`** `[ 0 ] ... [ 980 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [NA], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1037,7 +1074,7 @@ Number of words deleted that were coded as minority friendly.
 <br>**`not-0-NA :`** `           25 `\
 <br>**`sum      :`** `        1 353 `\
 <br>**`range    :`** `[ 0 ] ... [ 192 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1053,7 +1090,7 @@ Number of words deleted that were coded as neither majority nor minority friendl
 <br>**`not-0-NA :`** `          287 `\
 <br>**`sum      :`** `       91 237 `\
 <br>**`range    :`** `[ 0 ] ... [ 5992 ] `\
-<br>**`examples :`** ` [0], [1], [0], [NA], [111], [131], [NA], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [188], [31] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1069,7 +1106,7 @@ Number of lines coded as majority friendly.
 <br>**`not-0-NA :`** `          161 `\
 <br>**`sum      :`** `          697 `\
 <br>**`range    :`** `[ 0 ] ... [ 44 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [2], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [2], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1085,7 +1122,7 @@ Number of lines coded as minority friendly.
 <br>**`not-0-NA :`** `          182 `\
 <br>**`sum      :`** `          674 `\
 <br>**`range    :`** `[ 0 ] ... [ 40 ] `\
-<br>**`examples :`** ` [NA], [0], [4], [0], [0], [1], [0], [0], [8], [0] ... `\
+<br>**`examples :`** ` [0], [0], [4], [0], [1], [0], [NA], [2], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1101,7 +1138,7 @@ Number of lines coded as neither majority nor minority friendly.
 <br>**`not-0-NA :`** `          673 `\
 <br>**`sum      :`** `       21 241 `\
 <br>**`range    :`** `[ 0 ] ... [ 1049 ] `\
-<br>**`examples :`** ` [2], [68], [1], [0], [29], [47], [10], [NA], [4], [19] ... `\
+<br>**`examples :`** ` [1], [6], [7], [16], [136], [21], [4], [30], [1], [9] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1117,7 +1154,7 @@ Number of words coded as majority friendly.
 <br>**`not-0-NA :`** `          161 `\
 <br>**`sum      :`** `       25 866 `\
 <br>**`range    :`** `[ 0 ] ... [ 2583 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [207], [0], [NA], [82], [0], [NA] ... `\
+<br>**`examples :`** ` [NA], [0], [308], [0], [0], [0], [NA], [NA], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1133,7 +1170,7 @@ Number of words coded as minority friendly.
 <br>**`not-0-NA :`** `          182 `\
 <br>**`sum      :`** `       26 009 `\
 <br>**`range    :`** `[ 0 ] ... [ 1810 ] `\
-<br>**`examples :`** ` [0], [0], [8], [55], [71], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [1450], [8], [0], [0], [78] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1149,7 +1186,7 @@ Number of words coded as neither majority nor minority friendly.
 <br>**`not-0-NA :`** `          671 `\
 <br>**`sum      :`** `      547 728 `\
 <br>**`range    :`** `[ 0 ] ... [ 28262 ] `\
-<br>**`examples :`** ` [NA], [20], [877], [0], [170], [55], [NA], [NA], [25], [NA] ... `\
+<br>**`examples :`** ` [25], [209], [314], [72], [86], [48], [26], [79], [220], [951] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1174,7 +1211,7 @@ Number of lines with corpus code 111
 <br>**`not-0-NA :`** `          587 `\
 <br>**`sum      :`** `        3 295 `\
 <br>**`range    :`** `[ 0 ] ... [ 33 ] `\
-<br>**`examples :`** ` [2], [3], [12], [2], [19], [0], [2], [2], [1], [5] ... `\
+<br>**`examples :`** ` [21], [5], [1], [2], [0], [0], [7], [0], [1], [5] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1196,7 +1233,7 @@ Number of lines with corpus code 112
 <br>**`not-0-NA :`** `          690 `\
 <br>**`sum      :`** `        3 503 `\
 <br>**`range    :`** `[ 0 ] ... [ 28 ] `\
-<br>**`examples :`** ` [5], [2], [4], [3], [9], [5], [8], [0], [2], [0] ... `\
+<br>**`examples :`** ` [7], [0], [11], [3], [7], [8], [5], [0], [15], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1218,7 +1255,7 @@ Number of lines with corpus code 113
 <br>**`not-0-NA :`** `          754 `\
 <br>**`sum      :`** `        6 415 `\
 <br>**`range    :`** `[ 0 ] ... [ 31 ] `\
-<br>**`examples :`** ` [3], [11], [5], [6], [0], [2], [10], [1], [1], [1] ... `\
+<br>**`examples :`** ` [1], [1], [7], [11], [0], [11], [7], [7], [10], [6] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1240,7 +1277,7 @@ Number of lines with corpus code 114
 <br>**`not-0-NA :`** `          236 `\
 <br>**`sum      :`** `          564 `\
 <br>**`range    :`** `[ 0 ] ... [ 12 ] `\
-<br>**`examples :`** ` [0], [1], [2], [0], [1], [1], [0], [1], [0], [1] ... `\
+<br>**`examples :`** ` [1], [0], [0], [1], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1262,7 +1299,7 @@ Number of lines with corpus code 121
 <br>**`not-0-NA :`** `          564 `\
 <br>**`sum      :`** `        5 098 `\
 <br>**`range    :`** `[ 0 ] ... [ 49 ] `\
-<br>**`examples :`** ` [3], [2], [3], [4], [0], [4], [5], [5], [5], [11] ... `\
+<br>**`examples :`** ` [18], [0], [3], [0], [11], [11], [13], [4], [16], [4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1284,7 +1321,7 @@ Number of lines with corpus code 122
 <br>**`not-0-NA :`** `          572 `\
 <br>**`sum      :`** `        4 783 `\
 <br>**`range    :`** `[ 0 ] ... [ 26 ] `\
-<br>**`examples :`** ` [6], [5], [7], [0], [3], [7], [22], [3], [8], [5] ... `\
+<br>**`examples :`** ` [7], [0], [8], [24], [5], [20], [5], [7], [1], [11] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1306,7 +1343,7 @@ Number of lines with corpus code 123
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `       18 587 `\
 <br>**`range    :`** `[ 2 ] ... [ 67 ] `\
-<br>**`examples :`** ` [58], [27], [11], [22], [50], [50], [27], [15], [26], [11] ... `\
+<br>**`examples :`** ` [47], [17], [40], [29], [11], [26], [26], [10], [17], [21] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1328,7 +1365,7 @@ Number of lines with corpus code 124
 <br>**`not-0-NA :`** `          207 `\
 <br>**`sum      :`** `        1 338 `\
 <br>**`range    :`** `[ 0 ] ... [ 9 ] `\
-<br>**`examples :`** ` [0], [0], [8], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [7], [0], [8], [0], [0], [8], [0], [0], [0], [7] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1350,7 +1387,7 @@ Number of lines with corpus code 125
 <br>**`not-0-NA :`** `          750 `\
 <br>**`sum      :`** `        5 845 `\
 <br>**`range    :`** `[ 0 ] ... [ 22 ] `\
-<br>**`examples :`** ` [4], [6], [10], [13], [10], [3], [8], [4], [8], [10] ... `\
+<br>**`examples :`** ` [6], [6], [9], [3], [6], [6], [7], [4], [7], [7] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1372,7 +1409,7 @@ Number of lines with corpus code 131
 <br>**`not-0-NA :`** `          450 `\
 <br>**`sum      :`** `        1 535 `\
 <br>**`range    :`** `[ 0 ] ... [ 13 ] `\
-<br>**`examples :`** ` [1], [3], [1], [0], [2], [1], [10], [0], [0], [1] ... `\
+<br>**`examples :`** ` [0], [0], [1], [4], [0], [12], [0], [1], [0], [5] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1394,7 +1431,7 @@ Number of lines with corpus code 132
 <br>**`not-0-NA :`** `          452 `\
 <br>**`sum      :`** `        1 208 `\
 <br>**`range    :`** `[ 0 ] ... [ 10 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [10], [1] ... `\
+<br>**`examples :`** ` [7], [1], [1], [7], [6], [0], [0], [1], [0], [10] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1416,7 +1453,7 @@ Number of lines with corpus code 133
 <br>**`not-0-NA :`** `          566 `\
 <br>**`sum      :`** `        1 548 `\
 <br>**`range    :`** `[ 0 ] ... [ 11 ] `\
-<br>**`examples :`** ` [0], [1], [2], [1], [0], [0], [0], [2], [0], [1] ... `\
+<br>**`examples :`** ` [1], [2], [2], [2], [0], [1], [0], [0], [3], [4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1438,7 +1475,7 @@ Number of lines with corpus code 134
 <br>**`not-0-NA :`** `          782 `\
 <br>**`sum      :`** `        5 890 `\
 <br>**`range    :`** `[ 0 ] ... [ 22 ] `\
-<br>**`examples :`** ` [15], [7], [4], [1], [1], [4], [2], [9], [8], [16] ... `\
+<br>**`examples :`** ` [4], [8], [15], [9], [12], [15], [10], [5], [4], [8] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1460,7 +1497,7 @@ Number of lines with corpus code 141
 <br>**`not-0-NA :`** `          107 `\
 <br>**`sum      :`** `          363 `\
 <br>**`range    :`** `[ 0 ] ... [ 6 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [4], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1482,7 +1519,7 @@ Number of lines with corpus code 142
 <br>**`not-0-NA :`** `          562 `\
 <br>**`sum      :`** `        4 359 `\
 <br>**`range    :`** `[ 0 ] ... [ 47 ] `\
-<br>**`examples :`** ` [6], [0], [5], [26], [0], [5], [0], [3], [6], [1] ... `\
+<br>**`examples :`** ` [0], [1], [6], [2], [5], [1], [0], [2], [1], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1504,7 +1541,7 @@ Number of lines with corpus code 143
 <br>**`not-0-NA :`** `          136 `\
 <br>**`sum      :`** `          697 `\
 <br>**`range    :`** `[ 0 ] ... [ 13 ] `\
-<br>**`examples :`** ` [0], [1], [12], [0], [0], [0], [4], [0], [0], [0] ... `\
+<br>**`examples :`** ` [13], [0], [0], [0], [0], [0], [0], [0], [0], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1526,7 +1563,7 @@ Number of lines with corpus code 144
 <br>**`not-0-NA :`** `          191 `\
 <br>**`sum      :`** `          272 `\
 <br>**`range    :`** `[ 0 ] ... [ 6 ] `\
-<br>**`examples :`** ` [0], [0], [1], [1], [1], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1564,7 +1601,7 @@ Number of words with corpus code 111  - see lns_corp_111  for more information.
 <br>**`not-0-NA :`** `          587 `\
 <br>**`sum      :`** `       78 108 `\
 <br>**`range    :`** `[ 0 ] ... [ 651 ] `\
-<br>**`examples :`** ` [255], [96], [102], [318], [64], [353], [0], [64], [98], [32] ... `\
+<br>**`examples :`** ` [260], [123], [306], [255], [35], [0], [305], [45], [70], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1580,7 +1617,7 @@ Number of words with corpus code 112  - see lns_corp_112  for more information.
 <br>**`not-0-NA :`** `          690 `\
 <br>**`sum      :`** `      113 699 `\
 <br>**`range    :`** `[ 0 ] ... [ 522 ] `\
-<br>**`examples :`** ` [0], [126], [169], [22], [42], [53], [0], [127], [397], [89] ... `\
+<br>**`examples :`** ` [284], [94], [176], [117], [169], [25], [397], [395], [169], [46] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1596,7 +1633,7 @@ Number of words with corpus code 113  - see lns_corp_113  for more information.
 <br>**`not-0-NA :`** `          754 `\
 <br>**`sum      :`** `      212 072 `\
 <br>**`range    :`** `[ 0 ] ... [ 806 ] `\
-<br>**`examples :`** ` [129], [96], [533], [243], [170], [140], [533], [60], [727], [58] ... `\
+<br>**`examples :`** ` [29], [129], [165], [237], [89], [806], [441], [112], [655], [368] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1612,7 +1649,7 @@ Number of words with corpus code 114  - see lns_corp_114  for more information.
 <br>**`not-0-NA :`** `          236 `\
 <br>**`sum      :`** `       20 198 `\
 <br>**`range    :`** `[ 0 ] ... [ 635 ] `\
-<br>**`examples :`** ` [0], [24], [0], [23], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [23], [0], [0], [30], [0], [20], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1628,7 +1665,7 @@ Number of words with corpus code 121  - see lns_corp_121  for more information.
 <br>**`not-0-NA :`** `          564 `\
 <br>**`sum      :`** `      180 206 `\
 <br>**`range    :`** `[ 0 ] ... [ 1536 ] `\
-<br>**`examples :`** ` [0], [489], [640], [203], [141], [0], [243], [318], [0], [247] ... `\
+<br>**`examples :`** ` [334], [0], [0], [0], [660], [243], [0], [203], [147], [73] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1644,7 +1681,7 @@ Number of words with corpus code 122  - see lns_corp_122  for more information.
 <br>**`not-0-NA :`** `          572 `\
 <br>**`sum      :`** `      175 271 `\
 <br>**`range    :`** `[ 0 ] ... [ 1189 ] `\
-<br>**`examples :`** ` [0], [0], [139], [0], [54], [0], [333], [111], [201], [116] ... `\
+<br>**`examples :`** ` [240], [240], [277], [0], [334], [248], [367], [0], [92], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1660,7 +1697,7 @@ Number of words with corpus code 123  - see lns_corp_123  for more information.
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      621 902 `\
 <br>**`range    :`** `[ 80 ] ... [ 2366 ] `\
-<br>**`examples :`** ` [726], [697], [700], [619], [889], [432], [565], [341], [543], [431] ... `\
+<br>**`examples :`** ` [1165], [1173], [720], [556], [848], [885], [350], [1837], [714], [432] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1676,7 +1713,7 @@ Number of words with corpus code 124  - see lns_corp_124  for more information.
 <br>**`not-0-NA :`** `          207 `\
 <br>**`sum      :`** `       84 776 `\
 <br>**`range    :`** `[ 0 ] ... [ 498 ] `\
-<br>**`examples :`** ` [458], [458], [496], [0], [0], [458], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [268], [264], [458], [268], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1692,7 +1729,7 @@ Number of words with corpus code 125  - see lns_corp_125  for more information.
 <br>**`not-0-NA :`** `          750 `\
 <br>**`sum      :`** `      269 936 `\
 <br>**`range    :`** `[ 0 ] ... [ 1073 ] `\
-<br>**`examples :`** ` [50], [160], [590], [229], [372], [992], [694], [260], [590], [961] ... `\
+<br>**`examples :`** ` [81], [339], [91], [178], [259], [143], [275], [275], [0], [966] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1708,7 +1745,7 @@ Number of words with corpus code 131  - see lns_corp_131  for more information.
 <br>**`not-0-NA :`** `          450 `\
 <br>**`sum      :`** `       57 515 `\
 <br>**`range    :`** `[ 0 ] ... [ 636 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [48], [0], [0] ... `\
+<br>**`examples :`** ` [42], [0], [205], [0], [0], [0], [119], [61], [349], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1724,7 +1761,7 @@ Number of words with corpus code 132  - see lns_corp_132  for more information.
 <br>**`not-0-NA :`** `          452 `\
 <br>**`sum      :`** `       52 435 `\
 <br>**`range    :`** `[ 0 ] ... [ 435 ] `\
-<br>**`examples :`** ` [188], [0], [0], [55], [138], [49], [0], [0], [307], [68] ... `\
+<br>**`examples :`** ` [51], [68], [296], [0], [0], [0], [356], [0], [68], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1740,7 +1777,7 @@ Number of words with corpus code 133  - see lns_corp_133  for more information.
 <br>**`not-0-NA :`** `          566 `\
 <br>**`sum      :`** `       62 394 `\
 <br>**`range    :`** `[ 0 ] ... [ 489 ] `\
-<br>**`examples :`** ` [111], [0], [489], [445], [12], [62], [309], [78], [248], [0] ... `\
+<br>**`examples :`** ` [0], [107], [0], [111], [15], [70], [489], [245], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1756,7 +1793,7 @@ Number of words with corpus code 134  - see lns_corp_134  for more information.
 <br>**`not-0-NA :`** `          782 `\
 <br>**`sum      :`** `      204 068 `\
 <br>**`range    :`** `[ 0 ] ... [ 761 ] `\
-<br>**`examples :`** ` [562], [180], [41], [487], [158], [482], [496], [160], [180], [338] ... `\
+<br>**`examples :`** ` [233], [79], [122], [222], [211], [565], [202], [147], [94], [41] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1772,7 +1809,7 @@ Number of words with corpus code 141  - see lns_corp_141  for more information.
 <br>**`not-0-NA :`** `          107 `\
 <br>**`sum      :`** `       14 531 `\
 <br>**`range    :`** `[ 0 ] ... [ 187 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [90], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [90], [0], [107], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1788,7 +1825,7 @@ Number of words with corpus code 142  - see lns_corp_142  for more information.
 <br>**`not-0-NA :`** `          562 `\
 <br>**`sum      :`** `      168 428 `\
 <br>**`range    :`** `[ 0 ] ... [ 1359 ] `\
-<br>**`examples :`** ` [0], [400], [194], [139], [0], [13], [74], [897], [410], [354] ... `\
+<br>**`examples :`** ` [0], [156], [0], [0], [74], [55], [123], [802], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1804,7 +1841,7 @@ Number of words with corpus code 143  - see lns_corp_143  for more information.
 <br>**`not-0-NA :`** `          136 `\
 <br>**`sum      :`** `       27 235 `\
 <br>**`range    :`** `[ 0 ] ... [ 555 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [77], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1820,7 +1857,7 @@ Number of words with corpus code 144  - see lns_corp_144  for more information.
 <br>**`not-0-NA :`** `          191 `\
 <br>**`sum      :`** `        6 737 `\
 <br>**`range    :`** `[ 0 ] ... [ 136 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [21], [0], [21], [0], [0], [0], [21], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1836,7 +1873,7 @@ Number of words with corpus code 145  - see lns_corp_145  for more information.
 <br>**`not-0-NA :`** `           29 `\
 <br>**`sum      :`** `       13 301 `\
 <br>**`range    :`** `[ 0 ] ... [ 857 ] `\
-<br>**`examples :`** ` [0], [614], [76], [857], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [76], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1859,7 +1896,7 @@ Number of lines with corpus code 21
 <br>**`not-0-NA :`** `          387 `\
 <br>**`sum      :`** `        3 414 `\
 <br>**`range    :`** `[ 0 ] ... [ 35 ] `\
-<br>**`examples :`** ` [0], [2], [0], [3], [11], [0], [1], [14], [0], [7] ... `\
+<br>**`examples :`** ` [8], [0], [10], [0], [0], [11], [0], [0], [3], [2] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1879,7 +1916,7 @@ Number of lines with corpus code 22
 <br>**`not-0-NA :`** `          629 `\
 <br>**`sum      :`** `       15 358 `\
 <br>**`range    :`** `[ 0 ] ... [ 65 ] `\
-<br>**`examples :`** ` [24], [10], [3], [4], [15], [19], [43], [3], [0], [0] ... `\
+<br>**`examples :`** ` [17], [10], [10], [15], [12], [12], [11], [15], [0], [16] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1899,7 +1936,7 @@ Number of lines with corpus code 23
 <br>**`not-0-NA :`** `          213 `\
 <br>**`sum      :`** `        1 765 `\
 <br>**`range    :`** `[ 0 ] ... [ 29 ] `\
-<br>**`examples :`** ` [0], [1], [18], [0], [0], [0], [0], [0], [7], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [7], [0], [0], [6] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1919,7 +1956,7 @@ Number of lines with corpus code 25
 <br>**`not-0-NA :`** `          515 `\
 <br>**`sum      :`** `        8 653 `\
 <br>**`range    :`** `[ 0 ] ... [ 80 ] `\
-<br>**`examples :`** ` [79], [3], [3], [41], [20], [0], [5], [22], [13], [0] ... `\
+<br>**`examples :`** ` [5], [0], [15], [2], [40], [5], [40], [3], [4], [2] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1939,7 +1976,7 @@ Number of lines with corpus code 26
 <br>**`not-0-NA :`** `          465 `\
 <br>**`sum      :`** `        5 053 `\
 <br>**`range    :`** `[ 0 ] ... [ 44 ] `\
-<br>**`examples :`** ` [21], [2], [0], [0], [0], [0], [3], [0], [8], [2] ... `\
+<br>**`examples :`** ` [0], [21], [0], [0], [0], [28], [3], [8], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1959,7 +1996,7 @@ Number of lines with corpus code 27
 <br>**`not-0-NA :`** `          105 `\
 <br>**`sum      :`** `          609 `\
 <br>**`range    :`** `[ 0 ] ... [ 9 ] `\
-<br>**`examples :`** ` [0], [0], [5], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [8], [7], [0], [0], [5], [0], [0], [0], [0], [7] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1979,7 +2016,7 @@ Number of lines with corpus code 28
 <br>**`not-0-NA :`** `           23 `\
 <br>**`sum      :`** `          457 `\
 <br>**`range    :`** `[ 0 ] ... [ 32 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [12], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -1999,7 +2036,7 @@ Number of lines with corpus code 29
 <br>**`not-0-NA :`** `          259 `\
 <br>**`sum      :`** `       18 465 `\
 <br>**`range    :`** `[ 0 ] ... [ 245 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [1], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [208], [1], [0], [29], [0], [14], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2021,7 +2058,7 @@ Number of lines with corpus code 241
 <br>**`not-0-NA :`** `          291 `\
 <br>**`sum      :`** `        1 446 `\
 <br>**`range    :`** `[ 0 ] ... [ 24 ] `\
-<br>**`examples :`** ` [0], [18], [1], [0], [0], [5], [3], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [4], [5], [0], [0], [4], [0], [0], [0], [6] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2043,7 +2080,7 @@ Number of lines with corpus code 242
 <br>**`not-0-NA :`** `          264 `\
 <br>**`sum      :`** `        4 369 `\
 <br>**`range    :`** `[ 0 ] ... [ 48 ] `\
-<br>**`examples :`** ` [0], [15], [0], [45], [0], [0], [0], [0], [1], [0] ... `\
+<br>**`examples :`** ` [1], [0], [0], [7], [0], [0], [0], [46], [0], [4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2065,7 +2102,7 @@ Number of lines with corpus code 243
 <br>**`not-0-NA :`** `           67 `\
 <br>**`sum      :`** `          102 `\
 <br>**`range    :`** `[ 0 ] ... [ 4 ] `\
-<br>**`examples :`** ` [0], [0], [1], [0], [0], [0], [0], [0], [0], [1] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2087,7 +2124,7 @@ Number of lines with corpus code 244
 <br>**`not-0-NA :`** `          140 `\
 <br>**`sum      :`** `          661 `\
 <br>**`range    :`** `[ 0 ] ... [ 29 ] `\
-<br>**`examples :`** ` [1], [0], [0], [0], [0], [0], [0], [0], [0], [3] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [1], [1], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2103,7 +2140,7 @@ Number of words with corpus code 21   - see lns_corp_21   for more information.
 <br>**`not-0-NA :`** `          387 `\
 <br>**`sum      :`** `      100 101 `\
 <br>**`range    :`** `[ 0 ] ... [ 885 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [279], [0], [258], [0], [0], [124] ... `\
+<br>**`examples :`** ` [0], [347], [0], [131], [61], [733], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2119,7 +2156,7 @@ Number of words with corpus code 22   - see lns_corp_22   for more information.
 <br>**`not-0-NA :`** `          629 `\
 <br>**`sum      :`** `      640 813 `\
 <br>**`range    :`** `[ 0 ] ... [ 2938 ] `\
-<br>**`examples :`** ` [0], [0], [45], [897], [1516], [2630], [2630], [729], [1447], [0] ... `\
+<br>**`examples :`** ` [2630], [1788], [650], [536], [71], [489], [1401], [0], [1401], [733] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2135,7 +2172,7 @@ Number of words with corpus code 23   - see lns_corp_23   for more information.
 <br>**`not-0-NA :`** `          213 `\
 <br>**`sum      :`** `       74 661 `\
 <br>**`range    :`** `[ 0 ] ... [ 777 ] `\
-<br>**`examples :`** ` [0], [0], [0], [299], [0], [173], [67], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [636], [0], [0], [0], [0], [0], [0], [53] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2151,7 +2188,7 @@ Number of words with corpus code 25   - see lns_corp_25   for more information.
 <br>**`not-0-NA :`** `          515 `\
 <br>**`sum      :`** `      290 048 `\
 <br>**`range    :`** `[ 0 ] ... [ 1942 ] `\
-<br>**`examples :`** ` [290], [0], [71], [1824], [67], [1470], [180], [253], [180], [50] ... `\
+<br>**`examples :`** ` [0], [376], [0], [457], [0], [0], [193], [0], [1470], [457] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2167,7 +2204,7 @@ Number of words with corpus code 26   - see lns_corp_26   for more information.
 <br>**`not-0-NA :`** `          465 `\
 <br>**`sum      :`** `      199 867 `\
 <br>**`range    :`** `[ 0 ] ... [ 2217 ] `\
-<br>**`examples :`** ` [66], [797], [0], [817], [0], [0], [797], [817], [0], [1868] ... `\
+<br>**`examples :`** ` [736], [66], [831], [142], [0], [0], [0], [98], [213], [414] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2183,7 +2220,7 @@ Number of words with corpus code 27   - see lns_corp_27   for more information.
 <br>**`not-0-NA :`** `          105 `\
 <br>**`sum      :`** `       25 278 `\
 <br>**`range    :`** `[ 0 ] ... [ 475 ] `\
-<br>**`examples :`** ` [0], [0], [0], [195], [0], [0], [0], [0], [0], [195] ... `\
+<br>**`examples :`** ` [195], [0], [0], [0], [0], [0], [0], [0], [195], [195] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2199,7 +2236,7 @@ Number of words with corpus code 28   - see lns_corp_28   for more information.
 <br>**`not-0-NA :`** `           23 `\
 <br>**`sum      :`** `       12 021 `\
 <br>**`range    :`** `[ 0 ] ... [ 775 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [268] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2215,7 +2252,7 @@ Number of words with corpus code 29   - see lns_corp_29   for more information.
 <br>**`not-0-NA :`** `          259 `\
 <br>**`sum      :`** `      681 590 `\
 <br>**`range    :`** `[ 0 ] ... [ 8107 ] `\
-<br>**`examples :`** ` [0], [1052], [1576], [19], [0], [488], [0], [488], [0], [0] ... `\
+<br>**`examples :`** ` [0], [2216], [0], [0], [7921], [2081], [7601], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2231,7 +2268,7 @@ Number of words with corpus code 241  - see lns_corp_241  for more information.
 <br>**`not-0-NA :`** `          291 `\
 <br>**`sum      :`** `       56 096 `\
 <br>**`range    :`** `[ 0 ] ... [ 1348 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [796], [0], [0], [0], [0], [988] ... `\
+<br>**`examples :`** ` [0], [73], [70], [0], [0], [0], [879], [0], [123], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2247,7 +2284,7 @@ Number of words with corpus code 242  - see lns_corp_242  for more information.
 <br>**`not-0-NA :`** `          264 `\
 <br>**`sum      :`** `      123 510 `\
 <br>**`range    :`** `[ 0 ] ... [ 1310 ] `\
-<br>**`examples :`** ` [0], [209], [0], [0], [1250], [209], [934], [0], [0], [105] ... `\
+<br>**`examples :`** ` [1249], [0], [0], [1271], [34], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2263,7 +2300,7 @@ Number of words with corpus code 243  - see lns_corp_243  for more information.
 <br>**`not-0-NA :`** `           67 `\
 <br>**`sum      :`** `        3 733 `\
 <br>**`range    :`** `[ 0 ] ... [ 84 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [70], [0] ... `\
+<br>**`examples :`** ` [0], [0], [70], [19], [0], [0], [19], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2279,7 +2316,7 @@ Number of words with corpus code 244  - see lns_corp_244  for more information.
 <br>**`not-0-NA :`** `          140 `\
 <br>**`sum      :`** `       24 725 `\
 <br>**`range    :`** `[ 0 ] ... [ 927 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [123] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2302,7 +2339,7 @@ Number of lines with corpus code 31
 <br>**`not-0-NA :`** `          197 `\
 <br>**`sum      :`** `          690 `\
 <br>**`range    :`** `[ 0 ] ... [ 18 ] `\
-<br>**`examples :`** ` [0], [0], [0], [1], [0], [0], [1], [0], [15], [0] ... `\
+<br>**`examples :`** ` [15], [0], [0], [0], [1], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2322,7 +2359,7 @@ Number of lines with corpus code 32
 <br>**`not-0-NA :`** `          311 `\
 <br>**`sum      :`** `        2 141 `\
 <br>**`range    :`** `[ 0 ] ... [ 27 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [3], [0], [5] ... `\
+<br>**`examples :`** ` [0], [0], [0], [15], [0], [0], [2], [15], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2342,7 +2379,7 @@ Number of lines with corpus code 33
 <br>**`not-0-NA :`** `          153 `\
 <br>**`sum      :`** `          789 `\
 <br>**`range    :`** `[ 0 ] ... [ 9 ] `\
-<br>**`examples :`** ` [8], [0], [0], [0], [2], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [7], [0], [0], [7], [0], [5], [0], [0], [4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2362,7 +2399,7 @@ Number of lines with corpus code 34
 <br>**`not-0-NA :`** `          713 `\
 <br>**`sum      :`** `        4 395 `\
 <br>**`range    :`** `[ 0 ] ... [ 37 ] `\
-<br>**`examples :`** ` [0], [28], [0], [8], [31], [4], [4], [8], [1], [1] ... `\
+<br>**`examples :`** ` [12], [29], [7], [7], [2], [7], [5], [9], [2], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2378,7 +2415,7 @@ Number of words with corpus code 31   - see lns_corp_31   for more information.
 <br>**`not-0-NA :`** `          197 `\
 <br>**`sum      :`** `       17 859 `\
 <br>**`range    :`** `[ 0 ] ... [ 426 ] `\
-<br>**`examples :`** ` [27], [376], [0], [0], [426], [0], [0], [0], [38], [0] ... `\
+<br>**`examples :`** ` [0], [0], [27], [0], [0], [0], [0], [44], [0], [331] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2394,7 +2431,7 @@ Number of words with corpus code 32   - see lns_corp_32   for more information.
 <br>**`not-0-NA :`** `          311 `\
 <br>**`sum      :`** `       70 940 `\
 <br>**`range    :`** `[ 0 ] ... [ 861 ] `\
-<br>**`examples :`** ` [58], [0], [0], [0], [0], [120], [0], [57], [0], [0] ... `\
+<br>**`examples :`** ` [55], [0], [55], [0], [0], [230], [538], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2410,7 +2447,7 @@ Number of words with corpus code 33   - see lns_corp_33   for more information.
 <br>**`not-0-NA :`** `          153 `\
 <br>**`sum      :`** `       26 002 `\
 <br>**`range    :`** `[ 0 ] ... [ 268 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [214] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2426,7 +2463,7 @@ Number of words with corpus code 34   - see lns_corp_34   for more information.
 <br>**`not-0-NA :`** `          713 `\
 <br>**`sum      :`** `      135 027 `\
 <br>**`range    :`** `[ 0 ] ... [ 860 ] `\
-<br>**`examples :`** ` [92], [106], [92], [756], [24], [218], [304], [123], [0], [348] ... `\
+<br>**`examples :`** ` [72], [0], [348], [279], [99], [92], [132], [0], [0], [485] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2449,7 +2486,7 @@ Number of lines with corpus code 43
 <br>**`not-0-NA :`** `          243 `\
 <br>**`sum      :`** `        1 002 `\
 <br>**`range    :`** `[ 0 ] ... [ 16 ] `\
-<br>**`examples :`** ` [2], [0], [0], [0], [10], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [3], [2], [1], [2], [0], [0], [2], [4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2469,7 +2506,7 @@ Number of lines with corpus code 45
 <br>**`not-0-NA :`** `           68 `\
 <br>**`sum      :`** `          655 `\
 <br>**`range    :`** `[ 0 ] ... [ 34 ] `\
-<br>**`examples :`** ` [18], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [5], [0], [18], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2491,7 +2528,7 @@ Number of lines with corpus code 411
 <br>**`not-0-NA :`** `          177 `\
 <br>**`sum      :`** `        1 392 `\
 <br>**`range    :`** `[ 0 ] ... [ 46 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [1], [0], [0], [0], [6], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2513,7 +2550,7 @@ Number of lines with corpus code 412
 <br>**`not-0-NA :`** `          352 `\
 <br>**`sum      :`** `        1 921 `\
 <br>**`range    :`** `[ 0 ] ... [ 22 ] `\
-<br>**`examples :`** ` [0], [4], [0], [0], [0], [4], [7], [4], [5], [0] ... `\
+<br>**`examples :`** ` [17], [0], [17], [0], [0], [6], [0], [0], [17], [5] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2535,7 +2572,7 @@ Number of lines with corpus code 421
 <br>**`not-0-NA :`** `          129 `\
 <br>**`sum      :`** `          292 `\
 <br>**`range    :`** `[ 0 ] ... [ 15 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [1], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [1], [0], [0], [1], [0], [1], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2601,7 +2638,7 @@ Number of lines with corpus code 442
 <br>**`not-0-NA :`** `           71 `\
 <br>**`sum      :`** `          198 `\
 <br>**`range    :`** `[ 0 ] ... [ 5 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [5], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [5], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2617,7 +2654,7 @@ Number of words with corpus code 43   - see lns_corp_43   for more information.
 <br>**`not-0-NA :`** `          243 `\
 <br>**`sum      :`** `       28 427 `\
 <br>**`range    :`** `[ 0 ] ... [ 335 ] `\
-<br>**`examples :`** ` [0], [235], [0], [58], [0], [0], [78], [101], [0], [0] ... `\
+<br>**`examples :`** ` [0], [14], [93], [0], [0], [101], [163], [163], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2633,7 +2670,7 @@ Number of words with corpus code 45   - see lns_corp_45   for more information.
 <br>**`not-0-NA :`** `           68 `\
 <br>**`sum      :`** `       22 655 `\
 <br>**`range    :`** `[ 0 ] ... [ 1001 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [173], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [1001], [0], [0], [287], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2649,7 +2686,7 @@ Number of words with corpus code 411  - see lns_corp_411  for more information.
 <br>**`not-0-NA :`** `          177 `\
 <br>**`sum      :`** `       40 622 `\
 <br>**`range    :`** `[ 0 ] ... [ 1435 ] `\
-<br>**`examples :`** ` [0], [22], [0], [175], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2665,7 +2702,7 @@ Number of words with corpus code 412  - see lns_corp_412  for more information.
 <br>**`not-0-NA :`** `          352 `\
 <br>**`sum      :`** `       57 401 `\
 <br>**`range    :`** `[ 0 ] ... [ 629 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [346], [238], [350], [0], [24], [629] ... `\
+<br>**`examples :`** ` [0], [166], [113], [0], [0], [0], [0], [207], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2681,7 +2718,7 @@ Number of words with corpus code 421  - see lns_corp_421  for more information.
 <br>**`not-0-NA :`** `          129 `\
 <br>**`sum      :`** `       11 032 `\
 <br>**`range    :`** `[ 0 ] ... [ 391 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [33], [44], [0], [0], [33], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2713,7 +2750,7 @@ Number of words with corpus code 441  - see lns_corp_441  for more information.
 <br>**`not-0-NA :`** `           26 `\
 <br>**`sum      :`** `        1 695 `\
 <br>**`range    :`** `[ 0 ] ... [ 99 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [99], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2729,7 +2766,7 @@ Number of words with corpus code 442  - see lns_corp_442  for more information.
 <br>**`not-0-NA :`** `           71 `\
 <br>**`sum      :`** `        6 028 `\
 <br>**`range    :`** `[ 0 ] ... [ 142 ] `\
-<br>**`examples :`** ` [0], [0], [0], [27], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [142], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2752,7 +2789,7 @@ Number of lines with corpus code 51
 <br>**`not-0-NA :`** `          723 `\
 <br>**`sum      :`** `       15 446 `\
 <br>**`range    :`** `[ 0 ] ... [ 111 ] `\
-<br>**`examples :`** ` [15], [0], [11], [14], [18], [8], [20], [29], [11], [105] ... `\
+<br>**`examples :`** ` [9], [19], [21], [10], [18], [19], [15], [10], [14], [19] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2772,7 +2809,7 @@ Number of lines with corpus code 52
 <br>**`not-0-NA :`** `          318 `\
 <br>**`sum      :`** `        1 873 `\
 <br>**`range    :`** `[ 0 ] ... [ 32 ] `\
-<br>**`examples :`** ` [2], [0], [0], [0], [0], [0], [0], [25], [32], [0] ... `\
+<br>**`examples :`** ` [3], [0], [3], [0], [0], [3], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2792,7 +2829,7 @@ Number of lines with corpus code 53
 <br>**`not-0-NA :`** `          769 `\
 <br>**`sum      :`** `       17 319 `\
 <br>**`range    :`** `[ 0 ] ... [ 89 ] `\
-<br>**`examples :`** ` [10], [28], [41], [10], [17], [33], [23], [7], [44], [8] ... `\
+<br>**`examples :`** ` [13], [22], [23], [25], [21], [24], [14], [21], [14], [33] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2812,7 +2849,7 @@ Number of lines with corpus code 54
 <br>**`not-0-NA :`** `          503 `\
 <br>**`sum      :`** `        5 073 `\
 <br>**`range    :`** `[ 0 ] ... [ 49 ] `\
-<br>**`examples :`** ` [5], [0], [5], [5], [1], [9], [0], [12], [20], [12] ... `\
+<br>**`examples :`** ` [9], [0], [0], [0], [0], [0], [19], [0], [7], [9] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2832,7 +2869,7 @@ Number of lines with corpus code 55
 <br>**`not-0-NA :`** `          753 `\
 <br>**`sum      :`** `        8 446 `\
 <br>**`range    :`** `[ 0 ] ... [ 67 ] `\
-<br>**`examples :`** ` [9], [14], [23], [4], [8], [67], [1], [9], [1], [3] ... `\
+<br>**`examples :`** ` [5], [18], [10], [3], [23], [7], [67], [3], [4], [18] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2852,7 +2889,7 @@ Number of lines with corpus code 56
 <br>**`not-0-NA :`** `          776 `\
 <br>**`sum      :`** `       10 109 `\
 <br>**`range    :`** `[ 0 ] ... [ 61 ] `\
-<br>**`examples :`** ` [14], [13], [8], [15], [7], [11], [7], [11], [13], [14] ... `\
+<br>**`examples :`** ` [8], [12], [11], [9], [16], [13], [11], [0], [14], [20] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2868,7 +2905,7 @@ Number of words with corpus code 51   - see lns_corp_51   for more information.
 <br>**`not-0-NA :`** `          723 `\
 <br>**`sum      :`** `      486 967 `\
 <br>**`range    :`** `[ 0 ] ... [ 1649 ] `\
-<br>**`examples :`** ` [640], [1142], [879], [691], [398], [411], [752], [234], [407], [1020] ... `\
+<br>**`examples :`** ` [833], [518], [980], [425], [1084], [0], [785], [990], [824], [610] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2884,7 +2921,7 @@ Number of words with corpus code 52   - see lns_corp_52   for more information.
 <br>**`not-0-NA :`** `          318 `\
 <br>**`sum      :`** `       77 501 `\
 <br>**`range    :`** `[ 0 ] ... [ 1025 ] `\
-<br>**`examples :`** ` [0], [0], [0], [41], [631], [41], [295], [0], [275], [0] ... `\
+<br>**`examples :`** ` [170], [41], [0], [0], [0], [664], [295], [0], [275], [41] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2900,7 +2937,7 @@ Number of words with corpus code 53   - see lns_corp_53   for more information.
 <br>**`not-0-NA :`** `          769 `\
 <br>**`sum      :`** `      620 154 `\
 <br>**`range    :`** `[ 0 ] ... [ 2691 ] `\
-<br>**`examples :`** ` [631], [496], [1234], [505], [991], [169], [918], [791], [722], [901] ... `\
+<br>**`examples :`** ` [766], [1167], [1019], [791], [2169], [739], [1003], [775], [665], [968] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2916,7 +2953,7 @@ Number of words with corpus code 54   - see lns_corp_54   for more information.
 <br>**`not-0-NA :`** `          503 `\
 <br>**`sum      :`** `      179 259 `\
 <br>**`range    :`** `[ 0 ] ... [ 1106 ] `\
-<br>**`examples :`** ` [510], [0], [119], [0], [0], [349], [292], [0], [473], [0] ... `\
+<br>**`examples :`** ` [473], [134], [0], [510], [0], [0], [0], [418], [0], [119] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2932,7 +2969,7 @@ Number of words with corpus code 55   - see lns_corp_55   for more information.
 <br>**`not-0-NA :`** `          753 `\
 <br>**`sum      :`** `      273 739 `\
 <br>**`range    :`** `[ 0 ] ... [ 1851 ] `\
-<br>**`examples :`** ` [751], [144], [249], [42], [341], [418], [42], [287], [788], [1545] ... `\
+<br>**`examples :`** ` [260], [249], [372], [210], [135], [144], [144], [77], [751], [146] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2948,7 +2985,7 @@ Number of words with corpus code 56   - see lns_corp_56   for more information.
 <br>**`not-0-NA :`** `          776 `\
 <br>**`sum      :`** `      336 558 `\
 <br>**`range    :`** `[ 0 ] ... [ 1340 ] `\
-<br>**`examples :`** ` [712], [555], [233], [710], [297], [394], [126], [658], [474], [82] ... `\
+<br>**`examples :`** ` [647], [556], [617], [303], [244], [565], [650], [370], [315], [659] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2971,7 +3008,7 @@ Number of lines with corpus code 66
 <br>**`not-0-NA :`** `           89 `\
 <br>**`sum      :`** `           89 `\
 <br>**`range    :`** `[ 0 ] ... [ 1 ] `\
-<br>**`examples :`** ` [0], [0], [1], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [1], [0], [0], [0], [0], [1], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -2991,7 +3028,7 @@ Number of lines with corpus code 67
 <br>**`not-0-NA :`** `          108 `\
 <br>**`sum      :`** `          639 `\
 <br>**`range    :`** `[ 0 ] ... [ 7 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [6], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [7], [7], [6], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3011,7 +3048,7 @@ Number of lines with corpus code 68
 <br>**`not-0-NA :`** `          600 `\
 <br>**`sum      :`** `        6 090 `\
 <br>**`range    :`** `[ 0 ] ... [ 47 ] `\
-<br>**`examples :`** ` [8], [16], [8], [0], [11], [7], [38], [3], [0], [10] ... `\
+<br>**`examples :`** ` [2], [2], [8], [7], [3], [15], [0], [0], [0], [8] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3033,7 +3070,7 @@ Number of lines with corpus code 611
 <br>**`not-0-NA :`** `          722 `\
 <br>**`sum      :`** `       22 831 `\
 <br>**`range    :`** `[ 0 ] ... [ 200 ] `\
-<br>**`examples :`** ` [27], [12], [10], [68], [18], [18], [15], [6], [3], [8] ... `\
+<br>**`examples :`** ` [6], [18], [6], [194], [74], [5], [6], [7], [3], [44] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3055,7 +3092,7 @@ Number of lines with corpus code 612
 <br>**`not-0-NA :`** `          748 `\
 <br>**`sum      :`** `       10 960 `\
 <br>**`range    :`** `[ 0 ] ... [ 60 ] `\
-<br>**`examples :`** ` [6], [7], [2], [2], [58], [25], [2], [15], [16], [10] ... `\
+<br>**`examples :`** ` [6], [6], [12], [12], [7], [25], [16], [21], [9], [58] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3077,7 +3114,7 @@ Number of lines with corpus code 613
 <br>**`not-0-NA :`** `          731 `\
 <br>**`sum      :`** `        5 285 `\
 <br>**`range    :`** `[ 0 ] ... [ 32 ] `\
-<br>**`examples :`** ` [7], [10], [6], [21], [28], [6], [2], [3], [6], [7] ... `\
+<br>**`examples :`** ` [6], [9], [2], [6], [6], [6], [6], [0], [5], [11] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3099,7 +3136,7 @@ Number of lines with corpus code 631
 <br>**`not-0-NA :`** `          459 `\
 <br>**`sum      :`** `        1 706 `\
 <br>**`range    :`** `[ 0 ] ... [ 13 ] `\
-<br>**`examples :`** ` [0], [3], [0], [0], [1], [2], [1], [1], [10], [0] ... `\
+<br>**`examples :`** ` [4], [10], [0], [2], [2], [0], [1], [1], [6], [2] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3121,7 +3158,7 @@ Number of lines with corpus code 632
 <br>**`not-0-NA :`** `          773 `\
 <br>**`sum      :`** `       21 232 `\
 <br>**`range    :`** `[ 0 ] ... [ 164 ] `\
-<br>**`examples :`** ` [47], [32], [8], [47], [8], [25], [47], [7], [29], [41] ... `\
+<br>**`examples :`** ` [26], [1], [30], [46], [39], [24], [7], [8], [30], [27] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3143,7 +3180,7 @@ Number of lines with corpus code 633
 <br>**`not-0-NA :`** `          771 `\
 <br>**`sum      :`** `        3 276 `\
 <br>**`range    :`** `[ 0 ] ... [ 24 ] `\
-<br>**`examples :`** ` [1], [5], [2], [3], [7], [2], [6], [2], [1], [2] ... `\
+<br>**`examples :`** ` [1], [6], [2], [1], [9], [9], [5], [2], [3], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3165,7 +3202,7 @@ Number of lines with corpus code 634
 <br>**`not-0-NA :`** `          751 `\
 <br>**`sum      :`** `        9 442 `\
 <br>**`range    :`** `[ 0 ] ... [ 39 ] `\
-<br>**`examples :`** ` [2], [8], [2], [6], [34], [4], [13], [13], [4], [13] ... `\
+<br>**`examples :`** ` [13], [3], [34], [34], [34], [6], [22], [7], [13], [5] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3187,7 +3224,7 @@ Number of lines with corpus code 636
 <br>**`not-0-NA :`** `          612 `\
 <br>**`sum      :`** `        3 343 `\
 <br>**`range    :`** `[ 0 ] ... [ 21 ] `\
-<br>**`examples :`** ` [1], [5], [3], [0], [9], [10], [5], [3], [6], [0] ... `\
+<br>**`examples :`** ` [10], [6], [5], [5], [6], [6], [5], [9], [5], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3209,7 +3246,7 @@ Number of lines with corpus code 637
 <br>**`not-0-NA :`** `          275 `\
 <br>**`sum      :`** `        4 258 `\
 <br>**`range    :`** `[ 0 ] ... [ 78 ] `\
-<br>**`examples :`** ` [13], [3], [0], [0], [0], [5], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [18], [13], [0], [0], [0], [13], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3231,7 +3268,7 @@ Number of lines with corpus code 638
 <br>**`not-0-NA :`** `          135 `\
 <br>**`sum      :`** `          782 `\
 <br>**`range    :`** `[ 0 ] ... [ 20 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [17] ... `\
+<br>**`examples :`** ` [0], [0], [1], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3253,7 +3290,7 @@ Number of lines with corpus code 639
 <br>**`not-0-NA :`** `          691 `\
 <br>**`sum      :`** `       22 088 `\
 <br>**`range    :`** `[ 0 ] ... [ 211 ] `\
-<br>**`examples :`** ` [10], [32], [9], [3], [8], [1], [0], [3], [5], [10] ... `\
+<br>**`examples :`** ` [26], [0], [63], [11], [25], [0], [15], [33], [34], [13] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3275,7 +3312,7 @@ Number of lines with corpus code 641
 <br>**`not-0-NA :`** `          419 `\
 <br>**`sum      :`** `        1 964 `\
 <br>**`range    :`** `[ 0 ] ... [ 12 ] `\
-<br>**`examples :`** ` [5], [1], [6], [0], [6], [5], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [5], [0], [7], [0], [0], [5], [0], [0], [6], [3] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3297,7 +3334,7 @@ Number of lines with corpus code 642
 <br>**`not-0-NA :`** `          239 `\
 <br>**`sum      :`** `          893 `\
 <br>**`range    :`** `[ 0 ] ... [ 55 ] `\
-<br>**`examples :`** ` [2], [0], [0], [2], [0], [3], [30], [0], [2], [1] ... `\
+<br>**`examples :`** ` [5], [1], [0], [0], [0], [2], [0], [0], [1], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3319,7 +3356,7 @@ Number of lines with corpus code 643
 <br>**`not-0-NA :`** `          207 `\
 <br>**`sum      :`** `          513 `\
 <br>**`range    :`** `[ 0 ] ... [ 6 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [1], [2] ... `\
+<br>**`examples :`** ` [0], [0], [1], [0], [6], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3341,7 +3378,7 @@ Number of lines with corpus code 651
 <br>**`not-0-NA :`** `          750 `\
 <br>**`sum      :`** `        8 186 `\
 <br>**`range    :`** `[ 0 ] ... [ 56 ] `\
-<br>**`examples :`** ` [18], [10], [2], [6], [6], [9], [24], [7], [24], [6] ... `\
+<br>**`examples :`** ` [56], [5], [54], [5], [10], [7], [2], [20], [5], [5] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3363,7 +3400,7 @@ Number of lines with corpus code 652
 <br>**`not-0-NA :`** `          740 `\
 <br>**`sum      :`** `        5 837 `\
 <br>**`range    :`** `[ 0 ] ... [ 67 ] `\
-<br>**`examples :`** ` [2], [1], [5], [7], [20], [51], [4], [7], [0], [5] ... `\
+<br>**`examples :`** ` [7], [2], [9], [0], [2], [4], [7], [7], [12], [7] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3385,7 +3422,7 @@ Number of lines with corpus code 653
 <br>**`not-0-NA :`** `          209 `\
 <br>**`sum      :`** `          414 `\
 <br>**`range    :`** `[ 0 ] ... [ 7 ] `\
-<br>**`examples :`** ` [1], [0], [0], [0], [2], [2], [0], [0], [1], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3409,7 +3446,7 @@ Number of lines with corpus code 6211
 <br>**`not-0-NA :`** `          748 `\
 <br>**`sum      :`** `        7 375 `\
 <br>**`range    :`** `[ 0 ] ... [ 36 ] `\
-<br>**`examples :`** ` [4], [4], [26], [12], [8], [10], [4], [4], [7], [4] ... `\
+<br>**`examples :`** ` [4], [4], [6], [7], [36], [9], [8], [4], [4], [18] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3433,7 +3470,7 @@ Number of lines with corpus code 6212
 <br>**`not-0-NA :`** `          730 `\
 <br>**`sum      :`** `        5 448 `\
 <br>**`range    :`** `[ 0 ] ... [ 72 ] `\
-<br>**`examples :`** ` [4], [3], [6], [2], [5], [10], [6], [8], [9], [8] ... `\
+<br>**`examples :`** ` [6], [11], [3], [4], [12], [14], [6], [6], [8], [6] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3457,7 +3494,7 @@ Number of lines with corpus code 6221
 <br>**`not-0-NA :`** `          548 `\
 <br>**`sum      :`** `        1 928 `\
 <br>**`range    :`** `[ 0 ] ... [ 13 ] `\
-<br>**`examples :`** ` [3], [1], [4], [0], [7], [4], [6], [0], [3], [10] ... `\
+<br>**`examples :`** ` [0], [7], [5], [0], [6], [2], [4], [0], [0], [10] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3481,7 +3518,7 @@ Number of lines with corpus code 6222
 <br>**`not-0-NA :`** `          479 `\
 <br>**`sum      :`** `        2 529 `\
 <br>**`range    :`** `[ 0 ] ... [ 16 ] `\
-<br>**`examples :`** ` [0], [8], [2], [0], [1], [0], [0], [3], [4], [0] ... `\
+<br>**`examples :`** ` [12], [0], [4], [3], [2], [10], [0], [0], [4], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3505,7 +3542,7 @@ Number of lines with corpus code 6351
 <br>**`not-0-NA :`** `          144 `\
 <br>**`sum      :`** `          214 `\
 <br>**`range    :`** `[ 0 ] ... [ 6 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [2], [2], [0] ... `\
+<br>**`examples :`** ` [0], [0], [1], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3529,7 +3566,7 @@ Number of lines with corpus code 6352
 <br>**`not-0-NA :`** `          459 `\
 <br>**`sum      :`** `        1 225 `\
 <br>**`range    :`** `[ 0 ] ... [ 7 ] `\
-<br>**`examples :`** ` [0], [2], [1], [0], [1], [0], [2], [0], [0], [2] ... `\
+<br>**`examples :`** ` [0], [0], [2], [1], [1], [2], [1], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3545,7 +3582,7 @@ Number of words with corpus code 66   - see lns_corp_66   for more information.
 <br>**`not-0-NA :`** `           89 `\
 <br>**`sum      :`** `        3 649 `\
 <br>**`range    :`** `[ 0 ] ... [ 41 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [41], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3561,7 +3598,7 @@ Number of words with corpus code 67   - see lns_corp_67   for more information.
 <br>**`not-0-NA :`** `          108 `\
 <br>**`sum      :`** `       13 213 `\
 <br>**`range    :`** `[ 0 ] ... [ 137 ] `\
-<br>**`examples :`** ` [0], [0], [0], [119], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [137], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3577,7 +3614,7 @@ Number of words with corpus code 68   - see lns_corp_68   for more information.
 <br>**`not-0-NA :`** `          600 `\
 <br>**`sum      :`** `      148 597 `\
 <br>**`range    :`** `[ 0 ] ... [ 1093 ] `\
-<br>**`examples :`** ` [402], [170], [338], [50], [52], [52], [338], [17], [0], [105] ... `\
+<br>**`examples :`** ` [0], [206], [224], [33], [201], [122], [1032], [0], [366], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3593,7 +3630,7 @@ Number of words with corpus code 611  - see lns_corp_611  for more information.
 <br>**`not-0-NA :`** `          722 `\
 <br>**`sum      :`** `      899 117 `\
 <br>**`range    :`** `[ 0 ] ... [ 6791 ] `\
-<br>**`examples :`** ` [788], [827], [1530], [466], [1849], [748], [1548], [371], [169], [375] ... `\
+<br>**`examples :`** ` [1864], [219], [3428], [219], [204], [827], [208], [203], [221], [381] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3609,7 +3646,7 @@ Number of words with corpus code 612  - see lns_corp_612  for more information.
 <br>**`not-0-NA :`** `          748 `\
 <br>**`sum      :`** `      409 479 `\
 <br>**`range    :`** `[ 0 ] ... [ 2221 ] `\
-<br>**`examples :`** ` [231], [107], [107], [631], [0], [571], [802], [542], [741], [123] ... `\
+<br>**`examples :`** ` [663], [777], [361], [435], [725], [496], [1103], [326], [686], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3625,7 +3662,7 @@ Number of words with corpus code 613  - see lns_corp_613  for more information.
 <br>**`not-0-NA :`** `          731 `\
 <br>**`sum      :`** `      177 924 `\
 <br>**`range    :`** `[ 0 ] ... [ 842 ] `\
-<br>**`examples :`** ` [306], [234], [272], [212], [26], [110], [80], [214], [234], [280] ... `\
+<br>**`examples :`** ` [225], [765], [0], [0], [275], [303], [306], [168], [26], [606] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3641,7 +3678,7 @@ Number of words with corpus code 631  - see lns_corp_631  for more information.
 <br>**`not-0-NA :`** `          459 `\
 <br>**`sum      :`** `       56 342 `\
 <br>**`range    :`** `[ 0 ] ... [ 518 ] `\
-<br>**`examples :`** ` [0], [0], [137], [518], [81], [17], [286], [137], [0], [16] ... `\
+<br>**`examples :`** ` [286], [0], [99], [137], [17], [0], [0], [19], [0], [137] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3657,7 +3694,7 @@ Number of words with corpus code 632  - see lns_corp_632  for more information.
 <br>**`not-0-NA :`** `          773 `\
 <br>**`sum      :`** `      443 925 `\
 <br>**`range    :`** `[ 0 ] ... [ 1313 ] `\
-<br>**`examples :`** ` [998], [1239], [210], [115], [759], [776], [371], [44], [350], [906] ... `\
+<br>**`examples :`** ` [185], [188], [64], [843], [560], [188], [497], [493], [366], [188] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3673,7 +3710,7 @@ Number of words with corpus code 633  - see lns_corp_633  for more information.
 <br>**`not-0-NA :`** `          771 `\
 <br>**`sum      :`** `      105 561 `\
 <br>**`range    :`** `[ 0 ] ... [ 790 ] `\
-<br>**`examples :`** ` [175], [213], [145], [145], [76], [56], [165], [244], [198], [162] ... `\
+<br>**`examples :`** ` [273], [30], [13], [210], [219], [68], [267], [50], [178], [258] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3689,7 +3726,7 @@ Number of words with corpus code 634  - see lns_corp_634  for more information.
 <br>**`not-0-NA :`** `          751 `\
 <br>**`sum      :`** `      305 110 `\
 <br>**`range    :`** `[ 0 ] ... [ 1288 ] `\
-<br>**`examples :`** ` [202], [207], [0], [114], [312], [207], [697], [498], [1087], [207] ... `\
+<br>**`examples :`** ` [202], [170], [289], [54], [1162], [186], [134], [47], [151], [207] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3705,7 +3742,7 @@ Number of words with corpus code 636  - see lns_corp_636  for more information.
 <br>**`not-0-NA :`** `          612 `\
 <br>**`sum      :`** `      120 418 `\
 <br>**`range    :`** `[ 0 ] ... [ 878 ] `\
-<br>**`examples :`** ` [196], [47], [0], [40], [580], [68], [218], [0], [31], [195] ... `\
+<br>**`examples :`** ` [68], [0], [197], [112], [417], [202], [580], [167], [47], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3721,7 +3758,7 @@ Number of words with corpus code 637  - see lns_corp_637  for more information.
 <br>**`not-0-NA :`** `          275 `\
 <br>**`sum      :`** `      136 383 `\
 <br>**`range    :`** `[ 0 ] ... [ 2444 ] `\
-<br>**`examples :`** ` [574], [0], [0], [0], [0], [0], [0], [0], [0], [587] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [855], [0], [0], [0], [587], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3737,7 +3774,7 @@ Number of words with corpus code 638  - see lns_corp_638  for more information.
 <br>**`not-0-NA :`** `          135 `\
 <br>**`sum      :`** `       24 497 `\
 <br>**`range    :`** `[ 0 ] ... [ 649 ] `\
-<br>**`examples :`** ` [25], [250], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [25], [0], [0], [0], [144], [0], [0], [0], [649], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3753,7 +3790,7 @@ Number of words with corpus code 639  - see lns_corp_639  for more information.
 <br>**`not-0-NA :`** `          691 `\
 <br>**`sum      :`** `      673 166 `\
 <br>**`range    :`** `[ 0 ] ... [ 6014 ] `\
-<br>**`examples :`** ` [5208], [1025], [180], [271], [812], [5512], [248], [24], [209], [248] ... `\
+<br>**`examples :`** ` [264], [1657], [285], [249], [0], [283], [4767], [0], [143], [435] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3769,7 +3806,7 @@ Number of words with corpus code 641  - see lns_corp_641  for more information.
 <br>**`not-0-NA :`** `          419 `\
 <br>**`sum      :`** `       63 180 `\
 <br>**`range    :`** `[ 0 ] ... [ 439 ] `\
-<br>**`examples :`** ` [198], [0], [0], [0], [137], [63], [72], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [137], [141], [0], [0], [159] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3785,7 +3822,7 @@ Number of words with corpus code 642  - see lns_corp_642  for more information.
 <br>**`not-0-NA :`** `          239 `\
 <br>**`sum      :`** `       26 096 `\
 <br>**`range    :`** `[ 0 ] ... [ 643 ] `\
-<br>**`examples :`** ` [0], [148], [164], [292], [74], [0], [0], [74], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [42], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3801,7 +3838,7 @@ Number of words with corpus code 643  - see lns_corp_643  for more information.
 <br>**`not-0-NA :`** `          207 `\
 <br>**`sum      :`** `       20 175 `\
 <br>**`range    :`** `[ 0 ] ... [ 202 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [73], [0], [157], [93], [0], [0], [73], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3817,7 +3854,7 @@ Number of words with corpus code 651  - see lns_corp_651  for more information.
 <br>**`not-0-NA :`** `          750 `\
 <br>**`sum      :`** `      317 168 `\
 <br>**`range    :`** `[ 0 ] ... [ 2439 ] `\
-<br>**`examples :`** ` [437], [265], [372], [1125], [200], [78], [78], [230], [364], [198] ... `\
+<br>**`examples :`** ` [372], [256], [2236], [115], [286], [719], [2355], [249], [739], [399] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3833,7 +3870,7 @@ Number of words with corpus code 652  - see lns_corp_652  for more information.
 <br>**`not-0-NA :`** `          740 `\
 <br>**`sum      :`** `      190 488 `\
 <br>**`range    :`** `[ 0 ] ... [ 2080 ] `\
-<br>**`examples :`** ` [487], [122], [360], [651], [2080], [123], [487], [123], [428], [412] ... `\
+<br>**`examples :`** ` [108], [137], [177], [133], [195], [183], [94], [224], [0], [185] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3849,7 +3886,7 @@ Number of words with corpus code 653  - see lns_corp_653  for more information.
 <br>**`not-0-NA :`** `          209 `\
 <br>**`sum      :`** `       16 638 `\
 <br>**`range    :`** `[ 0 ] ... [ 328 ] `\
-<br>**`examples :`** ` [50], [58], [23], [0], [0], [201], [0], [25], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [148], [50], [58], [328], [0], [161], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3865,7 +3902,7 @@ Number of words with corpus code 6211 - see lns_corp_6211 for more information.
 <br>**`not-0-NA :`** `          748 `\
 <br>**`sum      :`** `      260 408 `\
 <br>**`range    :`** `[ 0 ] ... [ 1308 ] `\
-<br>**`examples :`** ` [202], [831], [186], [239], [96], [382], [227], [189], [655], [225] ... `\
+<br>**`examples :`** ` [189], [382], [0], [167], [831], [215], [225], [226], [259], [189] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3881,7 +3918,7 @@ Number of words with corpus code 6212 - see lns_corp_6212 for more information.
 <br>**`not-0-NA :`** `          730 `\
 <br>**`sum      :`** `      180 361 `\
 <br>**`range    :`** `[ 0 ] ... [ 1060 ] `\
-<br>**`examples :`** ` [97], [437], [199], [166], [25], [36], [244], [81], [185], [848] ... `\
+<br>**`examples :`** ` [0], [440], [295], [241], [83], [137], [443], [99], [0], [394] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3897,7 +3934,7 @@ Number of words with corpus code 6221 - see lns_corp_6221 for more information.
 <br>**`not-0-NA :`** `          548 `\
 <br>**`sum      :`** `       58 845 `\
 <br>**`range    :`** `[ 0 ] ... [ 312 ] `\
-<br>**`examples :`** ` [57], [120], [0], [52], [0], [41], [0], [0], [57], [128] ... `\
+<br>**`examples :`** ` [287], [181], [0], [35], [0], [9], [82], [0], [128], [38] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3913,7 +3950,7 @@ Number of words with corpus code 6222 - see lns_corp_6222 for more information.
 <br>**`not-0-NA :`** `          479 `\
 <br>**`sum      :`** `       88 290 `\
 <br>**`range    :`** `[ 0 ] ... [ 598 ] `\
-<br>**`examples :`** ` [0], [475], [0], [192], [66], [0], [126], [0], [0], [64] ... `\
+<br>**`examples :`** ` [125], [0], [156], [415], [129], [260], [0], [0], [0], [27] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3929,7 +3966,7 @@ Number of words with corpus code 6351 - see lns_corp_6351 for more information.
 <br>**`not-0-NA :`** `          144 `\
 <br>**`sum      :`** `        8 169 `\
 <br>**`range    :`** `[ 0 ] ... [ 179 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [43], [22], [38], [0], [43] ... `\
+<br>**`examples :`** ` [0], [0], [0], [43], [43], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3945,7 +3982,7 @@ Number of words with corpus code 6352 - see lns_corp_6352 for more information.
 <br>**`not-0-NA :`** `          459 `\
 <br>**`sum      :`** `       41 600 `\
 <br>**`range    :`** `[ 0 ] ... [ 323 ] `\
-<br>**`examples :`** ` [0], [196], [139], [0], [0], [0], [109], [67], [0], [101] ... `\
+<br>**`examples :`** ` [0], [196], [17], [0], [17], [0], [22], [20], [14], [156] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3966,7 +4003,7 @@ Number of lines with corpus code 8
 <br>**`not-0-NA :`** `          594 `\
 <br>**`sum      :`** `        4 044 `\
 <br>**`range    :`** `[ 0 ] ... [ 22 ] `\
-<br>**`examples :`** ` [0], [0], [7], [7], [7], [8], [7], [10], [9], [22] ... `\
+<br>**`examples :`** ` [3], [7], [0], [0], [4], [9], [0], [1], [9], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -3984,7 +4021,7 @@ Number of lines with corpus code 9
 <br>**`not-0-NA :`** `          261 `\
 <br>**`sum      :`** `          918 `\
 <br>**`range    :`** `[ 0 ] ... [ 12 ] `\
-<br>**`examples :`** ` [0], [0], [5], [0], [6], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [1], [2], [0], [0], [1], [1], [0], [0], [1] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4002,7 +4039,7 @@ Number of lines with corpus code 10
 <br>**`not-0-NA :`** `          767 `\
 <br>**`sum      :`** `       11 775 `\
 <br>**`range    :`** `[ 0 ] ... [ 164 ] `\
-<br>**`examples :`** ` [33], [0], [59], [8], [13], [3], [8], [161], [19], [5] ... `\
+<br>**`examples :`** ` [37], [7], [21], [19], [6], [37], [5], [10], [24], [16] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4022,7 +4059,7 @@ Number of lines with corpus code 71
 <br>**`not-0-NA :`** `          291 `\
 <br>**`sum      :`** `        1 112 `\
 <br>**`range    :`** `[ 0 ] ... [ 25 ] `\
-<br>**`examples :`** ` [0], [5], [3], [1], [0], [5], [5], [6], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [11], [0], [2], [0], [3], [0], [6], [3] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4042,7 +4079,7 @@ Number of lines with corpus code 72
 <br>**`not-0-NA :`** `          218 `\
 <br>**`sum      :`** `          485 `\
 <br>**`range    :`** `[ 0 ] ... [ 6 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [2], [0], [0], [0], [0], [3] ... `\
+<br>**`examples :`** ` [0], [3], [0], [0], [0], [0], [1], [0], [1], [4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4062,7 +4099,7 @@ Number of lines with corpus code 73
 <br>**`not-0-NA :`** `          145 `\
 <br>**`sum      :`** `          695 `\
 <br>**`range    :`** `[ 0 ] ... [ 20 ] `\
-<br>**`examples :`** ` [0], [0], [17], [0], [0], [0], [0], [0], [0], [3] ... `\
+<br>**`examples :`** ` [0], [0], [1], [1], [0], [0], [2], [0], [1], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4080,7 +4117,7 @@ Number of lines with corpus code 999
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      162 568 `\
 <br>**`range    :`** `[ 29 ] ... [ 1728 ] `\
-<br>**`examples :`** ` [204], [214], [345], [307], [366], [113], [416], [34], [36], [435] ... `\
+<br>**`examples :`** ` [60], [421], [122], [169], [125], [444], [423], [30], [277], [98] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4096,7 +4133,7 @@ Number of words with corpus code 8    - see lns_corp_8    for more information.
 <br>**`not-0-NA :`** `          594 `\
 <br>**`sum      :`** `      140 723 `\
 <br>**`range    :`** `[ 0 ] ... [ 729 ] `\
-<br>**`examples :`** ` [0], [0], [93], [0], [0], [0], [51], [304], [93], [255] ... `\
+<br>**`examples :`** ` [0], [0], [189], [78], [0], [93], [0], [283], [237], [307] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4112,7 +4149,7 @@ Number of words with corpus code 9    - see lns_corp_9    for more information.
 <br>**`not-0-NA :`** `          261 `\
 <br>**`sum      :`** `       27 408 `\
 <br>**`range    :`** `[ 0 ] ... [ 633 ] `\
-<br>**`examples :`** ` [0], [64], [0], [0], [0], [178], [125], [0], [0], [111] ... `\
+<br>**`examples :`** ` [164], [0], [0], [0], [181], [0], [213], [13], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4128,7 +4165,7 @@ Number of words with corpus code 10   - see lns_corp_10   for more information.
 <br>**`not-0-NA :`** `          767 `\
 <br>**`sum      :`** `      339 747 `\
 <br>**`range    :`** `[ 0 ] ... [ 3571 ] `\
-<br>**`examples :`** ` [547], [219], [461], [398], [813], [3571], [189], [90], [419], [1444] ... `\
+<br>**`examples :`** ` [271], [541], [533], [506], [274], [430], [532], [578], [194], [430] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4144,7 +4181,7 @@ Number of words with corpus code 71   - see lns_corp_71   for more information.
 <br>**`not-0-NA :`** `          291 `\
 <br>**`sum      :`** `       36 495 `\
 <br>**`range    :`** `[ 0 ] ... [ 588 ] `\
-<br>**`examples :`** ` [388], [0], [87], [0], [0], [0], [32], [189], [0], [0] ... `\
+<br>**`examples :`** ` [126], [0], [0], [0], [0], [0], [0], [188], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4160,7 +4197,7 @@ Number of words with corpus code 72   - see lns_corp_72   for more information.
 <br>**`not-0-NA :`** `          218 `\
 <br>**`sum      :`** `       16 556 `\
 <br>**`range    :`** `[ 0 ] ... [ 148 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [148], [0] ... `\
+<br>**`examples :`** ` [0], [0], [37], [102], [0], [148], [0], [46], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4176,7 +4213,7 @@ Number of words with corpus code 73   - see lns_corp_73   for more information.
 <br>**`not-0-NA :`** `          145 `\
 <br>**`sum      :`** `       14 599 `\
 <br>**`range    :`** `[ 0 ] ... [ 296 ] `\
-<br>**`examples :`** ` [295], [0], [0], [0], [0], [0], [0], [15], [0], [0] ... `\
+<br>**`examples :`** ` [15], [0], [0], [0], [0], [0], [85], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4192,7 +4229,7 @@ Number of words with corpus code 999  - see lns_corp_999  for more information.
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      453 248 `\
 <br>**`range    :`** `[ 38 ] ... [ 30211 ] `\
-<br>**`examples :`** ` [100], [116], [120], [420], [1055], [372], [190], [1527], [41], [198] ... `\
+<br>**`examples :`** ` [103], [235], [205], [724], [198], [505], [1475], [731], [96], [1527] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4213,7 +4250,7 @@ Number of lines with aggregated corpus code 1  - lawmaking
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `       65 567 `\
 <br>**`range    :`** `[ 9 ] ... [ 192 ] `\
-<br>**`examples :`** ` [89], [104], [165], [51], [89], [49], [106], [66], [67], [66] ... `\
+<br>**`examples :`** ` [89], [67], [104], [83], [66], [79], [10], [43], [100], [119] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4231,7 +4268,7 @@ Number of lines with aggregated corpus code 2  - special decission rules
 <br>**`not-0-NA :`** `          771 `\
 <br>**`sum      :`** `       54 630 `\
 <br>**`range    :`** `[ 0 ] ... [ 342 ] `\
-<br>**`examples :`** ` [127], [27], [25], [131], [32], [29], [21], [98], [106], [162] ... `\
+<br>**`examples :`** ` [35], [16], [24], [62], [59], [299], [62], [29], [92], [15] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4249,7 +4286,7 @@ Number of lines with aggregated corpus code 3  - elections
 <br>**`not-0-NA :`** `          538 `\
 <br>**`sum      :`** `       14 023 `\
 <br>**`range    :`** `[ 0 ] ... [ 98 ] `\
-<br>**`examples :`** ` [0], [10], [11], [0], [51], [0], [0], [13], [8], [11] ... `\
+<br>**`examples :`** ` [0], [16], [11], [50], [6], [0], [51], [51], [5], [40] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4267,7 +4304,7 @@ Number of lines with aggregated corpus code 4  - government control
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `       32 003 `\
 <br>**`range    :`** `[ 1 ] ... [ 164 ] `\
-<br>**`examples :`** ` [16], [29], [30], [61], [62], [33], [82], [52], [66], [37] ... `\
+<br>**`examples :`** ` [52], [32], [55], [55], [61], [49], [30], [14], [40], [30] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4285,7 +4322,7 @@ Number of lines with aggregated corpus code 5  - puplicity
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `       97 367 `\
 <br>**`range    :`** `[ 9 ] ... [ 314 ] `\
-<br>**`examples :`** ` [121], [122], [137], [67], [94], [16], [95], [97], [52], [141] ... `\
+<br>**`examples :`** ` [15], [136], [217], [149], [150], [237], [16], [66], [166], [74] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4303,7 +4340,7 @@ Number of lines with aggregated corpus code 66 - not used for aggregation
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      124 261 `\
 <br>**`range    :`** `[ 21 ] ... [ 464 ] `\
-<br>**`examples :`** ` [120], [230], [276], [272], [270], [277], [129], [100], [168], [129] ... `\
+<br>**`examples :`** ` [71], [133], [159], [75], [143], [62], [121], [143], [87], [266] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4321,7 +4358,7 @@ Number of lines with aggregated corpus code 77 - not relevant
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      162 568 `\
 <br>**`range    :`** `[ 29 ] ... [ 1728 ] `\
-<br>**`examples :`** ` [172], [93], [274], [108], [45], [306], [129], [43], [29], [36] ... `\
+<br>**`examples :`** ` [49], [93], [595], [421], [36], [44], [101], [439], [287], [29] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4339,7 +4376,7 @@ Number of words with aggregated corpus code 1 - lawmaking
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `    2 362 812 `\
 <br>**`range    :`** `[ 638 ] ... [ 7885 ] `\
-<br>**`examples :`** ` [2723], [2057], [4826], [1515], [2020], [1747], [2866], [1779], [1647], [6385] ... `\
+<br>**`examples :`** ` [5541], [4484], [2363], [1459], [4212], [7267], [1747], [2712], [2898], [3148] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4357,7 +4394,7 @@ Number of words with aggregated corpus code 2 - special decission rules
 <br>**`not-0-NA :`** `          771 `\
 <br>**`sum      :`** `    2 023 258 `\
 <br>**`range    :`** `[ 0 ] ... [ 11364 ] `\
-<br>**`examples :`** ` [2628], [296], [1719], [2776], [574], [2918], [685], [2171], [964], [11125] ... `\
+<br>**`examples :`** ` [391], [11061], [2421], [383], [11005], [323], [1174], [751], [7149], [1174] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4375,7 +4412,7 @@ Number of words with aggregated corpus code 3 - elections
 <br>**`not-0-NA :`** `          538 `\
 <br>**`sum      :`** `      458 198 `\
 <br>**`range    :`** `[ 0 ] ... [ 2478 ] `\
-<br>**`examples :`** ` [1392], [0], [608], [260], [1340], [1465], [239], [0], [0], [180] ... `\
+<br>**`examples :`** ` [0], [609], [0], [219], [0], [163], [565], [1738], [0], [1715] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4393,7 +4430,7 @@ Number of words with aggregated corpus code 4 - government control
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `    1 117 264 `\
 <br>**`range    :`** `[ 16 ] ... [ 5511 ] `\
-<br>**`examples :`** ` [922], [1589], [1724], [642], [1426], [845], [1675], [1082], [2526], [1674] ... `\
+<br>**`examples :`** ` [128], [2430], [807], [4384], [735], [4383], [1334], [1559], [1760], [1081] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4411,7 +4448,7 @@ Number of words with aggregated corpus code 5 - puplicity
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `    3 461 645 `\
 <br>**`range    :`** `[ 270 ] ... [ 11338 ] `\
-<br>**`examples :`** ` [6026], [4599], [8133], [3511], [6929], [2721], [3341], [2750], [8262], [2836] ... `\
+<br>**`examples :`** ` [7390], [2744], [3915], [649], [6011], [5739], [2945], [5196], [5102], [327] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4429,7 +4466,7 @@ Number of words with aggregated corpus code 66 - not used for aggregation
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `    3 731 824 `\
 <br>**`range    :`** `[ 1010 ] ... [ 13975 ] `\
-<br>**`examples :`** ` [1010], [5794], [4407], [7253], [2234], [6890], [5893], [2774], [5785], [1891] ... `\
+<br>**`examples :`** ` [1918], [2620], [13082], [6136], [2077], [6062], [6660], [2826], [4865], [3642] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4447,7 +4484,7 @@ Number of words with aggregated corpus code 77 - not relevant
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      453 248 `\
 <br>**`range    :`** `[ 38 ] ... [ 30211 ] `\
-<br>**`examples :`** ` [227], [1299], [363], [1050], [773], [190], [159], [314], [345], [312] ... `\
+<br>**`examples :`** ` [123], [328], [163], [161], [288], [38], [123], [99], [1238], [716] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4468,7 +4505,7 @@ Number of lines with aggregated corpus code 1  - MPs
 <br>**`not-0-NA :`** `          783 `\
 <br>**`sum      :`** `       17 732 `\
 <br>**`range    :`** `[ 0 ] ... [ 128 ] `\
-<br>**`examples :`** ` [24], [29], [12], [128], [18], [16], [128], [14], [72], [4] ... `\
+<br>**`examples :`** ` [12], [18], [17], [20], [18], [37], [18], [31], [18], [50] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4486,7 +4523,7 @@ Number of lines with aggregated corpus code 2  - PPGs
 <br>**`not-0-NA :`** `          450 `\
 <br>**`sum      :`** `        3 370 `\
 <br>**`range    :`** `[ 0 ] ... [ 61 ] `\
-<br>**`examples :`** ` [0], [6], [22], [10], [0], [0], [0], [0], [0], [8] ... `\
+<br>**`examples :`** ` [8], [0], [5], [0], [1], [6], [0], [0], [6], [10] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4504,7 +4541,7 @@ Number of lines with aggregated corpus code 3  - committees
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `       93 034 `\
 <br>**`range    :`** `[ 5 ] ... [ 404 ] `\
-<br>**`examples :`** ` [57], [78], [89], [66], [128], [113], [114], [113], [75], [186] ... `\
+<br>**`examples :`** ` [30], [114], [103], [70], [55], [173], [124], [218], [103], [234] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4522,7 +4559,7 @@ Number of lines with aggregated corpus code 4  - governing body
 <br>**`not-0-NA :`** `          776 `\
 <br>**`sum      :`** `       28 240 `\
 <br>**`range    :`** `[ 0 ] ... [ 126 ] `\
-<br>**`examples :`** ` [29], [42], [19], [30], [19], [38], [18], [30], [38], [76] ... `\
+<br>**`examples :`** ` [76], [44], [14], [24], [2], [25], [33], [14], [27], [27] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4540,7 +4577,7 @@ Number of lines with aggregated corpus code 66 - not used for aggregation
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      223 058 `\
 <br>**`range    :`** `[ 31 ] ... [ 738 ] `\
-<br>**`examples :`** ` [163], [386], [271], [193], [233], [341], [336], [314], [277], [327] ... `\
+<br>**`examples :`** ` [353], [713], [85], [146], [225], [209], [198], [378], [350], [136] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4558,7 +4595,7 @@ Number of lines with aggregated corpus code 77 - not relevant
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      162 568 `\
 <br>**`range    :`** `[ 29 ] ... [ 1728 ] `\
-<br>**`examples :`** ` [48], [35], [440], [123], [166], [74], [121], [336], [229], [205] ... `\
+<br>**`examples :`** ` [108], [197], [208], [446], [417], [171], [259], [421], [341], [343] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4576,7 +4613,7 @@ Number of words with aggregated corpus code 1  - MPs
 <br>**`not-0-NA :`** `          783 `\
 <br>**`sum      :`** `      602 402 `\
 <br>**`range    :`** `[ 0 ] ... [ 4779 ] `\
-<br>**`examples :`** ` [1815], [461], [2234], [442], [1032], [578], [478], [557], [1970], [442] ... `\
+<br>**`examples :`** ` [461], [333], [588], [328], [409], [484], [261], [1993], [1414], [557] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4594,7 +4631,7 @@ Number of words with aggregated corpus code 2  - PPGs
 <br>**`not-0-NA :`** `          450 `\
 <br>**`sum      :`** `      109 451 `\
 <br>**`range    :`** `[ 0 ] ... [ 841 ] `\
-<br>**`examples :`** ` [151], [270], [152], [0], [0], [107], [127], [59], [696], [182] ... `\
+<br>**`examples :`** ` [324], [297], [0], [42], [0], [270], [0], [30], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4612,7 +4649,7 @@ Number of words with aggregated corpus code 3  - committees
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `    2 864 288 `\
 <br>**`range    :`** `[ 264 ] ... [ 12091 ] `\
-<br>**`examples :`** ` [11137], [1873], [1982], [9062], [1891], [2432], [6901], [4233], [3196], [3003] ... `\
+<br>**`examples :`** ` [1934], [3583], [3321], [3303], [1873], [1116], [1893], [2563], [2172], [1613] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4630,7 +4667,7 @@ Number of words with aggregated corpus code 4  - governing body
 <br>**`not-0-NA :`** `          776 `\
 <br>**`sum      :`** `      997 383 `\
 <br>**`range    :`** `[ 0 ] ... [ 3291 ] `\
-<br>**`examples :`** ` [2089], [1926], [1468], [540], [2095], [1462], [3236], [539], [744], [554] ... `\
+<br>**`examples :`** ` [544], [701], [561], [1013], [1317], [1793], [702], [1358], [2080], [2258] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4648,7 +4685,7 @@ Number of words with aggregated corpus code 66 - not used for aggregation
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `    7 781 117 `\
 <br>**`range    :`** `[ 1810 ] ... [ 25564 ] `\
-<br>**`examples :`** ` [7704], [8293], [6652], [9874], [4259], [4196], [4914], [7942], [7927], [7737] ... `\
+<br>**`examples :`** ` [12846], [15886], [24602], [7460], [8170], [14016], [19151], [13073], [15855], [ ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4666,7 +4703,7 @@ Number of words with aggregated corpus code 77 - not relevant
 <br>**`not-0-NA :`** `          786 `\
 <br>**`sum      :`** `      453 248 `\
 <br>**`range    :`** `[ 38 ] ... [ 30211 ] `\
-<br>**`examples :`** ` [622], [294], [64], [583], [148], [1956], [297], [646], [96], [629] ... `\
+<br>**`examples :`** ` [44], [799], [629], [60], [635], [116], [117], [626], [158], [856] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4685,7 +4722,7 @@ Number of words with corpus code 8    which have changed from last version to th
 <br>**`not-0-NA :`** `           63 `\
 <br>**`sum      :`** `        4 087 `\
 <br>**`range    :`** `[ 0 ] ... [ 544 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [35], [8], [0], [NA], [0], [8] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4717,7 +4754,7 @@ Number of words with corpus code 10   which have changed from last version to th
 <br>**`not-0-NA :`** `          102 `\
 <br>**`sum      :`** `        6 498 `\
 <br>**`range    :`** `[ 0 ] ... [ 467 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [69], [311], [NA], [0], [8] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4733,7 +4770,7 @@ Number of words with corpus code 21   which have changed from last version to th
 <br>**`not-0-NA :`** `           35 `\
 <br>**`sum      :`** `        2 856 `\
 <br>**`range    :`** `[ 0 ] ... [ 437 ] `\
-<br>**`examples :`** ` [2], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4749,7 +4786,7 @@ Number of words with corpus code 22   which have changed from last version to th
 <br>**`not-0-NA :`** `          127 `\
 <br>**`sum      :`** `       20 098 `\
 <br>**`range    :`** `[ 0 ] ... [ 4427 ] `\
-<br>**`examples :`** ` [0], [14], [0], [0], [0], [0], [0], [0], [0], [107] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [33] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4765,7 +4802,7 @@ Number of words with corpus code 23   which have changed from last version to th
 <br>**`not-0-NA :`** `           26 `\
 <br>**`sum      :`** `        1 694 `\
 <br>**`range    :`** `[ 0 ] ... [ 276 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [64], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4781,7 +4818,7 @@ Number of words with corpus code 25   which have changed from last version to th
 <br>**`not-0-NA :`** `           61 `\
 <br>**`sum      :`** `        6 262 `\
 <br>**`range    :`** `[ 0 ] ... [ 1819 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [107], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4797,7 +4834,7 @@ Number of words with corpus code 26   which have changed from last version to th
 <br>**`not-0-NA :`** `           60 `\
 <br>**`sum      :`** `        5 154 `\
 <br>**`range    :`** `[ 0 ] ... [ 1081 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [19] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4845,7 +4882,7 @@ Number of words with corpus code 29   which have changed from last version to th
 <br>**`not-0-NA :`** `           50 `\
 <br>**`sum      :`** `        3 658 `\
 <br>**`range    :`** `[ 0 ] ... [ 533 ] `\
-<br>**`examples :`** ` [0], [0], [0], [178], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [2], [NA], [0], [0], [0], [0], [0], [0], [0], [13] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4877,7 +4914,7 @@ Number of words with corpus code 32   which have changed from last version to th
 <br>**`not-0-NA :`** `           21 `\
 <br>**`sum      :`** `        1 533 `\
 <br>**`range    :`** `[ 0 ] ... [ 691 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [4] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4909,7 +4946,7 @@ Number of words with corpus code 34   which have changed from last version to th
 <br>**`not-0-NA :`** `           69 `\
 <br>**`sum      :`** `        3 338 `\
 <br>**`range    :`** `[ 0 ] ... [ 298 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [11], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [9], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4941,7 +4978,7 @@ Number of words with corpus code 45   which have changed from last version to th
 <br>**`not-0-NA :`** `            7 `\
 <br>**`sum      :`** `          341 `\
 <br>**`range    :`** `[ 0 ] ... [ 143 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4957,7 +4994,7 @@ Number of words with corpus code 51   which have changed from last version to th
 <br>**`not-0-NA :`** `          128 `\
 <br>**`sum      :`** `       16 869 `\
 <br>**`range    :`** `[ 0 ] ... [ 2587 ] `\
-<br>**`examples :`** ` [37], [6], [0], [0], [0], [332], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [131], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4973,7 +5010,7 @@ Number of words with corpus code 52   which have changed from last version to th
 <br>**`not-0-NA :`** `           27 `\
 <br>**`sum      :`** `        2 081 `\
 <br>**`range    :`** `[ 0 ] ... [ 322 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [51], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [33], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -4989,7 +5026,7 @@ Number of words with corpus code 53   which have changed from last version to th
 <br>**`not-0-NA :`** `          151 `\
 <br>**`sum      :`** `       22 290 `\
 <br>**`range    :`** `[ 0 ] ... [ 1149 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [85], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [219], [0], [0], [0], [28], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5005,7 +5042,7 @@ Number of words with corpus code 54   which have changed from last version to th
 <br>**`not-0-NA :`** `           56 `\
 <br>**`sum      :`** `        4 287 `\
 <br>**`range    :`** `[ 0 ] ... [ 602 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [33], [168], [0], [0], [0], [7], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5021,7 +5058,7 @@ Number of words with corpus code 55   which have changed from last version to th
 <br>**`not-0-NA :`** `           89 `\
 <br>**`sum      :`** `        6 329 `\
 <br>**`range    :`** `[ 0 ] ... [ 586 ] `\
-<br>**`examples :`** ` [0], [0], [29], [0], [0], [0], [0], [0], [72], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5037,7 +5074,7 @@ Number of words with corpus code 56   which have changed from last version to th
 <br>**`not-0-NA :`** `          108 `\
 <br>**`sum      :`** `        7 379 `\
 <br>**`range    :`** `[ 0 ] ... [ 469 ] `\
-<br>**`examples :`** ` [0], [87], [85], [50], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [3], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5069,7 +5106,7 @@ Number of words with corpus code 67   which have changed from last version to th
 <br>**`not-0-NA :`** `            5 `\
 <br>**`sum      :`** `          274 `\
 <br>**`range    :`** `[ 0 ] ... [ 140 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5085,7 +5122,7 @@ Number of words with corpus code 68   which have changed from last version to th
 <br>**`not-0-NA :`** `           55 `\
 <br>**`sum      :`** `        2 903 `\
 <br>**`range    :`** `[ 0 ] ... [ 346 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [1], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5117,7 +5154,7 @@ Number of words with corpus code 72   which have changed from last version to th
 <br>**`not-0-NA :`** `           15 `\
 <br>**`sum      :`** `          492 `\
 <br>**`range    :`** `[ 0 ] ... [ 158 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5165,7 +5202,7 @@ Number of words with corpus code 112  which have changed from last version to th
 <br>**`not-0-NA :`** `           59 `\
 <br>**`sum      :`** `        3 021 `\
 <br>**`range    :`** `[ 0 ] ... [ 450 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5181,7 +5218,7 @@ Number of words with corpus code 113  which have changed from last version to th
 <br>**`not-0-NA :`** `           82 `\
 <br>**`sum      :`** `        6 009 `\
 <br>**`range    :`** `[ 0 ] ... [ 592 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [106], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [4], [NA], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5197,7 +5234,7 @@ Number of words with corpus code 114  which have changed from last version to th
 <br>**`not-0-NA :`** `           16 `\
 <br>**`sum      :`** `        1 645 `\
 <br>**`range    :`** `[ 0 ] ... [ 524 ] `\
-<br>**`examples :`** ` [0], [0], [9], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [27], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5213,7 +5250,7 @@ Number of words with corpus code 121  which have changed from last version to th
 <br>**`not-0-NA :`** `           71 `\
 <br>**`sum      :`** `        5 700 `\
 <br>**`range    :`** `[ 0 ] ... [ 545 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [8], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5229,7 +5266,7 @@ Number of words with corpus code 122  which have changed from last version to th
 <br>**`not-0-NA :`** `           63 `\
 <br>**`sum      :`** `        3 458 `\
 <br>**`range    :`** `[ 0 ] ... [ 290 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [110], [0], [18], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5245,7 +5282,7 @@ Number of words with corpus code 123  which have changed from last version to th
 <br>**`not-0-NA :`** `          130 `\
 <br>**`sum      :`** `       14 288 `\
 <br>**`range    :`** `[ 0 ] ... [ 1177 ] `\
-<br>**`examples :`** ` [10], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [32], [0], [50], [0], [0], [0], [697] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5277,7 +5314,7 @@ Number of words with corpus code 125  which have changed from last version to th
 <br>**`not-0-NA :`** `           77 `\
 <br>**`sum      :`** `        4 681 `\
 <br>**`range    :`** `[ 0 ] ... [ 355 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [123] ... `\
+<br>**`examples :`** ` [29], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5293,7 +5330,7 @@ Number of words with corpus code 131  which have changed from last version to th
 <br>**`not-0-NA :`** `           42 `\
 <br>**`sum      :`** `        1 999 `\
 <br>**`range    :`** `[ 0 ] ... [ 311 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5309,7 +5346,7 @@ Number of words with corpus code 132  which have changed from last version to th
 <br>**`not-0-NA :`** `           22 `\
 <br>**`sum      :`** `          730 `\
 <br>**`range    :`** `[ 0 ] ... [ 143 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5325,7 +5362,7 @@ Number of words with corpus code 133  which have changed from last version to th
 <br>**`not-0-NA :`** `           42 `\
 <br>**`sum      :`** `        1 254 `\
 <br>**`range    :`** `[ 0 ] ... [ 148 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [20], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [1], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5341,7 +5378,7 @@ Number of words with corpus code 134  which have changed from last version to th
 <br>**`not-0-NA :`** `          101 `\
 <br>**`sum      :`** `        6 142 `\
 <br>**`range    :`** `[ 0 ] ... [ 269 ] `\
-<br>**`examples :`** ` [0], [0], [33], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [2], [38], [27], [0], [0], [0], [41], [0], [0], [82] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5373,7 +5410,7 @@ Number of words with corpus code 142  which have changed from last version to th
 <br>**`not-0-NA :`** `           37 `\
 <br>**`sum      :`** `        2 166 `\
 <br>**`range    :`** `[ 0 ] ... [ 591 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [32], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5453,7 +5490,7 @@ Number of words with corpus code 242  which have changed from last version to th
 <br>**`not-0-NA :`** `           33 `\
 <br>**`sum      :`** `        2 539 `\
 <br>**`range    :`** `[ 0 ] ... [ 1096 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5469,7 +5506,7 @@ Number of words with corpus code 243  which have changed from last version to th
 <br>**`not-0-NA :`** `            1 `\
 <br>**`sum      :`** `          115 `\
 <br>**`range    :`** `[ 0 ] ... [ 115 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5485,7 +5522,7 @@ Number of words with corpus code 244  which have changed from last version to th
 <br>**`not-0-NA :`** `           10 `\
 <br>**`sum      :`** `          318 `\
 <br>**`range    :`** `[ 0 ] ... [ 85 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5501,7 +5538,7 @@ Number of words with corpus code 411  which have changed from last version to th
 <br>**`not-0-NA :`** `           18 `\
 <br>**`sum      :`** `        1 997 `\
 <br>**`range    :`** `[ 0 ] ... [ 535 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [125], [0], [0], [0], [16] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5517,7 +5554,7 @@ Number of words with corpus code 412  which have changed from last version to th
 <br>**`not-0-NA :`** `           33 `\
 <br>**`sum      :`** `        1 299 `\
 <br>**`range    :`** `[ 0 ] ... [ 133 ] `\
-<br>**`examples :`** ` [0], [15], [92], [0], [0], [107], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [83], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5549,7 +5586,7 @@ Number of words with corpus code 422  which have changed from last version to th
 <br>**`not-0-NA :`** `            8 `\
 <br>**`sum      :`** `          210 `\
 <br>**`range    :`** `[ 0 ] ... [ 72 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5565,7 +5602,7 @@ Number of words with corpus code 441  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5597,7 +5634,7 @@ Number of words with corpus code 611  which have changed from last version to th
 <br>**`not-0-NA :`** `          139 `\
 <br>**`sum      :`** `       12 499 `\
 <br>**`range    :`** `[ 0 ] ... [ 476 ] `\
-<br>**`examples :`** ` [0], [0], [21], [0], [0], [0], [0], [149], [0], [NA] ... `\
+<br>**`examples :`** ` [7], [0], [0], [0], [0], [0], [0], [71], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5613,7 +5650,7 @@ Number of words with corpus code 612  which have changed from last version to th
 <br>**`not-0-NA :`** `           66 `\
 <br>**`sum      :`** `        5 686 `\
 <br>**`range    :`** `[ 0 ] ... [ 789 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [36], [0], [0], [0], [12], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5629,7 +5666,7 @@ Number of words with corpus code 613  which have changed from last version to th
 <br>**`not-0-NA :`** `           86 `\
 <br>**`sum      :`** `        5 285 `\
 <br>**`range    :`** `[ 0 ] ... [ 327 ] `\
-<br>**`examples :`** ` [0], [0], [2], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [14], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5645,7 +5682,7 @@ Number of words with corpus code 631  which have changed from last version to th
 <br>**`not-0-NA :`** `           32 `\
 <br>**`sum      :`** `        1 413 `\
 <br>**`range    :`** `[ 0 ] ... [ 218 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [52], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5661,7 +5698,7 @@ Number of words with corpus code 632  which have changed from last version to th
 <br>**`not-0-NA :`** `          219 `\
 <br>**`sum      :`** `       23 580 `\
 <br>**`range    :`** `[ 0 ] ... [ 4856 ] `\
-<br>**`examples :`** ` [3], [NA], [26], [32], [0], [31], [19], [143], [0], [4] ... `\
+<br>**`examples :`** ` [8], [0], [0], [0], [NA], [0], [0], [17], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5677,7 +5714,7 @@ Number of words with corpus code 633  which have changed from last version to th
 <br>**`not-0-NA :`** `           79 `\
 <br>**`sum      :`** `        3 022 `\
 <br>**`range    :`** `[ 0 ] ... [ 184 ] `\
-<br>**`examples :`** ` [7], [NA], [21], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [31], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5693,7 +5730,7 @@ Number of words with corpus code 634  which have changed from last version to th
 <br>**`not-0-NA :`** `           97 `\
 <br>**`sum      :`** `        4 524 `\
 <br>**`range    :`** `[ 0 ] ... [ 337 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [17], [0], [0] ... `\
+<br>**`examples :`** ` [0], [11], [8], [0], [16], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5709,7 +5746,7 @@ Number of words with corpus code 636  which have changed from last version to th
 <br>**`not-0-NA :`** `           45 `\
 <br>**`sum      :`** `        2 050 `\
 <br>**`range    :`** `[ 0 ] ... [ 217 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [65] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5725,7 +5762,7 @@ Number of words with corpus code 637  which have changed from last version to th
 <br>**`not-0-NA :`** `           35 `\
 <br>**`sum      :`** `        2 696 `\
 <br>**`range    :`** `[ 0 ] ... [ 538 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [458], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5741,7 +5778,7 @@ Number of words with corpus code 638  which have changed from last version to th
 <br>**`not-0-NA :`** `            3 `\
 <br>**`sum      :`** `          410 `\
 <br>**`range    :`** `[ 0 ] ... [ 358 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5757,7 +5794,7 @@ Number of words with corpus code 639  which have changed from last version to th
 <br>**`not-0-NA :`** `          135 `\
 <br>**`sum      :`** `       10 934 `\
 <br>**`range    :`** `[ 0 ] ... [ 1063 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [8], [155], [0], [0], [44] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5773,7 +5810,7 @@ Number of words with corpus code 641  which have changed from last version to th
 <br>**`not-0-NA :`** `           28 `\
 <br>**`sum      :`** `        1 106 `\
 <br>**`range    :`** `[ 0 ] ... [ 267 ] `\
-<br>**`examples :`** ` [0], [34], [NA], [0], [0], [0], [0], [0], [0], [69] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [4], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5789,7 +5826,7 @@ Number of words with corpus code 642  which have changed from last version to th
 <br>**`not-0-NA :`** `           21 `\
 <br>**`sum      :`** `          975 `\
 <br>**`range    :`** `[ 0 ] ... [ 163 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [125], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5805,7 +5842,7 @@ Number of words with corpus code 643  which have changed from last version to th
 <br>**`not-0-NA :`** `           10 `\
 <br>**`sum      :`** `          502 `\
 <br>**`range    :`** `[ 0 ] ... [ 154 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5821,7 +5858,7 @@ Number of words with corpus code 651  which have changed from last version to th
 <br>**`not-0-NA :`** `           87 `\
 <br>**`sum      :`** `        6 631 `\
 <br>**`range    :`** `[ 0 ] ... [ 598 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [130], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [112] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5837,7 +5874,7 @@ Number of words with corpus code 652  which have changed from last version to th
 <br>**`not-0-NA :`** `           78 `\
 <br>**`sum      :`** `        6 415 `\
 <br>**`range    :`** `[ 0 ] ... [ 971 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [63] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5869,7 +5906,7 @@ Number of words with corpus code 999  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5885,7 +5922,7 @@ Number of words with corpus code 6211 which have changed from last version to th
 <br>**`not-0-NA :`** `           69 `\
 <br>**`sum      :`** `        4 530 `\
 <br>**`range    :`** `[ 0 ] ... [ 477 ] `\
-<br>**`examples :`** ` [54], [0], [0], [0], [121], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5901,7 +5938,7 @@ Number of words with corpus code 6212 which have changed from last version to th
 <br>**`not-0-NA :`** `           61 `\
 <br>**`sum      :`** `        5 387 `\
 <br>**`range    :`** `[ 0 ] ... [ 1069 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [29], [0], [47], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5917,7 +5954,7 @@ Number of words with corpus code 6221 which have changed from last version to th
 <br>**`not-0-NA :`** `           47 `\
 <br>**`sum      :`** `        1 552 `\
 <br>**`range    :`** `[ 0 ] ... [ 261 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [14], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5933,7 +5970,7 @@ Number of words with corpus code 6222 which have changed from last version to th
 <br>**`not-0-NA :`** `           40 `\
 <br>**`sum      :`** `        1 571 `\
 <br>**`range    :`** `[ 0 ] ... [ 234 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [1], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5981,7 +6018,7 @@ Number of words with corpus code 8    which have changed from last version to th
 <br>**`not-0-NA :`** `           22 `\
 <br>**`sum      :`** `        2 271 `\
 <br>**`range    :`** `[ 0 ] ... [ 708 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -5997,7 +6034,7 @@ Number of words with corpus code 9    which have changed from last version to th
 <br>**`not-0-NA :`** `           33 `\
 <br>**`sum      :`** `        2 480 `\
 <br>**`range    :`** `[ 0 ] ... [ 633 ] `\
-<br>**`examples :`** ` [0], [0], [0], [23], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6013,7 +6050,7 @@ Number of words with corpus code 10   which have changed from last version to th
 <br>**`not-0-NA :`** `           73 `\
 <br>**`sum      :`** `       11 172 `\
 <br>**`range    :`** `[ 0 ] ... [ 2330 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6045,7 +6082,7 @@ Number of words with corpus code 22   which have changed from last version to th
 <br>**`not-0-NA :`** `           80 `\
 <br>**`sum      :`** `       14 195 `\
 <br>**`range    :`** `[ 0 ] ... [ 1879 ] `\
-<br>**`examples :`** ` [0], [37], [0], [540], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [147], [0], [37], [0], [0], [1], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6077,7 +6114,7 @@ Number of words with corpus code 25   which have changed from last version to th
 <br>**`not-0-NA :`** `           28 `\
 <br>**`sum      :`** `        4 373 `\
 <br>**`range    :`** `[ 0 ] ... [ 832 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [33], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6125,7 +6162,7 @@ Number of words with corpus code 28   which have changed from last version to th
 <br>**`not-0-NA :`** `            3 `\
 <br>**`sum      :`** `          864 `\
 <br>**`range    :`** `[ 0 ] ... [ 441 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6157,7 +6194,7 @@ Number of words with corpus code 31   which have changed from last version to th
 <br>**`not-0-NA :`** `            6 `\
 <br>**`sum      :`** `          852 `\
 <br>**`range    :`** `[ 0 ] ... [ 387 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [111], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6189,7 +6226,7 @@ Number of words with corpus code 33   which have changed from last version to th
 <br>**`not-0-NA :`** `            4 `\
 <br>**`sum      :`** `          482 `\
 <br>**`range    :`** `[ 0 ] ... [ 244 ] `\
-<br>**`examples :`** ` [59], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6205,7 +6242,7 @@ Number of words with corpus code 34   which have changed from last version to th
 <br>**`not-0-NA :`** `           55 `\
 <br>**`sum      :`** `        4 430 `\
 <br>**`range    :`** `[ 0 ] ... [ 479 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [19], [45] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6221,7 +6258,7 @@ Number of words with corpus code 43   which have changed from last version to th
 <br>**`not-0-NA :`** `           11 `\
 <br>**`sum      :`** `          647 `\
 <br>**`range    :`** `[ 0 ] ... [ 171 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [74], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6237,7 +6274,7 @@ Number of words with corpus code 45   which have changed from last version to th
 <br>**`not-0-NA :`** `            4 `\
 <br>**`sum      :`** `        1 177 `\
 <br>**`range    :`** `[ 0 ] ... [ 554 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6253,7 +6290,7 @@ Number of words with corpus code 51   which have changed from last version to th
 <br>**`not-0-NA :`** `           72 `\
 <br>**`sum      :`** `        7 981 `\
 <br>**`range    :`** `[ 0 ] ... [ 493 ] `\
-<br>**`examples :`** ` [0], [493], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [80], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6269,7 +6306,7 @@ Number of words with corpus code 52   which have changed from last version to th
 <br>**`not-0-NA :`** `           20 `\
 <br>**`sum      :`** `        4 041 `\
 <br>**`range    :`** `[ 0 ] ... [ 586 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [111], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6285,7 +6322,7 @@ Number of words with corpus code 53   which have changed from last version to th
 <br>**`not-0-NA :`** `           95 `\
 <br>**`sum      :`** `       14 976 `\
 <br>**`range    :`** `[ 0 ] ... [ 674 ] `\
-<br>**`examples :`** ` [0], [0], [0], [85], [0], [0], [0], [0], [420], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [318], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6317,7 +6354,7 @@ Number of words with corpus code 55   which have changed from last version to th
 <br>**`not-0-NA :`** `           61 `\
 <br>**`sum      :`** `        6 727 `\
 <br>**`range    :`** `[ 0 ] ... [ 1260 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [77], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6333,7 +6370,7 @@ Number of words with corpus code 56   which have changed from last version to th
 <br>**`not-0-NA :`** `           64 `\
 <br>**`sum      :`** `        6 594 `\
 <br>**`range    :`** `[ 0 ] ... [ 547 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [152], [0] ... `\
+<br>**`examples :`** ` [41], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6381,7 +6418,7 @@ Number of words with corpus code 68   which have changed from last version to th
 <br>**`not-0-NA :`** `           32 `\
 <br>**`sum      :`** `        3 365 `\
 <br>**`range    :`** `[ 0 ] ... [ 545 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [26] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6429,7 +6466,7 @@ Number of words with corpus code 73   which have changed from last version to th
 <br>**`not-0-NA :`** `            6 `\
 <br>**`sum      :`** `          563 `\
 <br>**`range    :`** `[ 0 ] ... [ 235 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6461,7 +6498,7 @@ Number of words with corpus code 112  which have changed from last version to th
 <br>**`not-0-NA :`** `           31 `\
 <br>**`sum      :`** `        2 324 `\
 <br>**`range    :`** `[ 0 ] ... [ 212 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6477,7 +6514,7 @@ Number of words with corpus code 113  which have changed from last version to th
 <br>**`not-0-NA :`** `           35 `\
 <br>**`sum      :`** `        3 340 `\
 <br>**`range    :`** `[ 0 ] ... [ 422 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [12], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6493,7 +6530,7 @@ Number of words with corpus code 114  which have changed from last version to th
 <br>**`not-0-NA :`** `           13 `\
 <br>**`sum      :`** `        1 054 `\
 <br>**`range    :`** `[ 0 ] ... [ 173 ] `\
-<br>**`examples :`** ` [41], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6525,7 +6562,7 @@ Number of words with corpus code 122  which have changed from last version to th
 <br>**`not-0-NA :`** `           37 `\
 <br>**`sum      :`** `        3 270 `\
 <br>**`range    :`** `[ 0 ] ... [ 693 ] `\
-<br>**`examples :`** ` [0], [0], [0], [62], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [37], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6541,7 +6578,7 @@ Number of words with corpus code 123  which have changed from last version to th
 <br>**`not-0-NA :`** `           82 `\
 <br>**`sum      :`** `        8 981 `\
 <br>**`range    :`** `[ 0 ] ... [ 697 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [141], [0], [0], [0], [0], [30], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6557,7 +6594,7 @@ Number of words with corpus code 124  which have changed from last version to th
 <br>**`not-0-NA :`** `            3 `\
 <br>**`sum      :`** `          381 `\
 <br>**`range    :`** `[ 0 ] ... [ 231 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6573,7 +6610,7 @@ Number of words with corpus code 125  which have changed from last version to th
 <br>**`not-0-NA :`** `           38 `\
 <br>**`sum      :`** `        2 973 `\
 <br>**`range    :`** `[ 0 ] ... [ 352 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6589,7 +6626,7 @@ Number of words with corpus code 131  which have changed from last version to th
 <br>**`not-0-NA :`** `           20 `\
 <br>**`sum      :`** `        1 480 `\
 <br>**`range    :`** `[ 0 ] ... [ 271 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6605,7 +6642,7 @@ Number of words with corpus code 132  which have changed from last version to th
 <br>**`not-0-NA :`** `           17 `\
 <br>**`sum      :`** `        1 115 `\
 <br>**`range    :`** `[ 0 ] ... [ 262 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [35], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [262], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6621,7 +6658,7 @@ Number of words with corpus code 133  which have changed from last version to th
 <br>**`not-0-NA :`** `           20 `\
 <br>**`sum      :`** `        1 709 `\
 <br>**`range    :`** `[ 0 ] ... [ 371 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [166], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6637,7 +6674,7 @@ Number of words with corpus code 134  which have changed from last version to th
 <br>**`not-0-NA :`** `           58 `\
 <br>**`sum      :`** `        4 267 `\
 <br>**`range    :`** `[ 0 ] ... [ 316 ] `\
-<br>**`examples :`** ` [0], [0], [277], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6669,7 +6706,7 @@ Number of words with corpus code 142  which have changed from last version to th
 <br>**`not-0-NA :`** `           23 `\
 <br>**`sum      :`** `        2 095 `\
 <br>**`range    :`** `[ 0 ] ... [ 312 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6701,7 +6738,7 @@ Number of words with corpus code 144  which have changed from last version to th
 <br>**`not-0-NA :`** `            1 `\
 <br>**`sum      :`** `           73 `\
 <br>**`range    :`** `[ 0 ] ... [ 73 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6717,7 +6754,7 @@ Number of words with corpus code 145  which have changed from last version to th
 <br>**`not-0-NA :`** `            3 `\
 <br>**`sum      :`** `          913 `\
 <br>**`range    :`** `[ 0 ] ... [ 629 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6733,7 +6770,7 @@ Number of words with corpus code 241  which have changed from last version to th
 <br>**`not-0-NA :`** `           23 `\
 <br>**`sum      :`** `        5 010 `\
 <br>**`range    :`** `[ 0 ] ... [ 801 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [73], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6749,7 +6786,7 @@ Number of words with corpus code 242  which have changed from last version to th
 <br>**`not-0-NA :`** `           21 `\
 <br>**`sum      :`** `        3 618 `\
 <br>**`range    :`** `[ 0 ] ... [ 491 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [65], [0], [0], [0], [153], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6765,7 +6802,7 @@ Number of words with corpus code 243  which have changed from last version to th
 <br>**`not-0-NA :`** `            4 `\
 <br>**`sum      :`** `          160 `\
 <br>**`range    :`** `[ 0 ] ... [ 70 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6781,7 +6818,7 @@ Number of words with corpus code 244  which have changed from last version to th
 <br>**`not-0-NA :`** `           20 `\
 <br>**`sum      :`** `        3 921 `\
 <br>**`range    :`** `[ 0 ] ... [ 764 ] `\
-<br>**`examples :`** ` [0], [0], [0], [43], [0], [0], [0], [25], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [374], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6797,7 +6834,7 @@ Number of words with corpus code 411  which have changed from last version to th
 <br>**`not-0-NA :`** `            7 `\
 <br>**`sum      :`** `        1 358 `\
 <br>**`range    :`** `[ 0 ] ... [ 801 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6893,7 +6930,7 @@ Number of words with corpus code 611  which have changed from last version to th
 <br>**`not-0-NA :`** `           74 `\
 <br>**`sum      :`** `       12 292 `\
 <br>**`range    :`** `[ 0 ] ... [ 2713 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [36], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6957,7 +6994,7 @@ Number of words with corpus code 632  which have changed from last version to th
 <br>**`not-0-NA :`** `          107 `\
 <br>**`sum      :`** `        7 434 `\
 <br>**`range    :`** `[ 0 ] ... [ 524 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [124], [0], [0], [0], [0], [75], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6973,7 +7010,7 @@ Number of words with corpus code 633  which have changed from last version to th
 <br>**`not-0-NA :`** `           33 `\
 <br>**`sum      :`** `        1 976 `\
 <br>**`range    :`** `[ 0 ] ... [ 196 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [24], [0], [0], [43], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -6989,7 +7026,7 @@ Number of words with corpus code 634  which have changed from last version to th
 <br>**`not-0-NA :`** `           59 `\
 <br>**`sum      :`** `        4 563 `\
 <br>**`range    :`** `[ 0 ] ... [ 460 ] `\
-<br>**`examples :`** ` [0], [43], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7005,7 +7042,7 @@ Number of words with corpus code 636  which have changed from last version to th
 <br>**`not-0-NA :`** `           36 `\
 <br>**`sum      :`** `        3 334 `\
 <br>**`range    :`** `[ 0 ] ... [ 388 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [16], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7053,7 +7090,7 @@ Number of words with corpus code 639  which have changed from last version to th
 <br>**`not-0-NA :`** `          100 `\
 <br>**`sum      :`** `       17 168 `\
 <br>**`range    :`** `[ 0 ] ... [ 1150 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [31], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [375], [0], [0], [0], [0], [0], [0], [0], [209] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7085,7 +7122,7 @@ Number of words with corpus code 642  which have changed from last version to th
 <br>**`not-0-NA :`** `           23 `\
 <br>**`sum      :`** `        1 770 `\
 <br>**`range    :`** `[ 0 ] ... [ 330 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [36], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7117,7 +7154,7 @@ Number of words with corpus code 651  which have changed from last version to th
 <br>**`not-0-NA :`** `           44 `\
 <br>**`sum      :`** `        8 949 `\
 <br>**`range    :`** `[ 0 ] ... [ 2061 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [577], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7165,7 +7202,7 @@ Number of words with corpus code 999  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7181,7 +7218,7 @@ Number of words with corpus code 6211 which have changed from last version to th
 <br>**`not-0-NA :`** `           29 `\
 <br>**`sum      :`** `        3 046 `\
 <br>**`range    :`** `[ 0 ] ... [ 975 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [120], [0], [0], [0], [0], [0], [0], [14], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7197,7 +7234,7 @@ Number of words with corpus code 6212 which have changed from last version to th
 <br>**`not-0-NA :`** `           35 `\
 <br>**`sum      :`** `        2 132 `\
 <br>**`range    :`** `[ 0 ] ... [ 263 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7213,7 +7250,7 @@ Number of words with corpus code 6221 which have changed from last version to th
 <br>**`not-0-NA :`** `           21 `\
 <br>**`sum      :`** `          938 `\
 <br>**`range    :`** `[ 0 ] ... [ 95 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [42], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7229,7 +7266,7 @@ Number of words with corpus code 6222 which have changed from last version to th
 <br>**`not-0-NA :`** `           25 `\
 <br>**`sum      :`** `        1 432 `\
 <br>**`range    :`** `[ 0 ] ... [ 304 ] `\
-<br>**`examples :`** ` [0], [67], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [22], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7261,7 +7298,7 @@ Number of words with corpus code 6352 which have changed from last version to th
 <br>**`not-0-NA :`** `           17 `\
 <br>**`sum      :`** `          986 `\
 <br>**`range    :`** `[ 0 ] ... [ 202 ] `\
-<br>**`examples :`** ` [39], [0], [20], [0], [0], [0], [15], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7293,7 +7330,7 @@ Number of words with corpus code 9    which have changed from last version to th
 <br>**`not-0-NA :`** `           18 `\
 <br>**`sum      :`** `        1 544 `\
 <br>**`range    :`** `[ 0 ] ... [ 564 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7325,7 +7362,7 @@ Number of words with corpus code 21   which have changed from last version to th
 <br>**`not-0-NA :`** `           13 `\
 <br>**`sum      :`** `        1 913 `\
 <br>**`range    :`** `[ 0 ] ... [ 879 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [182], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7341,7 +7378,7 @@ Number of words with corpus code 22   which have changed from last version to th
 <br>**`not-0-NA :`** `           45 `\
 <br>**`sum      :`** `        7 534 `\
 <br>**`range    :`** `[ 0 ] ... [ 1032 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [115], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7373,7 +7410,7 @@ Number of words with corpus code 25   which have changed from last version to th
 <br>**`not-0-NA :`** `           17 `\
 <br>**`sum      :`** `        1 692 `\
 <br>**`range    :`** `[ 0 ] ... [ 681 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7405,7 +7442,7 @@ Number of words with corpus code 27   which have changed from last version to th
 <br>**`not-0-NA :`** `            1 `\
 <br>**`sum      :`** `           17 `\
 <br>**`range    :`** `[ 0 ] ... [ 17 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7517,7 +7554,7 @@ Number of words with corpus code 43   which have changed from last version to th
 <br>**`not-0-NA :`** `            7 `\
 <br>**`sum      :`** `          282 `\
 <br>**`range    :`** `[ 0 ] ... [ 63 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7549,7 +7586,7 @@ Number of words with corpus code 51   which have changed from last version to th
 <br>**`not-0-NA :`** `           51 `\
 <br>**`sum      :`** `        3 147 `\
 <br>**`range    :`** `[ 0 ] ... [ 294 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [1], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7565,7 +7602,7 @@ Number of words with corpus code 52   which have changed from last version to th
 <br>**`not-0-NA :`** `           13 `\
 <br>**`sum      :`** `        1 143 `\
 <br>**`range    :`** `[ 0 ] ... [ 267 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [44], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7597,7 +7634,7 @@ Number of words with corpus code 54   which have changed from last version to th
 <br>**`not-0-NA :`** `           20 `\
 <br>**`sum      :`** `        3 110 `\
 <br>**`range    :`** `[ 0 ] ... [ 670 ] `\
-<br>**`examples :`** ` [0], [0], [0], [158], [0], [59], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7613,7 +7650,7 @@ Number of words with corpus code 55   which have changed from last version to th
 <br>**`not-0-NA :`** `           24 `\
 <br>**`sum      :`** `        2 540 `\
 <br>**`range    :`** `[ 0 ] ... [ 485 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [17], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7629,7 +7666,7 @@ Number of words with corpus code 56   which have changed from last version to th
 <br>**`not-0-NA :`** `           38 `\
 <br>**`sum      :`** `        4 583 `\
 <br>**`range    :`** `[ 0 ] ... [ 997 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [46], [0], [0], [220], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7677,7 +7714,7 @@ Number of words with corpus code 68   which have changed from last version to th
 <br>**`not-0-NA :`** `           26 `\
 <br>**`sum      :`** `        1 749 `\
 <br>**`range    :`** `[ 0 ] ... [ 232 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [19], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7709,7 +7746,7 @@ Number of words with corpus code 72   which have changed from last version to th
 <br>**`not-0-NA :`** `            2 `\
 <br>**`sum      :`** `           73 `\
 <br>**`range    :`** `[ 0 ] ... [ 58 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7773,7 +7810,7 @@ Number of words with corpus code 113  which have changed from last version to th
 <br>**`not-0-NA :`** `           17 `\
 <br>**`sum      :`** `        1 298 `\
 <br>**`range    :`** `[ 0 ] ... [ 169 ] `\
-<br>**`examples :`** ` [0], [87], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7805,7 +7842,7 @@ Number of words with corpus code 121  which have changed from last version to th
 <br>**`not-0-NA :`** `           29 `\
 <br>**`sum      :`** `        2 917 `\
 <br>**`range    :`** `[ 0 ] ... [ 545 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [50], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7837,7 +7874,7 @@ Number of words with corpus code 123  which have changed from last version to th
 <br>**`not-0-NA :`** `           41 `\
 <br>**`sum      :`** `        3 861 `\
 <br>**`range    :`** `[ 0 ] ... [ 300 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [43], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7869,7 +7906,7 @@ Number of words with corpus code 125  which have changed from last version to th
 <br>**`not-0-NA :`** `           19 `\
 <br>**`sum      :`** `        1 267 `\
 <br>**`range    :`** `[ 0 ] ... [ 198 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7885,7 +7922,7 @@ Number of words with corpus code 131  which have changed from last version to th
 <br>**`not-0-NA :`** `            6 `\
 <br>**`sum      :`** `          834 `\
 <br>**`range    :`** `[ 0 ] ... [ 385 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7917,7 +7954,7 @@ Number of words with corpus code 133  which have changed from last version to th
 <br>**`not-0-NA :`** `            7 `\
 <br>**`sum      :`** `          454 `\
 <br>**`range    :`** `[ 0 ] ... [ 229 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7949,7 +7986,7 @@ Number of words with corpus code 141  which have changed from last version to th
 <br>**`not-0-NA :`** `            1 `\
 <br>**`sum      :`** `           30 `\
 <br>**`range    :`** `[ 0 ] ... [ 30 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -7981,7 +8018,7 @@ Number of words with corpus code 143  which have changed from last version to th
 <br>**`not-0-NA :`** `            3 `\
 <br>**`sum      :`** `          126 `\
 <br>**`range    :`** `[ 0 ] ... [ 44 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8013,7 +8050,7 @@ Number of words with corpus code 145  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8125,7 +8162,7 @@ Number of words with corpus code 421  which have changed from last version to th
 <br>**`not-0-NA :`** `            4 `\
 <br>**`sum      :`** `          393 `\
 <br>**`range    :`** `[ 0 ] ... [ 187 ] `\
-<br>**`examples :`** ` [105], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8141,7 +8178,7 @@ Number of words with corpus code 422  which have changed from last version to th
 <br>**`not-0-NA :`** `            2 `\
 <br>**`sum      :`** `           58 `\
 <br>**`range    :`** `[ 0 ] ... [ 35 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [23], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8173,7 +8210,7 @@ Number of words with corpus code 442  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8189,7 +8226,7 @@ Number of words with corpus code 611  which have changed from last version to th
 <br>**`not-0-NA :`** `           43 `\
 <br>**`sum      :`** `        6 347 `\
 <br>**`range    :`** `[ 0 ] ... [ 817 ] `\
-<br>**`examples :`** ` [0], [0], [0], [109], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8205,7 +8242,7 @@ Number of words with corpus code 612  which have changed from last version to th
 <br>**`not-0-NA :`** `           18 `\
 <br>**`sum      :`** `          923 `\
 <br>**`range    :`** `[ 0 ] ... [ 95 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [67], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8221,7 +8258,7 @@ Number of words with corpus code 613  which have changed from last version to th
 <br>**`not-0-NA :`** `           23 `\
 <br>**`sum      :`** `        1 702 `\
 <br>**`range    :`** `[ 0 ] ... [ 295 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [25] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8237,7 +8274,7 @@ Number of words with corpus code 631  which have changed from last version to th
 <br>**`not-0-NA :`** `           10 `\
 <br>**`sum      :`** `          788 `\
 <br>**`range    :`** `[ 0 ] ... [ 276 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [39], [0], [0] ... `\
+<br>**`examples :`** ` [44], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8253,7 +8290,7 @@ Number of words with corpus code 632  which have changed from last version to th
 <br>**`not-0-NA :`** `           73 `\
 <br>**`sum      :`** `        5 196 `\
 <br>**`range    :`** `[ 0 ] ... [ 590 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [394], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8269,7 +8306,7 @@ Number of words with corpus code 633  which have changed from last version to th
 <br>**`not-0-NA :`** `           19 `\
 <br>**`sum      :`** `        1 412 `\
 <br>**`range    :`** `[ 0 ] ... [ 647 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8285,7 +8322,7 @@ Number of words with corpus code 634  which have changed from last version to th
 <br>**`not-0-NA :`** `           25 `\
 <br>**`sum      :`** `        1 917 `\
 <br>**`range    :`** `[ 0 ] ... [ 622 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [34], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8301,7 +8338,7 @@ Number of words with corpus code 636  which have changed from last version to th
 <br>**`not-0-NA :`** `           12 `\
 <br>**`sum      :`** `          859 `\
 <br>**`range    :`** `[ 0 ] ... [ 219 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8317,7 +8354,7 @@ Number of words with corpus code 637  which have changed from last version to th
 <br>**`not-0-NA :`** `           12 `\
 <br>**`sum      :`** `        1 667 `\
 <br>**`range    :`** `[ 0 ] ... [ 587 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [128], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8349,7 +8386,7 @@ Number of words with corpus code 639  which have changed from last version to th
 <br>**`not-0-NA :`** `           42 `\
 <br>**`sum      :`** `        6 303 `\
 <br>**`range    :`** `[ 0 ] ... [ 840 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [72], [0], [0], [NA], [34], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8381,7 +8418,7 @@ Number of words with corpus code 642  which have changed from last version to th
 <br>**`not-0-NA :`** `           11 `\
 <br>**`sum      :`** `          615 `\
 <br>**`range    :`** `[ 0 ] ... [ 131 ] `\
-<br>**`examples :`** ` [0], [29], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8413,7 +8450,7 @@ Number of words with corpus code 651  which have changed from last version to th
 <br>**`not-0-NA :`** `           19 `\
 <br>**`sum      :`** `        4 413 `\
 <br>**`range    :`** `[ 0 ] ... [ 1457 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [14], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8477,7 +8514,7 @@ Number of words with corpus code 6211 which have changed from last version to th
 <br>**`not-0-NA :`** `           14 `\
 <br>**`sum      :`** `          706 `\
 <br>**`range    :`** `[ 0 ] ... [ 178 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8509,7 +8546,7 @@ Number of words with corpus code 6221 which have changed from last version to th
 <br>**`not-0-NA :`** `            5 `\
 <br>**`sum      :`** `          215 `\
 <br>**`range    :`** `[ 0 ] ... [ 101 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8557,7 +8594,7 @@ Number of words with corpus code 6352 which have changed from last version to th
 <br>**`not-0-NA :`** `            6 `\
 <br>**`sum      :`** `          210 `\
 <br>**`range    :`** `[ 0 ] ... [ 67 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8589,7 +8626,7 @@ Number of lines with corpus code 9    which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8605,7 +8642,7 @@ Number of lines with corpus code 10   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8637,7 +8674,7 @@ Number of lines with corpus code 22   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8701,7 +8738,7 @@ Number of lines with corpus code 27   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8733,7 +8770,7 @@ Number of lines with corpus code 29   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8749,7 +8786,7 @@ Number of lines with corpus code 31   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8765,7 +8802,7 @@ Number of lines with corpus code 32   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8781,7 +8818,7 @@ Number of lines with corpus code 33   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8877,7 +8914,7 @@ Number of lines with corpus code 53   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8909,7 +8946,7 @@ Number of lines with corpus code 55   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8925,7 +8962,7 @@ Number of lines with corpus code 56   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -8957,7 +8994,7 @@ Number of lines with corpus code 67   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9101,7 +9138,7 @@ Number of lines with corpus code 121  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9133,7 +9170,7 @@ Number of lines with corpus code 123  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [NA], [0], [0], [0], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9149,7 +9186,7 @@ Number of lines with corpus code 124  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9181,7 +9218,7 @@ Number of lines with corpus code 131  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9229,7 +9266,7 @@ Number of lines with corpus code 134  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9261,7 +9298,7 @@ Number of lines with corpus code 142  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9293,7 +9330,7 @@ Number of lines with corpus code 144  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9501,7 +9538,7 @@ Number of lines with corpus code 612  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [NA], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9533,7 +9570,7 @@ Number of lines with corpus code 631  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [NA], [NA], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9629,7 +9666,7 @@ Number of lines with corpus code 638  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9645,7 +9682,7 @@ Number of lines with corpus code 639  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9661,7 +9698,7 @@ Number of lines with corpus code 641  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -9677,7 +9714,7 @@ Number of lines with corpus code 642  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10029,7 +10066,7 @@ Number of lines with corpus code 29   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10061,7 +10098,7 @@ Number of lines with corpus code 32   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10093,7 +10130,7 @@ Number of lines with corpus code 34   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10109,7 +10146,7 @@ Number of lines with corpus code 43   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10125,7 +10162,7 @@ Number of lines with corpus code 45   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10141,7 +10178,7 @@ Number of lines with corpus code 51   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10237,7 +10274,7 @@ Number of lines with corpus code 66   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10269,7 +10306,7 @@ Number of lines with corpus code 68   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10461,7 +10498,7 @@ Number of lines with corpus code 125  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10493,7 +10530,7 @@ Number of lines with corpus code 132  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10525,7 +10562,7 @@ Number of lines with corpus code 134  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10557,7 +10594,7 @@ Number of lines with corpus code 142  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10573,7 +10610,7 @@ Number of lines with corpus code 143  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10605,7 +10642,7 @@ Number of lines with corpus code 145  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10621,7 +10658,7 @@ Number of lines with corpus code 241  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10653,7 +10690,7 @@ Number of lines with corpus code 243  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10669,7 +10706,7 @@ Number of lines with corpus code 244  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10701,7 +10738,7 @@ Number of lines with corpus code 412  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10733,7 +10770,7 @@ Number of lines with corpus code 422  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10909,7 +10946,7 @@ Number of lines with corpus code 637  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10941,7 +10978,7 @@ Number of lines with corpus code 639  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -10973,7 +11010,7 @@ Number of lines with corpus code 642  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11005,7 +11042,7 @@ Number of lines with corpus code 651  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [NA], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11037,7 +11074,7 @@ Number of lines with corpus code 653  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [NA], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11053,7 +11090,7 @@ Number of lines with corpus code 999  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11085,7 +11122,7 @@ Number of lines with corpus code 6212 which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11501,7 +11538,7 @@ Number of lines with corpus code 55   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11533,7 +11570,7 @@ Number of lines with corpus code 66   which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [NA], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11661,7 +11698,7 @@ Number of lines with corpus code 113  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11677,7 +11714,7 @@ Number of lines with corpus code 114  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11693,7 +11730,7 @@ Number of lines with corpus code 121  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11709,7 +11746,7 @@ Number of lines with corpus code 122  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [NA], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11869,7 +11906,7 @@ Number of lines with corpus code 143  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11901,7 +11938,7 @@ Number of lines with corpus code 145  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11933,7 +11970,7 @@ Number of lines with corpus code 242  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11965,7 +12002,7 @@ Number of lines with corpus code 244  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -11997,7 +12034,7 @@ Number of lines with corpus code 412  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [NA], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12061,7 +12098,7 @@ Number of lines with corpus code 442  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12093,7 +12130,7 @@ Number of lines with corpus code 612  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [NA], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12221,7 +12258,7 @@ Number of lines with corpus code 638  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12253,7 +12290,7 @@ Number of lines with corpus code 641  which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [NA], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12365,7 +12402,7 @@ Number of lines with corpus code 6211 which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [NA], [0], [NA] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12397,7 +12434,7 @@ Number of lines with corpus code 6221 which have changed from last version to th
 <br>**`not-0-NA :`** `            0 `\
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [NA], [NA], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12453,6 +12490,22 @@ Number of lines with corpus code 6352 which have changed from last version to th
 
 
 
+**tsb_agc** (Tsebelis )
+
+Tsebelis original 2002, page 182 governenment control of the legislative agenda measure. See ext_tsb_agc1 for further description.
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `           16 `\
+<br>**`NAs      :`** `          770 `\
+<br>**`not-NA   :`** `           16 `\
+<br>**`not-0-NA :`** `           16 `\
+<br>**`sum      :`** `       -0.095 `\
+<br>**`range    :`** `[ -0.527 ] ... [ 0.69 ] `\
+<br>**`examples :`** ` [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ... `\
+<br>
+
+<p>&nbsp;</p>
+
 **ext_tsb_agc1** (Tsebelis )
 
 This variable is based on *George Tsebelis (2002): Veto Players: How Political Institutions Work, Princeton* table 7.3 at page 182 and 
@@ -12477,7 +12530,7 @@ of the agenda control extrapolation.
 <br>**`not-0-NA :`** `          715 `\
 <br>**`sum      :`** `        36.36 `\
 <br>**`range    :`** `[ -0.57 ] ... [ 0.7 ] `\
-<br>**`examples :`** ` [0.22], [0.68], [-0.16], [-0.07], [0.69], [-0.23], [-0.12], [-0.22], [NA], [0.22 ... `\
+<br>**`examples :`** ` [-0.05], [-0.05], [0.69], [0.14], [0.52], [-0.27], [-0.06], [-0.06], [0.69], [-0 ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12493,7 +12546,7 @@ See ext_tsb_agc1.
 <br>**`not-0-NA :`** `          710 `\
 <br>**`sum      :`** `        41.43 `\
 <br>**`range    :`** `[ -0.62 ] ... [ 0.7 ] `\
-<br>**`examples :`** ` [0.69], [-0.56], [0.69], [0.69], [-0.32], [-0.39], [-0.03], [0.69], [-0.39], [0. ... `\
+<br>**`examples :`** ` [0.68], [0.69], [0.68], [0.69], [-0.4], [0.32], [-0.13], [-0.21], [0.22], [-0.4] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12509,7 +12562,7 @@ See ext_tsb_agc1.
 <br>**`not-0-NA :`** `          712 `\
 <br>**`sum      :`** `        52.01 `\
 <br>**`range    :`** `[ -0.71 ] ... [ 1.25 ] `\
-<br>**`examples :`** ` [0.7], [0.69], [-0.6], [-0.13], [-0.32], [-0.12], [0.69], [NA], [-0.5], [0.53] ... `\
+<br>**`examples :`** ` [0.53], [0.12], [-0.22], [-0.41], [-0.18], [0.68], [-0.29], [-0.1], [-0.06], [NA ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12625,7 +12678,7 @@ Find below the coding of all non-trivial cases ... $$ diff = pro\_maj - pro\_min
 <br>**`not-0-NA :`** `          238 `\
 <br>**`sum      :`** `          -22 `\
 <br>**`range    :`** `[ -1 ] ... [ 1 ] `\
-<br>**`examples :`** ` [-1], [0], [0], [0], [1], [0], [1], [0], [-1], [1] ... `\
+<br>**`examples :`** ` [NA], [-1], [0], [0], [0], [0], [0], [-1], [NA], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12641,7 +12694,7 @@ Whether or not the reform in general was pro majority (1), pro minority (-1) or 
 <br>**`not-0-NA :`** `          252 `\
 <br>**`sum      :`** `           -6 `\
 <br>**`range    :`** `[ -1 ] ... [ 1 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [1], [-1], [-1], [-1], [0], [-1] ... `\
+<br>**`examples :`** ` [1], [0], [0], [0], [NA], [-1], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>
@@ -12657,7 +12710,7 @@ Whether or not the reform in general was pro majority (1), pro minority (-1) or 
 <br>**`not-0-NA :`** `          234 `\
 <br>**`sum      :`** `           -2 `\
 <br>**`range    :`** `[ -1 ] ... [ 1 ] `\
-<br>**`examples :`** ` [0], [0], [0], [0], [1], [0], [1], [0], [0], [NA] ... `\
+<br>**`examples :`** ` [0], [0], [0], [1], [-1], [0], [0], [0], [0], [0] ... `\
 <br>
 
 <p>&nbsp;</p>

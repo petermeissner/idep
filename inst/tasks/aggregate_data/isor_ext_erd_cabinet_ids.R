@@ -13,7 +13,7 @@ setwd("Z:/Gesch\xe4ftsordnungen/Database/aggregats")
 
 #### loading data ==============================================================
 
-load("Z:/Geschäftsordnungen/Database/external_data/erd_cleaned_up.Rdata")
+load("Z:/Gesch\xe4ftsordnungen/Database/external_data/erd_cleaned_up.Rdata")
 load("reforms.Rdata")
 
 reforms <- as.data.frame(reforms)
@@ -100,9 +100,10 @@ reforms  %>%
 reforms <- as_data_frame(reforms)
 
 # save reforms dataset
-setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
+setwd("Z:/Gesch\xe4ftsordnungen/database/aggregats")
 save(reforms, file="reforms.Rdata")
 write.dta(reforms, file="reforms.dta")
+write.csv(reforms, file="reforms.csv")
 
 
 

@@ -1,7 +1,7 @@
 ---
 title: "Code book"
 author: "pm"
-date: '2015-09-25 12:59:15'
+date: '2015-09-29 14:29:15'
 output:
   pdf_document:
     keep_tex: yes
@@ -25,7 +25,7 @@ The data-set is based on the IDEP data - data on Standing Orders versions (*text
 The data set incorporates aggregated data for 
 770 reforms in
 15 countries and consists of 
-729 variables. 
+737 variables. 
 
 **Example:**
 
@@ -271,22 +271,9 @@ Each and every code is exclusive, meaning that one subparagraph needs to have on
 
 
 
-# Surplus variable descriptions
 
 
-```r
-description$name[!(description$name %in% names(reforms))]
-```
 
-```
-## [1] "tsb_agc"          "ext_tsb_agc1"     "ext_tsb_agc2"    
-## [4] "ext_tsb_agc4"     "pro_minmaj_qual"  "pro_minmaj_auto1"
-## [7] "pro_minmaj_auto2" "erd_cab_id"
-```
-
-```r
-description <- description[(description$name %in% names(reforms)),]
-```
 
 
 
@@ -12485,6 +12472,250 @@ Number of lines with corpus code 6352 which have changed from last version to th
 <br>**`sum      :`** `            0 `\
 <br>**`range    :`** `[ 0 ] ... [ 0 ] `\
 <br>**`examples :`** ` [0], [0], [0], [0], [0], [0], [0], [0], [0], [0] ... `\
+<br>
+
+<p>&nbsp;</p>
+## external variables and extensions
+
+
+
+**tsb_agc** (Tsebelis )
+
+Tsebelis original 2002, page 182 governenment control of the legislative agenda measure. See ext_tsb_agc1 for further description.
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `           16 `\
+<br>**`NAs      :`** `          770 `\
+<br>**`not-NA   :`** `           16 `\
+<br>**`not-0-NA :`** `           16 `\
+<br>**`sum      :`** `       -0.095 `\
+<br>**`range    :`** `[ -0.527 ] ... [ 0.69 ] `\
+<br>**`examples :`** ` [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA], [NA] ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**ext_tsb_agc1** (Tsebelis )
+
+This variable is based on *George Tsebelis (2002): Veto Players: How Political Institutions Work, Princeton* table 7.3 at page 182 and 
+    measures governenment control of the legislative agenda. 
+     
+The cross section values found in the table were assigned to those SO versions that were enacted in 1985 (when the agenda control measure was gathered).
+To extrapolate the measure over time it was: 
+1) multiplied by the number of words for those 1985 versions, 
+2) the change in majority prone and minority prone words was added (majority words as positives, minority words as negatives)
+3) these text lengths were again divided by the lengths of the 1985 versions.
+
+Because it is unclear which numeric relation the agenda control measure and the change of pro majority / pro minority words might hold 
+(one would need a second time point to determine that) the varaible exists in three variations: ext_tsb_agc1, ext_tsb_agc2 and ext_tsb_agc4.
+The numbers indicate by which factor the change in majority/minority friendly words was multiplied to give it an higher impact (1, 2, 4) thus increasing the variance
+of the agenda control extrapolation. 
+     
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `           64 `\
+<br>**`NAs      :`** `           71 `\
+<br>**`not-NA   :`** `          715 `\
+<br>**`not-0-NA :`** `          715 `\
+<br>**`sum      :`** `        36.36 `\
+<br>**`range    :`** `[ -0.57 ] ... [ 0.7 ] `\
+<br>**`examples :`** ` [-0.05], [-0.05], [0.69], [0.14], [0.52], [-0.27], [-0.06], [-0.06], [0.69], [-0 ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**ext_tsb_agc2** (Tsebelis )
+
+See ext_tsb_agc1.
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `           85 `\
+<br>**`NAs      :`** `           71 `\
+<br>**`not-NA   :`** `          715 `\
+<br>**`not-0-NA :`** `          710 `\
+<br>**`sum      :`** `        41.43 `\
+<br>**`range    :`** `[ -0.62 ] ... [ 0.7 ] `\
+<br>**`examples :`** ` [0.68], [0.69], [0.68], [0.69], [-0.4], [0.32], [-0.13], [-0.21], [0.22], [-0.4] ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**ext_tsb_agc4** (Tsebelis )
+
+See ext_tsb_agc1.
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `          104 `\
+<br>**`NAs      :`** `           71 `\
+<br>**`not-NA   :`** `          715 `\
+<br>**`not-0-NA :`** `          712 `\
+<br>**`sum      :`** `        52.01 `\
+<br>**`range    :`** `[ -0.71 ] ... [ 1.25 ] `\
+<br>**`examples :`** ` [0.53], [0.12], [-0.22], [-0.41], [-0.18], [0.68], [-0.29], [-0.1], [-0.06], [NA ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**pro_minmaj_qual** (textlines, linelinkage, manual coding)
+
+Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), 
+the decission was made by comparing the number of sub-paragraphs/lines changed in each direction.
+If there was no change in favor of majority but changes in favor of minority it was considered minority friendly and vice versa.
+If changes in both directions took place there the differences in the SO texts were cosidered. 
+
+Find below the coding of all non-trivial cases ... $$ diff = pro\_maj - pro\_min $$ $$ ratio\_pro = (pro\_maj - pro\_min) / (pro\_maj + pro\_min) $$ $$ ratio\_all = (pro\_maj - pro\_min) / (pro\_maj + pro\_min + pro\_none) $$ 
+    
+|t_id               | pro_maj| pro_min| pro_non| pro_minmaj_qual| diff| ratio_pro| ratio_all|
+|:------------------|-------:|-------:|-------:|---------------:|----:|---------:|---------:|
+|`FRA_1994-03-12.0` |      29|       1|     134|               1|   28|      0.93|      0.17|
+|`LUX_2003-11-27.0` |      14|       1|      88|               1|   13|      0.87|      0.13|
+|`ITA_1983-11-30.0` |      13|       1|      26|               1|   12|      0.86|      0.30|
+|`DEN_1976-10-05.0` |      12|       1|      21|               1|   11|      0.85|      0.32|
+|`NED_1947-07-08.0` |       8|       1|      22|               1|    7|      0.78|      0.23|
+|`BEL_1985-04-25.0` |       8|       1|     157|               1|    7|      0.78|      0.04|
+|`NED_1994-05-17.0` |      21|       3|     347|               1|   18|      0.75|      0.05|
+|`LUX_2000-07-01.0` |      24|       4|     150|               1|   20|      0.71|      0.11|
+|`DEN_1981-06-01.0` |       9|       2|      54|               1|    7|      0.64|      0.11|
+|`SWE_2007-01-01.1` |       4|       1|      16|               1|    3|      0.60|      0.14|
+|`SWE_1949-04-06.0` |      10|       3|      53|              -1|    7|      0.54|      0.11|
+|`LUX_2007-03-15.0` |       6|       2|      43|               1|    4|      0.50|      0.08|
+|`LUX_2010-07-15.0` |       3|       1|       6|               0|    2|      0.50|      0.20|
+|`ITA_1982-01-12.0` |       3|       1|       9|               0|    2|      0.50|      0.15|
+|`SWE_1998-10-01.0` |       3|       1|      23|               1|    2|      0.50|      0.07|
+|`NED_1986-06-24.0` |       3|       1|      53|               1|    2|      0.50|      0.04|
+|`NOR_2009-10-01.4` |       3|       1|      96|               1|    2|      0.50|      0.02|
+|`ITA_1986-09-01.2` |      11|       5|      16|               1|    6|      0.38|      0.19|
+|`GER_1952-01-01.0` |      12|       6|     208|              -1|    6|      0.33|      0.03|
+|`ESP_1982-03-06.0` |       8|       4|     705|              -1|    4|      0.33|      0.01|
+|`SWE_2003-07-01.0` |       8|       4|     476|               1|    4|      0.33|      0.01|
+|`UK_2005-10-10.0 ` |       6|       3|      29|               1|    3|      0.33|      0.08|
+|`POR_1984-03-16.0` |       6|       3|      83|              -1|    3|      0.33|      0.03|
+|`BEL_2003-10-12.0` |       6|       3|     111|               1|    3|      0.33|      0.02|
+|`DEN_1959-04-29.0` |       4|       2|      14|               1|    2|      0.33|      0.10|
+|`ITA_1982-01-29.0` |       2|       1|       5|               1|    1|      0.33|      0.12|
+|`GER_1986-12-18.0` |       2|       1|      31|               1|    1|      0.33|      0.03|
+|`NED_1953-07-09.0` |       2|       1|      35|              -1|    1|      0.33|      0.03|
+|`BEL_1990-07-12.0` |       2|       1|      68|               1|    1|      0.33|      0.01|
+|`IRE_2010-12-02.0` |       2|       1|     135|              -1|    1|      0.33|      0.01|
+|`NED_1966-07-12.0` |      14|       8|     432|               1|    6|      0.27|      0.01|
+|`BEL_1962-02-08.0` |      12|       7|     383|               1|    5|      0.26|      0.01|
+|`DEN_1997-05-27.0` |       5|       3|      69|               0|    2|      0.25|      0.03|
+|`SWE_1974-02-28.0` |       8|       5|     381|               1|    3|      0.23|      0.01|
+|`SWE_1996-01-01.0` |       9|       6|      10|               0|    3|      0.20|      0.12|
+|`BEL_1998-10-13.0` |       6|       4|     313|               1|    2|      0.20|      0.01|
+|`NED_2006-06-29.0` |       3|       2|      21|              -1|    1|      0.20|      0.04|
+|`AUT_1986-09-01.0` |       3|       2|      34|              -1|    1|      0.20|      0.03|
+|`BEL_1995-06-08.0` |       3|       2|      71|              -1|    1|      0.20|      0.01|
+|`AUT_1996-10-15.0` |      32|      23|      90|               1|    9|      0.16|      0.06|
+|`DEN_2004-01-01.0` |       4|       3|      31|               1|    1|      0.14|      0.03|
+|`SWE_1995-01-01.1` |       4|       3|      60|               1|    1|      0.14|      0.01|
+|`DEN_1966-01-01.0` |      10|       8|      69|               0|    2|      0.11|      0.02|
+|`DEN_1989-05-12.0` |       5|       4|      48|               1|    1|      0.11|      0.02|
+|`LUX_1991-01-01.0` |      44|      40|     271|              -1|    4|      0.05|      0.01|
+|`AUT_1993-09-15.0` |      12|      12|      52|               1|    0|      0.00|      0.00|
+|`BEL_1973-04-26.0` |       1|       1|      11|               0|    0|      0.00|      0.00|
+|`BEL_1982-10-26.0` |       1|       1|      13|               1|    0|      0.00|      0.00|
+|`BEL_2005-05-19.0` |       1|       1|       6|               0|    0|      0.00|      0.00|
+|`DEN_1969-10-07.0` |       2|       2|      20|               0|    0|      0.00|      0.00|
+|`DEN_1986-12-17.0` |       1|       1|       6|               0|    0|      0.00|      0.00|
+|`DEN_2004-12-16.0` |       1|       1|      20|               1|    0|      0.00|      0.00|
+|`GER_1972-10-19.0` |       1|       1|      17|              -1|    0|      0.00|      0.00|
+|`IRE_1996-10-15.0` |       2|       2|     181|               0|    0|      0.00|      0.00|
+|`ITA_1983-12-14.0` |       1|       1|       9|              -1|    0|      0.00|      0.00|
+|`LUX_1998-03-01.0` |       3|       3|      10|              -1|    0|      0.00|      0.00|
+|`NED_1952-04-01.0` |       2|       2|      14|               0|    0|      0.00|      0.00|
+|`NED_1956-05-03.0` |       2|       2|      12|              -1|    0|      0.00|      0.00|
+|`NOR_1989-10-02.0` |       3|       3|      60|               1|    0|      0.00|      0.00|
+|`NOR_1996-10-01.0` |       2|       2|      15|               1|    0|      0.00|      0.00|
+|`SWE_1988-09-01.0` |       2|       2|      12|               0|    0|      0.00|      0.00|
+|`SWE_1993-01-01.0` |       1|       1|      16|               1|    0|      0.00|      0.00|
+|`SWE_2009-12-01.0` |       1|       1|      23|               0|    0|      0.00|      0.00|
+|`UK_1991-01-29.0 ` |       1|       1|       4|               1|    0|      0.00|      0.00|
+|`SWE_1971-01-01.0` |       3|       4|     180|              -1|   -1|     -0.14|     -0.01|
+|`DEN_1972-10-03.0` |       3|       4|      48|               0|   -1|     -0.14|     -0.02|
+|`AUT_1989-01-01.0` |      25|      34|     156|              -1|   -9|     -0.15|     -0.04|
+|`GER_1970-05-22.0` |       2|       3|      46|              -1|   -1|     -0.20|     -0.02|
+|`NED_2004-03-31.0` |       2|       3|      39|              -1|   -1|     -0.20|     -0.02|
+|`DEN_2007-06-01.0` |       2|       3|      16|              -1|   -1|     -0.20|     -0.05|
+|`BEL_1993-10-27.0` |       3|       5|      87|              -1|   -2|     -0.25|     -0.02|
+|`AUT_1975-10-01.0` |      24|      40|     316|              -1|  -16|     -0.25|     -0.04|
+|`FRA_1969-11-30.0` |       9|      16|     151|              -1|   -7|     -0.28|     -0.04|
+|`POR_2003-01-17.0` |       1|       2|     443|              -1|   -1|     -0.33|      0.00|
+|`IRE_1997-11-13.0` |       1|       2|     161|              -1|   -1|     -0.33|     -0.01|
+|`FRA_1995-11-11.0` |       1|       2|      53|              -1|   -1|     -0.33|     -0.02|
+|`DEN_1971-10-05.0` |       1|       2|      17|               0|   -1|     -0.33|     -0.05|
+|`ITA_1971-04-30.0` |       7|      15|     539|              -1|   -8|     -0.36|     -0.01|
+|`ITA_1998-01-01.0` |       3|       7|      92|              -1|   -4|     -0.40|     -0.04|
+|`POR_1985-03-06.0` |       2|       5|     821|              -1|   -3|     -0.43|      0.00|
+|`BEL_1987-01-28.0` |       2|       5|     102|              -1|   -3|     -0.43|     -0.03|
+|`DEN_1999-05-25.0` |       2|       5|      34|              -1|   -3|     -0.43|     -0.07|
+|`DEN_1953-12-17.0` |      10|      27|     118|              -1|  -17|     -0.46|     -0.11|
+|`SWE_1996-02-01.0` |       3|       9|      18|              -1|   -6|     -0.50|     -0.20|
+|`AUT_1961-09-01.0` |       4|      13|      95|              -1|   -9|     -0.53|     -0.08|
+|`DEN_1947-10-07.0` |       2|       7|      88|              -1|   -5|     -0.56|     -0.05|
+|`AUT_1998-01-01.0` |       1|       4|      78|              -1|   -3|     -0.60|     -0.04|
+|`ITA_1982-01-16.0` |       1|       6|       3|              -1|   -5|     -0.71|     -0.50|
+|`FRA_2009-06-25.0` |       4|      34|     385|              -1|  -30|     -0.79|     -0.07|
+|`GER_1980-10-01.0` |       1|       9|     253|              -1|   -8|     -0.80|     -0.03|
+
+    
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `            4 `\
+<br>**`NAs      :`** `           87 `\
+<br>**`not-NA   :`** `          699 `\
+<br>**`not-0-NA :`** `          238 `\
+<br>**`sum      :`** `          -22 `\
+<br>**`range    :`** `[ -1 ] ... [ 1 ] `\
+<br>**`examples :`** ` [NA], [-1], [0], [0], [0], [0], [0], [-1], [NA], [0] ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**pro_minmaj_auto1** (textlines, linelinkage, manual coding)
+
+Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of words changed in each direction.
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `            4 `\
+<br>**`NAs      :`** `           87 `\
+<br>**`not-NA   :`** `          699 `\
+<br>**`not-0-NA :`** `          252 `\
+<br>**`sum      :`** `           -6 `\
+<br>**`range    :`** `[ -1 ] ... [ 1 ] `\
+<br>**`examples :`** ` [1], [0], [0], [0], [NA], [-1], [0], [0], [0], [0] ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**pro_minmaj_auto2** (textlines, linelinkage, manual coding)
+
+Whether or not the reform in general was pro majority (1), pro minority (-1) or neither (0), the decission was made autoamitcally by comparing the number of lines changed in each direction.
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `            4 `\
+<br>**`NAs      :`** `           87 `\
+<br>**`not-NA   :`** `          699 `\
+<br>**`not-0-NA :`** `          234 `\
+<br>**`sum      :`** `           -2 `\
+<br>**`range    :`** `[ -1 ] ... [ 1 ] `\
+<br>**`examples :`** ` [0], [0], [0], [1], [-1], [0], [0], [0], [0], [0] ... `\
+<br>
+
+<p>&nbsp;</p>
+
+**erd_cab_id** (European Representative Democracy http://www.erdda.se/)
+
+
+
+**`class    :`** `      numeric `\
+<br>**`unique   :`** `          232 `\
+<br>**`NAs      :`** `           76 `\
+<br>**`not-NA   :`** `          710 `\
+<br>**`not-0-NA :`** `          710 `\
+<br>**`sum      :`** `      827 513 `\
+<br>**`range    :`** `[ 102 ] ... [ 1723 ] `\
+<br>**`examples :`** ` [1721], [1622], [234], [1629], [1329], [114], [228], [1222], [1622], [1324] ... `\
 <br>
 
 <p>&nbsp;</p>

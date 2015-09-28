@@ -234,7 +234,7 @@ label variable cab_dur_100 "cabinet duration 100%"
 rename v603e cab_dur_rel
 label variable cab_dur_rel "relative cabinet duration"
 
-rename v605e cab_dur_abs
+rename v605e cab_dur_abs2
 label variable cab_dur_abs "absolute cabinet duration"
 
 rename v700e el_volat_cab
@@ -250,9 +250,15 @@ label variable el_perf_cab "cabinet electoral performance"
 rename  v010e cab_comp
 
 
+rename v330e      cab_n_members
+rename v331e      cab_n_members_change
+rename v326e_add  maj_coal
+rename v604e      cab_dur_abs1
 
 
 
+
+/*
 
 // definition of external variables ============================================
 
@@ -302,7 +308,7 @@ label variable el_volat "electoral volatility"
 
 rename v302 words_const
 label variable words_const "words in constitution"
-
+*/
 
 
 // generate cariables capturing change =========================================
@@ -352,7 +358,7 @@ drop v222e v223e v224e v225e v226e v227e    v229e v230e v231e v250e v251e v252e
 drop v006e v007e v008e v009e v254e v255e    v257e v258e v259e v260e v261e v262e 
 drop v264e v265e v266e v267e v268e v269e    v271e v408e v272e v702e v273e v106e
 drop v113e v120e v127e v134e v141e v200e    v207e v214e v221e v228e v253e v256e 
-drop v263e v270e  v302e v303e v304e v322e   v600e v602e
+drop v263e v270e  v302e v303e v304e v322e   v600e v602e v303   
 
 
 // save data ===================================================================

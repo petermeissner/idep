@@ -16,7 +16,7 @@ library(testthat)
 
 if(!interactive()){
   options(error = quote({
-    email_error("make reforms failed")
+    email_error("make isor failed")
     q(save = "no")
   }))
 }
@@ -677,16 +677,17 @@ test_that(
 
 #### saving ====================================================================
 
+isor <- reforms
 
 # save reforms dataset
 setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
-save(reforms, file="reforms.Rdata")
-write.dta(reforms, file="reforms.dta")
+save(isor, file="isor.Rdata")
+write.dta(isor, file="isor.dta")
 
 # save it to idep as well
 setwd("c:/dropbox/idep/data")
-save(reforms, file="reforms.Rdata")
-write.dta(reforms, file="reforms.dta")
+save(isor, file="isor.Rdata")
+write.dta(isor, file="isor.dta")
 
 
 

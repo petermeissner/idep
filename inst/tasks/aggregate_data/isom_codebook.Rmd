@@ -1,0 +1,98 @@
+---
+title: "ISOM"
+author: "pm"
+date: '`r Sys.time()`'
+output:
+  pdf_document:
+  keep_tex: yes
+  number_sections: yes
+html_document:
+  highlight: espresso
+  keep_md: yes
+  number_sections: yes
+  self_contained: no
+  toc: yes
+---
+  
+```{r, include=FALSE}
+library(dplyr)
+library(stringr)
+library(magrittr)
+load("Z:/Gesch\xe4ftsordnungen/database/aggregats/isord.Rdata")
+```
+
+```{r include=FALSE}
+# version check 
+data_path  <- "z:/gesch\u00e4ftsordnungen/database/extracts/"
+db_on_disk_version <- 
+  str_extract(list.files(data_path), "\\d+\\.\\d+") %>% 
+  as.numeric()  %>% 
+  max(na.rm=T)
+db_on_disk_version
+set.seed(7787)
+options("width"=100)
+```
+
+
+# IDEP Standing Orders Minority-Majority-Change Dataset
+
+The dataset is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISORD [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/), ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/)
+
+
+
+The data set incorporates aggregated data for 
+`r dim(isord)[1] - length(unique(isord$country))` cabinets in
+`r length(unique(substring(isord$country,1,3)))` countries and consists of 
+`r dim(isord)[2]` variables. 
+
+**Example:**
+  
+```{r, width=100}
+isom  %>% 
+  select(ctr, cab_pm, cab_in, wds_chg, pro_minmaj_qual, idl_pnt_all, volatility) %>% 
+  mutate(
+    idl_pnt_all = round(idl_pnt_all, 1), 
+    volatility  = round(volatility, 1)
+  )
+```
+
+
+# Variable Descriptions
+
+
+## ERD variables
+
+
+
+
+## ISORD variables
+
+The variables of the ISORD dataset are extensively described in a seperate codebook. 
+
+
+## ParlGov variables
+
+
+
+
+## CMP variables 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
