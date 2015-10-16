@@ -86,7 +86,6 @@ parties <-
 #### save ======================================================================
 
 write.dta(parties, "cmp_parlgov_parties_ideo_confl_volatility.dta")
-write.csv(parties, "cmp_parlgov_parties_ideo_confl_volatility.csv")
 save(parties, file="cmp_parlgov_parties_ideo_confl_volatility.Rdata")
 
 

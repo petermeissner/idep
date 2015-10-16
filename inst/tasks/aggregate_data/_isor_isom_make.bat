@@ -16,7 +16,6 @@ R < isor.R                         > routs/isor.rout                         --v
 
 R < isor_ext_pro_minmaj.R          > routs/isor_ext_pro_minmaj.Rout          --vanilla
 R < isor_ext_tsebelis.R            > routs/isor_ext_tsebelis.Rout            --vanilla        
-:: R < isor_ext_parlgov_cabinet_ids.R > routs/isor_ext_parlgov_cabinet_ids.Rout --vanilla
 R < isor_ext_erd_cabinet_ids.R     > routs/isor_ext_erd_cabinet_ids.Rout     --vanilla
 
 R < isom.R                         > routs/isom.rout                         --vanilla 
@@ -25,8 +24,11 @@ REM ===========================================================================
 REM building codebook HTML 
 REM ===========================================================================
 
-Rscript -e "library(knitr); knitr::knit2html('isor_codebook.Rmd')" 
-
+::Rscript -e "library(knitr); knitr::knit2html('isor_codebook.Rmd')" 
+::Rscript -e "library(knitr); knitr::knit2html('isom_codebook.Rmd')" 
+Rscript -e "library(rmarkdown); render('isor_codebook.Rmd')" 
+Rscript -e "library(rmarkdown); render('isom_codebook.Rmd')" 
+Rscript -e "library(rmarkdown); render('isor_codebook_manuals.Rmd')" 
 
 REM ===========================================================================
 REM MOVING FILES

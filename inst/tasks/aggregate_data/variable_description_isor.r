@@ -1,4 +1,4 @@
-desc <- 
+var_desc_isor <- 
 rbind(
   # Meta 
   list(name="t_id"             , from="texts", group="01 meta", description="Unique identifier of a SO version by including country shorthand, date, and version counter."),
@@ -894,13 +894,13 @@ Find below the coding of all non-trivial cases ... $$ diff = pro\\_maj - pro\\_m
 )
 
 
-desc <- as.data.frame(desc)
-description <- 
+var_desc_isor <- as.data.frame(var_desc_isor)
+var_desc_isor <- 
   data_frame(
-    name  = unlist(desc$name),
-    from  = unlist(desc$from),
-    group = unlist(desc$group), 
-    desc  = unlist(desc$description)
+    name  = unlist(var_desc_isor$name),
+    from  = unlist(var_desc_isor$from),
+    group = unlist(var_desc_isor$group), 
+    desc  = unlist(var_desc_isor$description)
   )
 
 

@@ -513,53 +513,53 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
   # https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3 
   reforms$country <- NA
   reforms$ctr     <- reforms$t_country
-  reforms$ctr[reforms$ctr=="DEN"] <- "DNK"
-  reforms$ctr[reforms$ctr=="GER"] <- "DEU"
-  reforms$ctr[reforms$ctr=="IRE"] <- "IRL"
-  reforms$ctr[reforms$ctr=="NED"] <- "NLD"
-  reforms$ctr[reforms$ctr=="POR"] <- "PRT"
-  reforms$ctr[reforms$ctr=="SWIGRN"]   <- "CHEGRN"
-  reforms$ctr[reforms$ctr=="SWIPARLG"] <- "CHEPARLG"
-  reforms$ctr[reforms$ctr=="UK"] <- "GBR"
+  reforms$ctr[ toupper(reforms$ctr)=="DEN"]      <- tolower("DNK"      )
+  reforms$ctr[ toupper(reforms$ctr)=="GER"]      <- tolower("DEU"      )
+  reforms$ctr[ toupper(reforms$ctr)=="IRE"]      <- tolower("IRL"      )
+  reforms$ctr[ toupper(reforms$ctr)=="NED"]      <- tolower("NLD"      )
+  reforms$ctr[ toupper(reforms$ctr)=="POR"]      <- tolower("PRT"      )
+  reforms$ctr[ toupper(reforms$ctr)=="SWIGRN"]   <- tolower("CHEGRN"   )
+  reforms$ctr[ toupper(reforms$ctr)=="SWIPARLG"] <- tolower("CHEPARLG" )
+  reforms$ctr[ toupper(reforms$ctr)=="UK"]       <- tolower("GBR"      )
   
-  reforms$country[reforms$ctr=="AUT"      ] <- "Austria"
-  reforms$country[reforms$ctr=="BEL"      ] <- "Belgium"
-  reforms$country[reforms$ctr=="DNK"      ] <- "Denmark"
-  reforms$country[reforms$ctr=="ESP"      ] <- "Spain"
-  reforms$country[reforms$ctr=="FRA"      ] <- "France"
-  reforms$country[reforms$ctr=="DEU"      ] <- "Germany"
-  reforms$country[reforms$ctr=="IRL"      ] <- "Ireland"
-  reforms$country[reforms$ctr=="ITA"      ] <- "Italy"
-  reforms$country[reforms$ctr=="LUX"      ] <- "Luxembourg"
-  reforms$country[reforms$ctr=="NLD"      ] <- "Netherlands"
-  reforms$country[reforms$ctr=="NOR"      ] <- "Norway"
-  reforms$country[reforms$ctr=="PRT"      ] <- "Portugal"
-  reforms$country[reforms$ctr=="SWE"      ] <- "Sweden"
-  reforms$country[reforms$ctr=="CHEGRN"   ] <- "Swiss (GRN)"
-  reforms$country[reforms$ctr=="CHEPARLG" ] <- "Swiss (Parlg)"
-  reforms$country[reforms$ctr=="GBR"      ] <- "United Kingdom"
+  reforms$country[ toupper(reforms$ctr)=="AUT"      ] <- "Austria"
+  reforms$country[ toupper(reforms$ctr)=="BEL"      ] <- "Belgium"
+  reforms$country[ toupper(reforms$ctr)=="DNK"      ] <- "Denmark"
+  reforms$country[ toupper(reforms$ctr)=="ESP"      ] <- "Spain"
+  reforms$country[ toupper(reforms$ctr)=="FRA"      ] <- "France"
+  reforms$country[ toupper(reforms$ctr)=="DEU"      ] <- "Germany"
+  reforms$country[ toupper(reforms$ctr)=="IRL"      ] <- "Ireland"
+  reforms$country[ toupper(reforms$ctr)=="ITA"      ] <- "Italy"
+  reforms$country[ toupper(reforms$ctr)=="LUX"      ] <- "Luxembourg"
+  reforms$country[ toupper(reforms$ctr)=="NLD"      ] <- "Netherlands"
+  reforms$country[ toupper(reforms$ctr)=="NOR"      ] <- "Norway"
+  reforms$country[ toupper(reforms$ctr)=="PRT"      ] <- "Portugal"
+  reforms$country[ toupper(reforms$ctr)=="SWE"      ] <- "Sweden"
+  reforms$country[ toupper(reforms$ctr)=="CHEGRN"   ] <- "Swiss (GRN)"
+  reforms$country[ toupper(reforms$ctr)=="CHEPARLG" ] <- "Swiss (Parlg)"
+  reforms$country[ toupper(reforms$ctr)=="GBR"      ] <- "United Kingdom"
   
   reforms$ctr <- tolower(reforms$ctr)
   
 #### add wordiness variables ===================================================
   
   reforms$lang <- NA
-  reforms$lang[reforms$ctr=="AUT"      ] <- "German"
-  reforms$lang[reforms$ctr=="BEL"      ] <- "French"
-  reforms$lang[reforms$ctr=="DNK"      ] <- "Danish"
-  reforms$lang[reforms$ctr=="ESP"      ] <- "Spanish"
-  reforms$lang[reforms$ctr=="FRA"      ] <- "French"
-  reforms$lang[reforms$ctr=="DEU"      ] <- "German"
-  reforms$lang[reforms$ctr=="IRL"      ] <- "English"
-  reforms$lang[reforms$ctr=="ITA"      ] <- "Italien"
-  reforms$lang[reforms$ctr=="LUX"      ] <- "French"
-  reforms$lang[reforms$ctr=="NLD"      ] <- "Dutch"
-  reforms$lang[reforms$ctr=="NOR"      ] <- "Norwegian"
-  reforms$lang[reforms$ctr=="PRT"      ] <- "Portuguese"
-  reforms$lang[reforms$ctr=="SWE"      ] <- "Swedish"
-  reforms$lang[reforms$ctr=="CHEGRN"   ] <- "German"
-  reforms$lang[reforms$ctr=="CHEPARLG" ] <- "German"
-  reforms$lang[reforms$ctr=="GBR"      ] <- "English"
+  reforms$lang[reforms$ctr=="aut"      ] <- "German"
+  reforms$lang[reforms$ctr=="bel"      ] <- "French"
+  reforms$lang[reforms$ctr=="dnk"      ] <- "Danish"
+  reforms$lang[reforms$ctr=="esp"      ] <- "Spanish"
+  reforms$lang[reforms$ctr=="fra"      ] <- "French"
+  reforms$lang[reforms$ctr=="deu"      ] <- "German"
+  reforms$lang[reforms$ctr=="irl"      ] <- "English"
+  reforms$lang[reforms$ctr=="ita"      ] <- "Italien"
+  reforms$lang[reforms$ctr=="lux"      ] <- "French"
+  reforms$lang[reforms$ctr=="nld"      ] <- "Dutch"
+  reforms$lang[reforms$ctr=="nor"      ] <- "Norwegian"
+  reforms$lang[reforms$ctr=="prt"      ] <- "Portuguese"
+  reforms$lang[reforms$ctr=="swe"      ] <- "Swedish"
+  reforms$lang[reforms$ctr=="chegrn"   ] <- "German"
+  reforms$lang[reforms$ctr=="cheparlg" ] <- "German"
+  reforms$lang[reforms$ctr=="gbr"      ] <- "English"
   
   reforms$wdns <- NA
   reforms$wdns[reforms$lang=="German"]     <- 0.9
@@ -577,7 +577,21 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
   reforms$wdns_corr <- 1 / reforms$wdns
   
   reforms$wds_clean_rel_wdns_corr <- reforms$wds_clean_rel * reforms$wdns_corr
+
+    
+#### add time since last reform variable =======================================
   
+  reforms <- 
+    reforms  %>% 
+    arrange(ctr, t_date) %>% 
+    group_by(ctr) %>% 
+    mutate(
+      t_date_lag  = lag(t_date),
+      t_date_lead = lead(t_date),
+      t_snc_lst_ref = t_date - t_date_lag,
+      t_to_nxt_ref  = t_date_lead - t_date
+    )  
+
   
   
 #### some cleanup ==============================================================
@@ -681,13 +695,12 @@ isor <- reforms
 
 # save reforms dataset
 setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
+
 save(isor, file="isor.Rdata")
 write.dta(isor, file="isor.dta")
 
-# save it to idep as well
-setwd("c:/dropbox/idep/data")
-save(isor, file="isor.Rdata")
-write.dta(isor, file="isor.dta")
+
+
 
 
 

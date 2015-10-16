@@ -1,0 +1,162 @@
+---
+title: "Descriptions"
+author: "pm"
+date: '`r Sys.time()`'
+output:
+  pdf_document:
+    fig_height: 6
+    fig_width: 10
+  word_document:
+    fig_height: 6
+    fig_width: 10
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+Sys.setlocale(category = "LC_ALL", locale = "English")
+```
+\pagebreak{}
+
+
+```{r packages, include=FALSE}
+library(stringr)
+library(dplyr)
+library(ggplot2)
+library(memisc)
+library(pander)
+panderOptions("digits", 2)
+theme_set(theme_bw())
+```
+
+```{r laoding and preapring data, include=FALSE}
+load("Z:/Gesch\xe4ftsordnungen/Database/aggregats/isor.Rdata")
+isor <- 
+  isor  %>% 
+  filter(t_date >= as.Date("1945-01-01"))
+```
+
+
+
+
+# General Overview
+
+```{r genral statistics, include=FALSE}
+n_countries <- length(unique(substring(isor$ctr, 1,3)))
+ctr         <- unique(isor$ctr)
+countries   <- unique(isor$country)
+min_date    <- format(min(isor$t_date, na.rm=TRUE), "%B %d, %Y")
+max_date    <- format(max(isor$t_date, na.rm=TRUE), "%B %d, %Y")
+```
+
+The ISOR dataset entails `r n_countries` countries, namely: `r paste(countries[-length(countries)], sep=", ")` and `r countries[length(countries)]`. 
+Switzerland has two parliamentary Standing Orders and therefore is included twice. The timeframe under consideration in the dataset ranges from Standing Orders passed at `r min_date` up to ones passed at `r max_date`.
+
+
+```{r general table, include=FALSE}
+df <- data.frame("country" = countries)
+df$`N SO` <- 0
+df$`min y` <- "1000-01-01"
+df$`max y` <- "1000-01-01"
+
+for (i in seq_along(unique(isor$country)) ) {
+  df$`min y`[i] <- format(min(isor$t_date[isor$country == countries[i]]), "%Y")
+  df$`max y`[i] <- format(max(isor$t_date[isor$country == countries[i]]), "%Y")
+  df$`N SO`[i]  <- sum(isor$country == countries[i])
+  df$`chg`[i]   <- sum( isor$wds_chg[isor$country == countries[i]], na.rm=TRUE)
+  df$`min w`[i] <- min(isor$wds_clean_rel[isor$country == countries[i]], na.rm=TRUE)
+  df$`max w`[i] <- max(isor$wds_clean_rel[isor$country == countries[i]], na.rm=TRUE)
+}
+
+df$`ys per SO`  <- 
+  round((as.numeric(df$`max y`) - as.numeric(df$`min y`)) / df$`N SO` ,2)
+df$`chg per y` <- 
+  round(as.numeric(str_replace(df$chg, ",", "")) / (as.numeric(df$`max y`) - as.numeric(df$`min y`)))
+
+# df <- df[order(-df$`max w`),]
+rownames(df) <- NULL
+```
+
+```{r, results='asis', echo=FALSE, message=FALSE}
+knitr::kable(df)
+```
+
+
+The above table gives an general overview across all countries within the dataset. Both the differences in length (measured as relevant words, column: *'min w'* and *'max w'*) as well as the differences in the amount of change (measured as relevant words changed, column: *'chg'*) are striking. The British SO are more than four times as long as e.g. the Norwegian and most change within the dataset happened in Great Britan amounting to nearly 80000 words changed in over 60 years compared to Denmark with only approximatly 25000 words changed in the same time period. Nonetheless, all SO are changed considerably. While in SO ar usually changed more than ocne per legislative term (column: *'ys per SO'*) Austria manages to set itself apart. There SO last nearly five years on average. 
+
+
+\pagebreak{} 
+
+# General proness to change
+
+The graph below shows the relationship between the average of changes per year and the time a SO lasts usally -- the thick grey line represents the running mean while the thin grey line indicates a regression line; both are drawn separatly once for the noraml group and once fo a group of outliers. 
+
+Interestingly the need for change or more general the proness to it -- i.e. the number of words changed per year -- seem to also drive the frequency of changes up in a very consistant way: The more change per year is needed for the assemply the more often these changes will take place. The as well plausible but counterfactual alternative would be to expect that all changes would take place in a regular intervall (e.g. once per legislative term) no matter how large these changes might be. 
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Amount of change per year versus change rate"}
+df$chg  <- str_replace(df$chg, ",", "")
+df$ctr  <- isor$ctr[match(df$country, isor$country)]
+df$outlier <- ifelse(df$ctr %in% c("prt","esp", "aut"),1, 0)
+ggplot(data=df, aes(x=`chg per y`, y=`ys per SO`, label=ctr, group=outlier)) + 
+  geom_smooth(method="lm", se=FALSE, size=2, color="#10101035") + geom_text() +
+  geom_smooth(se=FALSE, size=10, color="#10101015") 
+```
+
+
+
+Of cause this relationship could also be viewed the other way around with the frequency with which changes take place explaining the amount of changes per year: One could argue that depending on the culture of change predominant in a chamber -- expressed by the frequency with wich SO are reformed -- the amount of change varies accordingly. In other words countries with parliaments that have a strong proness to reforming SO -- for whatever reasons [[can we find or give reasons why this might be so or not??? clear majorities, conservatism, ...???]] -- are also very likely to change more than those that refrain from frequent changes. 
+
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Change rate versus amount of change per year"}
+ggplot(data=df, aes(x=`ys per SO`, y=`chg per y`, label=ctr, group=outlier)) + 
+  geom_smooth(method="lm", se=FALSE, size=2, color="#10101035") + geom_text() +
+  geom_smooth(se=FALSE, size=10, color="#10101015") 
+```
+
+
+The results of the regression model below translates the second interpretation of the realationship (countries are either prone to change or not) into regression models. The frist model ignores the fact that Austria, Portugal and Spain obviously form a group of their own while the second model allows for a mean shift for those three cases. We can see, that when the frequency of change goes up (the time until the next reform goes down), the amount of changes (words changed per year) goes down as well. Raising the frequency of changes from 0.5 changes per year (Luxembourg) to 1 (Netherlands) should raise the expected words changed per year from 475 to 819.  
+
+Model 3 is just a version with loged dependent variable to account for a possibly non-linear relationship -- for the given sample the linear estimates should approximate those sufficiently. 
+
+```{r, echo=FALSE}
+model1 <- lm(`chg per y` ~ `ys per SO`, data=df)
+model2 <- lm(`chg per y` ~ `ys per SO`  + outlier  , data=df)
+model3 <- lm(log10(`chg per y`) ~ `ys per SO`  + outlier + wdns , data=df)
+pander(
+  mtable(
+    `chg/y (1)`=model1, 
+    `chg/y (2)`=model2, 
+    `log10(chg/y) (3)`=model3, 
+    summary.stats = c('R-squared','F','p','N')
+    )
+)
+```
+
+
+
+\pagebreak{}
+
+# Particular proness to change
+
+```{r, echo=FALSE}
+df2 <- isor
+ggplot(data = df2, aes(x=tm_lst_ref, y=wds_chg) ) +
+  geom_line() 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

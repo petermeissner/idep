@@ -1,5 +1,5 @@
 ---
-title: "Code book"
+title: "ISOR Codebook"
 author: "pm"
 date: '`r Sys.time()`'
 output:
@@ -15,10 +15,11 @@ output:
 ---
 
 ```{r, include=FALSE}
+library(idep)
 library(dplyr)
 library(stringr)
 library(magrittr)
-load("Z:/Gesch\u00e4ftsordnungen/database/aggregats/reforms.Rdata")
+load("Z:/Gesch\u00e4ftsordnungen/database/aggregats/isor.Rdata")
 ```
 
 ```{r include=FALSE}
@@ -29,23 +30,25 @@ db_on_disk_version <-
   as.numeric()  %>% 
   max(na.rm=T)
 db_on_disk_version
+
 set.seed(7787)
+options("width" = 110)
 ```
 
 
-# The reforms dataset (version `r db_on_disk_version`)
+# The ISOR dataset (version `r db_on_disk_version`)
 The data-set is based on the IDEP data - data on Standing Orders versions (*texts*), data on Standing Orders Text (*textlines*) and data on Standing Orders change between versions (*linelinkage*). Information from all three sources are aggregated on Standing Orders version level - i.e. each version has its own line in the data-set. This aggregation allows for studying what happened - in an aggregate - at each reform of Standing Orders. 
 
 The data set incorporates aggregated data for 
-`r dim(reforms)[1] - length(unique(reforms$t_country))` reforms in
-`r length(unique(substring(reforms$t_country,1,3)))` countries and consists of 
-`r dim(reforms)[2]` variables. 
+`r dim(isor)[1] - length(unique(isor$t_country))` reforms in
+`r length(unique(substring(isor$t_country,1,3)))` countries and consists of 
+`r dim(isor)[2]` variables. 
 
 **Example:**
 
 ```{r}
-reforms  %>% 
-  select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_top_1)
+isor  %>% 
+  select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_top_1, pro_minmaj_qual)
 ```
 
 **ADDING FURTHER DESCRIPTION OF REFORM AND TEXT DATA**
@@ -89,6 +92,19 @@ Other shortcuts or variable names missing the above mentioned shortcuts indicate
 
 
 
+# Citing the Data
+
+Publications using this dataset should acknowledge in writing that the information comes from:
+
+Sieberer, Ulrich; Meißner, Peter; Keh, Julia; Müller, Wolfgang C. (2015): ISOR - IDEP Standing Orders Reforms Dateset. 
+
+Tsebelis, George (2002): Veto Players. How Political Institutions Work. Princeton UP
+
+
+# References used in the Codebook
+
+ERD (2014):  European Representative Democracy (ERD) Release 3.0 February 12, 2014 Codebook for ERD - e. 
+
 
 # General Notes and Remarks
 
@@ -103,169 +119,11 @@ Since all coding and analysis was only pursued on the basis of relevant and clea
 
 
 
-# Coding Manual: Categories and Codes for Coding the Content of Parliamentary Standing Orders
-
-### Basic Intuition:
-
-Each and every code is exclusive, meaning that one subparagraph needs to have one code but one code only. For some codes there are notes on how to decide between multiple codes which may seem appropriate. Sometimes even the coding rules and additional notes will not help to decide between codes. In this case please let us know. Every decision accompanied by doubt should be documented.
-
-### Further rules of the game:
-
--	Often sub-paragraphs can be coded differently, depending on whether or not one takes into consideration the overall context of the rule or the more specific regulation. If in doubt, code based on the overall context. Example: §14 GOBT: president grants vacation time &#8594; coded as rights and obligations of individual members of parliament if one takes into account the general context (652) and not as responsibility of the president (6212).
-
--	Rules which concern the interaction of two actors are attributed to the actor which takes the active part if he has discretion regarding this action. Example: §62 (2) GOBT: The plenary can request report of committee &#8594; coded as recall through the plenary (124) and not as report of committee to the plenary (134).
-
--	The right of those initiating a bill or law to be present at the committee meetings is coded as general right of individual members of parliament (652).
-
-
-
-### Coding Scheme
-
-**(1) Law Making**
-
-&nbsp;
-
-*Note: SPs that refer to both the plenary sessions and committees are coded as 12x; SPs dealing with both law-making and special decision procedures are coded as 1xx.*
-
-
-* **11 Bills and Motions**
-    + 111	types of bills and motions; printing and distribution of bills and motions to MPs
-    + 112	right to initiate bills and motions 
-    + 113	restrictions and deadlines (if not assignable to more specific category, e.g. code 121; 32; 134)
-    + 114	legislative planning (concerns the whole term- general schedule)
-* **12	Treatment of bills and motions in the plenary** *(Note: SPs including all stages of the treatment of bills and motions are coded as votes in the plenary (123); SPs which determine the subject of debate and vote are coded as subject of vote (123).)*
-    + 121	debate in the plenary
-    + 122	right of amendment in the plenary 
-    + 123	subject of vote, rules of vote (including quorum), voting technology in the plenary
-    + 124	the plenary as Committee of the Whole House *(Note: SPs referring to both committees and Committee of the Whole House are coded as committees (not 124 but 13x).)*
-    + 125	referral to committee, withdrawal from committee
-* **13	Treatment of bills and motions in committee** *(Note: SPs including all stages of the treatment of bills and motions in committee are coded as votes in committee (133); SPs which determine both the subject of debate and the subject of vote are coded as subject of vote in committee (133).)*
-    + 131	debate in committee (including hearing) 
-    + 132	amendment rights in committee
-    + 133	subject of vote, rules of vote (including quorum), voting technology in committee
-    + 134	report to the plenary
-
-
-**(2) Special Decision Procedures other than Regular Law-Making**
-
-&nbsp;
-
-*Note: SPs which concern multiple special decision procedures apart from regular law-making are coded as follows: highest priority is given to constitutional matters, second highest priority is given to financial laws and budgeting, third highest priority is given to EU policy and fourth highest priority is given toforeign policy.*
-
-* **21	constitutional change and amendment**
-* **22	financial laws** (money bills) and budgeting
-* **23	foreign policy**  (e.g. approval of law of nations, declaration of war *Note: If foreign policy and EU is treated together, the SP is coded as EU (241, 242, 243 or 244).*)
-* **24	EU** *(Note: If foreign policy and EU is treated together, the SP is coded as EU (241, 242, 243 or 244))*
-    + 241	treatment of EU-bills and motions
-    + 242	EU-committee: election and resignation 
-    + 243	instructions to the government concerning EU decisions
-    + 244	further rights of participation in EU matters (e.g. debates about EU topics not based on EU bills and motions, reaction to violations of subsidiary principle) 
-* **25	general rules on elections in parliament** (if not coded as election of government (31), or election of specific officials (411; 421; 441; 6211; 6221; 632))
-* **26	further special decision procedures** leading to a decision, e.g. resolution, or leading to a decree/act/bylaw (not mere debate or question time) but cannot be coded as regular law-making nor special decision procedures (21-24)
-* **27	procedures concerning laws that are hierarchically situated between regular laws and constitutional laws** (above regular laws; e.g. organic laws in Spain)
-* **28 	emergency legislation**
-* **29	relationship to sub-national level** (law-making, rights of participation of sub-national level)
-
-
-
-**(3)	Relationship to Government**
-
-&nbsp; 
-
-*Note: If vote of no confidence and vote of confidence is treated together, the SP is coded as vote of no confidence (32).*
-
-* **31	election of government / mandatory investiture vote; entry into office**
-* **32	vote of no confidence / government resignation**
-* **33	vote of confidence**
-* **34	instructions to government, involvement of members of government in parliamentary activities** (rights to compel witnesses [usually right of parliament against members of government], right to speak [usually members of government's right], request of information about state of execution of decisions of parliament)
-
-
-**(4)	Relationship to External Offices/Institutions apart from the Government**
-
-* **41	parliamentary support bodies (e.g. general accounting office, ombudsman,...)**
-    + 411	election and resignation
-    + 412	competences and resources of external offices/institutions; relations to parliament (e.g. reports, questions, ...)
-* **42	head of state**
-    + 421	election and resignation
-    + 422	relation to parliament (if not coded as law-making (141, 144))
-* **43	second chamber (if not coded as law-making (142))**
-* **44	constitutional courts**
-    + 441	election and resignation
-    + 442	relation to parliament (if not coded as law-making (145))
-* **45	other external offices**
-
-
-**(5)	Generating Publicity**
-
-* **51	general rules regarding debate** (e.g. time allotted for speaking, proportional representation of parties during debate, closure of debate)
-* **52	debates outside of law-making** (e.g. topical hours ...)
-* **53	question rights**
-* **54	petitions and petition committee**
-* **55	relationship to media and citizens** (e.g. parliamentary TV, accreditation of journalists, publicity of meetings, admissibility of visitors); regulation of matters of confidentiality
-* **56	protocols and parliamentary documents; forwarding of documents and decisions to other bodies**
-
-
-
-**6	 Internal Organization of Parliament**
-
-* **61	plenary**
-    + 611	agenda setting and removal of items from the agenda (general rules which are not specifically regulated under 114)
-    + 612	chairing of meetings and measures to uphold order
-    + 613	sitting times *(Note: When members are to be present inside the parliament)*
-* **62	parliamentary presiding bodies**
-    + 621	president of parliament, vice presidents, secretaries and clerks
-        * 6211	election, resignation and internal decision rules
-        * 6212	responsibilities *(Note: if not coded as more specific category  (e.g. 612), Try to code in regard to the topic at first - 6212 only when no code corresponds)*
-    + 622	council of elders or similar coordination body *(Note: The council of elders can be distinguished from the Presidency of Parliament (621) insofar as representatives of the parliamentary party groups are explicitly included.)*
-        * 6221	composition, election, resignation, internal decision rules
-        * 6222	responsibilities (if not coded as more specific category (e.g. 612))
-* **63	committees** (if not coded as more specific category (e.g. 13; 24; 54; 55; 72))
-    + 631	general regulations regarding types of committees
-    + 632	membership and committee jurisdiction (area of influence-control .g. finance, economy, agriculture...)
-    + 633	formal organizational units of committee *(Note: e.g. chair of committee, sub-committees, staff; This is about the appointment and election of the organizational units within committees and NOT about their responsibilities.)*
-    + 634	agenda and procedures (details on how decisions are taken) within committees (if not coded as law-making (13))
-    + 635	relations to other bodies
-        * 6351	relation to plenary (if not coded as 124; 134; 34)
-        * 6352 	relation to other committees
-    + 636	investigative competencies of regular committees (NOT committees of inquiry (637))
-		+ 637	committee of inquiry 
-		+ 638	enquête commission
-    + 639	other special committees which are not explicitly referenced in this coding manual  *(Note: e.g. oversight committees in Switzerland; Otherwise referenced are: EU-committee (242); committee of inquiry (637); petition committee (54); standing order committee (usually 72); council of elders or similar coordination body (622). Exception: committees which deal exclusively with the confirmation of the elections of members of parliament are coded as 651.)*
-* **64	parliamentary party groups**
-    + 641	formation of parliamentary party groups
-    + 642	rights and obligations of parliamentary party groups (if not coded more specifically as e.g. 112; 51; 52; 53)
-    + 643	financial and staff resources
-* **65	individual members of parliament**
-    + 651	election, entry into office, resignation, incompatibilities, legal status, immunity, indemnity
-    + 652	rights and obligations of individual members of parliament (if not coded more specifically as e.g. 112; 51; 52; 53)
-    + 653	salary, financial and staff resources
-* **66	opposition**
-* **67	special bodies for emergency situations**
-* **68	parliamentary administration**
-
-
-
-**7 	Change and Interpretation of the Standing Orders**
-
-* **71	rules regarding changing the standing orders**
-* **72	rules regarding interpretation of and deviation from standing orders**
-* **73	debate about standing orders and motions regarding the standing orders**
-
-**8 	General Rules Regarding Formation and Legislative Session; Discontinuity**
-
-**9 	Final Provisions**
-
-**10	Miscellaneous** (cannot be coded otherwise)
-
-**999 	Footnotes and Titles Without Relevant Content**
-
-
-
 
 ```{r var description, include=FALSE}
-source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description.r")
-desc_missing <- any( !(   names(reforms) %in% description$name ))
-desc_tomuch  <- any( !( description$name %in% names(reforms)   ))
+source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description_isor.r")
+desc_missing <- any( !(   names(isor) %in% var_desc_isor$name ))
+desc_tomuch  <- any( !( var_desc_isor$name %in% names(isor)   ))
 anymiss <- desc_tomuch | desc_missing
 ```
 
@@ -278,7 +136,7 @@ if(desc_missing){
 ```
 
 ```{r, include=desc_missing}
-names(reforms)[!(names(reforms) %in% description$name)]
+names(isor)[!(names(isor) %in% var_desc_isor$name)]
 ```
 
 ```{r, echo=FALSE, results='asis'}
@@ -290,8 +148,8 @@ if(desc_tomuch){
 ```
 
 ```{r, include=desc_tomuch}
-description$name[!(description$name %in% names(reforms))]
-description <- description[(description$name %in% names(reforms)),]
+var_desc_isor$name[!(var_desc_isor$name %in% names(isor))]
+var_desc_isor <- var_desc_isor[(var_desc_isor$name %in% names(isor)),]
 ```
 
 
@@ -299,7 +157,7 @@ description <- description[(description$name %in% names(reforms)),]
 # Variable descriptions
 
 
-```{r, echo=FALSE, results='asis', warning=FALSE}
+```{r, echo=FALSE, results='asis', warning=FALSE, fig.width=10, fig.height=1}
 sumdummy<-function(x)
 {
   ifelse(
@@ -346,17 +204,18 @@ sumvar <- function(x){
   
 }
 
-for( g in sort(unique(description$group)) ){
+for( g in sort(unique(var_desc_isor$group)) ){
   gtitle <- str_replace(g, "^\\d* ", "")
   cat(paste0("\n## ", gtitle, "\n\n"))
-  dat <- description  %>% filter(group==g)
+  dat <- var_desc_isor  %>% filter(group==g)
   for( i in seq_len(dim(dat)[1]) ){
     cat(
       "\n\n**", dat$name[i], "** (", dat$from[i] ,")", "\n\n",
       dat$desc[i], "\n\n",
       sep=""
     )
-    sumvar(as.data.frame(reforms, stringsAsFactors=F)[ , dat$name[i] ])
+    x <- as.data.frame(isor, stringsAsFactors=F)[ , dat$name[i] ]
+    sumvar(x)
     cat("\n\n<p>&nbsp;</p>")
   }
 }

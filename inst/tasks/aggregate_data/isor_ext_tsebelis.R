@@ -15,35 +15,35 @@ setwd("Z:/Gesch\xe4ftsordnungen/Database/aggregats")
 
 #### load data =================================================================
 
-load("Z:/Gesch\xe4ftsordnungen/Database/aggregats/reforms.Rdata")
+load("Z:/Gesch\xe4ftsordnungen/Database/aggregats/isor.Rdata")
 tsebelis <- 
   read.csv2("Z:/Gesch\xe4ftsordnungen/Database/external_data/Tsebelis agenda Control p105/tsebelis.csv" ) %>% 
   as_data_frame() %>% 
   factors_to_character()  %>% 
   filter(cntrshort!="" & cntrshort!="ICE") 
 
-reforms$tsb_agc  <- NULL
-reforms$ext_tsb_agc1 <- NULL
-reforms$ext_tsb_agc2 <- NULL
-reforms$ext_tsb_agc4 <- NULL
-reforms$minmaj_wds   <- NULL
-reforms$minmaj_wds1  <- NULL
-reforms$minmaj_wds2  <- NULL
-reforms$minmaj_wds4  <- NULL
+isor$tsb_agc  <- NULL
+isor$ext_tsb_agc1 <- NULL
+isor$ext_tsb_agc2 <- NULL
+isor$ext_tsb_agc4 <- NULL
+isor$minmaj_wds   <- NULL
+isor$minmaj_wds1  <- NULL
+isor$minmaj_wds2  <- NULL
+isor$minmaj_wds4  <- NULL
 
 
 #### DEV Options ===============================================================
 
 if ( exists("DEV") ){
-  reforms <- 
-    reforms  %>% select(t_id, t_date, t_country, wds_clean_rel, wds_pro_maj, wds_pro_min, lns_rel, lns_chg, pro_maj, pro_min  )  
+  isor <- 
+    isor  %>% select(t_id, t_date, t_country, wds_clean_rel, wds_pro_maj, wds_pro_min, lns_rel, lns_chg, pro_maj, pro_min  )  
 }
 
 
 
 #### adjust data ===============================================================
 
-#reforms$t_date <- as.POSIXct(reforms$t_date)
+#isor$t_date <- as.POSIXct(isor$t_date)
 
 tsebelis <- 
   tsebelis %>% 
@@ -58,15 +58,15 @@ tsebelis[  tsebelis$cntrshort=="GBR",  ]$cntrshort <- "UK"
 #### merge data ================================================================
 
 tdate <- as.Date("1985-01-01")
-reforms$tsb_agc <- NA
+isor$tsb_agc <- NA
 
-countries <- unique(reforms$t_country)
+countries <- unique(isor$t_country)
 
 for(ctr in countries){
-  iffer <- reforms$t_country==ctr & reforms$t_date <= tdate
-  date  <- max(reforms[iffer,]$t_date)
-  iffer <- reforms$t_country==ctr & reforms$t_date == date
-  reforms$tsb_agc[iffer] <-   as.numeric(tsebelis$agenda_control[tsebelis$cntrshort==ctr])
+  iffer <- isor$t_country==ctr & isor$t_date <= tdate
+  date  <- max(isor[iffer,]$t_date)
+  iffer <- isor$t_country==ctr & isor$t_date == date
+  isor$tsb_agc[iffer] <-   as.numeric(tsebelis$agenda_control[tsebelis$cntrshort==ctr])
 }
 
 
@@ -82,68 +82,68 @@ for(ctr in countries){
 #   overall text lengths instead of by amount of regulations in the on or other direction
 
 
-reforms$minmaj_wds1 <- reforms$tsb_agc * reforms$wds_clean_rel / 1
-reforms$minmaj_wds2 <- reforms$tsb_agc * reforms$wds_clean_rel / 2
-reforms$minmaj_wds4 <- reforms$tsb_agc * reforms$wds_clean_rel / 4
+isor$minmaj_wds1 <- isor$tsb_agc * isor$wds_clean_rel / 1
+isor$minmaj_wds2 <- isor$tsb_agc * isor$wds_clean_rel / 2
+isor$minmaj_wds4 <- isor$tsb_agc * isor$wds_clean_rel / 4
 
-anchors_index <- which(!is.na(reforms$minmaj_wds1))
-anchors       <- reforms$t_id[anchors_index]
+anchors_index <- which(!is.na(isor$minmaj_wds1))
+anchors       <- isor$t_id[anchors_index]
 
   for (k in anchors_index) {
     i <- k
-    while ( empty_to_false( reforms$t_country[i] == reforms$t_country[i+1] ) )
+    while ( empty_to_false( isor$t_country[i] == isor$t_country[i+1] ) )
     {
-      reforms$minmaj_wds1[i+1] <- (reforms$wds_pro_maj[i+1] - reforms$wds_pro_min[i+1])  + reforms$minmaj_wds1[i]
-      reforms$minmaj_wds2[i+1] <- (reforms$wds_pro_maj[i+1] - reforms$wds_pro_min[i+1])  + reforms$minmaj_wds2[i]
-      reforms$minmaj_wds4[i+1] <- (reforms$wds_pro_maj[i+1] - reforms$wds_pro_min[i+1])  + reforms$minmaj_wds4[i]
+      isor$minmaj_wds1[i+1] <- (isor$wds_pro_maj[i+1] - isor$wds_pro_min[i+1])  + isor$minmaj_wds1[i]
+      isor$minmaj_wds2[i+1] <- (isor$wds_pro_maj[i+1] - isor$wds_pro_min[i+1])  + isor$minmaj_wds2[i]
+      isor$minmaj_wds4[i+1] <- (isor$wds_pro_maj[i+1] - isor$wds_pro_min[i+1])  + isor$minmaj_wds4[i]
       i <- i + 1 
     }
     i <- k
-    while ( empty_to_false( reforms$t_country[i] == reforms$t_country[i-1] ) )
+    while ( empty_to_false( isor$t_country[i] == isor$t_country[i-1] ) )
     {
-      reforms$minmaj_wds1[i-1] <-  reforms$minmaj_wds1[i] - (reforms$wds_pro_maj[i] - reforms$wds_pro_min[i]) 
-      reforms$minmaj_wds2[i-1] <-  reforms$minmaj_wds2[i] - (reforms$wds_pro_maj[i] - reforms$wds_pro_min[i]) 
-      reforms$minmaj_wds4[i-1] <-  reforms$minmaj_wds4[i] - (reforms$wds_pro_maj[i] - reforms$wds_pro_min[i]) 
+      isor$minmaj_wds1[i-1] <-  isor$minmaj_wds1[i] - (isor$wds_pro_maj[i] - isor$wds_pro_min[i]) 
+      isor$minmaj_wds2[i-1] <-  isor$minmaj_wds2[i] - (isor$wds_pro_maj[i] - isor$wds_pro_min[i]) 
+      isor$minmaj_wds4[i-1] <-  isor$minmaj_wds4[i] - (isor$wds_pro_maj[i] - isor$wds_pro_min[i]) 
       i <- i - 1
     } 
   }
 
 for (i in anchors_index) {
-  country              <- reforms$t_country[i]
-  country_index        <- reforms$t_country==country
-  anchor_wds_clean_rel <- reforms$wds_clean_rel[i] 
-  reforms$ext_tsb_agc1[country_index] <- reforms$minmaj_wds1[country_index] / (anchor_wds_clean_rel / 1)
-  reforms$ext_tsb_agc2[country_index] <- reforms$minmaj_wds2[country_index] / (anchor_wds_clean_rel / 2)
-  reforms$ext_tsb_agc4[country_index] <- reforms$minmaj_wds4[country_index] / (anchor_wds_clean_rel / 4)
+  country              <- isor$t_country[i]
+  country_index        <- isor$t_country==country
+  anchor_wds_clean_rel <- isor$wds_clean_rel[i] 
+  isor$ext_tsb_agc1[country_index] <- isor$minmaj_wds1[country_index] / (anchor_wds_clean_rel / 1)
+  isor$ext_tsb_agc2[country_index] <- isor$minmaj_wds2[country_index] / (anchor_wds_clean_rel / 2)
+  isor$ext_tsb_agc4[country_index] <- isor$minmaj_wds4[country_index] / (anchor_wds_clean_rel / 4)
 }
 
 
 #### some cleanup ==============================================================
 
 # round agenda control variable to 2 digits 
-reforms$ext_tsb_agc1 <- round(reforms$ext_tsb_agc1, 2)
-reforms$ext_tsb_agc2 <- round(reforms$ext_tsb_agc2, 2)
-reforms$ext_tsb_agc4 <- round(reforms$ext_tsb_agc4, 2)
+isor$ext_tsb_agc1 <- round(isor$ext_tsb_agc1, 2)
+isor$ext_tsb_agc2 <- round(isor$ext_tsb_agc2, 2)
+isor$ext_tsb_agc4 <- round(isor$ext_tsb_agc4, 2)
 
 # drop minmaj_wds variable
-reforms <- reforms  %>% select(-minmaj_wds1, -minmaj_wds2, -minmaj_wds4)
+isor <- isor  %>% select(-minmaj_wds1, -minmaj_wds2, -minmaj_wds4)
 
 
 
 #### plot new variable =========================================================
 
 
-p <- ggplot( reforms ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc1, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
+p <- ggplot( isor ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc1, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
 p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE) + 
   ggtitle(paste("extrapolated Tsebelis Agenda Control")) + 
   xlim(as.POSIXct("1920-01-01"), as.POSIXct("2010-01-01"))
 
-p <- ggplot( reforms ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc2, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
+p <- ggplot( isor ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc2, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
 p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE) + 
   ggtitle(paste("extrapolated Tsebelis Agenda Control")) + 
   xlim(as.POSIXct("1920-01-01"), as.POSIXct("2010-01-01"))
 
-p <- ggplot( reforms ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc4, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
+p <- ggplot( isor ,  aes(x=as.POSIXct(t_date), y=ext_tsb_agc4, group=t_country, color=t_country, label = ifelse(duplicated(ctr),"",ctr) ) )
 p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE) + 
   ggtitle(paste("extrapolated Tsebelis Agenda Control")) + 
   xlim(as.POSIXct("1920-01-01"), as.POSIXct("2010-01-01"))
@@ -153,10 +153,10 @@ p +  geom_line(lwd=1.4) + geom_text(hjust=1.2) + theme_bw() + guides(color=FALSE
 
 #### saving ====================================================================
 
-# save reforms dataset
+# save isor dataset
 setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
-save(reforms, file="reforms.Rdata")
-write.dta(reforms, file="reforms.dta")
+save(isor, file="isor.Rdata")
+write.dta(isor, file="isor.dta")
 
 
 

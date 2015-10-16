@@ -268,6 +268,55 @@ keep <- function(...){
 
 
 
+#' function plotting the range of a variable 
+#' @param x varaible to be plotted
+
+plot_var_overview <- function(x){
+  if( (is.numeric(x) | class(x)=="Date") ){
+    par("mar" = c(2,0,0,0))
+    plot(range(x, na.rm=TRUE), c(0,1), type="n", ylab = "", yaxt="n", xlab="", xaxt="n", ylim=c(-0.2,2.2))
+    axis(1, at=summary(x)[c(1,4,6)], cex.axis=1.25)
+    if( class(x)=="Date" ) x <- as.numeric(x)
+    dx <- density(x, na.rm=TRUE)
+    segments(x0=x, x1=x, y0=0, y1=1, col="#00000060")
+    lines(dx$x, dx$y * 2 / max(dx$y), col="#EEEEEECC", lwd=10)
+    lines(dx$x, dx$y * 2 / max(dx$y), lwd=5, col="#808080AA")
+    lines(dx$x, dx$y * 2 / max(dx$y), lwd=2, col="#000000")
+  }
+}
+
+
+
+
+#' function to describe variables in data.frame
+#' @param df data.frame to be described
+#' @param what metric to put out
+#' @param cols columns of data.frame for which to put out metrics
+
+describe <- function(
+  df, 
+  what=c("class", "nas","min", "mean", "modus", "median", "max"), 
+  cols=TRUE
+){
+  tmp <- as.data.frame(t(as_data_frame(classes(df))), stringsAsFactors=FALSE)
+  tmp <- data.frame(name=rownames(tmp), class=tmp[,1], stringsAsFactors = FALSE)
+  tmp$nas   <- unlist( lapply(df, function(x){sum(is.na(x))} ))
+  tmp$min   <- unlist( lapply(df, function(x){min(x, na.rm = TRUE)} ))
+  tmp$mean  <- unlist( lapply(df, function(x){mean(x, na.rm = TRUE)} ))
+  tmp$modus <- unlist( lapply(df, function(x){modus(x)} ))
+  tmp$median<- unlist( lapply(df, function(x){median(x, na.rm = TRUE)} ))
+  tmp$max   <- unlist( lapply(df, function(x){max(x, na.rm = TRUE)} ))
+  tmp <- tmp[cols, c("name", what)]
+  # return
+  return(tmp)
+}
+
+
+
+
+
+
+
 
 
 
