@@ -1,0 +1,177 @@
+---
+title: "Descriptions"
+author: "pm"
+date: '`r Sys.time()`'
+output:
+  pdf_document:
+    fig_height: 6
+    fig_width: 10
+  word_document:
+    fig_height: 6
+    fig_width: 10
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+Sys.setlocale(category = "LC_ALL", locale = "English")
+```
+
+
+```{r packages, include=FALSE}
+library(pander)
+panderOptions("digits", 2)
+library(memisc)
+library(stringr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r laoding and preapring data, include=FALSE}
+load("Z:/Gesch\xe4ftsordnungen/Database/aggregats/isor.Rdata")
+isor <- 
+  isor  %>% 
+  filter(t_date >= as.Date("1945-01-01")) 
+isor <- isor[, -grep("_corp_\\d|_corp_mdf_\\d|_corp_del_\\d|_corp_ins_\\d", names(isor))]
+```
+
+```{r ggplot options, include=FALSE}
+theme_set(theme_bw())
+theme_stripped <- 
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.y=element_text(angle=90, vjust=0.5, hjust=0.5)
+  ) 
+xlim_time  <- xlim(c(min(isor$t_date), max(isor$t_date))) 
+```
+
+
+# General Overview
+
+```{r genral statistics, include=FALSE}
+n_countries <- length(unique(substring(isor$ctr, 1,3)))
+ctr         <- unique(isor$ctr)
+countries   <- unique(isor$country)
+min_date    <- format(min(isor$t_date, na.rm=TRUE), "%B %d, %Y")
+max_date    <- format(max(isor$t_date, na.rm=TRUE), "%B %d, %Y")
+```
+
+The ISOR dataset entails `r n_countries` countries, namely: `r paste(countries[-length(countries)], sep=", ")` and `r countries[length(countries)]`. 
+Switzerland has two parliamentary Standing Orders and therefore is included twice. The timeframe under consideration in the dataset ranges from Standing Orders passed at `r min_date` up to ones passed at `r max_date`.
+
+
+```{r general table, include=FALSE}
+df <- data.frame("country" = countries)
+df$`N SO` <- 0
+df$`min y` <- "1000-01-01"
+df$`max y` <- "1000-01-01"
+
+for (i in seq_along(unique(isor$country)) ) {
+  df$`min y`[i] <- format(min(isor$t_date[isor$country == countries[i]]), "%Y")
+  df$`max y`[i] <- format(max(isor$t_date[isor$country == countries[i]]), "%Y")
+  df$`N SO`[i]  <- sum(isor$country == countries[i])
+  df$`chg`[i]   <- sum( isor$wds_chg[isor$country == countries[i]], na.rm=TRUE)
+  df$`min w`[i] <- min(isor$wds_clean_rel[isor$country == countries[i]], na.rm=TRUE)
+  df$`max w`[i] <- max(isor$wds_clean_rel[isor$country == countries[i]], na.rm=TRUE)
+  df$wdns[i]    <- max(isor$wdns[isor$country == countries[i]], na.rm=TRUE)
+}
+
+df$`ys per SO`  <- 
+  1 / round((as.numeric(df$`max y`) - as.numeric(df$`min y`)) / df$`N SO` ,2)
+df$`chg per y` <- 
+  round(as.numeric(str_replace(df$chg, ",", "")) / (as.numeric(df$`max y`) - as.numeric(df$`min y`)))
+
+# df <- df[order(-df$`max w`),]
+rownames(df) <- NULL
+```
+
+```{r, results='asis', echo=FALSE, message=FALSE}
+knitr::kable(df[-length(df[1,])])
+```
+
+
+The above table gives an general overview across all countries within the dataset. Both the differences in length (measured as relevant words, column: *'min w'* and *'max w'*) as well as the differences in the amount of change (measured as relevant words changed, column: *'chg'*) are striking. The British SO are more than four times as long as e.g. the Norwegian and most change within the dataset happened in Great Britan amounting to nearly 80000 words changed in over 60 years compared to Denmark with only approximatly 25000 words changed in the same time period. Nonetheless, all SO are changed considerably. While in SO ar usually changed more than ocne per legislative term (column: *'ys per SO'*) Austria manages to set itself apart. There SO last nearly five years on average. 
+
+
+\pagebreak{}
+
+# Reforms per country
+
+
+```{r, echo=FALSE}
+CTR <- unique(isor$ctr)
+COUNTRY <- unique(isor$country)
+for ( i in seq_along(CTR)){
+  changes <- 
+    isor %>% 
+    select(t_id, ctr, t_date, wds_mdf, wds_ins, wds_del) %>% 
+    filter(ctr==CTR[i]) %>% 
+    gather(change, length, wds_ins, wds_mdf, wds_del)
+  
+  corpus <- 
+    isor %>% 
+    select(
+      t_id, ctr, t_date, 
+      wds_corp_top_1, wds_corp_top_2, wds_corp_top_3, wds_corp_top_4, wds_corp_top_5
+    ) %>% 
+    filter(ctr==CTR[i]) %>% 
+    gather(
+      corpus, length, 
+      wds_corp_top_1, wds_corp_top_2, wds_corp_top_3, wds_corp_top_4, wds_corp_top_5
+    )
+  
+  p <- 
+    ggplot() + 
+    geom_area(
+      data=corpus, 
+      aes(x=t_date, y=length, group=corpus, fill=corpus)
+    ) #+
+    # geom_bar(
+    #   data=changes, 
+    #   aes(x=t_date, y=length, group=change, fill=change), 
+    #   stat = 'identity', width=250
+    # ) 
+  
+  p <- 
+  p + annotate( "text", x = as.Date("1946-01-01"), y = Inf, label = COUNTRY[i], hjust=0, vjust=5, size=5, color="#3180AE")
+  
+  p <- 
+    p +  
+     scale_fill_manual(
+       values=c("wds_ins"="#8EB418", "wds_mdf"="#F7B360", "wds_del"="#D81A3C",
+                "wds_corp_top_1"="#F7FBFF", "wds_corp_top_2"="#DEEBF7", 
+                "wds_corp_top_3"="#C6DBEF", "wds_corp_top_4"="#9ECAE1", 
+                "wds_corp_top_5"="#6BAED6")
+     ) + 
+    guides(fill=FALSE) + 
+    theme_stripped +
+    xlim_time + 
+    geom_hline(yintercept=0)
+  
+  
+  print(p)
+}
+
+```
+
+
+
+
+# dutiestodo
+
+```{r, echo=FALSE}
+cat("==========================================================================")
+cat("file copied to: \nZ:/Geschäftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/")
+file.copy(
+  "C:/Dropbox/RPackages/idep/inst/reports/in_progress.pdf",
+  "Z:/Geschäftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/in_progress.pdf", overwrite=TRUE
+  )
+```
+
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+---
+  title: "General Change"
+author: "pm"
+date: '`r Sys.time()`'
+output:
+  pdf_document:
+  fig_height: 6
+fig_width: 10
+word_document:
+  fig_height: 6
+fig_width: 10
+---
+  
+  ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+Sys.setlocale(category = "LC_ALL", locale = "English")
+```
+
+
+```{r packages, include=FALSE}
+library(pander)
+panderOptions("digits", 2)
+library(memisc)
+library(stringr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+
+```{r laoding and preapring data, include=FALSE}
+load("Z:/Gesch\xe4ftsordnungen/Database/aggregats/isor.Rdata")
+isor <- 
+  isor  %>% 
+  filter(t_date >= as.Date("1945-01-01")) 
+isor <- isor[, -grep("_corp_\\d|_corp_mdf_\\d|_corp_del_\\d|_corp_ins_\\d", names(isor))]
+```
+
+```{r ggplot options, include=FALSE}
+theme_set(theme_bw())
+theme_stripped <- 
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.y=element_text(angle=90, vjust=0.5, hjust=0.5)
+  ) 
+xlim_time  <- xlim(c(min(isor$t_date), max(isor$t_date))) 
+```
+
+
+
+
+\pagebreak{} 
+
+# General proness to change
+
+The graph below shows the relationship between the average of changes per year and the time a SO lasts usally -- the thick grey line represents the running mean while the thin grey line indicates a regression line; both are drawn separatly once for the noraml group and once fo a group of outliers. 
+
+Interestingly the need for change or more general the proness to it -- i.e. the number of words changed per year -- seem to also drive the frequency of changes up in a very consistant way: The more change per year is needed for the assemply the more often these changes will take place. The as well plausible but counterfactual alternative would be to expect that all changes would take place in a regular intervall (e.g. once per legislative term) no matter how large these changes might be. 
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Amount of change per year versus change rate"}
+df$chg  <- str_replace(df$chg, ",", "")
+df$ctr  <- isor$ctr[match(df$country, isor$country)]
+df$outlier <- ifelse(df$ctr %in% c("prt","esp", "aut"),1, 0)
+ggplot(data=df, aes(x=`chg per y`, y=`ys per SO`, label=ctr, group=outlier)) + 
+  geom_smooth(method="lm", se=FALSE, size=2, color="#10101035") + geom_text() +
+  geom_smooth(se=FALSE, size=10, color="#10101015") 
+```
+
+
+
+Of cause this relationship could also be viewed the other way around with the frequency with which changes take place explaining the amount of changes per year: One could argue that depending on the culture of change predominant in a chamber -- expressed by the frequency with wich SO are reformed -- the amount of change varies accordingly. In other words countries with parliaments that have a strong proness to reforming SO -- for whatever reasons [[can we find or give reasons why this might be so or not??? clear majorities, conservatism, ...???]] -- are also very likely to change more than those that refrain from frequent changes. 
+
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Change rate versus amount of change per year"}
+ggplot(data=df, aes(x=`ys per SO`, y=`chg per y`, label=ctr, group=outlier)) + 
+  geom_smooth(method="lm", se=FALSE, size=2, color="#10101035") + geom_text() +
+  geom_smooth(se=FALSE, size=10, color="#10101015") 
+```
+
+
+The results of the regression model below translates the second interpretation of the realationship (countries are either prone to change or not) into regression models. The frist model ignores the fact that Austria, Portugal and Spain obviously form a group of their own while the second model allows for a mean shift for those three cases. We can see, that when the frequency of change goes up (the time until the next reform goes down), the amount of changes (words changed per year) goes down as well. Raising the frequency of changes from 0.5 changes per year (Luxembourg) to 1 (Netherlands) should raise the expected words changed per year from 475 to 819.  
+
+Model 3 is just robustness check adding a logged dependent variable as well as the general wordiness of the language in which the SO was written. 
+
+```{r, echo=FALSE}
+model1 <- lm(`chg per y` ~ `ys per SO`, data=df)
+model2 <- lm(`chg per y` ~ `ys per SO`  + outlier  , data=df)
+model3 <- lm(log10(`chg per y`) ~ `ys per SO`  + outlier + wdns , data=df)
+pander(
+  mtable(
+    `chg/y (1)`=model1, 
+    `chg/y (2)`=model2, 
+    `log10(chg/y) (3)`=model3, 
+    summary.stats = c('R-squared','F','p','N')
+    )
+)
+```
+
+
+
+\pagebreak{}
+
+# Particular proness to change
+
+```{r, echo=FALSE, warning=FALSE}
+ggplot(
+    data=isor, 
+    aes( x = as.numeric(t_snc_lst_ref)/365, y = wds_chg, group=ctr) 
+  ) +
+  geom_point(color=("#80808080")) + 
+  geom_smooth(method="lm", se=FALSE, color="#101010AA", fullrange=TRUE) 
+```
+
+
+# A model of change
+
+... previous two chapters together
+
+
+
+
+
+
+
+# dutiestodo
+
+```{r, echo=FALSE}
+cat("==========================================================================")
+cat("file copied to: \nZ:/Geschäftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/")
+file.copy(
+  "C:/Dropbox/RPackages/idep/inst/reports/general_change.pdf",
+  "Z:/Geschäftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/general_change.pdf", overwrite=TRUE
+  )
+```
