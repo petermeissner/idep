@@ -51,6 +51,6 @@ R/pversion_inc.R
 **/tex2pdf.*/*
 
 # paper pdfs
-inst/reports/**/*.pdf 
+inst/reports/*.pdf 
 
 
