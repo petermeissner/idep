@@ -102,7 +102,7 @@ The above table gives an general overview across all countries within the datase
 ```{r, echo=FALSE}
 CTR <- unique(isor$ctr)
 COUNTRY <- unique(isor$country)
-for ( i in seq_along(CTR)){
+for ( i in seq_along(CTR)[c(1,4)]){
   changes <- 
     isor %>% 
     select(t_id, ctr, t_date, wds_mdf, wds_ins, wds_del) %>% 
