@@ -50,4 +50,7 @@ R/pversion_inc.R
 *.rout
 **/tex2pdf.*/*
 
+# paper pdfs
+inst/reports/**/*.pdf 
+
 
