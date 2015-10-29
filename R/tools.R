@@ -312,9 +312,57 @@ describe <- function(
 }
 
 
+#' method for POSIXct
+`/.POSIXt` <- function(x,y) as.POSIXct(as.numeric(x) / as.numeric(y), origin="1970-01-01")
+
+#' method for POSIXct
+`+.POSIXt` <- function(x,y) as.POSIXct(as.numeric(x) + as.numeric(y), origin="1970-01-01")
 
 
-
+#' function for making rank plots
+rankplot <- function(x, label, axislab="", ...){
+  label <- label[order(x)]
+  x     <- x[order(x)]
+  rangex    <- diff(range(x))
+  minx      <- min(x)
+  maxx      <- max(x)
+  nx        <- length(x)
+  label_pos <- seq(minx, maxx, rangex / (nx-1))
+  
+  ggplot() + 
+    theme_bw() +
+    geom_segment(
+      aes(x=0.07, y=mean(x), xend=0.09, yend=mean(x)), 
+      colour="#10101080"
+    )+
+    geom_segment(
+      aes(x=0.31, y=mean(x), xend=0.33, yend=mean(x)), 
+      colour="#10101080"
+    )+
+    geom_text(
+      aes(x=0.2, y=label_pos,label=label), 
+      hjust=0, ...
+    ) + 
+    geom_point(
+      aes(x=0.1, y=x),
+      colour="#10101080"
+    ) + 
+    geom_segment(
+      aes(x=0.11, y=x, yend=label_pos, xend=0.19), 
+      colour="#10101080"
+    ) +
+    ggtitle(axislab) + 
+    theme(
+      axis.text.x  = element_blank(), 
+      axis.ticks.x = element_blank(), 
+      axis.title.y = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.y = element_text(size=5, angle = 60), 
+      plot.title = element_text(size=6)
+    ) + 
+    geom_blank(aes(x=0.30,y=x)) + 
+    geom_blank(aes(x=0.075,y=x)) 
+}
 
 
 

@@ -4,20 +4,23 @@ author: "pm"
 date: '`r Sys.time()`'
 output:
   pdf_document:
-    fig_height: 2.5
-    fig_width: 6.4
+    fig_height: 6.5
+    fig_width: 11.5
     keep_tex: yes
   word_document:
     fig_height: 6
     fig_width: 10
 documentclass: article
-classoption: a4paper
+classoption: a4paper, landscape
+geometry: margin=0.5cm
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 Sys.setlocale(category = "LC_ALL", locale = "English")
 ```
+
+\pagebreak{}
 
 
 ```{r packages, include=FALSE}
@@ -47,8 +50,7 @@ theme_stripped <-
   theme(
     axis.title.x = element_blank(),
     axis.title.y = element_blank(),
-    axis.text.y=element_text(angle=90, vjust=0.5, hjust=0.5),
-    axis.text=element_text(size=6)
+    axis.text.y=element_text(angle=90, vjust=0.5, hjust=0.5)
   ) 
 xlim_time  <- coord_cartesian( xlim = c(
                   as.POSIXct("1944-12-31"),              
@@ -73,8 +75,6 @@ mega_scale <- scale_fill_manual(
 ```
 
 
-# General Overview
-
 ```{r genral statistics, include=FALSE}
 n_countries <- length(unique(substring(isor$ctr, 1,3)))
 ctr         <- unique(isor$ctr)
@@ -82,15 +82,6 @@ countries   <- unique(isor$country)
 min_date    <- format(min(isor$t_date, na.rm=TRUE), "%B %d, %Y")
 max_date    <- format(max(isor$t_date, na.rm=TRUE), "%B %d, %Y")
 ```
-
-
-
-The ISOR dataset entails `r n_countries` countries, namely: `r paste(countries[-length(countries)], sep=", ")` and `r countries[length(countries)]`. 
-Switzerland has two parliamentary Standing Orders and therefore is included twice. The timeframe under consideration in the dataset ranges from Standing Orders passed at `r min_date` up to ones passed at `r max_date`. 
-
-All in all the corpus encompasses `r format(sum(isor$wds_raw_rel), big.mark=",")` words of relevant content structured in `r format(sum(isor$lns_rel), big.mark=",")` sub-paragraphs and `r dim(isor)[1]` documents - that is 7 times the first five books of G.R.R. Martin's *A Song of Ice and Fire*. `r format(sum(isor$lns_chg, na.rm=TRUE), big.mark=",")` times a sub-paragraph had been changed within our sample amounting to `r format(sum(isor$wds_chg, na.rm=TRUE), big.mark=",")` changed words - or 1.5 times J.R.R. Tolkien's *Lord of the Rings*. 
-
-
 
 
 ```{r general table, include=FALSE}
@@ -109,45 +100,22 @@ for (i in seq_along(unique(isor$country)) ) {
   df$wdns[i]    <- max(isor$wdns[isor$country == countries[i]], na.rm=TRUE)
 }
 
-df$`persist`  <- 
-  round(  ((as.numeric(df$`max y`) - as.numeric(df$`min y`)) / df$`N SO`) ,2)
+df$`ys per SO`  <- 
+  1 / round((as.numeric(df$`max y`) - as.numeric(df$`min y`)) / df$`N SO` ,2)
 df$`chg per y` <- 
   round(as.numeric(str_replace(df$chg, ",", "")) / (as.numeric(df$`max y`) - as.numeric(df$`min y`)))
 
 # df <- df[order(-df$`max w`),]
-rownames(df) <- df$country
+rownames(df) <- NULL
 ```
 
 ```{r, results='asis', echo=FALSE, message=FALSE}
-knitr::kable(df[,-1])
+#knitr::kable(df[-length(df[1,])])
 ```
 
-
-The above table gives an general overview across all countries within the dataset. Both the differences in length (measured as relevant words, column: *'min w'* and *'max w'*) as well as the differences in the amount of change (measured as relevant words changed, column: *'chg'*) are striking. The British SO are more than four times as long as e.g. the Norwegian and most change within the dataset happened in Great Britan amounting to nearly 80000 words changed in over 60 years compared to Denmark with only approximatly 25000 words changed in the same time period. Nonetheless, all SO are changed considerably. While an SO usually is changed more than once per legislative term (column: *'ys per SO'*) Austria and the UK manage to set themselves apart by having SO changes only occuring once every 5 years, respectively by having more than two SO per year.
-
-
-
-```{r, echo=FALSE, fig.width=1.55}
-rankplot(df$`N SO` , df$country, "Number of SO", size=1.7) + ylim(0,150)
-rankplot(df$chg, df$country, "changed words", size=1.7) + ylim(0,80000)
-rankplot(df$persist, df$country, "SO persistence in years", size=1.7) + ylim(0,5)
-rankplot(df$`chg per y`, df$country, "changed words per year", size=1.7) + ylim(0, 1600)
-```
-
-
-The graphics above give a brief overview of four basic variables in the data set. They show they show the value as well as the rank for the number of SO in the data set, the amount of changed that occured to those SO, how many years it takes on average until it is replaced by a new version, the average amount of words that are changed per year.
-
-First of all, all countries under consideration do change their SO frequently and to an substantial amount. On average SO are changed every `r round(mean(df$persist), 1)` years with an change rate of approximatly `r round(mean(df$'chg per y')/10)*10` words per year. Within the variables there is considerable variance as well. UK and Sweden are the most frequent changers with more than one version per year while Austria's SO have an exceptional high lifespan with over 4.5 years - in the UK all matters seem to require a change of SO even the creation or disolving of a single committee while in Austria changing the SO requires a super majority. In regard to the amount changed especially Portugal and UK seem to play a special role. In addition to beeing a hyper-frequent changer UK also manages to change much more than other countries. One reason for this is that in UK all rules for the Grand Committees for Northern Ireland. Scotland and Wales are speleld out explicitly and redundantly. Portugal on the other hand had very view changes (13) since 1976 with one reform beeing extremely extensive so that over time the Portugese change rate might wander nearer towards the other countries. 
-
-
-\pagebreak{}
-
-# Reforms per country
-
-In the following the the length, topical distribution as well as the amount of change and the type of change are plotted country by country. 
 
 ```{r, echo=FALSE}
-  t_size  <- 2 
+  t_size  <- 3
   legend_data <- 
     data.frame(
       xmin=0.25, xmax=0.5, ymin = seq(0,1, 1/6)[1:6], ymax = seq(0,1, 1/6)[2:7], 
@@ -167,7 +135,7 @@ p_legend <- ggplot()
       data = legend_data,
       aes(x=legend_data$xmean, 
           y=legend_data$ymean, 
-          label=c("misc","laws", "spec.","elec.", "cntrl","public")),
+          label=c("misc","laws", "special","elections", "control","pulbic")),
       size=t_size, hjust=0.5, vjust=0.5, angle=90
     )
   
@@ -206,16 +174,6 @@ p_legend <- ggplot()
 ```
 
 ```{r, echo=FALSE}
-desc <- list()
-desc$Austria <- "
-Austria is a clears outlier in regard to the frequency with which is makes changes to its SO -- approximatly five years lie between changes. 
-"
-```
-
-
-
-
-```{r, echo=FALSE, results="asis"}
 P <- list()
 CTR <- unique(isor$ctr)
 COUNTRY <- unique(isor$country)
@@ -261,7 +219,7 @@ for ( i in seq_along(CTR)){
   
   p <- 
     p + 
-    annotate( "text", x = as.POSIXct("1947-01-01"), y = Inf, label = COUNTRY[i], hjust=0, vjust=2, size=4, color="#3180AE")
+    annotate( "text", x = as.POSIXct("1947-01-01"), y = Inf, label = COUNTRY[i], hjust=0, vjust=2, size=6, color="#3180AE")
   
   
   
@@ -284,26 +242,24 @@ for ( i in seq_along(CTR)){
       axis.text.y= element_text(angle = 60)
     )
   
-  grid.arrange(p, p_legend, ncol=2, widths=c(16,1))
+  grid.arrange(p, p_legend, ncol=2, widths=c(13,1))
 }
 ```
 
 
 
 
-
 \pagebreak{}
-
-
-
-
 
 # dutiestodo
 
 ```{r, echo=FALSE}
 cat("==========================================================================")
-cat("file copied to: \nZ:/Gesch\xe4ftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/")
-file.copy("C:/Dropbox/RPackages/idep/inst/reports/in_progress.pdf",  "Z:/Gesch\xe4ftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/in_progress.pdf", overwrite=TRUE) 
+cat("file copied to: \nZ:/Geschäftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/")
+file.copy(
+  "C:/Dropbox/RPackages/idep/inst/reports/country_graphs.pdf",
+  "Z:/Geschäftsordnungen/Papiere und Konferenzen/2015_corpus_coding/in_progress/country_graphs.pdf", overwrite=TRUE
+  )
 ```
 
 
