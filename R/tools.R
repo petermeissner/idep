@@ -292,8 +292,7 @@ plot_var_overview <- function(x){
 #' @param df data.frame to be described
 #' @param what metric to put out
 #' @param cols columns of data.frame for which to put out metrics
-
-describe <- function(
+desc_df <- function(
   df, 
   what=c("class", "nas","min", "mean", "modus", "median", "max"), 
   cols=TRUE
