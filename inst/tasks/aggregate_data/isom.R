@@ -1,16 +1,20 @@
 # script for joining / merging erd, isor, parlgov, 
 
 
-#### setting things up 
+#### setting things up =========================================================
 
-setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/")
+if ( grepl("linux", sessionInfo()$platform) ){
+  setwd("~/z/Geschäftsordnungen/Database/aggregats")
+}else{
+  setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/")  
+}
 
 library(idep)
 library(dplyr)
 library(foreign)
 
 
-#### loading data
+#### loading data ==============================================================
 
 load("isor.Rdata")
 isor[,1:8]
@@ -27,7 +31,7 @@ load("../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")
 cabinets[,1:10]
 
 
-#### merging data
+#### merging data ==============================================================
 
 isom <- 
   erd  %>% 
@@ -39,7 +43,7 @@ isom <-
   ) %>% 
   select(-country.x, -country.y, -ctr.x, -ctr.y)
 
-#### setting NAs right
+#### setting NAs right =========================================================
 
 isom$eff_no_upper  <- ifelse(isom$eff_no_upper  ==88888, NA, isom$eff_no_party)
 isom$cab_seats_upp <- ifelse(isom$cab_seats_upp ==88888, NA, isom$cab_seats_upp)
@@ -56,13 +60,150 @@ isom$cab_dur_100  <- ifelse(isom$cab_dur_100==88888, NA, isom$cab_dur_100)
 
 
 
-#### expanding isor data for missing values (if applicaple)
+# overview
+desc_df(isom, cols=90:120)
 
+isom %>% 
+  select(ctr,cab_id, cab_pm, cab_in, cab_out, t_id, wds_clean_all, wds_chg)  %>% 
+  head(50)
+
+
+
+#### saving non aggregated data ================================================
+
+#### dev #### >>>>
+setwd("~/")
+#### dev #### <<<<
+
+
+isom_non_agg <- isom
+save(     isom_non_agg, file="isom_non_agg.Rdata")
+write.dta(isom_non_agg, file="isom_non_agg.dta")
+
+
+
+
+#### aggregation ===============================================================
+source(
+  system.file(package="idep","tasks/aggregate_data/isom_helper_aggregation.R")
+)
+
+
+#### dichotomize pro_maj / pro_min codings =====================================
+
+isom %>% 
+  filter( pro_min_sum > 0, pro_maj_sum > 0 ) %>% 
+  select(ctr, cab_id, cab_pm, pro_maj_sum, 
+         pro_min_sum, pro_non_sum, pro_minmaj_qual_sum )
+
+isom$pro_minmaj_qual <-
+  sapply(
+    str_split(isom$pro_minmaj_qual_sum, ", "), 
+    function(x){ 
+      x <- unique(x[ x != "NA" & !is.null(x) ])
+      if( length(x)     ==     0      ) return(  0 )
+      if( all(unique(x) ==     0     )) return(  0 )
+      if( all(unique(x) %in% c(0, 1) )) return(  1 ) 
+      if( all(unique(x) %in% c(0,-1) )) return( -1 )
+      -99
+    } 
+  )
+
+isom$pro_minmaj_qual[isom$cab_id==1720] <- -1
+isom$pro_minmaj_qual[isom$cab_id==1622] <-  1
+isom$pro_minmaj_qual[isom$cab_id==1329] <- -1 
+isom$pro_minmaj_qual[isom$cab_id==1042] <- -1
+isom$pro_minmaj_qual[isom$cab_id==1710] <-  1 
+isom$pro_minmaj_qual[isom$cab_id==1718] <-  0
+isom$pro_minmaj_qual[isom$cab_id==1719] <- -1
+isom$pro_minmaj_qual[isom$cab_id==1723] <-  0 
+isom$pro_minmaj_qual[isom$cab_id==1410] <- -1
+isom$pro_minmaj_qual[isom$cab_id==1214] <-  0
+isom$pro_minmaj_qual[isom$cab_id==1221] <-  0
+isom$pro_minmaj_qual[isom$cab_id==1224] <-  0
+isom$pro_minmaj_qual[isom$cab_id==228]  <-  1 
+isom$pro_minmaj_qual[isom$cab_id==527]  <-  0
+isom$pro_minmaj_qual[isom$cab_id==613]  <-  2
+isom$pro_minmaj_qual[isom$cab_id==925]  <-  1 
+isom$pro_minmaj_qual[isom$cab_id==1005] <-  1
+isom$pro_minmaj_qual[isom$cab_id==1036] <-  1 
+isom$pro_minmaj_qual[isom$cab_id==1038] <-  1 
+isom$pro_minmaj_qual[isom$cab_id==1328] <- -1 
+isom$pro_minmaj_qual[isom$cab_id==1624] <-  0
+
+isom  <- 
+  isom %>% select(-pro_minmaj_qual_sum)
+  
+isom  %>% 
+  select(ctr, cab_in, cab_id, n_reforms, 
+         pro_minmaj_qual, pro_min_sum, pro_maj_sum)   %>% 
+  filter(n_reforms>0, pro_minmaj_qual==-99) %>% 
+  head(400) 
+  
+  
+isom$pro_minmaj_auto1 <- 0 # based on words
+isom$pro_minmaj_auto1[ isom$pro_maj_sum > isom$pro_min_sum ] <-  1
+isom$pro_minmaj_auto1[ isom$pro_min_sum > isom$pro_maj_sum ] <- -1
+
+isom$pro_minmaj_auto2 <- 0 # based on lines
+isom$pro_minmaj_auto2[ isom$wds_pro_maj_sum > isom$wds_pro_min_sum ] <-  1
+isom$pro_minmaj_auto2[ isom$wds_pro_min_sum > isom$wds_pro_maj_sum ] <- -1
+
+# correlation
+isom  %>% 
+  select(pro_minmaj_qual, pro_minmaj_auto1, pro_minmaj_auto2) %>% 
+  cor() %>% 
+  round(2)
+
+
+#### fill values ===============================================================
+
+isom  %>% 
+  select(ctr, cab_id, cab_pm, cab_in, t_date_fst, t_date_lst,
+       n_reforms, wds_chg_sum, wds_clean_rel_mn)   %>% 
+  head(30)
+
+no_change_vars <- 
+  grep(
+    "_mdf|_chg|_ins|_del|pro_", names(isom), 
+    value=TRUE, invert=TRUE
+  )
+
+change_vars <- 
+  grep(
+    "_mdf|_chg|_ins|_del|pro_", names(isom), 
+    value=TRUE
+  )
+
+# change vars should be 0 by default 
+isom[,change_vars] %>% head(10)
+
+# non_change vars should be filled with previous value
+isom[,no_change_vars] %>% head(10)
+
+
+#### save aggregated data ======================================================
+
+#save(     isom_non_agg, file="isom.Rdata")
+#write.dta(isom_non_agg, file="isom.dta")
+
+
+
+
+
+
+
+
+
+
+
+#### expanding isor data for missing values (if applicaple) ====================
+if(1 == 2){
 isom <- 
   isom  %>% 
   arrange(country, cab_in)
 
-describe(isom, cols=90:120)
+desc_df(isom, cols=90:120)
 
 # fill holes with lag values 
 for(i in seq_len(dim(isom)[1]) ){
@@ -118,20 +259,15 @@ for (i in seq_len(dim(isom)[1])[-1] ) {
 }
 
 
-# overview
-describe(isom, cols=90:120)
-
-isom %>% 
-  select(ctr, cab_in, cab_out, t_id, wds_clean_all, wds_chg)  %>% 
-  head(50)
+}
 
 
 
 
 
-#### saving data
-save(     isom, file="isom.Rdata")
-write.dta(isom, file="isom.dta")
+
+
+
 
 
 

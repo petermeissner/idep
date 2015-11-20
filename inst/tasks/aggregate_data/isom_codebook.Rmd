@@ -53,6 +53,8 @@ The data set incorporates aggregated data for
 **Example:**
   
 ```{r, width=100}
+#### R-code: #### 
+
 isom  %>% 
   select(ctr, cab_pm, cab_in, cab_out, wds_chg, pro_minmaj_qual, idl_pnt_all, volatility) %>% 
   mutate(
@@ -81,9 +83,16 @@ Tsebelis, George (2002): Veto Players. How Political Institutions Work. Princeto
 
 # References used in the Codebook
 
+**ERD:**
+
 ERD (2014): European Representative Democracy (ERD) Release 3.0 February 12, 2014 Codebook for ERD - e. 
 
+
+**CMP:**
+
 CMP (2015): Manifesto Project Dataset Codebook. Website: https://manifesto-project.wzb.eu/ . Version: 2015a
+
+**Volatility**
 
 Pedersen, Mogens N. (1979): The Dynamics of European Party Systems: Changing Patterns of Electoral Volatility. European Journal of Political Research, 7/1, 1-26. http://janda.org/c24/Readings/Pedersen/Pedersen.htm
 
@@ -92,7 +101,19 @@ Pedersen, Mogens N. (1979): The Dynamics of European Party Systems: Changing Pat
 
 ## Notes
 
-The variables of the ISORD dataset are extensively described in a seperate codebook (`isor_codebook.pdf`) -- therefore only some of those variables are presented here. 
+The variables of the ISOR dataset are extensively described in a seperate codebook (`isor_codebook.pdf`) -- therefore only some of those variables are presented here. 
+
+Since there might be more than one SO reform (ISOR) that took place during the course of a cabinet ISOR data had to be aggregated:
+
+- all ISOR variables preserve their name 
+- but if values had to be aggregated the variables names get an extra suffix:
+    - **fst** for the value of the first reform of a cabinet time span
+    - **lst** for the value of the last  reform of a cabinet time span
+    - **mn**  for the mean value
+    - **sum** for the sum of all values
+- Furthermore, due to the aggregation of ISOR data an addtitional variable is provided: **n_reforms** captures the number of times SO were changed during the course of a cabinet. 
+  
+For a version of the very same data set prior to aggregation have a look at `isom_non_agg.Rdata` respectively `isom_non_agg.dta`. 
 
 ```{r Description Functions, include=FALSE}
 sumdummy<-function(x){
