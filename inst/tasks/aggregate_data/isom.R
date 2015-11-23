@@ -29,6 +29,8 @@ cabinets[,1:10]
 
 #### merging data ==============================================================
 
+#### !!!! sicher gehen, dass first versions ebenfalls angematched werden
+
 isom <- 
   erd  %>% 
   left_join(cabinets, by="erd_pg_mp_matcher")  %>% 
@@ -244,15 +246,11 @@ for( i in seq_len(dim(isom_non_agg)[1]) ){
 
 
 #### save data =================================================================
-
 save(      isom, file = "isom.Rdata")
 write.dta( isom, file = "isom.dta")
 
 save(      isom_non_agg, file = "isom_non_agg.Rdata")
 write.dta( isom_non_agg, file = "isom_non_agg.dta")
-
-
-
 
 
 
