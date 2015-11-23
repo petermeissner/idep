@@ -3,11 +3,7 @@
 
 #### setting things up =========================================================
 
-if ( grepl("linux", sessionInfo()$platform) ){
-  setwd("~/z/Geschäftsordnungen/Database/aggregats")
-}else{
-  setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/")  
-}
+setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/")  
 
 library(idep)
 library(dplyr)
@@ -69,16 +65,9 @@ isom %>%
 
 
 
-#### saving non aggregated data ================================================
-
-#### dev #### >>>>
-setwd("~/")
-#### dev #### <<<<
-
+#### saving non aggregated data for later ======================================
 
 isom_non_agg <- isom
-save(     isom_non_agg, file="isom_non_agg.Rdata")
-write.dta(isom_non_agg, file="isom_non_agg.dta")
 
 
 
@@ -156,10 +145,10 @@ isom  %>%
   round(2)
 
 
-#### fill values ===============================================================
+#### fill values for isom ======================================================
 
 isom  %>% 
-  select(ctr, cab_id, cab_pm, cab_in, t_date_fst, t_date_lst,
+  select(ctr, cab_id, cab_in, t_date_fst, t_date_lst,
        n_reforms, wds_chg_sum, wds_clean_rel_mn)   %>% 
   head(30)
 
@@ -181,16 +170,86 @@ isom[,change_vars] %>% head(10)
 # non_change vars should be filled with previous value
 isom[,no_change_vars] %>% head(10)
 
+# filling for non-change vars
+isom <-
+  isom %>% 
+  arrange(ctr, cab_in)
 
-#### save aggregated data ======================================================
+for( i in seq_len(dim(isom)[1]) ){
+  for( var in no_change_vars ){
+    if( 
+      i > 1 & 
+      as.vector(is.na(isom[i,var])) &
+      null_to_false(isom$ctr[i] == isom$ctr[i-1])
+    ) 
+    {
+      isom[i, var] <- isom[i-1, var]
+    }
+  }
+}
 
-#save(     isom_non_agg, file="isom.Rdata")
-#write.dta(isom_non_agg, file="isom.dta")
+
+#### fill values for isom_non_agg ==============================================
+
+# n_reforms
+isom_non_agg$n_reforms <- ifelse(is.na(isom_non_agg$t_date), 0, 1)
+isom_non_agg$n_reforms <- ifelse(
+                            isom_non_agg$cab_in > isom_non_agg$t_date & 
+                              !is.na(isom_non_agg$t_date), 
+                            0, 
+                            isom_non_agg$n_reforms
+                          )
+
+# show some data
+isom_non_agg  %>% 
+  select(ctr, cab_id, cab_in, t_date, n_reforms, wds_chg, wds_clean_rel)   %>% 
+  head(30)
+
+# gen change and non-change-vars
+no_change_vars <- 
+  grep(
+    "_mdf|_chg|_ins|_del|pro_", names(isom_non_agg), 
+    value=TRUE, invert=TRUE
+  )
+
+change_vars <- 
+  grep(
+    "_mdf|_chg|_ins|_del|pro_", names(isom_non_agg), 
+    value=TRUE
+  )
+
+# change vars should be 0 by default 
+isom_non_agg[,change_vars] %>% head(10)
+
+# non_change vars should be filled with previous value
+isom_non_agg[,no_change_vars] %>% head(10)
+
+# filling for non-change vars
+isom_non_agg <-
+  isom_non_agg %>% 
+  arrange(ctr, cab_in)
+
+for( i in seq_len(dim(isom_non_agg)[1]) ){
+  for( var in no_change_vars ){
+    if( 
+      i > 1 & 
+      as.vector(is.na(isom_non_agg[i,var])) &
+      null_to_false(isom_non_agg$ctr[i] == isom_non_agg$ctr[i-1])
+    ) 
+    {
+      isom_non_agg[i, var] <- isom_non_agg[i-1, var]
+    }
+  }
+}
 
 
+#### save data =================================================================
 
+save(      isom, file = "isom.Rdata")
+write.dta( isom, file = "isom.dta")
 
-
+save(      isom_non_agg, file = "isom_non_agg.Rdata")
+write.dta( isom_non_agg, file = "isom_non_agg.dta")
 
 
 
@@ -198,68 +257,68 @@ isom[,no_change_vars] %>% head(10)
 
 
 #### expanding isor data for missing values (if applicaple) ====================
-if(1 == 2){
-isom <- 
-  isom  %>% 
-  arrange(country, cab_in)
-
-desc_df(isom, cols=90:120)
-
-# fill holes with lag values 
-for(i in seq_len(dim(isom)[1]) ){
-  isom$t_id[i] <- 
-    ifelse( 
-      is.na(isom$t_id[i]) & isom$ctr[i] == lag(isom$ctr)[i], 
-      lag(isom$t_id)[i], 
-      isom$t_id[i] 
-    )                   
-}
-
-
-# fill start values with SOs before cabinet
-for ( i in which(is.na(isom$t_id)) ){
-  isom$t_id[i] <- 
-    suppressWarnings(
-      max(isor$t_id[ isor$ctr == isom$ctr[i] & 
-                       isor$t_date <= isom$cab_out[i] ]        ,
-          na.rm=TRUE))
-}
-
-variables <- 
-  names(isom)[
-    names(isom) %in% names(isor) & 
-      !(names(isom) %in% c("ctr", "country", "t_id"))
-    ]
-
-isom <- 
-  isom[ , -which(names(isom) %in% variables)]
-
-isom <- 
-  left_join( isom, isor[, c("t_id", variables)], by="t_id" )
-
-
-isom %>% 
-  select(ctr, cab_in, t_id, wds_clean_rel, wds_chg)  %>% 
-  head(50)
-
-# NAs to 0 for all change variables
-for (var in grep("_del|_ins|_mdf|_chg", names(isom), value = TRUE) ) {
-  isom[is.na(isom[, var]) & !is.na(isom$wds_raw_all), var] <- 0 
-}
-
-# non-change to 0 for all change varaibles
-var <- grep("_del|_ins|_mdf|_chg", names(isom), value = TRUE)
-for (i in seq_len(dim(isom)[1])[-1] ) {
-  if ( isom$t_id[i] == isom$t_id[i-1] & all(!is.na(isom$t_id[i:(i-1)])) ){
-    isom[i, "wds_chg"] <- 0 
-  }
-  if ( isom$ctr[i] == isom$ctr[i-1] & is.na(isom$t_id[i-1]) ){
-    isom[i, "wds_chg"] <- NA
-  }
-}
-
-
-}
+# if(1 == 2){
+# isom <- 
+#   isom  %>% 
+#   arrange(country, cab_in)
+# 
+# desc_df(isom, cols=90:120)
+# 
+# # fill holes with lag values 
+# for(i in seq_len(dim(isom)[1]) ){
+#   isom$t_id[i] <- 
+#     ifelse( 
+#       is.na(isom$t_id[i]) & isom$ctr[i] == lag(isom$ctr)[i], 
+#       lag(isom$t_id)[i], 
+#       isom$t_id[i] 
+#     )                   
+# }
+# 
+# 
+# # fill start values with SOs before cabinet
+# for ( i in which(is.na(isom$t_id)) ){
+#   isom$t_id[i] <- 
+#     suppressWarnings(
+#       max(isor$t_id[ isor$ctr == isom$ctr[i] & 
+#                        isor$t_date <= isom$cab_out[i] ]        ,
+#           na.rm=TRUE))
+# }
+# 
+# variables <- 
+#   names(isom)[
+#     names(isom) %in% names(isor) & 
+#       !(names(isom) %in% c("ctr", "country", "t_id"))
+#     ]
+# 
+# isom <- 
+#   isom[ , -which(names(isom) %in% variables)]
+# 
+# isom <- 
+#   left_join( isom, isor[, c("t_id", variables)], by="t_id" )
+# 
+# 
+# isom %>% 
+#   select(ctr, cab_in, t_id, wds_clean_rel, wds_chg)  %>% 
+#   head(50)
+# 
+# # NAs to 0 for all change variables
+# for (var in grep("_del|_ins|_mdf|_chg", names(isom), value = TRUE) ) {
+#   isom[is.na(isom[, var]) & !is.na(isom$wds_raw_all), var] <- 0 
+# }
+# 
+# # non-change to 0 for all change varaibles
+# var <- grep("_del|_ins|_mdf|_chg", names(isom), value = TRUE)
+# for (i in seq_len(dim(isom)[1])[-1] ) {
+#   if ( isom$t_id[i] == isom$t_id[i-1] & all(!is.na(isom$t_id[i:(i-1)])) ){
+#     isom[i, "wds_chg"] <- 0 
+#   }
+#   if ( isom$ctr[i] == isom$ctr[i-1] & is.na(isom$t_id[i-1]) ){
+#     isom[i, "wds_chg"] <- NA
+#   }
+# }
+# 
+# 
+# }
 
 
 

@@ -80,6 +80,21 @@ isor$erd_cab_id[with(isor, is.na(erd_cab_id) & ctr=="nld" & t_date=="2010-07-01"
 isor$erd_cab_id[with(isor, is.na(erd_cab_id) & ctr=="nor" & t_date=="1972-10-10")] <- 1312
 
 
+
+### FIRST VERSION MATCHING TO LATER CABINETS ### 
+
+#   1 # aut 1928-02-01
+# isor$erd_cab_id[with(isor, is.na(erd_cab_id) & ctr=="aut" & t_date=="1928-02-01")] <- 101
+
+# 183 # irl 1943-05-26
+# isor$erd_cab_id[with(isor, is.na(erd_cab_id) & ctr=="irl" & t_date=="1943-05-26")] <- 901
+
+# 309 # nld 1938-03-10
+# isor$erd_cab_id[with(isor, is.na(erd_cab_id) & ctr=="nld" & t_date=="1938-03-10")] <- 1201
+
+
+
+
 #### isor without cabinet id of erd dataset
 
 isor  %>%

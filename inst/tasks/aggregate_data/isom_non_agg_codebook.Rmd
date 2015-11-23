@@ -1,5 +1,5 @@
 ---
-title: "ISOM"
+title: "ISOM (not aggregated by cabinets)"
 author: "pm"
 date: '`r Sys.time()`'
 output:
@@ -20,7 +20,7 @@ library(idep)
 library(dplyr)
 library(stringr)
 library(magrittr)
-load("Z:/Gesch\xe4ftsordnungen/database/aggregats/isom.Rdata")
+load("Z:/Gesch\xe4ftsordnungen/database/aggregats/isom_non_agg.Rdata")
 ```
 
 ```{r include=FALSE}
@@ -41,22 +41,22 @@ Sys.setlocale("LC_TIME", "English")
 
 The dataset is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISORD [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/), ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/)
 
-Its structure has several levels/layers -- time episodes for cabinets in different countries starting as early as `r format(min(isom$cab_in), "%B %Y")` up `r format(max(isom$cab_in), "%B %Y")`.
+Its structure has several levels/layers -- time episodes for cabinets in different countries starting as early as `r format(min(isom_non_agg$cab_in), "%B %Y")` up `r format(max(isom_non_agg$cab_in), "%B %Y")`.
 
 The basic structure of cabinet time episodes stems from ERD. Information on standing orders reforms was merged/joined from ISOR dataset by matching reform dates (date of acceptance of the reform or if not availible earliest date availible) into cabinet time spans (and countries). All measures of ideological positions, distances and polarization come from CMP which was merged/joined with ParlGov first (ParlGov includes the CMP party id variable). ParlGov in turn was used as source of volatility measures. Having merged/joined ParlGov and CMP this combined dataset was than joined with ERD by matching cabinet start dates (automatically and by hand due to occasional differing start days). 
 
 The data set incorporates aggregated data for 
-`r dim(isom)[1] - length(unique(isom$country))` cabinets in
-`r length(unique(substring(isom$country,1,3)))` countries and consists of 
-`r dim(isom)[2]` variables. 
+`r dim(isom_non_agg)[1] - length(unique(isom_non_agg$country))` cabinets in
+`r length(unique(substring(isom_non_agg$country,1,3)))` countries and consists of 
+`r dim(isom_non_agg)[2]` variables. 
 
 **Example:**
   
 ```{r, width=100}
 #### R-code: #### 
 
-isom  %>% 
-  select(ctr, cab_pm, cab_in, cab_out, wds_chg_sum, pro_minmaj_qual, idl_pnt_all, volatility) %>% 
+isom_non_agg  %>% 
+  select(ctr, cab_pm, cab_in, cab_out, wds_chg, pro_minmaj_qual, idl_pnt_all, volatility) %>% 
   mutate(
     idl_pnt_all = round(idl_pnt_all, 1), 
     volatility  = round(volatility, 1)
@@ -164,8 +164,8 @@ sumvar <- function(x){
 
 
 
-```{r Describing ERD, echo=FALSE, results='asis', warning=FALSE, eval=FALSE}
-source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description_isom.r")
+```{r Describing ERD, echo=FALSE, results='asis', warning=FALSE}
+source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description_isom_non_agg.r")
 for( g in sort(unique(var_desc_erd$group)) ){
   gtitle <- str_replace(g, "^\\d* ", "")
   cat(paste0("\n## ", gtitle, "\n\n"))
@@ -176,7 +176,7 @@ for( g in sort(unique(var_desc_erd$group)) ){
       dat$desc[i], "\n\n",
       sep=""
     )
-    sumvar(as.data.frame(isom, stringsAsFactors=F)[ , dat$name[i] ])
+    sumvar(as.data.frame(isom_non_agg, stringsAsFactors=F)[ , dat$name[i] ])
     cat("\n\n<p>&nbsp;</p>")
   }
 }
