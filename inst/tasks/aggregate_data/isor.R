@@ -424,6 +424,7 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
   
     
 #### modification types per corpus code ========================================
+# ref_save <- reforms
 
   
   # ... modification
@@ -507,6 +508,90 @@ reforms$wds_chg <- reforms$wds_mdf + reforms$wds_ins + reforms$wds_del
     left_join(reforms, tmp)
   
 
+    
+#### modification types per corpus code ========================================
+# ref_save <- reforms
+
+  
+  # ... modification
+  tmp <- 
+    linkage  %>% 
+    filter(ll_type=="change") %>% 
+    select(ll_diff_wd, ll_tl_id2) %>%
+    rename(tl_id = ll_tl_id2) %>% 
+    left_join(select(lines, tl_id, t_id, tl_corpus_code)) %>% 
+    group_by(t_id, tl_corpus_code) %>% 
+    summarize(
+     n()
+    )
+  
+  names(tmp) <- c("t_id", "ccode", "mdf")
+  
+  tmp <- 
+    reshape(as.data.frame(tmp),  idvar="t_id", timevar="ccode", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  
+  tmp[is.na(tmp)] <- 0
+  names(tmp)[-1] <- paste0("lns_corp_",names(tmp)[-1])
+  
+  reforms <- 
+    left_join(reforms, tmp)
+  
+  
+  
+  # ... insertion
+  tmp <- 
+    linkage  %>% 
+    filter(ll_type=="insertion") %>% 
+    select(ll_diff_wd, ll_tl_id2) %>%
+    rename(tl_id = ll_tl_id2) %>% 
+    left_join(select(lines, tl_id, t_id, tl_corpus_code)) %>% 
+    group_by(t_id, tl_corpus_code) %>% 
+    summarize(
+      n()
+    )
+  
+  names(tmp) <- c("t_id", "ccode", "ins")
+  
+  tmp <- 
+    reshape(as.data.frame(tmp),  idvar="t_id", timevar="ccode", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  
+  tmp[is.na(tmp)] <- 0
+  
+  names(tmp)[-1] <- paste0("lns_corp_", names(tmp)[-1] )
+  reforms <- 
+    left_join(reforms, tmp)
+  
+  
+  # ... deletion
+  tmp <- 
+    linkage  %>% 
+    filter(ll_type=="deletion") %>% 
+    select(ll_diff_wd, ll_tl_id1, ll_t_id2) %>%
+    rename(tl_id = ll_tl_id1) %>% 
+    left_join(select(lines, tl_id, t_id, tl_corpus_code)) 
+  
+  tmp <- 
+    tmp  %>% 
+    select(ll_t_id2, ll_diff_wd, tl_corpus_code) %>% 
+    rename(t_id = ll_t_id2) %>% 
+    group_by(t_id, tl_corpus_code) %>% 
+    summarize(
+      n()
+    )
+  
+  names(tmp) <- c("t_id", "ccode", "del")
+
+  tmp <- 
+    reshape(as.data.frame(tmp),  idvar="t_id", timevar="ccode", direction="wide", sep="_")  %>% 
+    as_data_frame()
+  
+  tmp[is.na(tmp)] <- 0
+  names(tmp)[-1] <- paste0("lns_corp_",names(tmp)[-1])
+  
+  reforms <- 
+    left_join(reforms, tmp)
   
 #### add correct country variables =============================================
   
