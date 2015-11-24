@@ -100,7 +100,7 @@ isor_names_so <-
 isor_names_chg <- 
   c(
 "t_id", "erd_cab_id", "t_date", "t_dplus", "t_country", 
-"t_daccept", "t_dpromul", "t_denact", 
+"t_daccept", "t_dpromul", "t_denact", "db_version", "db_lastupdate",
 "wds_chg", "wds_ins", "wds_del", "wds_mdf", 
 "lns_chg", "lns_ins", "lns_del", "lns_mdf", 
 "pro_maj", "pro_min", "pro_non", 
@@ -237,50 +237,169 @@ isor_names_chg <-
 "lns_corp_del_6352"
   )
 
-isor_so  <- isor[,isor_names_so]
+isor_so  <- 
+  isor[,isor_names_so]  %>% 
+rename(
+  so_t_id    = t_id, 
+  so_date    = t_date,
+  so_dplus   = t_dplus,
+  so_daccept = t_daccept, 
+  so_dpromul = t_dpromul, 
+  so_denact  = t_denact
+)
+
 isor_chg <- 
   isor[,isor_names_chg]  %>% 
-  rename()
+  rename(
+    ref_t_id    = t_id, 
+    ref_date    = t_date,
+    ref_dplus   = t_dplus,
+    ref_daccept = t_daccept, 
+    ref_dpromul = t_dpromul, 
+    ref_denact  = t_denact
+  )
 
 
 
 
 
-#### merging data ==============================================================
+#### merging data:  erd and MP and PG ==========================================
+
+# erd 1:1 parlgov
+# -> simply join
+#
+# erd 1:1 manifesto project
+# -> simply join
+#
+# erd 1:n isor_chg
+# -> simply join and aggregate thereafter
+#
+# erd n:n isor_so
+# -> join and aggregate in a separate step
+
+isor_so[1:5]
 
 isom <- 
   erd  %>% 
-  left_join(cabinets, by="erd_pg_mp_matcher")  %>% 
-  left_join(isor_chg,  by="erd_cab_id") %>% 
+  left_join(cabinets, by="erd_pg_mp_matcher")   %>% 
   mutate(
     country = country.x,
     ctr     = ctr.x
   ) %>% 
   select(-country.x, -country.y, -ctr.x, -ctr.y)
 
-#### setting NAs right =========================================================
-
-isom$eff_no_upper  <- ifelse(isom$eff_no_upper  ==88888, NA, isom$eff_no_party)
-isom$cab_seats_upp <- ifelse(isom$cab_seats_upp ==88888, NA, isom$cab_seats_upp)
-isom$seats_upp     <- ifelse(isom$seats_upp ==88888, NA, isom$seats_upp)
-isom$cab_dur_abs1  <- ifelse(isom$cab_dur_abs1 ==99999, NA, isom$cab_dur_abs1)
-isom$abs_no_party  <- ifelse(isom$abs_no_party==88888, NA, isom$abs_no_party)
-isom$abs_no_party_seat_plus  <- ifelse(isom$abs_no_party_seat_plus==88888, NA, isom$abs_no_party_seat_plus)
-isom$cab_n_members_change    <- ifelse(isom$cab_n_members_change==88888, NA, isom$cab_n_members_change)
-isom$connect_cab   <- ifelse(isom$connect_cab==88888, NA, isom$connect_cab)
-isom$mwc_connected_cab       <- ifelse(isom$mwc_connected_cab==88888, NA, isom$mwc_connected_cab)
-isom$seats_low    <- ifelse(isom$seats_low==88888, NA, isom$seats_low)
-isom$cab_dur_100  <- ifelse(isom$cab_dur_100==88888, NA, isom$cab_dur_100)
 
 
+#### setting variables right ===================================================
+# - 88888 and 99999 to NA
+# - leap days to Date
 
+isom <- 
+  as_data_frame( 
+    lapply(
+      isom, 
+      function(x){ifelse(x %in% c(88888, 99999), NA, x)} 
+    )
+  )
+
+isom$cab_in  <- as.Date(isom$cab_in,  origin="1970-01-01")
+isom$cab_out <- as.Date(isom$cab_out, origin="1970-01-01")
 
 # overview
-desc_df(isom, cols=90:120)
+desc_df(isom)
 
-isom %>% 
-  select(ctr,cab_id, cab_pm, cab_in, cab_out, t_id, wds_clean_all, wds_chg)  %>% 
-  head(50)
+
+
+#### merging erd and isor_chg ==================================================
+
+isor_chg_joined <- 
+  isom["cab_id"]  %>% 
+  left_join(isor_chg, by=c(cab_id="erd_cab_id"))
+
+isor_chg_joined %>% desc_df()
+
+isor_chg_joined$ref_n <- NA
+for(cabid in unique(isor_chg_joined$cab_id) ){
+  iffer <- isor_chg_joined$cab_id == cabid
+  isor_chg_joined$ref_n[iffer] <- 
+    sum( !is.na(isor_chg_joined$ref_date[iffer]) )
+}
+
+isor_chg_agg <- 
+isor_chg_joined  %>% 
+  arrange(cab_id, ref_date, ref_dplus) %>% 
+  select(cab_id, ref_date, ref_dplus, ref_n, everything()) %>% 
+  group_by(cab_id) %>%  
+  summarise(
+    ref_id_fst             = first(ref_t_id             ),
+    ref_id_lst             = last( ref_t_id              ),
+    ref_id_all             = paste(ref_t_id, collapse=", "),
+
+    ref_date_fst             = first(ref_date    ),
+    ref_dplus_fst            = first(ref_dplus   ),
+    ref_daccept_fst          = first(ref_daccept ),
+    ref_dpromul_fst          = first(ref_dpromul ),
+    ref_denact_fst           = first(ref_denact  ),
+    ref_date_lst             = last(ref_date    ),
+    ref_dplus_lst            = last(ref_dplus   ),
+    ref_daccept_lst          = last(ref_daccept ),
+    ref_dpromul_lst          = last(ref_dpromul ),
+    ref_denact_lst           = last(ref_denact  ),
+    
+    db_version             = first(db_version),
+    db_lastupdate          = first(db_lastupdate),
+    
+    lns_chg_sum                = sum(lns_chg           ,na.rm=TRUE)    ,
+    lns_mdf_sum                = sum(lns_mdf           ,na.rm=TRUE)    ,
+    lns_ins_sum                = sum(lns_ins           ,na.rm=TRUE)    ,
+    lns_del_sum                = sum(lns_del           ,na.rm=TRUE)    ,
+    
+    pro_maj_sum                = sum(pro_maj           ,na.rm=TRUE)    ,
+    pro_min_sum                = sum(pro_min           ,na.rm=TRUE)    ,
+    pro_non_sum                = sum(pro_non           ,na.rm=TRUE)    ,
+    pro_maj_mdf_sum            = sum(pro_maj_mdf       ,na.rm=TRUE)    ,
+    pro_min_mdf_sum            = sum(pro_min_mdf       ,na.rm=TRUE)    ,
+    pro_non_mdf_sum            = sum(pro_non_mdf       ,na.rm=TRUE)    ,
+    pro_maj_ins_sum            = sum(pro_maj_ins       ,na.rm=TRUE)    ,
+    pro_min_ins_sum            = sum(pro_min_ins       ,na.rm=TRUE)    ,
+    pro_non_ins_sum            = sum(pro_non_ins       ,na.rm=TRUE)    ,
+    pro_maj_del_sum            = sum(pro_maj_del       ,na.rm=TRUE)    ,
+    pro_min_del_sum            = sum(pro_min_del       ,na.rm=TRUE)    ,
+    pro_non_del_sum            = sum(pro_non_del       ,na.rm=TRUE)    ,
+    
+    wds_chg_sum                = sum(wds_chg           ,na.rm=TRUE)    ,
+    wds_mdf_sum                = sum(wds_mdf           ,na.rm=TRUE)    ,
+    wds_ins_sum                = sum(wds_ins           ,na.rm=TRUE)    ,
+    wds_del_sum                = sum(wds_del           ,na.rm=TRUE)    ,
+    
+    wds_pro_maj_sum            = sum(wds_pro_maj       ,na.rm=TRUE)    ,
+    wds_pro_min_sum            = sum(wds_pro_min       ,na.rm=TRUE)    ,
+    wds_pro_non_sum            = sum(wds_pro_non       ,na.rm=TRUE)    ,
+    wds_pro_maj_mdf_sum        = sum(wds_pro_maj_mdf   ,na.rm=TRUE)    ,
+    wds_pro_min_mdf_sum        = sum(wds_pro_min_mdf   ,na.rm=TRUE)    ,
+    wds_pro_non_mdf_sum        = sum(wds_pro_non_mdf   ,na.rm=TRUE)    ,
+    wds_pro_maj_ins_sum        = sum(wds_pro_maj_ins   ,na.rm=TRUE)    ,
+    wds_pro_min_ins_sum        = sum(wds_pro_min_ins   ,na.rm=TRUE)    ,
+    wds_pro_non_ins_sum        = sum(wds_pro_non_ins   ,na.rm=TRUE)    ,
+    wds_pro_maj_del_sum        = sum(wds_pro_maj_del   ,na.rm=TRUE)    ,
+    wds_pro_min_del_sum        = sum(wds_pro_min_del   ,na.rm=TRUE)    ,
+    wds_pro_non_del_sum        = sum(wds_pro_non_del   ,na.rm=TRUE)    
+    
+  )
+isor_chg_agg <- filter(isor_chg_agg, !is.na(ref_id_fst))
+
+
+#### merging erd and isor_so ===================================================
+
+
+
+
+
+
+
+
+
+
 
 
 
