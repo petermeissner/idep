@@ -287,24 +287,52 @@ plot_var_overview <- function(x){
 
 
 
+#' function wrapper for grep(,value=TRUE)
+#' @param pattern regular expression to look for
+#' @param x text to look through
+#' @param ... passed through to grep(pattern, x, value = TRUE, ...)
+grepv <- function(pattern, x, ...){grep(pattern, x, value = TRUE, ...)}
+
 
 #' function to describe variables in data.frame
 #' @param df data.frame to be described
 #' @param what metric to put out
 #' @param cols columns of data.frame for which to put out metrics
+#' @param digits shall numbers be rounded to a certain amount of diogits?
 desc_df <- function(
   df, 
   what=c("class", "nas","min", "mean", "modus", "median", "max"), 
-  cols=TRUE
+  cols=TRUE,
+  digits=2
 ){
   tmp <- as.data.frame(t(as_data_frame(classes(df))), stringsAsFactors=FALSE)
   tmp <- data.frame(name=rownames(tmp), class=tmp[,1], stringsAsFactors = FALSE)
-  tmp$nas   <- unlist( lapply(df, function(x){sum(is.na(x))} ))
-  tmp$min   <- unlist( lapply(df, function(x){min(x, na.rm = TRUE)} ))
-  tmp$mean  <- unlist( lapply(df, function(x){mean(x, na.rm = TRUE)} ))
-  tmp$modus <- unlist( lapply(df, function(x){modus(x)} ))
-  tmp$median<- unlist( lapply(df, function(x){median(x, na.rm = TRUE)} ))
-  tmp$max   <- unlist( lapply(df, function(x){max(x, na.rm = TRUE)} ))
+  
+  # calculating statistics
+  suppressWarnings({
+    tmp$nas   <- unlist( lapply(df, function(x){sum(is.na(x))} ))
+    tmp$min   <- unlist( lapply(df, function(x){min(x, na.rm = TRUE)} ))
+    tmp$mean  <- unlist( lapply(df, function(x){mean(x, na.rm = TRUE)} ))
+    tmp$modus <- unlist( lapply(df, function(x){modus(x)} ))
+    tmp$median<- unlist( lapply(df, function(x){median(x, na.rm = TRUE)} ))
+    tmp$max   <- unlist( lapply(df, function(x){max(x, na.rm = TRUE)} ))
+  })
+  
+  # applying round
+  if(digits >=1 ){
+    for(j in seq_len(dim(tmp)[2])){
+      for(i in seq_len(dim(tmp)[1])){  
+        tmp[i,j] <- 
+          ifelse(
+            suppressWarnings(is.na(as.numeric(tmp[i,j]))),
+            tmp[i,j],
+            round(as.numeric(tmp[i,j]), digits)
+         )
+      }
+    }
+  }
+  
+  # nameing
   tmp <- tmp[cols, c("name", what)]
   # return
   return(tmp)

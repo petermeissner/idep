@@ -16,8 +16,20 @@ htmltable <- function( x,
                        bgcolor = "", 
                        html = "",
                        browse = file=="",
-                       width = rep("", dim(x)[2])
+                       width = rep("", dim(x)[2]),
+                       digits=2
                      ){
+  # round numbers to ... digits precission
+  if( is.numeric(digits) ) {
+    dummy <- function(x){
+      if(is.numeric(x)){
+        return(round(x, digits))
+      }
+      return(x)
+    }
+    as.data.frame(lapply(x, dummy))
+  }
+  
   # save function call for later
   FC <- function_call()$call
   
