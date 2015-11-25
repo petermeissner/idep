@@ -898,37 +898,138 @@ isom %>%
 
 #### merging erd and isor_so ===================================================
 
-merger <- data_frame(cab_id=character(0), so_id=character(0))
+# merge / map / match criteria is whether or not there is some kind of overlap
+#
+# -> 
+# 
+# cab_in   <= so_start <= cab_out 
+# cab_in   <= so_end   <= cab_out 
+# so_start <= cab_in   <= so_start
+# so_start <= cab_out  <= so_start
 
+
+merger <- data_frame(cab_id=character(0), so_id=character(0))
 
 for (i in seq_len(dim(isor_so)[1]) ) {
   # cab_in between so_start and so_end
   so_id    <- isor_so$so_t_id[i]
   so_ctr   <- isor_so$ctr[i]
   so_start <- isor_so$so_start[i]
-  so_end   <- isor_so$so_end[i]
+  so_end   <- 
+    is.na(isor_so$so_end[i])  %>% 
+    ifelse(Sys.Date(), isor_so$so_end[i]) %>% 
+    as.Date(origin="1970-01-01")
+  
   
   cab_ids <- 
-    isom$cab_id[
-    so_start < isom$cab_in & 
-    isom$cab_in < so_end[i] &
-    isom$ctr == so_ctr]
-  
-  if( length(so_id) > 0 & length(cab_ids) > 0 ){
-    merger <- rbind(merger, data_frame(cab_id=cab_ids, so_id=so_id))
-  }
+    erd$cab_id[
+    so_start <= erd$cab_in & 
+      erd$cab_in <= so_end &
+      erd$ctr == so_ctr] %>% 
+    .[!is.na(.)]
 
   # cab_in between so_start and so_end
   cab_ids <- 
-    isom$cab_id[
-      so_start < isom$cab_out & 
-        isom$cab_out < so_end[i] &
-        isom$ctr == so_ctr]
+    cab_ids  %>% 
+    c(
+      erd$cab_id[
+        so_start <= ifelse(is.na(erd$cab_out), Sys.Date(), erd$cab_out) & 
+          erd$cab_out <= so_end &
+          erd$ctr == so_ctr]
+    ) %>% 
+    .[!is.na(.)] %>% 
+    unique()
   
   if( length(so_id) > 0 & length(cab_ids) > 0 ){
     merger <- rbind(merger, data_frame(cab_id=cab_ids, so_id=so_id))
   }
 }
+
+for (i in seq_len(dim(erd)[1]) ) {
+  # so_start between cab_in and cab_out
+  erd_id    <- erd$cab_id[i]
+  erd_ctr   <- erd$ctr[i]
+  erd_start <- erd$cab_in[i]
+  erd_end    <- 
+    is.na(erd$cab_out[i])  %>% 
+    ifelse(Sys.Date(), erd$cab_out[i]) %>% 
+    as.Date(origin="1970-01-01")
+  
+  
+  so_ids <- 
+    isor_so$so_t_id[ 
+      erd_start <= isor_so$so_start & 
+        isor_so$so_start <= erd_end &
+        isor_so$ctr == erd_ctr
+    ] %>% 
+    .[!is.na(.)]
+  
+  # so_end between cab_in and cab_out
+  so_ids <- 
+    so_ids  %>% 
+    c(
+      isor_so$so_t_id[
+        erd_start <= ifelse(is.na(isor_so$so_end), Sys.Date(), isor_so$so_end) & 
+          isor_so$so_end <= erd_end &
+          isor_so$ctr == erd_ctr]
+    ) %>% 
+    .[!is.na(.)] %>% 
+    unique()
+  
+  if( length(so_ids) > 0 & length(erd_id) > 0 ){
+    merger <- 
+      rbind(
+        merger, 
+        data_frame(cab_id=erd_id, so_id=so_ids)
+      )
+  }
+}
+
+(merger <- unique(merger) %>% arrange(cab_id, so_id))
+
+
+
+### merge isor_so to merger
+
+isor_so_joined <- 
+  left_join( merger, isor_so, by=c(so_id="so_t_id") )  %>% 
+  arrange(cab_id, so_id) %>% 
+  group_by(cab_id) %>% 
+  select(cab_id, so_id, so_start, so_end, wds_clean_rel, everything(), -t_date_lag)
+
+names(isor_so_joined)
+
+
+
+### aggregate 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
