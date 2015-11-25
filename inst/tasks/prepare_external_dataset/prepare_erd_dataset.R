@@ -13,6 +13,12 @@ Sys.sleep(10)
 #### load ERD and transform to csv and R as well ===============================
 
 erd <- read.dta("Z:/Gesch\xe4ftsordnungen/Database/external_data/erd_cleaned_up.dta")
+
+# add two out dates
+erd[erd$ctr=="swe" & erd$cab_pm=="Reinfeldt II" & is.na(erd$cab_out),]$cab_out <- as.Date("2014-09-14")
+erd[erd$ctr=="gbr" & erd$cab_pm=="Cameron" & is.na(erd$cab_out),]$cab_out <- as.Date("2015-06-15")
+
+# save
 save(erd, file="Z:/Gesch\xe4ftsordnungen/Database/external_data/erd_cleaned_up.Rdata")
 write.csv(erd, "Z:/Gesch\xe4ftsordnungen/Database/external_data/erd_cleaned_up.csv")
 
