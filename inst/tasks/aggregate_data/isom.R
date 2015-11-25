@@ -241,7 +241,8 @@ isor_so  <-
   isor[,isor_names_so]  %>% 
 rename(
   so_t_id    = t_id, 
-  so_date    = t_date,
+  so_start   = t_date,
+  so_end     = t_date_lead,
   so_dplus   = t_dplus,
   so_daccept = t_daccept, 
   so_dpromul = t_dpromul, 
@@ -316,6 +317,7 @@ isor_chg_joined <-
   isom["cab_id"]  %>% 
   left_join(isor_chg, by=c(cab_id="erd_cab_id"))
 
+
 isor_chg_joined %>% desc_df()
 
 isor_chg_joined$ref_n <- NA
@@ -334,6 +336,7 @@ isor_chg_joined  %>%
     ref_id_fst             = first(ref_t_id             ),
     ref_id_lst             = last( ref_t_id              ),
     ref_id_all             = paste(ref_t_id, collapse=", "),
+    ref_n                  = max(ref_n),
 
     ref_date_fst             = first(ref_date    ),
     ref_dplus_fst            = first(ref_dplus   ),
@@ -383,284 +386,549 @@ isor_chg_joined  %>%
     wds_pro_non_ins_sum        = sum(wds_pro_non_ins   ,na.rm=TRUE)    ,
     wds_pro_maj_del_sum        = sum(wds_pro_maj_del   ,na.rm=TRUE)    ,
     wds_pro_min_del_sum        = sum(wds_pro_min_del   ,na.rm=TRUE)    ,
-    wds_pro_non_del_sum        = sum(wds_pro_non_del   ,na.rm=TRUE)    
+    wds_pro_non_del_sum        = sum(wds_pro_non_del   ,na.rm=TRUE)    ,
+    
+    
+    wds_corp_del_10_sum        = sum(wds_corp_del_10        , na.rm=TRUE),
+    wds_corp_del_111_sum       = sum(wds_corp_del_111       , na.rm=TRUE),
+    wds_corp_del_112_sum       = sum(wds_corp_del_112       , na.rm=TRUE),
+    wds_corp_del_113_sum       = sum(wds_corp_del_113       , na.rm=TRUE),
+    wds_corp_del_114_sum       = sum(wds_corp_del_114       , na.rm=TRUE),
+    wds_corp_del_121_sum       = sum(wds_corp_del_121       , na.rm=TRUE),
+    wds_corp_del_122_sum       = sum(wds_corp_del_122       , na.rm=TRUE),
+    wds_corp_del_123_sum       = sum(wds_corp_del_123       , na.rm=TRUE),
+    wds_corp_del_124_sum       = sum(wds_corp_del_124       , na.rm=TRUE),
+    wds_corp_del_125_sum       = sum(wds_corp_del_125       , na.rm=TRUE),
+    wds_corp_del_131_sum       = sum(wds_corp_del_131       , na.rm=TRUE),
+    wds_corp_del_132_sum       = sum(wds_corp_del_132       , na.rm=TRUE),
+    wds_corp_del_133_sum       = sum(wds_corp_del_133       , na.rm=TRUE),
+    wds_corp_del_134_sum       = sum(wds_corp_del_134       , na.rm=TRUE),
+    wds_corp_del_141_sum       = sum(wds_corp_del_141       , na.rm=TRUE),
+    wds_corp_del_142_sum       = sum(wds_corp_del_142       , na.rm=TRUE),
+    wds_corp_del_143_sum       = sum(wds_corp_del_143       , na.rm=TRUE),
+    wds_corp_del_144_sum       = sum(wds_corp_del_144       , na.rm=TRUE),
+    wds_corp_del_145_sum       = sum(wds_corp_del_145       , na.rm=TRUE),
+    wds_corp_del_21_sum        = sum(wds_corp_del_21        , na.rm=TRUE),
+    wds_corp_del_22_sum        = sum(wds_corp_del_22        , na.rm=TRUE),
+    wds_corp_del_23_sum        = sum(wds_corp_del_23        , na.rm=TRUE),
+    wds_corp_del_241_sum       = sum(wds_corp_del_241       , na.rm=TRUE),
+    wds_corp_del_242_sum       = sum(wds_corp_del_242       , na.rm=TRUE),
+    wds_corp_del_243_sum       = sum(wds_corp_del_243       , na.rm=TRUE),
+    wds_corp_del_244_sum       = sum(wds_corp_del_244       , na.rm=TRUE),
+    wds_corp_del_25_sum        = sum(wds_corp_del_25        , na.rm=TRUE),
+    wds_corp_del_26_sum        = sum(wds_corp_del_26        , na.rm=TRUE),
+    wds_corp_del_27_sum        = sum(wds_corp_del_27        , na.rm=TRUE),
+    wds_corp_del_28_sum        = sum(wds_corp_del_28        , na.rm=TRUE),
+    wds_corp_del_29_sum        = sum(wds_corp_del_29        , na.rm=TRUE),
+    wds_corp_del_31_sum        = sum(wds_corp_del_31        , na.rm=TRUE),
+    wds_corp_del_32_sum        = sum(wds_corp_del_32        , na.rm=TRUE),
+    wds_corp_del_33_sum        = sum(wds_corp_del_33        , na.rm=TRUE),
+    wds_corp_del_34_sum        = sum(wds_corp_del_34        , na.rm=TRUE),
+    wds_corp_del_411_sum       = sum(wds_corp_del_411       , na.rm=TRUE),
+    wds_corp_del_412_sum       = sum(wds_corp_del_412       , na.rm=TRUE),
+    wds_corp_del_421_sum       = sum(wds_corp_del_421       , na.rm=TRUE),
+    wds_corp_del_422_sum       = sum(wds_corp_del_422       , na.rm=TRUE),
+    wds_corp_del_43_sum        = sum(wds_corp_del_43        , na.rm=TRUE),
+    wds_corp_del_441_sum       = sum(wds_corp_del_441       , na.rm=TRUE),
+    wds_corp_del_442_sum       = sum(wds_corp_del_442       , na.rm=TRUE),
+    wds_corp_del_45_sum        = sum(wds_corp_del_45        , na.rm=TRUE),
+    wds_corp_del_51_sum        = sum(wds_corp_del_51        , na.rm=TRUE),
+    wds_corp_del_52_sum        = sum(wds_corp_del_52        , na.rm=TRUE),
+    wds_corp_del_53_sum        = sum(wds_corp_del_53        , na.rm=TRUE),
+    wds_corp_del_54_sum        = sum(wds_corp_del_54        , na.rm=TRUE),
+    wds_corp_del_55_sum        = sum(wds_corp_del_55        , na.rm=TRUE),
+    wds_corp_del_56_sum        = sum(wds_corp_del_56        , na.rm=TRUE),
+    wds_corp_del_611_sum       = sum(wds_corp_del_611       , na.rm=TRUE),
+    wds_corp_del_612_sum       = sum(wds_corp_del_612       , na.rm=TRUE),
+    wds_corp_del_613_sum       = sum(wds_corp_del_613       , na.rm=TRUE),
+    wds_corp_del_6211_sum      = sum(wds_corp_del_6211      , na.rm=TRUE),
+    wds_corp_del_6212_sum      = sum(wds_corp_del_6212      , na.rm=TRUE),
+    wds_corp_del_6221_sum      = sum(wds_corp_del_6221      , na.rm=TRUE),
+    wds_corp_del_6222_sum      = sum(wds_corp_del_6222      , na.rm=TRUE),
+    wds_corp_del_631_sum       = sum(wds_corp_del_631       , na.rm=TRUE),
+    wds_corp_del_632_sum       = sum(wds_corp_del_632       , na.rm=TRUE),
+    wds_corp_del_633_sum       = sum(wds_corp_del_633       , na.rm=TRUE),
+    wds_corp_del_634_sum       = sum(wds_corp_del_634       , na.rm=TRUE),
+    wds_corp_del_6351_sum      = sum(wds_corp_del_6351      , na.rm=TRUE),
+    wds_corp_del_6352_sum      = sum(wds_corp_del_6352      , na.rm=TRUE),
+    wds_corp_del_636_sum       = sum(wds_corp_del_636       , na.rm=TRUE),
+    wds_corp_del_637_sum       = sum(wds_corp_del_637       , na.rm=TRUE),
+    wds_corp_del_638_sum       = sum(wds_corp_del_638       , na.rm=TRUE),
+    wds_corp_del_639_sum       = sum(wds_corp_del_639       , na.rm=TRUE),
+    wds_corp_del_641_sum       = sum(wds_corp_del_641       , na.rm=TRUE),
+    wds_corp_del_642_sum       = sum(wds_corp_del_642       , na.rm=TRUE),
+    wds_corp_del_643_sum       = sum(wds_corp_del_643       , na.rm=TRUE),
+    wds_corp_del_651_sum       = sum(wds_corp_del_651       , na.rm=TRUE),
+    wds_corp_del_652_sum       = sum(wds_corp_del_652       , na.rm=TRUE),
+    wds_corp_del_653_sum       = sum(wds_corp_del_653       , na.rm=TRUE),
+    wds_corp_del_66_sum        = sum(wds_corp_del_66        , na.rm=TRUE),
+    wds_corp_del_67_sum        = sum(wds_corp_del_67        , na.rm=TRUE),
+    wds_corp_del_68_sum        = sum(wds_corp_del_68        , na.rm=TRUE),
+    wds_corp_del_71_sum        = sum(wds_corp_del_71        , na.rm=TRUE),
+    wds_corp_del_72_sum        = sum(wds_corp_del_72        , na.rm=TRUE),
+    wds_corp_del_73_sum        = sum(wds_corp_del_73        , na.rm=TRUE),
+    wds_corp_del_8_sum         = sum(wds_corp_del_8         , na.rm=TRUE),
+    wds_corp_del_999_sum       = sum(wds_corp_del_999       , na.rm=TRUE),
+    wds_corp_del_9_sum         = sum(wds_corp_del_9         , na.rm=TRUE),
+    wds_corp_ins_10_sum        = sum(wds_corp_ins_10        , na.rm=TRUE),
+    wds_corp_ins_111_sum       = sum(wds_corp_ins_111       , na.rm=TRUE),
+    wds_corp_ins_112_sum       = sum(wds_corp_ins_112       , na.rm=TRUE),
+    wds_corp_ins_113_sum       = sum(wds_corp_ins_113       , na.rm=TRUE),
+    wds_corp_ins_114_sum       = sum(wds_corp_ins_114       , na.rm=TRUE),
+    wds_corp_ins_121_sum       = sum(wds_corp_ins_121       , na.rm=TRUE),
+    wds_corp_ins_122_sum       = sum(wds_corp_ins_122       , na.rm=TRUE),
+    wds_corp_ins_123_sum       = sum(wds_corp_ins_123       , na.rm=TRUE),
+    wds_corp_ins_124_sum       = sum(wds_corp_ins_124       , na.rm=TRUE),
+    wds_corp_ins_125_sum       = sum(wds_corp_ins_125       , na.rm=TRUE),
+    wds_corp_ins_131_sum       = sum(wds_corp_ins_131       , na.rm=TRUE),
+    wds_corp_ins_132_sum       = sum(wds_corp_ins_132       , na.rm=TRUE),
+    wds_corp_ins_133_sum       = sum(wds_corp_ins_133       , na.rm=TRUE),
+    wds_corp_ins_134_sum       = sum(wds_corp_ins_134       , na.rm=TRUE),
+    wds_corp_ins_141_sum       = sum(wds_corp_ins_141       , na.rm=TRUE),
+    wds_corp_ins_142_sum       = sum(wds_corp_ins_142       , na.rm=TRUE),
+    wds_corp_ins_143_sum       = sum(wds_corp_ins_143       , na.rm=TRUE),
+    wds_corp_ins_144_sum       = sum(wds_corp_ins_144       , na.rm=TRUE),
+    wds_corp_ins_145_sum       = sum(wds_corp_ins_145       , na.rm=TRUE),
+    wds_corp_ins_21_sum        = sum(wds_corp_ins_21        , na.rm=TRUE),
+    wds_corp_ins_22_sum        = sum(wds_corp_ins_22        , na.rm=TRUE),
+    wds_corp_ins_23_sum        = sum(wds_corp_ins_23        , na.rm=TRUE),
+    wds_corp_ins_241_sum       = sum(wds_corp_ins_241       , na.rm=TRUE),
+    wds_corp_ins_242_sum       = sum(wds_corp_ins_242       , na.rm=TRUE),
+    wds_corp_ins_243_sum       = sum(wds_corp_ins_243       , na.rm=TRUE),
+    wds_corp_ins_244_sum       = sum(wds_corp_ins_244       , na.rm=TRUE),
+    wds_corp_ins_25_sum        = sum(wds_corp_ins_25        , na.rm=TRUE),
+    wds_corp_ins_26_sum        = sum(wds_corp_ins_26        , na.rm=TRUE),
+    wds_corp_ins_27_sum        = sum(wds_corp_ins_27        , na.rm=TRUE),
+    wds_corp_ins_28_sum        = sum(wds_corp_ins_28        , na.rm=TRUE),
+    wds_corp_ins_29_sum        = sum(wds_corp_ins_29        , na.rm=TRUE),
+    wds_corp_ins_31_sum        = sum(wds_corp_ins_31        , na.rm=TRUE),
+    wds_corp_ins_32_sum        = sum(wds_corp_ins_32        , na.rm=TRUE),
+    wds_corp_ins_33_sum        = sum(wds_corp_ins_33        , na.rm=TRUE),
+    wds_corp_ins_34_sum        = sum(wds_corp_ins_34        , na.rm=TRUE),
+    wds_corp_ins_411_sum       = sum(wds_corp_ins_411       , na.rm=TRUE),
+    wds_corp_ins_412_sum       = sum(wds_corp_ins_412       , na.rm=TRUE),
+    wds_corp_ins_421_sum       = sum(wds_corp_ins_421       , na.rm=TRUE),
+    wds_corp_ins_422_sum       = sum(wds_corp_ins_422       , na.rm=TRUE),
+    wds_corp_ins_43_sum        = sum(wds_corp_ins_43        , na.rm=TRUE),
+    wds_corp_ins_441_sum       = sum(wds_corp_ins_441       , na.rm=TRUE),
+    wds_corp_ins_442_sum       = sum(wds_corp_ins_442       , na.rm=TRUE),
+    wds_corp_ins_45_sum        = sum(wds_corp_ins_45        , na.rm=TRUE),
+    wds_corp_ins_51_sum        = sum(wds_corp_ins_51        , na.rm=TRUE),
+    wds_corp_ins_52_sum        = sum(wds_corp_ins_52        , na.rm=TRUE),
+    wds_corp_ins_53_sum        = sum(wds_corp_ins_53        , na.rm=TRUE),
+    wds_corp_ins_54_sum        = sum(wds_corp_ins_54        , na.rm=TRUE),
+    wds_corp_ins_55_sum        = sum(wds_corp_ins_55        , na.rm=TRUE),
+    wds_corp_ins_56_sum        = sum(wds_corp_ins_56        , na.rm=TRUE),
+    wds_corp_ins_611_sum       = sum(wds_corp_ins_611       , na.rm=TRUE),
+    wds_corp_ins_612_sum       = sum(wds_corp_ins_612       , na.rm=TRUE),
+    wds_corp_ins_613_sum       = sum(wds_corp_ins_613       , na.rm=TRUE),
+    wds_corp_ins_6211_sum      = sum(wds_corp_ins_6211      , na.rm=TRUE),
+    wds_corp_ins_6212_sum      = sum(wds_corp_ins_6212      , na.rm=TRUE),
+    wds_corp_ins_6221_sum      = sum(wds_corp_ins_6221      , na.rm=TRUE),
+    wds_corp_ins_6222_sum      = sum(wds_corp_ins_6222      , na.rm=TRUE),
+    wds_corp_ins_631_sum       = sum(wds_corp_ins_631       , na.rm=TRUE),
+    wds_corp_ins_632_sum       = sum(wds_corp_ins_632       , na.rm=TRUE),
+    wds_corp_ins_633_sum       = sum(wds_corp_ins_633       , na.rm=TRUE),
+    wds_corp_ins_634_sum       = sum(wds_corp_ins_634       , na.rm=TRUE),
+    wds_corp_ins_6351_sum      = sum(wds_corp_ins_6351      , na.rm=TRUE),
+    wds_corp_ins_6352_sum      = sum(wds_corp_ins_6352      , na.rm=TRUE),
+    wds_corp_ins_636_sum       = sum(wds_corp_ins_636       , na.rm=TRUE),
+    wds_corp_ins_637_sum       = sum(wds_corp_ins_637       , na.rm=TRUE),
+    wds_corp_ins_638_sum       = sum(wds_corp_ins_638       , na.rm=TRUE),
+    wds_corp_ins_639_sum       = sum(wds_corp_ins_639       , na.rm=TRUE),
+    wds_corp_ins_641_sum       = sum(wds_corp_ins_641       , na.rm=TRUE),
+    wds_corp_ins_642_sum       = sum(wds_corp_ins_642       , na.rm=TRUE),
+    wds_corp_ins_643_sum       = sum(wds_corp_ins_643       , na.rm=TRUE),
+    wds_corp_ins_651_sum       = sum(wds_corp_ins_651       , na.rm=TRUE),
+    wds_corp_ins_652_sum       = sum(wds_corp_ins_652       , na.rm=TRUE),
+    wds_corp_ins_653_sum       = sum(wds_corp_ins_653       , na.rm=TRUE),
+    wds_corp_ins_66_sum        = sum(wds_corp_ins_66        , na.rm=TRUE),
+    wds_corp_ins_67_sum        = sum(wds_corp_ins_67        , na.rm=TRUE),
+    wds_corp_ins_68_sum        = sum(wds_corp_ins_68        , na.rm=TRUE),
+    wds_corp_ins_71_sum        = sum(wds_corp_ins_71        , na.rm=TRUE),
+    wds_corp_ins_72_sum        = sum(wds_corp_ins_72        , na.rm=TRUE),
+    wds_corp_ins_73_sum        = sum(wds_corp_ins_73        , na.rm=TRUE),
+    wds_corp_ins_8_sum         = sum(wds_corp_ins_8         , na.rm=TRUE),
+    wds_corp_ins_999_sum       = sum(wds_corp_ins_999       , na.rm=TRUE),
+    wds_corp_ins_9_sum         = sum(wds_corp_ins_9         , na.rm=TRUE),
+    wds_corp_mdf_10_sum        = sum(wds_corp_mdf_10        , na.rm=TRUE),
+    wds_corp_mdf_111_sum       = sum(wds_corp_mdf_111       , na.rm=TRUE),
+    wds_corp_mdf_112_sum       = sum(wds_corp_mdf_112       , na.rm=TRUE),
+    wds_corp_mdf_113_sum       = sum(wds_corp_mdf_113       , na.rm=TRUE),
+    wds_corp_mdf_114_sum       = sum(wds_corp_mdf_114       , na.rm=TRUE),
+    wds_corp_mdf_121_sum       = sum(wds_corp_mdf_121       , na.rm=TRUE),
+    wds_corp_mdf_122_sum       = sum(wds_corp_mdf_122       , na.rm=TRUE),
+    wds_corp_mdf_123_sum       = sum(wds_corp_mdf_123       , na.rm=TRUE),
+    wds_corp_mdf_124_sum       = sum(wds_corp_mdf_124       , na.rm=TRUE),
+    wds_corp_mdf_125_sum       = sum(wds_corp_mdf_125       , na.rm=TRUE),
+    wds_corp_mdf_131_sum       = sum(wds_corp_mdf_131       , na.rm=TRUE),
+    wds_corp_mdf_132_sum       = sum(wds_corp_mdf_132       , na.rm=TRUE),
+    wds_corp_mdf_133_sum       = sum(wds_corp_mdf_133       , na.rm=TRUE),
+    wds_corp_mdf_134_sum       = sum(wds_corp_mdf_134       , na.rm=TRUE),
+    wds_corp_mdf_141_sum       = sum(wds_corp_mdf_141       , na.rm=TRUE),
+    wds_corp_mdf_142_sum       = sum(wds_corp_mdf_142       , na.rm=TRUE),
+    wds_corp_mdf_143_sum       = sum(wds_corp_mdf_143       , na.rm=TRUE),
+    wds_corp_mdf_144_sum       = sum(wds_corp_mdf_144       , na.rm=TRUE),
+    wds_corp_mdf_145_sum       = sum(wds_corp_mdf_145       , na.rm=TRUE),
+    wds_corp_mdf_21_sum        = sum(wds_corp_mdf_21        ,na.rm=TRUE),
+    wds_corp_mdf_22_sum        = sum(wds_corp_mdf_22        , na.rm=TRUE),
+    wds_corp_mdf_23_sum        = sum(wds_corp_mdf_23        , na.rm=TRUE),
+    wds_corp_mdf_241_sum       = sum(wds_corp_mdf_241       , na.rm=TRUE),
+    wds_corp_mdf_242_sum       = sum(wds_corp_mdf_242       , na.rm=TRUE),
+    wds_corp_mdf_243_sum       = sum(wds_corp_mdf_243       , na.rm=TRUE),
+    wds_corp_mdf_244_sum       = sum(wds_corp_mdf_244       , na.rm=TRUE),
+    wds_corp_mdf_25_sum        = sum(wds_corp_mdf_25        ,na.rm=TRUE),
+    wds_corp_mdf_26_sum        = sum(wds_corp_mdf_26        , na.rm=TRUE),
+    wds_corp_mdf_27_sum        = sum(wds_corp_mdf_27        , na.rm=TRUE),
+    wds_corp_mdf_28_sum        = sum(wds_corp_mdf_28        , na.rm=TRUE),
+    wds_corp_mdf_29_sum        = sum(wds_corp_mdf_29        , na.rm=TRUE),
+    wds_corp_mdf_31_sum        = sum(wds_corp_mdf_31        , na.rm=TRUE),
+    wds_corp_mdf_32_sum        = sum(wds_corp_mdf_32        , na.rm=TRUE),
+    wds_corp_mdf_33_sum        = sum(wds_corp_mdf_33        , na.rm=TRUE),
+    wds_corp_mdf_34_sum        = sum(wds_corp_mdf_34        , na.rm=TRUE),
+    wds_corp_mdf_411_sum       = sum(wds_corp_mdf_411       , na.rm=TRUE),
+    wds_corp_mdf_412_sum       = sum(wds_corp_mdf_412       , na.rm=TRUE),
+    wds_corp_mdf_421_sum       = sum(wds_corp_mdf_421       , na.rm=TRUE),
+    wds_corp_mdf_422_sum       = sum(wds_corp_mdf_422       , na.rm=TRUE),
+    wds_corp_mdf_43_sum        = sum(wds_corp_mdf_43        , na.rm=TRUE),
+    wds_corp_mdf_441_sum       = sum(wds_corp_mdf_441       , na.rm=TRUE),
+    wds_corp_mdf_442_sum       = sum(wds_corp_mdf_442       , na.rm=TRUE),
+    wds_corp_mdf_45_sum        = sum(wds_corp_mdf_45        , na.rm=TRUE),
+    wds_corp_mdf_51_sum        = sum(wds_corp_mdf_51        ,na.rm=TRUE),
+    wds_corp_mdf_52_sum        = sum(wds_corp_mdf_52        , na.rm=TRUE),
+    wds_corp_mdf_53_sum        = sum(wds_corp_mdf_53        ,na.rm=TRUE),
+    wds_corp_mdf_54_sum        = sum(wds_corp_mdf_54        ,na.rm=TRUE),
+    wds_corp_mdf_55_sum        = sum(wds_corp_mdf_55        , na.rm=TRUE),
+    wds_corp_mdf_56_sum        = sum(wds_corp_mdf_56        , na.rm=TRUE),
+    wds_corp_mdf_611_sum       = sum(wds_corp_mdf_611       , na.rm=TRUE),
+    wds_corp_mdf_612_sum       = sum(wds_corp_mdf_612       , na.rm=TRUE),
+    wds_corp_mdf_613_sum       = sum(wds_corp_mdf_613       , na.rm=TRUE),
+    wds_corp_mdf_6211_sum      = sum(wds_corp_mdf_6211      , na.rm=TRUE),
+    wds_corp_mdf_6212_sum      = sum(wds_corp_mdf_6212      , na.rm=TRUE),
+    wds_corp_mdf_6221_sum      = sum(wds_corp_mdf_6221      , na.rm=TRUE),
+    wds_corp_mdf_6222_sum      = sum(wds_corp_mdf_6222      , na.rm=TRUE),
+    wds_corp_mdf_631_sum       = sum(wds_corp_mdf_631       , na.rm=TRUE),
+    wds_corp_mdf_632_sum       = sum(wds_corp_mdf_632       , na.rm=TRUE),
+    wds_corp_mdf_633_sum       = sum(wds_corp_mdf_633       , na.rm=TRUE),
+    wds_corp_mdf_634_sum       = sum(wds_corp_mdf_634       , na.rm=TRUE),
+    wds_corp_mdf_6351_sum      = sum(wds_corp_mdf_6351      , na.rm=TRUE),
+    wds_corp_mdf_6352_sum      = sum(wds_corp_mdf_6352      , na.rm=TRUE),
+    wds_corp_mdf_636_sum       = sum(wds_corp_mdf_636       , na.rm=TRUE),
+    wds_corp_mdf_637_sum       = sum(wds_corp_mdf_637       , na.rm=TRUE),
+    wds_corp_mdf_638_sum       = sum(wds_corp_mdf_638       , na.rm=TRUE),
+    wds_corp_mdf_639_sum       = sum(wds_corp_mdf_639       , na.rm=TRUE),
+    wds_corp_mdf_641_sum       = sum(wds_corp_mdf_641       , na.rm=TRUE),
+    wds_corp_mdf_642_sum       = sum(wds_corp_mdf_642       , na.rm=TRUE),
+    wds_corp_mdf_643_sum       = sum(wds_corp_mdf_643       , na.rm=TRUE),
+    wds_corp_mdf_651_sum       = sum(wds_corp_mdf_651       , na.rm=TRUE),
+    wds_corp_mdf_652_sum       = sum(wds_corp_mdf_652       , na.rm=TRUE),
+    wds_corp_mdf_653_sum       = sum(wds_corp_mdf_653       , na.rm=TRUE),
+    wds_corp_mdf_66_sum        = sum(wds_corp_mdf_66        , na.rm=TRUE),
+    wds_corp_mdf_67_sum        = sum(wds_corp_mdf_67        , na.rm=TRUE),
+    wds_corp_mdf_68_sum        = sum(wds_corp_mdf_68        , na.rm=TRUE),
+    wds_corp_mdf_71_sum        = sum(wds_corp_mdf_71        , na.rm=TRUE),
+    wds_corp_mdf_72_sum        = sum(wds_corp_mdf_72        , na.rm=TRUE),
+    wds_corp_mdf_73_sum        = sum(wds_corp_mdf_73        , na.rm=TRUE),
+    wds_corp_mdf_8_sum         = sum(wds_corp_mdf_8         ,na.rm=TRUE),
+    wds_corp_mdf_999_sum       = sum(wds_corp_mdf_999       , na.rm=TRUE),
+    wds_corp_mdf_9_sum         = sum(wds_corp_mdf_9         , na.rm=TRUE),
+    
+    lns_corp_del_10_sum     = sum(lns_corp_del_10        , na.rm=TRUE),
+    lns_corp_del_111_sum    = sum(lns_corp_del_111       , na.rm=TRUE),
+    lns_corp_del_112_sum    = sum(lns_corp_del_112       , na.rm=TRUE),
+    lns_corp_del_113_sum    = sum(lns_corp_del_113       , na.rm=TRUE),
+    lns_corp_del_114_sum    = sum(lns_corp_del_114       , na.rm=TRUE),
+    lns_corp_del_121_sum    = sum(lns_corp_del_121       , na.rm=TRUE),
+    lns_corp_del_122_sum    = sum(lns_corp_del_122       , na.rm=TRUE),
+    lns_corp_del_123_sum    = sum(lns_corp_del_123       , na.rm=TRUE),
+    lns_corp_del_124_sum    = sum(lns_corp_del_124       , na.rm=TRUE),
+    lns_corp_del_125_sum    = sum(lns_corp_del_125       , na.rm=TRUE),
+    lns_corp_del_131_sum    = sum(lns_corp_del_131       , na.rm=TRUE),
+    lns_corp_del_132_sum    = sum(lns_corp_del_132       , na.rm=TRUE),
+    lns_corp_del_133_sum    = sum(lns_corp_del_133       , na.rm=TRUE),
+    lns_corp_del_134_sum    = sum(lns_corp_del_134       , na.rm=TRUE),
+    lns_corp_del_141_sum    = sum(lns_corp_del_141       , na.rm=TRUE),
+    lns_corp_del_142_sum    = sum(lns_corp_del_142       , na.rm=TRUE),
+    lns_corp_del_143_sum    = sum(lns_corp_del_143       , na.rm=TRUE),
+    lns_corp_del_144_sum    = sum(lns_corp_del_144       , na.rm=TRUE),
+    lns_corp_del_145_sum    = sum(lns_corp_del_145       , na.rm=TRUE),
+    lns_corp_del_21_sum     = sum(lns_corp_del_21        , na.rm=TRUE),
+    lns_corp_del_22_sum     = sum(lns_corp_del_22        , na.rm=TRUE),
+    lns_corp_del_23_sum     = sum(lns_corp_del_23        , na.rm=TRUE),
+    lns_corp_del_241_sum    = sum(lns_corp_del_241       , na.rm=TRUE),
+    lns_corp_del_242_sum    = sum(lns_corp_del_242       , na.rm=TRUE),
+    lns_corp_del_243_sum    = sum(lns_corp_del_243       , na.rm=TRUE),
+    lns_corp_del_244_sum    = sum(lns_corp_del_244       , na.rm=TRUE),
+    lns_corp_del_25_sum     = sum(lns_corp_del_25        , na.rm=TRUE),
+    lns_corp_del_26_sum     = sum(lns_corp_del_26        , na.rm=TRUE),
+    lns_corp_del_27_sum     = sum(lns_corp_del_27        , na.rm=TRUE),
+    lns_corp_del_28_sum     = sum(lns_corp_del_28        , na.rm=TRUE),
+    lns_corp_del_29_sum     = sum(lns_corp_del_29        , na.rm=TRUE),
+    lns_corp_del_31_sum     = sum(lns_corp_del_31        , na.rm=TRUE),
+    lns_corp_del_32_sum     = sum(lns_corp_del_32        , na.rm=TRUE),
+    lns_corp_del_33_sum     = sum(lns_corp_del_33        , na.rm=TRUE),
+    lns_corp_del_34_sum     = sum(lns_corp_del_34        , na.rm=TRUE),
+    lns_corp_del_411_sum    = sum(lns_corp_del_411       , na.rm=TRUE),
+    lns_corp_del_412_sum    = sum(lns_corp_del_412       , na.rm=TRUE),
+    lns_corp_del_421_sum    = sum(lns_corp_del_421       , na.rm=TRUE),
+    lns_corp_del_422_sum    = sum(lns_corp_del_422       , na.rm=TRUE),
+    lns_corp_del_43_sum     = sum(lns_corp_del_43        , na.rm=TRUE),
+    lns_corp_del_441_sum    = sum(lns_corp_del_441       , na.rm=TRUE),
+    lns_corp_del_442_sum    = sum(lns_corp_del_442       , na.rm=TRUE),
+    lns_corp_del_45_sum     = sum(lns_corp_del_45        , na.rm=TRUE),
+    lns_corp_del_51_sum     = sum(lns_corp_del_51        , na.rm=TRUE),
+    lns_corp_del_52_sum     = sum(lns_corp_del_52        , na.rm=TRUE),
+    lns_corp_del_53_sum     = sum(lns_corp_del_53        , na.rm=TRUE),
+    lns_corp_del_54_sum     = sum(lns_corp_del_54        , na.rm=TRUE),
+    lns_corp_del_55_sum     = sum(lns_corp_del_55        , na.rm=TRUE),
+    lns_corp_del_56_sum     = sum(lns_corp_del_56        , na.rm=TRUE),
+    lns_corp_del_611_sum    = sum(lns_corp_del_611       , na.rm=TRUE),
+    lns_corp_del_612_sum    = sum(lns_corp_del_612       , na.rm=TRUE),
+    lns_corp_del_613_sum    = sum(lns_corp_del_613       , na.rm=TRUE),
+    lns_corp_del_6211_sum   = sum(lns_corp_del_6211      , na.rm=TRUE),
+    lns_corp_del_6212_sum   = sum(lns_corp_del_6212      , na.rm=TRUE),
+    lns_corp_del_6221_sum   = sum(lns_corp_del_6221      , na.rm=TRUE),
+    lns_corp_del_6222_sum   = sum(lns_corp_del_6222      , na.rm=TRUE),
+    lns_corp_del_631_sum    = sum(lns_corp_del_631       , na.rm=TRUE),
+    lns_corp_del_632_sum    = sum(lns_corp_del_632       , na.rm=TRUE),
+    lns_corp_del_633_sum    = sum(lns_corp_del_633       , na.rm=TRUE),
+    lns_corp_del_634_sum    = sum(lns_corp_del_634       , na.rm=TRUE),
+    lns_corp_del_6351_sum   = sum(lns_corp_del_6351      , na.rm=TRUE),
+    lns_corp_del_6352_sum   = sum(lns_corp_del_6352      , na.rm=TRUE),
+    lns_corp_del_636_sum    = sum(lns_corp_del_636       , na.rm=TRUE),
+    lns_corp_del_637_sum    = sum(lns_corp_del_637       , na.rm=TRUE),
+    lns_corp_del_638_sum    = sum(lns_corp_del_638       , na.rm=TRUE),
+    lns_corp_del_639_sum    = sum(lns_corp_del_639       , na.rm=TRUE),
+    lns_corp_del_641_sum    = sum(lns_corp_del_641       , na.rm=TRUE),
+    lns_corp_del_642_sum    = sum(lns_corp_del_642       , na.rm=TRUE),
+    lns_corp_del_643_sum    = sum(lns_corp_del_643       , na.rm=TRUE),
+    lns_corp_del_651_sum    = sum(lns_corp_del_651       , na.rm=TRUE),
+    lns_corp_del_652_sum    = sum(lns_corp_del_652       , na.rm=TRUE),
+    lns_corp_del_653_sum    = sum(lns_corp_del_653       , na.rm=TRUE),
+    lns_corp_del_66_sum     = sum(lns_corp_del_66        , na.rm=TRUE),
+    lns_corp_del_67_sum     = sum(lns_corp_del_67        , na.rm=TRUE),
+    lns_corp_del_68_sum     = sum(lns_corp_del_68        , na.rm=TRUE),
+    lns_corp_del_71_sum     = sum(lns_corp_del_71        , na.rm=TRUE),
+    lns_corp_del_72_sum     = sum(lns_corp_del_72        , na.rm=TRUE),
+    lns_corp_del_73_sum     = sum(lns_corp_del_73        , na.rm=TRUE),
+    lns_corp_del_8_sum      = sum(lns_corp_del_8         , na.rm=TRUE),
+    lns_corp_del_999_sum    = sum(lns_corp_del_999       , na.rm=TRUE),
+    lns_corp_del_9_sum      = sum(lns_corp_del_9         , na.rm=TRUE),
+    lns_corp_ins_10_sum     = sum(lns_corp_ins_10        , na.rm=TRUE),
+    lns_corp_ins_111_sum    = sum(lns_corp_ins_111       , na.rm=TRUE),
+    lns_corp_ins_112_sum    = sum(lns_corp_ins_112       , na.rm=TRUE),
+    lns_corp_ins_113_sum    = sum(lns_corp_ins_113       , na.rm=TRUE),
+    lns_corp_ins_114_sum    = sum(lns_corp_ins_114       , na.rm=TRUE),
+    lns_corp_ins_121_sum    = sum(lns_corp_ins_121       , na.rm=TRUE),
+    lns_corp_ins_122_sum    = sum(lns_corp_ins_122       , na.rm=TRUE),
+    lns_corp_ins_123_sum    = sum(lns_corp_ins_123       , na.rm=TRUE),
+    lns_corp_ins_124_sum    = sum(lns_corp_ins_124       , na.rm=TRUE),
+    lns_corp_ins_125_sum    = sum(lns_corp_ins_125       , na.rm=TRUE),
+    lns_corp_ins_131_sum    = sum(lns_corp_ins_131       , na.rm=TRUE),
+    lns_corp_ins_132_sum    = sum(lns_corp_ins_132       , na.rm=TRUE),
+    lns_corp_ins_133_sum    = sum(lns_corp_ins_133       , na.rm=TRUE),
+    lns_corp_ins_134_sum    = sum(lns_corp_ins_134       , na.rm=TRUE),
+    lns_corp_ins_141_sum    = sum(lns_corp_ins_141       , na.rm=TRUE),
+    lns_corp_ins_142_sum    = sum(lns_corp_ins_142       , na.rm=TRUE),
+    lns_corp_ins_143_sum    = sum(lns_corp_ins_143       , na.rm=TRUE),
+    lns_corp_ins_144_sum    = sum(lns_corp_ins_144       , na.rm=TRUE),
+    lns_corp_ins_145_sum    = sum(lns_corp_ins_145       , na.rm=TRUE),
+    lns_corp_ins_21_sum     = sum(lns_corp_ins_21        , na.rm=TRUE),
+    lns_corp_ins_22_sum     = sum(lns_corp_ins_22        , na.rm=TRUE),
+    lns_corp_ins_23_sum     = sum(lns_corp_ins_23        , na.rm=TRUE),
+    lns_corp_ins_241_sum    = sum(lns_corp_ins_241       , na.rm=TRUE),
+    lns_corp_ins_242_sum    = sum(lns_corp_ins_242       , na.rm=TRUE),
+    lns_corp_ins_243_sum    = sum(lns_corp_ins_243       , na.rm=TRUE),
+    lns_corp_ins_244_sum    = sum(lns_corp_ins_244       , na.rm=TRUE),
+    lns_corp_ins_25_sum     = sum(lns_corp_ins_25        , na.rm=TRUE),
+    lns_corp_ins_26_sum     = sum(lns_corp_ins_26        , na.rm=TRUE),
+    lns_corp_ins_27_sum     = sum(lns_corp_ins_27        , na.rm=TRUE),
+    lns_corp_ins_28_sum     = sum(lns_corp_ins_28        , na.rm=TRUE),
+    lns_corp_ins_29_sum     = sum(lns_corp_ins_29        , na.rm=TRUE),
+    lns_corp_ins_31_sum     = sum(lns_corp_ins_31        , na.rm=TRUE),
+    lns_corp_ins_32_sum     = sum(lns_corp_ins_32        , na.rm=TRUE),
+    lns_corp_ins_33_sum     = sum(lns_corp_ins_33        , na.rm=TRUE),
+    lns_corp_ins_34_sum     = sum(lns_corp_ins_34        , na.rm=TRUE),
+    lns_corp_ins_411_sum    = sum(lns_corp_ins_411       , na.rm=TRUE),
+    lns_corp_ins_412_sum    = sum(lns_corp_ins_412       , na.rm=TRUE),
+    lns_corp_ins_421_sum    = sum(lns_corp_ins_421       , na.rm=TRUE),
+    lns_corp_ins_422_sum    = sum(lns_corp_ins_422       , na.rm=TRUE),
+    lns_corp_ins_43_sum     = sum(lns_corp_ins_43        , na.rm=TRUE),
+    lns_corp_ins_441_sum    = sum(lns_corp_ins_441       , na.rm=TRUE),
+    lns_corp_ins_442_sum    = sum(lns_corp_ins_442       , na.rm=TRUE),
+    lns_corp_ins_45_sum     = sum(lns_corp_ins_45        , na.rm=TRUE),
+    lns_corp_ins_51_sum     = sum(lns_corp_ins_51        , na.rm=TRUE),
+    lns_corp_ins_52_sum     = sum(lns_corp_ins_52        , na.rm=TRUE),
+    lns_corp_ins_53_sum     = sum(lns_corp_ins_53        , na.rm=TRUE),
+    lns_corp_ins_54_sum     = sum(lns_corp_ins_54        , na.rm=TRUE),
+    lns_corp_ins_55_sum     = sum(lns_corp_ins_55        , na.rm=TRUE),
+    lns_corp_ins_56_sum     = sum(lns_corp_ins_56        , na.rm=TRUE),
+    lns_corp_ins_611_sum    = sum(lns_corp_ins_611       , na.rm=TRUE),
+    lns_corp_ins_612_sum    = sum(lns_corp_ins_612       , na.rm=TRUE),
+    lns_corp_ins_613_sum    = sum(lns_corp_ins_613       , na.rm=TRUE),
+    lns_corp_ins_6211_sum   = sum(lns_corp_ins_6211      , na.rm=TRUE),
+    lns_corp_ins_6212_sum   = sum(lns_corp_ins_6212      , na.rm=TRUE),
+    lns_corp_ins_6221_sum   = sum(lns_corp_ins_6221      , na.rm=TRUE),
+    lns_corp_ins_6222_sum   = sum(lns_corp_ins_6222      , na.rm=TRUE),
+    lns_corp_ins_631_sum    = sum(lns_corp_ins_631       , na.rm=TRUE),
+    lns_corp_ins_632_sum    = sum(lns_corp_ins_632       , na.rm=TRUE),
+    lns_corp_ins_633_sum    = sum(lns_corp_ins_633       , na.rm=TRUE),
+    lns_corp_ins_634_sum    = sum(lns_corp_ins_634       , na.rm=TRUE),
+    lns_corp_ins_6351_sum   = sum(lns_corp_ins_6351      , na.rm=TRUE),
+    lns_corp_ins_6352_sum   = sum(lns_corp_ins_6352      , na.rm=TRUE),
+    lns_corp_ins_636_sum    = sum(lns_corp_ins_636       , na.rm=TRUE),
+    lns_corp_ins_637_sum    = sum(lns_corp_ins_637       , na.rm=TRUE),
+    lns_corp_ins_638_sum    = sum(lns_corp_ins_638       , na.rm=TRUE),
+    lns_corp_ins_639_sum    = sum(lns_corp_ins_639       , na.rm=TRUE),
+    lns_corp_ins_641_sum    = sum(lns_corp_ins_641       , na.rm=TRUE),
+    lns_corp_ins_642_sum    = sum(lns_corp_ins_642       , na.rm=TRUE),
+    lns_corp_ins_643_sum    = sum(lns_corp_ins_643       , na.rm=TRUE),
+    lns_corp_ins_651_sum    = sum(lns_corp_ins_651       , na.rm=TRUE),
+    lns_corp_ins_652_sum    = sum(lns_corp_ins_652       , na.rm=TRUE),
+    lns_corp_ins_653_sum    = sum(lns_corp_ins_653       , na.rm=TRUE),
+    lns_corp_ins_66_sum     = sum(lns_corp_ins_66        , na.rm=TRUE),
+    lns_corp_ins_67_sum     = sum(lns_corp_ins_67        , na.rm=TRUE),
+    lns_corp_ins_68_sum     = sum(lns_corp_ins_68        , na.rm=TRUE),
+    lns_corp_ins_71_sum     = sum(lns_corp_ins_71        , na.rm=TRUE),
+    lns_corp_ins_72_sum     = sum(lns_corp_ins_72        , na.rm=TRUE),
+    lns_corp_ins_73_sum     = sum(lns_corp_ins_73        , na.rm=TRUE),
+    lns_corp_ins_8_sum      = sum(lns_corp_ins_8         , na.rm=TRUE),
+    lns_corp_ins_999_sum    = sum(lns_corp_ins_999       , na.rm=TRUE),
+    lns_corp_ins_9_sum      = sum(lns_corp_ins_9         , na.rm=TRUE),
+    lns_corp_mdf_10_sum     = sum(lns_corp_mdf_10        , na.rm=TRUE),
+    lns_corp_mdf_111_sum    = sum(lns_corp_mdf_111       , na.rm=TRUE),
+    lns_corp_mdf_112_sum    = sum(lns_corp_mdf_112       , na.rm=TRUE),
+    lns_corp_mdf_113_sum    = sum(lns_corp_mdf_113       , na.rm=TRUE),
+    lns_corp_mdf_114_sum    = sum(lns_corp_mdf_114       , na.rm=TRUE),
+    lns_corp_mdf_121_sum    = sum(lns_corp_mdf_121       , na.rm=TRUE),
+    lns_corp_mdf_122_sum    = sum(lns_corp_mdf_122       , na.rm=TRUE),
+    lns_corp_mdf_123_sum    = sum(lns_corp_mdf_123       , na.rm=TRUE),
+    lns_corp_mdf_124_sum    = sum(lns_corp_mdf_124       , na.rm=TRUE),
+    lns_corp_mdf_125_sum    = sum(lns_corp_mdf_125       , na.rm=TRUE),
+    lns_corp_mdf_131_sum    = sum(lns_corp_mdf_131       , na.rm=TRUE),
+    lns_corp_mdf_132_sum    = sum(lns_corp_mdf_132       , na.rm=TRUE),
+    lns_corp_mdf_133_sum    = sum(lns_corp_mdf_133       , na.rm=TRUE),
+    lns_corp_mdf_134_sum    = sum(lns_corp_mdf_134       , na.rm=TRUE),
+    lns_corp_mdf_141_sum    = sum(lns_corp_mdf_141       , na.rm=TRUE),
+    lns_corp_mdf_142_sum    = sum(lns_corp_mdf_142       , na.rm=TRUE),
+    lns_corp_mdf_143_sum    = sum(lns_corp_mdf_143       , na.rm=TRUE),
+    lns_corp_mdf_144_sum    = sum(lns_corp_mdf_144       , na.rm=TRUE),
+    lns_corp_mdf_145_sum    = sum(lns_corp_mdf_145       , na.rm=TRUE),
+    lns_corp_mdf_21_sum     = sum(lns_corp_mdf_21        , na.rm=TRUE),
+    lns_corp_mdf_22_sum     = sum(lns_corp_mdf_22        , na.rm=TRUE),
+    lns_corp_mdf_23_sum     = sum(lns_corp_mdf_23        , na.rm=TRUE),
+    lns_corp_mdf_241_sum    = sum(lns_corp_mdf_241       , na.rm=TRUE),
+    lns_corp_mdf_242_sum    = sum(lns_corp_mdf_242       , na.rm=TRUE),
+    lns_corp_mdf_243_sum    = sum(lns_corp_mdf_243       , na.rm=TRUE),
+    lns_corp_mdf_244_sum    = sum(lns_corp_mdf_244       , na.rm=TRUE),
+    lns_corp_mdf_25_sum     = sum(lns_corp_mdf_25        , na.rm=TRUE),
+    lns_corp_mdf_26_sum     = sum(lns_corp_mdf_26        , na.rm=TRUE),
+    lns_corp_mdf_27_sum     = sum(lns_corp_mdf_27        , na.rm=TRUE),
+    lns_corp_mdf_28_sum     = sum(lns_corp_mdf_28        , na.rm=TRUE),
+    lns_corp_mdf_29_sum     = sum(lns_corp_mdf_29        , na.rm=TRUE),
+    lns_corp_mdf_31_sum     = sum(lns_corp_mdf_31        , na.rm=TRUE),
+    lns_corp_mdf_32_sum     = sum(lns_corp_mdf_32        , na.rm=TRUE),
+    lns_corp_mdf_33_sum     = sum(lns_corp_mdf_33        , na.rm=TRUE),
+    lns_corp_mdf_34_sum     = sum(lns_corp_mdf_34        , na.rm=TRUE),
+    lns_corp_mdf_411_sum    = sum(lns_corp_mdf_411       , na.rm=TRUE),
+    lns_corp_mdf_412_sum    = sum(lns_corp_mdf_412       , na.rm=TRUE),
+    lns_corp_mdf_421_sum    = sum(lns_corp_mdf_421       , na.rm=TRUE),
+    lns_corp_mdf_422_sum    = sum(lns_corp_mdf_422       , na.rm=TRUE),
+    lns_corp_mdf_43_sum     = sum(lns_corp_mdf_43        , na.rm=TRUE),
+    lns_corp_mdf_441_sum    = sum(lns_corp_mdf_441       , na.rm=TRUE),
+    lns_corp_mdf_442_sum    = sum(lns_corp_mdf_442       , na.rm=TRUE),
+    lns_corp_mdf_45_sum     = sum(lns_corp_mdf_45        , na.rm=TRUE),
+    lns_corp_mdf_51_sum     = sum(lns_corp_mdf_51        , na.rm=TRUE),
+    lns_corp_mdf_52_sum     = sum(lns_corp_mdf_52        , na.rm=TRUE),
+    lns_corp_mdf_53_sum     = sum(lns_corp_mdf_53        , na.rm=TRUE),
+    lns_corp_mdf_54_sum     = sum(lns_corp_mdf_54        , na.rm=TRUE),
+    lns_corp_mdf_55_sum     = sum(lns_corp_mdf_55        , na.rm=TRUE),
+    lns_corp_mdf_56_sum     = sum(lns_corp_mdf_56        , na.rm=TRUE),
+    lns_corp_mdf_611_sum    = sum(lns_corp_mdf_611       , na.rm=TRUE),
+    lns_corp_mdf_612_sum    = sum(lns_corp_mdf_612       , na.rm=TRUE),
+    lns_corp_mdf_613_sum    = sum(lns_corp_mdf_613       , na.rm=TRUE),
+    lns_corp_mdf_6211_sum   = sum(lns_corp_mdf_6211      , na.rm=TRUE),
+    lns_corp_mdf_6212_sum   = sum(lns_corp_mdf_6212      , na.rm=TRUE),
+    lns_corp_mdf_6221_sum   = sum(lns_corp_mdf_6221      , na.rm=TRUE),
+    lns_corp_mdf_6222_sum   = sum(lns_corp_mdf_6222      , na.rm=TRUE),
+    lns_corp_mdf_631_sum    = sum(lns_corp_mdf_631       , na.rm=TRUE),
+    lns_corp_mdf_632_sum    = sum(lns_corp_mdf_632       , na.rm=TRUE),
+    lns_corp_mdf_633_sum    = sum(lns_corp_mdf_633       , na.rm=TRUE),
+    lns_corp_mdf_634_sum    = sum(lns_corp_mdf_634       , na.rm=TRUE),
+    lns_corp_mdf_6351_sum   = sum(lns_corp_mdf_6351      , na.rm=TRUE),
+    lns_corp_mdf_6352_sum   = sum(lns_corp_mdf_6352      , na.rm=TRUE),
+    lns_corp_mdf_636_sum    = sum(lns_corp_mdf_636       , na.rm=TRUE),
+    lns_corp_mdf_637_sum    = sum(lns_corp_mdf_637       , na.rm=TRUE),
+    lns_corp_mdf_638_sum    = sum(lns_corp_mdf_638       , na.rm=TRUE),
+    lns_corp_mdf_639_sum    = sum(lns_corp_mdf_639       , na.rm=TRUE),
+    lns_corp_mdf_641_sum    = sum(lns_corp_mdf_641       , na.rm=TRUE),
+    lns_corp_mdf_642_sum    = sum(lns_corp_mdf_642       , na.rm=TRUE),
+    lns_corp_mdf_643_sum    = sum(lns_corp_mdf_643       , na.rm=TRUE),
+    lns_corp_mdf_651_sum    = sum(lns_corp_mdf_651       , na.rm=TRUE),
+    lns_corp_mdf_652_sum    = sum(lns_corp_mdf_652       , na.rm=TRUE),
+    lns_corp_mdf_653_sum    = sum(lns_corp_mdf_653       , na.rm=TRUE),
+    lns_corp_mdf_66_sum     = sum(lns_corp_mdf_66        , na.rm=TRUE),
+    lns_corp_mdf_67_sum     = sum(lns_corp_mdf_67        , na.rm=TRUE),
+    lns_corp_mdf_68_sum     = sum(lns_corp_mdf_68        , na.rm=TRUE),
+    lns_corp_mdf_71_sum     = sum(lns_corp_mdf_71        , na.rm=TRUE),
+    lns_corp_mdf_72_sum     = sum(lns_corp_mdf_72        , na.rm=TRUE),
+    lns_corp_mdf_73_sum     = sum(lns_corp_mdf_73        , na.rm=TRUE),
+    lns_corp_mdf_8_sum      = sum(lns_corp_mdf_8         , na.rm=TRUE),
+    lns_corp_mdf_999_sum    = sum(lns_corp_mdf_999       , na.rm=TRUE),
+    lns_corp_mdf_9_sum      = sum(lns_corp_mdf_9         , na.rm=TRUE)
     
   )
 isor_chg_agg <- filter(isor_chg_agg, !is.na(ref_id_fst))
 
+# all variables 
+dim(isor_chg)
+dim(isor_chg_agg)
+
+# join isom with isor_chg_agg
+isom <-
+  isom  %>% 
+  left_join(isor_chg_agg)
+
+# hacve a glance
+isom %>% 
+  select( 
+    cab_id, cab_pm, cab_in, cab_out, 
+    ref_n, ref_id_fst, lns_chg_sum, wds_chg_sum
+  )
 
 #### merging erd and isor_so ===================================================
 
+merger <- data_frame(cab_id=character(0), so_id=character(0))
 
 
-
-
-
-
-
-
-
-
-
-
-#### saving non aggregated data for later ======================================
-
-isom_non_agg <- isom
-
-
-
-
-#### aggregation ===============================================================
-source(
-  system.file(package="idep","tasks/aggregate_data/isom_helper_aggregation.R")
-)
-
-
-#### dichotomize pro_maj / pro_min codings =====================================
-
-isom %>% 
-  filter( pro_min_sum > 0, pro_maj_sum > 0 ) %>% 
-  select(ctr, cab_id, cab_pm, pro_maj_sum, 
-         pro_min_sum, pro_non_sum, pro_minmaj_qual_sum )
-
-isom$pro_minmaj_qual <-
-  sapply(
-    str_split(isom$pro_minmaj_qual_sum, ", "), 
-    function(x){ 
-      x <- unique(x[ x != "NA" & !is.null(x) ])
-      if( length(x)     ==     0      ) return(  0 )
-      if( all(unique(x) ==     0     )) return(  0 )
-      if( all(unique(x) %in% c(0, 1) )) return(  1 ) 
-      if( all(unique(x) %in% c(0,-1) )) return( -1 )
-      -99
-    } 
-  )
-
-isom$pro_minmaj_qual[isom$cab_id==1720] <- -1
-isom$pro_minmaj_qual[isom$cab_id==1622] <-  1
-isom$pro_minmaj_qual[isom$cab_id==1329] <- -1 
-isom$pro_minmaj_qual[isom$cab_id==1042] <- -1
-isom$pro_minmaj_qual[isom$cab_id==1710] <-  1 
-isom$pro_minmaj_qual[isom$cab_id==1718] <-  0
-isom$pro_minmaj_qual[isom$cab_id==1719] <- -1
-isom$pro_minmaj_qual[isom$cab_id==1723] <-  0 
-isom$pro_minmaj_qual[isom$cab_id==1410] <- -1
-isom$pro_minmaj_qual[isom$cab_id==1214] <-  0
-isom$pro_minmaj_qual[isom$cab_id==1221] <-  0
-isom$pro_minmaj_qual[isom$cab_id==1224] <-  0
-isom$pro_minmaj_qual[isom$cab_id==228]  <-  1 
-isom$pro_minmaj_qual[isom$cab_id==527]  <-  0
-isom$pro_minmaj_qual[isom$cab_id==613]  <-  2
-isom$pro_minmaj_qual[isom$cab_id==925]  <-  1 
-isom$pro_minmaj_qual[isom$cab_id==1005] <-  1
-isom$pro_minmaj_qual[isom$cab_id==1036] <-  1 
-isom$pro_minmaj_qual[isom$cab_id==1038] <-  1 
-isom$pro_minmaj_qual[isom$cab_id==1328] <- -1 
-isom$pro_minmaj_qual[isom$cab_id==1624] <-  0
-
-isom  <- 
-  isom %>% select(-pro_minmaj_qual_sum)
+for (i in seq_len(dim(isor_so)[1]) ) {
+  # cab_in between so_start and so_end
+  so_id    <- isor_so$so_t_id[i]
+  so_ctr   <- isor_so$ctr[i]
+  so_start <- isor_so$so_start[i]
+  so_end   <- isor_so$so_end[i]
   
-isom  %>% 
-  select(ctr, cab_in, cab_id, n_reforms, 
-         pro_minmaj_qual, pro_min_sum, pro_maj_sum)   %>% 
-  filter(n_reforms>0, pro_minmaj_qual==-99) %>% 
-  head(400) 
+  cab_ids <- 
+    isom$cab_id[
+    so_start < isom$cab_in & 
+    isom$cab_in < so_end[i] &
+    isom$ctr == so_ctr]
   
+  if( length(so_id) > 0 & length(cab_ids) > 0 ){
+    merger <- rbind(merger, data_frame(cab_id=cab_ids, so_id=so_id))
+  }
+
+  # cab_in between so_start and so_end
+  cab_ids <- 
+    isom$cab_id[
+      so_start < isom$cab_out & 
+        isom$cab_out < so_end[i] &
+        isom$ctr == so_ctr]
   
-isom$pro_minmaj_auto1 <- 0 # based on words
-isom$pro_minmaj_auto1[ isom$pro_maj_sum > isom$pro_min_sum ] <-  1
-isom$pro_minmaj_auto1[ isom$pro_min_sum > isom$pro_maj_sum ] <- -1
-
-isom$pro_minmaj_auto2 <- 0 # based on lines
-isom$pro_minmaj_auto2[ isom$wds_pro_maj_sum > isom$wds_pro_min_sum ] <-  1
-isom$pro_minmaj_auto2[ isom$wds_pro_min_sum > isom$wds_pro_maj_sum ] <- -1
-
-# correlation
-isom  %>% 
-  select(pro_minmaj_qual, pro_minmaj_auto1, pro_minmaj_auto2) %>% 
-  cor() %>% 
-  round(2)
-
-
-#### fill values for isom ======================================================
-
-isom  %>% 
-  select(ctr, cab_id, cab_in, t_date_fst, t_date_lst,
-       n_reforms, wds_chg_sum, wds_clean_rel_mn)   %>% 
-  head(30)
-
-no_change_vars <- 
-  grep(
-    "_mdf|_chg|_ins|_del|pro_", names(isom), 
-    value=TRUE, invert=TRUE
-  )
-
-change_vars <- 
-  grep(
-    "_mdf|_chg|_ins|_del|pro_", names(isom), 
-    value=TRUE
-  )
-
-# change vars should be 0 by default 
-isom[,change_vars] %>% head(10)
-
-# non_change vars should be filled with previous value
-isom[,no_change_vars] %>% head(10)
-
-# filling for non-change vars
-isom <-
-  isom %>% 
-  arrange(ctr, cab_in)
-
-for( i in seq_len(dim(isom)[1]) ){
-  for( var in no_change_vars ){
-    if( 
-      i > 1 & 
-      as.vector(is.na(isom[i,var])) &
-      null_to_false(isom$ctr[i] == isom$ctr[i-1])
-    ) 
-    {
-      isom[i, var] <- isom[i-1, var]
-    }
+  if( length(so_id) > 0 & length(cab_ids) > 0 ){
+    merger <- rbind(merger, data_frame(cab_id=cab_ids, so_id=so_id))
   }
 }
-
-
-#### fill values for isom_non_agg ==============================================
-
-# n_reforms
-isom_non_agg$n_reforms <- ifelse(is.na(isom_non_agg$t_date), 0, 1)
-isom_non_agg$n_reforms <- ifelse(
-                            isom_non_agg$cab_in > isom_non_agg$t_date & 
-                              !is.na(isom_non_agg$t_date), 
-                            0, 
-                            isom_non_agg$n_reforms
-                          )
-
-# show some data
-isom_non_agg  %>% 
-  select(ctr, cab_id, cab_in, t_date, n_reforms, wds_chg, wds_clean_rel)   %>% 
-  head(30)
-
-# gen change and non-change-vars
-no_change_vars <- 
-  grep(
-    "_mdf|_chg|_ins|_del|pro_", names(isom_non_agg), 
-    value=TRUE, invert=TRUE
-  )
-
-change_vars <- 
-  grep(
-    "_mdf|_chg|_ins|_del|pro_", names(isom_non_agg), 
-    value=TRUE
-  )
-
-# change vars should be 0 by default 
-isom_non_agg[,change_vars] %>% head(10)
-
-# non_change vars should be filled with previous value
-isom_non_agg[,no_change_vars] %>% head(10)
-
-# filling for non-change vars
-isom_non_agg <-
-  isom_non_agg %>% 
-  arrange(ctr, cab_in)
-
-for( i in seq_len(dim(isom_non_agg)[1]) ){
-  for( var in no_change_vars ){
-    if( 
-      i > 1 & 
-      as.vector(is.na(isom_non_agg[i,var])) &
-      null_to_false(isom_non_agg$ctr[i] == isom_non_agg$ctr[i-1])
-    ) 
-    {
-      isom_non_agg[i, var] <- isom_non_agg[i-1, var]
-    }
-  }
-}
-
-
-#### save data =================================================================
-save(      isom, file = "isom.Rdata")
-write.dta( isom, file = "isom.dta")
-
-save(      isom_non_agg, file = "isom_non_agg.Rdata")
-write.dta( isom_non_agg, file = "isom_non_agg.dta")
-
-
-
-#### expanding isor data for missing values (if applicaple) ====================
-# if(1 == 2){
-# isom <- 
-#   isom  %>% 
-#   arrange(country, cab_in)
-# 
-# desc_df(isom, cols=90:120)
-# 
-# # fill holes with lag values 
-# for(i in seq_len(dim(isom)[1]) ){
-#   isom$t_id[i] <- 
-#     ifelse( 
-#       is.na(isom$t_id[i]) & isom$ctr[i] == lag(isom$ctr)[i], 
-#       lag(isom$t_id)[i], 
-#       isom$t_id[i] 
-#     )                   
-# }
-# 
-# 
-# # fill start values with SOs before cabinet
-# for ( i in which(is.na(isom$t_id)) ){
-#   isom$t_id[i] <- 
-#     suppressWarnings(
-#       max(isor$t_id[ isor$ctr == isom$ctr[i] & 
-#                        isor$t_date <= isom$cab_out[i] ]        ,
-#           na.rm=TRUE))
-# }
-# 
-# variables <- 
-#   names(isom)[
-#     names(isom) %in% names(isor) & 
-#       !(names(isom) %in% c("ctr", "country", "t_id"))
-#     ]
-# 
-# isom <- 
-#   isom[ , -which(names(isom) %in% variables)]
-# 
-# isom <- 
-#   left_join( isom, isor[, c("t_id", variables)], by="t_id" )
-# 
-# 
-# isom %>% 
-#   select(ctr, cab_in, t_id, wds_clean_rel, wds_chg)  %>% 
-#   head(50)
-# 
-# # NAs to 0 for all change variables
-# for (var in grep("_del|_ins|_mdf|_chg", names(isom), value = TRUE) ) {
-#   isom[is.na(isom[, var]) & !is.na(isom$wds_raw_all), var] <- 0 
-# }
-# 
-# # non-change to 0 for all change varaibles
-# var <- grep("_del|_ins|_mdf|_chg", names(isom), value = TRUE)
-# for (i in seq_len(dim(isom)[1])[-1] ) {
-#   if ( isom$t_id[i] == isom$t_id[i-1] & all(!is.na(isom$t_id[i:(i-1)])) ){
-#     isom[i, "wds_chg"] <- 0 
-#   }
-#   if ( isom$ctr[i] == isom$ctr[i-1] & is.na(isom$t_id[i-1]) ){
-#     isom[i, "wds_chg"] <- NA
-#   }
-# }
-# 
-# 
-# }
-
-
-
-
-
-
-
-
 
 
 
