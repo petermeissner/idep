@@ -1701,9 +1701,33 @@ isom <-
 
 
 
+#### last minute changes =======================================================
+
+isom$db_version         <- max(isom$db_version, na.rm = TRUE)
+isom$db_lastupdate      <- max(isom$db_lastupdate, na.rm = TRUE)
+isom$db_isom_lastupdate <- Sys.time()
+isom <- 
+  isom  %>% 
+  select(db_isom_lastupdate, db_version, db_lastupdate, everything())
+
 
 #### saving to disk ============================================================
 
 save(      isom, file = "isom.Rdata")
 write.dta( isom, file = "isom.dta")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
