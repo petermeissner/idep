@@ -613,12 +613,31 @@ isom  %>%
   round(2)  %>% knitr::kable()
 
 # manual decisions
-isom %>% 
-  filter(cab_id %in% c(1720,1622,1329,1042,1710,1718,1719,1723,1410,1214,1221,1224,228 ,527 ,613 ,925 ,1005,1036,1038,1328,1624)) %>% 
-  select(ctr, cab_id, cab_pm, cab_in, cab_out, pro_maj_sum, pro_min_sum, pro_minmaj_qual)  %>% 
-  head(100)  %>% 
-  knitr::kable()
+# isom %>% 
+#   filter(cab_id %in% c(1720,1622,1329,1042,1710,1718,1719,1723,1410,1214,1221,1224,228 ,527 ,613 ,925 ,1005,1036,1038,1328,1624)) %>% 
+#   select(ctr, cab_id, cab_pm, cab_in, cab_out, pro_maj_sum, pro_min_sum, pro_minmaj_qual)  %>% 
+#   head(100)  %>% 
+#   knitr::kable()
 
+
+
+#### adding majority requirement and veto points 
+
+load("../external_data/maj_req.Rdata")
+load("../external_data/veto_pts.Rdata")
+
+maj_req  <- maj_req %>% select(-ctr)
+veto_pts <- veto_pts %>% select(-ctr)
+
+isom <- 
+  isom  %>% 
+  left_join(maj_req)
+isom <- 
+  isom  %>% 
+  left_join(veto_pts)
+
+# isom$veto_pts
+# isom$maj_req
 
 
 #### saving to disk ============================================================
@@ -626,8 +645,8 @@ isom %>%
 save(      isom, file = "isom.Rdata")
 
 isom_stata <- isom
-isom_stata[,101] <- substring(isom_stata[,101],0,100)
-isom_stata[,634] <- substring(isom_stata[,634],0,100)
+isom_stata[,"ref_id_all"] <- substring(isom_stata[,"ref_id_all"],0,100)
+isom_stata[,"so_id_all"] <- substring(isom_stata[,"so_id_all"],0,100)
 write.dta( isom_stata, file = "isom.dta")
 
 
