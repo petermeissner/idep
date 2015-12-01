@@ -41,6 +41,10 @@ for ( i in seq_along(isor$t_id) ) {
   isor$erd_cab_id[i] <- ifelse(length(erd_cab_id)==0, NA, erd_cab_id)
 }
 
+#### false matches 
+
+isor$erd_cab_id[with(isor, erd_cab_id %in% 1702 )] <- 1703 # 
+
 #### still missing cabinet ids for isor        
 
 #   1 # aut 1928-02-01 --> no data in erd         --> should be ok

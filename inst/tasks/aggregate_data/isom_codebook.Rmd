@@ -1,5 +1,5 @@
 ---
-title: "ISOM"
+title: "ISOM Codebook"
 author: "pm"
 date: '`r Sys.time()`'
 output:
@@ -37,7 +37,7 @@ Sys.setlocale("LC_TIME", "English")
 ```
 
 
-# IDEP Standing Orders Minority-Majority-Change Dataset
+# IDEP Standing Orders Minority-Majority-Change Dataset \newline (version: `r isom$db_isom_lastupdate[1]`)
 
 The dataset is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISORD [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/), ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/)
 
@@ -115,6 +115,42 @@ Since there might be more than one SO reform (ISOR) that took place during the c
   
 For a version of the very same data set prior to aggregation have a look at `isom_non_agg.Rdata` respectively `isom_non_agg.dta`. 
 
+```{r}
+source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description_isom.r")
+load(system.file("tasks/aggregate_data/var_desc_isor.Rdata", package="idep"))
+miss_names <- names(isom)[!(names(isom) %in% var_desc_isom$name)]
+
+for ( m in miss_names ){
+  ms <- str_replace(m, "_mn$|_fst$|_all$|_lst$|_sum$", "")
+  if ( sum(var_desc_isor$name == ms) > 0 ){
+    tmp <- var_desc_isor[var_desc_isor$name == ms,]
+    tmp$name <- m
+    tmp$group <- "ISOR"
+    tmp$from <- paste("ISOR", tmp$from, sep=", ")
+    if ( grepl("all$", tmp$name ) ) {
+      tmp$desc <- 
+      paste(tmp$desc, "(all within cabinet, might be truncated in Stata version)")
+    }
+    if ( grepl("fst$", tmp$name ) ) {
+      tmp$desc <- 
+        paste(tmp$desc, "(first value within cabinet duration)")
+    }
+    if ( grepl("lst$", tmp$name ) ) {
+      tmp$desc <- paste(tmp$desc, "(last value within cabinet duration)")
+    }
+    if ( grepl("sum$", tmp$name ) ) {
+      tmp$desc <- paste(tmp$desc, "(sum of all values within cabinet duration)")
+    }
+    if ( grepl("mn$", tmp$name ) ) {
+      tmp$desc <- paste(tmp$desc, "(mean of all values within cabinet duration)")
+    }
+    var_desc_isom <- rbind(var_desc_isom, tmp)
+  }
+}
+
+```
+
+
 ```{r Description Functions, include=FALSE}
 sumdummy<-function(x){
   ifelse(
@@ -158,31 +194,39 @@ sumvar <- function(x){
     "...",
     "`\\\n<br>"
   )
-  
 }
 ```
 
 
 
-```{r Describing ERD, echo=FALSE, results='asis', warning=FALSE, eval=FALSE}
-source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description_isom.r")
-for( g in sort(unique(var_desc_erd$group)) ){
+```{r Describing ERD, echo=FALSE, results='asis', warning=FALSE, eval=TRUE}
+
+
+for( g in sort(unique(var_desc_isom$group)) ){
   gtitle <- str_replace(g, "^\\d* ", "")
   cat(paste0("\n## ", gtitle, "\n\n"))
-  dat <- var_desc_erd  %>% filter(group==g)
+  dat <- var_desc_isom  %>% filter(group==g)
   for( i in seq_len(dim(dat)[1]) ){
     cat(
       "\n\n**", dat$name[i], "** (", dat$from[i] ,")", "\n\n",
       dat$desc[i], "\n\n",
       sep=""
     )
-    sumvar(as.data.frame(isom, stringsAsFactors=F)[ , dat$name[i] ])
+    tryCatch(
+      {
+        sumvar(as.data.frame(isom, stringsAsFactors=F)[ , dat$name[i] ])
+      },
+      error = function(e){
+        message("ERROR: Variable not found in dataset!")
+      }
+    )
     cat("\n\n<p>&nbsp;</p>")
   }
 }
+
 ```
 
-
+`r paste(names(isom)[!(names(isom) %in% var_desc_isom$name)], collapse="\n\n")`
 
 
 

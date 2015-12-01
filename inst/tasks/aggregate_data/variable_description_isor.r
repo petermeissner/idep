@@ -1,3 +1,4 @@
+
 var_desc_isor <- 
 rbind(
   # Meta 
@@ -908,7 +909,7 @@ var_desc_isor <-
   )
 
 
-
+save(var_desc_isor, file="var_desc_isor.Rdata")
 
 
 
