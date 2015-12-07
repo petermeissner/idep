@@ -39,11 +39,9 @@ Sys.setlocale("LC_TIME", "English")
 
 # IDEP Standing Orders Minority-Majority-Change Dataset \newline (version: `r isom$db_isom_lastupdate[1]`)
 
-The dataset is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISORD [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/), ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/)
+The dataset is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISOR [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/) and ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/). 
 
-Its structure has several levels/layers -- time episodes for cabinets in different countries starting as early as `r format(min(isom$cab_in), "%B %Y")` up `r format(max(isom$cab_in), "%B %Y")`.
-
-The basic structure of cabinet time episodes stems from ERD. Information on standing orders reforms was merged/joined from ISOR dataset by matching reform dates (date of acceptance of the reform or if not availible earliest date availible) into cabinet time spans (and countries). All measures of ideological positions, distances and polarization come from CMP which was merged/joined with ParlGov first (ParlGov includes the CMP party id variable). ParlGov in turn was used as source of volatility measures. Having merged/joined ParlGov and CMP this combined dataset was than joined with ERD by matching cabinet start dates (automatically and by hand due to occasional differing start days). 
+All information are aggregate on cabinet level with one row per cabinet. Cabinet information stems from ERD. Information on Standing Orders reforms was added from ISOR dataset by matching reform dates (date of acceptance of the reform or if not availible earliest date availible) into cabinet time spans (and countries) for inforamtion on reforms. For information on the Standing Order present for a particular cabinet matching was done by overlapping time spans from SO and cabinet. All measures of ideological positions, distances and polarization come from CMP which was merged/joined with ParlGov first (ParlGov includes the CMP party id variable). ParlGov in turn was used as source of volatility measures. Having merged/joined ParlGov and CMP this combined dataset was than joined with ERD by matching cabinet start dates (automatically and by hand due to occasional differing start days). 
 
 The data set incorporates aggregated data for 
 `r dim(isom)[1] - length(unique(isom$country))` cabinets in
@@ -113,16 +111,15 @@ Since there might be more than one SO reform (ISOR) that took place during the c
     - **sum** for the sum of all values
 - Furthermore, due to the aggregation of ISOR data an addtitional variable is provided: **n_reforms** captures the number of times SO were changed during the course of a cabinet. 
   
-For a version of the very same data set prior to aggregation have a look at `isom_non_agg.Rdata` respectively `isom_non_agg.dta`. 
 
-```{r}
+```{r, echo=FALSE}
 source("C:/Dropbox/RPackages/idep/inst/tasks/aggregate_data/variable_description_isom.r")
 load(system.file("tasks/aggregate_data/var_desc_isor.Rdata", package="idep"))
 miss_names <- names(isom)[!(names(isom) %in% var_desc_isom$name)]
 
 for ( m in miss_names ){
   ms <- str_replace(m, "_mn$|_fst$|_all$|_lst$|_sum$", "")
-  if ( sum(var_desc_isor$name == ms) > 0 ){
+  if ( sum(grepl(ms, var_desc_isor$name) > 0) ){
     tmp <- var_desc_isor[var_desc_isor$name == ms,]
     tmp$name <- m
     tmp$group <- "ISOR"
@@ -147,6 +144,9 @@ for ( m in miss_names ){
     var_desc_isom <- rbind(var_desc_isom, tmp)
   }
 }
+
+
+
 
 ```
 

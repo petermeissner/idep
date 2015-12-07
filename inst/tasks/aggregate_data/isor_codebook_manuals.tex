@@ -1,4 +1,4 @@
-\documentclass[]{article}
+\documentclass[10pt,]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -34,13 +34,54 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={pm/bm},
-            pdftitle={ISOR Coding Manual},
+            pdftitle={ISOR Coding Procedures},
             colorlinks=true,
             citecolor=blue,
             urlcolor=blue,
             linkcolor=magenta,
             pdfborder={0 0 0}}
 \urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{longtable,booktabs}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -63,7 +104,7 @@
 }
 
 \setlength{\droptitle}{-2em}
-  \title{ISOR Coding Manual}
+  \title{ISOR Coding Procedures}
   \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
   \author{pm/bm}
@@ -71,8 +112,9 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2015-11-27 15:15:27}
+  \date{2015-12-07 14:32:32}
 
+\usepackage{graphicx}
 
 % Redefines (sub)paragraphs to behave more like sections
 \ifx\paragraph\undefined\else
@@ -87,40 +129,144 @@
 \begin{document}
 \maketitle
 
-\section{Document Gathering}\label{document-gathering}
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\makeatletter
+\newcommand{\justified}{%
+  \rightskip\z@skip%
+  \leftskip\z@skip} \makeatother
 
-The aim of this procedure was to identify and correct errors that had
-occurred through the process of converting PDF-documents into
-Word-documents. Another purpose was to put the cleaned versions of the
-parliamentary standing orders in a standardized format while maintaining
-the original structure of paragraphs. First of all, the oldest
-consolidated version of the parliamentary standing orders of the single
-countries was completely read through and corrected manually. Typos,
-unnecessary line breaks, signs not belonging to the text and everything
-going beyond the actual text of the standing orders was deleted.
+\newpage
 
-Next, a header containing information about the version such as the
-dates of acceptance, promulgation and enactment of the version of the
-standing orders was inserted. The version cleaned in this manner served
-as reference version. In the following step the subsequent consolidated
-version was compared to the reference version using the software DiffDoc
-(in a later state of the cleaning process the software UltraCompare was
-used instead). The software made it possible to easily identify
-identical parts of the two versions that only contained few mistakes to
-be corrected as well as parts that had been changed. The latter were
-read completely and handled like the first version. After the cleaning
-of the second version it served as new reference version for the
-subsequent consolidated version of the standing orders. Alongside
-cleaning the text, it was made sure that each subparagraph, headline or
-other structuring element of the standing orders was given a single
-line. Each element was separated by a line break; no element was allowed
-to spread more than one line. The steps were repeated for all
-consolidated versions. Throughout the procedure the PDF-versions of the
-standing orders were considered in case of uncertainty regarding
-cleaning decisions. In a last step the lines (representing text
-elements) that were of non-relevant content (e.g.~headlines) were marked
-by adding a special string at the start of the line (â\#Â§\#â) to allow
-the computer to automatically dismiss these lines later on.
+\section{Introduction}\label{introduction}
+
+To collect data on reforms to Standing Orders many steps had to be taken
+and many hands had to help. The basic idea was that two proceeding
+versions of the same text can be compared by putting them side by side
+and going through each (sub)-paragraph.
+
+\begin{longtable}[c]{@{}rlrl@{}}
+\toprule
+lnr1 & old & lnr2 & new\tabularnewline
+\midrule
+\endhead
+1 & Three kind mice, see how they run! & 1 & Three blind mice, see how
+they run!\tabularnewline
+2 & They all ran after the farmer's wife, & 2 & They all ran after the
+farmer's wife,\tabularnewline
+3 & Who cut off their tails with the carving knife, & 3 & they took out
+some cheese,\tabularnewline
+4 & Did you ever see such a thing in your life? & 4 & and they cut her a
+slice,\tabularnewline
+5 & As three blind mice. & 5 & Did you ever see such a sight in your
+life\tabularnewline
+6 & End & 6 & as three kind mice?\tabularnewline
+\bottomrule
+\end{longtable}
+
+Some parts might have changed, others might not have changed but were
+put at a different locations. Those parts that have been changed might
+have been deleted, modified or inserted.
+
+\begin{longtable}[c]{@{}llllrl@{}}
+\toprule
+lnr1 & old & lnr2 & new & bowdist & type\tabularnewline
+\midrule
+\endhead
+1 & Three kind mice, see how th \ldots{} & 1 & Three blind mice, see how
+t \ldots{} & 2 & change\tabularnewline
+2 & They all ran after the farm \ldots{} & 2 & They all ran after the
+farm \ldots{} & 0 & no change\tabularnewline
+3 & Who cut off their tails wit \ldots{} & 4 & and they cut her a slice,
+\ldots{} & 13 & change\tabularnewline
+& & 3 & they took out some cheese, \ldots{} & 5 &
+insertion\tabularnewline
+4 & Did you ever see such a thi \ldots{} & 5 & Did you ever see such a
+sig \ldots{} & 2 & change\tabularnewline
+5 & As three blind mice. \ldots{} & 6 & as three kind mice? \ldots{} & 4
+& change\tabularnewline
+6 & End \ldots{} & & & 1 & deletion\tabularnewline
+\bottomrule
+\end{longtable}
+
+To gather changes in that manner the first task is to \textbf{acquire
+all the documents} that describe the status or evolution of a particular
+set of Standing Orders. That step incorporated finding contact persons
+within the parliaments and checking for completeness and consistency of
+the provided `historical' documents.
+
+While intuitively one might think about Standing Orders as fully written
+out, explicit documents most of the time this is only but a little part
+of the story. While so called \textbf{consolidated versions} exist, most
+of the time one needs a consolidated version and all the amendments
+(short, technical instructions of how to transform Standing Orders in
+place to a new set of Standing Orders) made to that version over time to
+know which set of rules was in place at a certain point in time. To
+apply the basic idea all amendments had to be transformed into
+consolidated versions.
+
+Documents were provided in differing form and in differing shades of
+quality. There might be sheets of paper, Books, Word-documents, machine
+readable PDFs or scans. All those various types were first transformed
+to Word-documents and later on freed of transformation errors and
+artifacts in a \textbf{cleaning} step.
+
+After cleaning and consolidation \textbf{documents were restructured} in
+such a way that each sub-paragraph corresponded to one line in a plain
+text file. Furthermore, lines without relevant content such as headlines
+or notes were marked by \texttt{\#§\#}. The restructuring made it easy
+for the documents to be read in by the coding programs used in the
+following steps.
+
+For comparing Standing Orders effectively we made use of two types of
+programs: First there are programs specialized in presenting the
+comparison of documents to humans. Second, there are programs that are
+less accessible by humans but more standardized and therefore better
+suited to serve as helpers for computer programs. While we found good
+companions in the first category -- e.g.~UltraCompare, the Notepad++
+Compare Plugin, DiffDoc, WinMerge, \ldots{} see:
+\url{https://en.wikipedia.org/wiki/Comparison_of_file_comparison_tools},
+for a list) -- we did not find any tool that suited our needs in the
+second category -- i.e.~indicating line modifications and measuring
+differences.
+
+Therefore we wrote our \textbf{own software} that helped with comparing
+texts, assigning change types and measuring differences. Three programs
+were written: The frist for comparing documents, \textbf{gathering
+links} between sub-paragraph from one version to the other, assigning
+\textbf{change types} an measuring change; the second for coding changes
+between documents as \textbf{minority or majority friendly}; the third
+for coding sub-paragraphs into \textbf{categories capturing the type of
+regulation}.
+
+The data gathered with help of the programs than was merged into one
+\textbf{database} with three tables - meta information on the Standing
+Orders (\emph{texts}), the text of the Standing Orders and accompanied
+data (\emph{textlines}) and how sub-paragraphs from one version are
+linked those of another version (\emph{textlines}). Thereafter the
+information were \textbf{checked for errors}. After elimanting all
+errors the raw information from the database was then
+\textbf{aggregated} to various formats.
+
+\section{Document Transformation}\label{document-transformation}
+
+The original Standing Orders documents gathered often were books or came
+as scans in PDF format. To be able to further work with them the text
+had to be brought into computer readable format. This first digital
+format of the Standing Orders text was Word. Although, the texts later
+on were further broken down into plain text, Word is a good intermediate
+format since everyone is familiar with it and it is able to emulate the
+layout of the original document which eases comparisons between original
+and digital version.
+
+\begin{center}
+\includegraphics[height=0.4\textheight]{fig/fig1.png}
+\end{center}
+
+\emph{Figure 1: 1952 German Bundestag Standing Orders word-document}
 
 \section{Document Consolidation}\label{document-consolidation}
 
@@ -137,6 +283,59 @@ the current text is issued. As a consequence, consolidated versions of
 the standing orders for every date of change had to be constructed by
 inserting manually the changes into the previous complete version.
 
+\begin{center}
+\includegraphics[height=0.4\textheight]{fig/fig1a.png}
+\end{center}
+
+\emph{Figure 2: List of ammendments to the 1950 SO UK, page 497}
+
+\section{Document Cleaning}\label{document-cleaning}
+
+The aim of this procedure was to identify and correct errors that had
+occurred through the process of converting PDF-documents into
+Word-documents. Another purpose was to put the cleaned versions of the
+parliamentary standing orders in a standardized format while maintaining
+the original structure of paragraphs. First of all, the oldest
+consolidated version of Standing Orders was completely read through and
+corrected manually. Typos, unnecessary line breaks, signs not belonging
+to the text and everything going beyond the actual text of the standing
+orders was deleted.
+
+Next, a header containing information about the version such as the
+dates of acceptance, promulgation and enactment of the version of the
+standing orders was inserted. The version cleaned in this manner served
+as reference version. In the following step the subsequent consolidated
+version was compared to the reference version using the software DiffDoc
+(in a later state of the cleaning process the software UltraCompare was
+used instead). The software made it possible to easily identify
+identical parts of the two versions that only contained few mistakes to
+be corrected as well as parts that had been changed. The latter were
+read completely and handled like the first version. After the cleaning
+of the second version it served as new reference version for the
+subsequent consolidated version of the standing orders. Alongside
+cleaning the text, it was made sure that each sub-paragraph, headline or
+other structuring element of the standing orders was given a single
+line. Each element was separated by a line break; no element was allowed
+to spread more than one line. The steps were repeated for all
+consolidated versions. Throughout the procedure the PDF-versions of the
+standing orders were considered in case of uncertainty regarding
+cleaning decisions. In a last step the lines (representing text
+elements) that were of non-relevant content (e.g.~headlines) were marked
+by adding a special string at the start of the line (`\#§\#') to allow
+the computer to automatically dismiss these lines later on.
+
+\begin{center}
+\includegraphics[width=\textwidth]{fig/fig2.png}
+\end{center}
+
+\emph{Figure 3: 1952 SO Germany plain-text version}
+
+\begin{center}
+\includegraphics[height=0.4\textheight]{fig/fig3a.png}
+\end{center}
+
+\emph{Figure 4: Comparing Standing Orders versions with Ultra Compare}
+
 \section{Linkage}\label{linkage}
 
 Having generated complete, cleaned versions of the standing orders, the
@@ -145,28 +344,28 @@ standing orders could be coded in an efficient manner and to get
 information about what had or had not changed from one version to the
 next. For this purpose changes in the standing orders between versions
 were linked. This means that for each line of text (each relevant
-subparagraph) it was recorded whether or not the line was deleted in the
-version to come, got inserted in the current version, got changed or
+sub-paragraph) it was recorded whether or not the line was deleted in
+the version to come, got inserted in the current version, got changed or
 simply stayed the same. The coding was done semi-automatically by first
 letting an algorithm developed by the project and implemented in R
 handle all non-relevant lines as well as those that were not changed.
 Thereafter human coders went through all remaining text lines of two
-subsequent versions to add there linkage information to the dataset. For
-this another program implemented in R helped the coders by making sure
-that: all lines were coded; the information was recorded correct and
-alongside the text that was linked, coders were given suggestions for
-possible matching lines similar to that under consideration. As the
+subsequent versions to add there linkage information to the data-set.
+For this another program implemented in R helped the coders by making
+sure that: all lines were coded; the information was recorded correct
+and alongside the text that was linked, coders were given suggestions
+for possible matching lines similar to that under consideration. As the
 linked files depicted the basis for later analyzes and coding, it was
 crucial to differentiate between minor reformulations of paragraphs
 (e.g.~mere orthographic reforms) and actual changes. In case of doubt
 the supervisors were consulted.
 
-The process of gathering link information between subparagraphs of
+The process of gathering link information between sub-paragraphs of
 subsequent standing orders versions allows for distinguishing between
 types of change (deletion, insertion, modification and no-change),
 measuring its extent more precisely and to later transfer line codes
 from one version of the standing orders to another so that all
-subparagraphs (the selected coding entity) that were identical in two
+sub-paragraphs (the selected coding entity) that were identical in two
 versions got automatically the same code.
 
 Furthermore, the use of an semi-automatic approach allows to use the
@@ -180,6 +379,60 @@ flexible -- e.g.~finding line pairs that might be not very similar based
 on the sequence of characters or the distribution of words but in regard
 to the things that are regulated within.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(stringr)}
+\KeywordTok{library}\NormalTok{(diffr)}
+
+\CommentTok{# defining text}
+\NormalTok{old <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(}\StringTok{"Three kind mice, see how they run!}\CharTok{\textbackslash{}n}\StringTok{They all ran after the farmer's wife,}\CharTok{\textbackslash{}n}\StringTok{Who cut off their tails with the carving knife,}\CharTok{\textbackslash{}n}\StringTok{Did you ever see such a thing in your life?}\CharTok{\textbackslash{}n}\StringTok{As three blind mice.}\CharTok{\textbackslash{}n}\StringTok{End"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{new <-}\StringTok{ }\KeywordTok{str_split}\NormalTok{(}\StringTok{"Three blind mice, see how they run!}\CharTok{\textbackslash{}n}\StringTok{They all ran after the farmer's wife,}\CharTok{\textbackslash{}n}\StringTok{they took out some cheese,}\CharTok{\textbackslash{}n}\StringTok{and they cut her a slice,}\CharTok{\textbackslash{}n}\StringTok{Did you ever see such a sight in your life}\CharTok{\textbackslash{}n}\StringTok{as three kind mice?"}\NormalTok{, }\StringTok{"}\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{# calculating distances, aligning text, determining change types}
+\NormalTok{res <-}\StringTok{ }\KeywordTok{diffr}\NormalTok{(old, new, }\DataTypeTok{dist=}\StringTok{"bow"}\NormalTok{)}
+
+\CommentTok{# distance matrix}
+\NormalTok{res$distance_matrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    2   15   10   11   15    7
+## [2,]   15    0   13   14   18   12
+## [3,]   16   15   14   13   19   13
+## [4,]   15   18   15   14    2   14
+## [5,]    7   12    9   10   14    4
+## [6,]    8    9    6    7   11    5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# resulting alignment and change type}
+\NormalTok{res$alignment_df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   lnr1 lnr2 distance      type
+## 1    1    1        2    change
+## 2    2    2        0 no change
+## 3    3    4       13    change
+## 7   NA    3        5 insertion
+## 4    4    5        2    change
+## 5    5    6        4    change
+## 6    6   NA        1  deletion
+\end{verbatim}
+
+\emph{Code Snippet 1: Text comparison with own software written in R}
+
+\begin{center}
+\includegraphics[height=0.4\textwidth]{fig/linkage.png}
+\end{center}
+
+\emph{Figure 5: R Software with commandline interface for linking parts
+of two version of Standing Orders}
+
 \section{Minority-Majority-Change
 Coding}\label{minority-majority-change-coding}
 
@@ -187,7 +440,7 @@ Coding}\label{minority-majority-change-coding}
 
 Based on the linked versions of the standing orders the content could be
 coded. The intention of the so called corpus coding process was to
-assign a single code expressing the content to every legal subparagraph
+assign a single code expressing the content to every legal sub-paragraph
 of every version of the standing orders.
 
 The coding scheme comprises 80 different single codes belonging to ten
@@ -200,15 +453,16 @@ session/discontinuity, final provisions, miscellaneous (cannot be coded
 otherwise)).
 
 Apart from the codes the coding manual encompasses general rules for
-coding. As every subparagraph got only one code the coders had to decide
-which code suites best even if several different codes could be assigned
-to a subparagraph. These decisions were based on a specific hierarchy of
-codes. Rules which concern the interaction of two actors were attributed
-to the actor which takes the active part if he has discretion regarding
-this action. Regular law-making was considered more important than other
-decision procedures if they were treated together in one subparagraph. A
-further general coding rule was to take the overall context into account
-instead of just looking at a specific regulation.
+coding. As every sub-paragraph got only one code the coders had to
+decide which code suites best even if several different codes could be
+assigned to a sub-paragraph. These decisions were based on a specific
+hierarchy of codes. Rules which concern the interaction of two actors
+were attributed to the actor which takes the active part if he has
+discretion regarding this action. Regular law-making was considered more
+important than other decision procedures if they were treated together
+in one sub-paragraph. A further general coding rule was to take the
+overall context into account instead of just looking at a specific
+regulation.
 
 Like the other coding processes corpus coding was done
 semi-automatically with a self-written program implemented in R. Human
@@ -218,7 +472,7 @@ to create one fully coded version. The next step was to transfer these
 codes to the other versions. As in the linking procedure text lines that
 have stayed exactly the same from one version to the following had been
 identified and linked, the R program automatically assigned the same
-codes to them. So the coders only had to go through the uncoded text
+codes to them. So the coders only had to go through the not coded text
 lines of the subsequent version of the standing orders (that is the
 passages that had been changed between two versions) and code them
 manually. Then, the new codes were transferred. The coders proceeded in
@@ -245,15 +499,23 @@ supplementary documents such as constitutions and information from the
 webpages of the national parliaments were considered to check coding
 decisions.
 
-\subsection{Coding Scheme}\label{coding-scheme}
+\section{Appendix}\label{appendix}
+
+\subsection{Manual for Text Cleansing}\label{manual-for-text-cleansing}
+
+\subsection{Manual for Text
+Cosolidation}\label{manual-for-text-cosolidation}
+
+\subsection{Coding Scheme for Corpus
+Coding}\label{coding-scheme-for-corpus-coding}
 
 \subsubsection{Basic Intuition:}\label{basic-intuition}
 
-Each and every code is exclusive, meaning that one subparagraph needs to
-have one code but one code only. For some codes there are notes on how
-to decide between multiple codes which may seem appropriate. Sometimes
-even the coding rules and additional notes will not help to decide
-between codes. In this case please let us know. Every decision
+Each and every code is exclusive, meaning that one sub-paragraph needs
+to have one code but one code only. For some codes there are notes on
+how to decide between multiple codes which may seem appropriate.
+Sometimes even the coding rules and additional notes will not help to
+decide between codes. In this case please let us know. Every decision
 accompanied by doubt should be documented.
 
 \subsubsection{Further rules of the
@@ -264,14 +526,14 @@ game:}\label{further-rules-of-the-game}
   Often sub-paragraphs can be coded differently, depending on whether or
   not one takes into consideration the overall context of the rule or
   the more specific regulation. If in doubt, code based on the overall
-  context. Example: Â§14 GOBT: president grants vacation time → coded as
+  context. Example: §14 GOBT: president grants vacation time → coded as
   rights and obligations of individual members of parliament if one
   takes into account the general context (652) and not as responsibility
   of the president (6212).
 \item
   Rules which concern the interaction of two actors are attributed to
   the actor which takes the active part if he has discretion regarding
-  this action. Example: Â§62 (2) GOBT: The plenary can request report of
+  this action. Example: §62 (2) GOBT: The plenary can request report of
   committee → coded as recall through the plenary (124) and not as
   report of committee to the plenary (134).
 \item
@@ -587,7 +849,7 @@ Government}
     \item
       637 committee of inquiry
     \item
-      638 enquÃªte commission
+      638 enquête commission
     \end{itemize}
   \item
     639 other special committees which are not explicitly referenced in

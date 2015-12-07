@@ -107,6 +107,10 @@ list(name="idl_rng_all"            , from="CMP derived", group="4 CMP - derived"
 list(name="idl_rng_gov"            , from="CMP derived", group="4 CMP - derived", description="Range of left-right positions given the parties belong to governemnt  $$idl\\_rng\\_gov = max(idl_{i|cabinet\\_party==1}) - min(idl_{i|cabinet\\_party==1})$$"),
 list(name="idl_rng_opp"            , from="CMP derived", group="4 CMP - derived", description="Range of left-right positions given the parties belong to Opposition  $$idl\\_rng\\_opp = max(idl_{i|cabinet\\_party==0}) - min(idl_{i|cabinet\\_party==0})$$"),
 
+list(name="maj_req"                , from="IDEP", group="6 IDEP", description="Majority requirements to change standing orders: 1 simple majority, 2 absolute majority, 3 qualified majority"),
+list(name="veto_pts"               , from="IDEP", group="6 IDEP", description="Veto points, Ganghof"),
+list(name="db_isom_lastupdate"     , from="IDEP", group="6 IDEP", description="Veto points, Ganghof"),
+
 list(name="tsb_agc"                , from="Tsebelis ",  group="5 Tsebelis", description="Tsebelis original 2002, page 182 governenment control of the legislative agenda measure. See ext_tsb_agc1 for further description."),
   list(name="ext_tsb_agc1"         , from="Tsebelis ",  group="5 Tsebelis derived", 
     description=
@@ -183,8 +187,37 @@ Correlations:
   
   list(name="ref_n"       , from="texts", group="ISOR", description="Number of SO reforms within cabinet duration. Equals NA/missing if no information was available."),
   
-  list(name="ref_date_fst"           , from="texts", group="ISOR", description="Date of the SO version - equals to (according to availibility) enactment, promulgation, acceptance."),
-  list(name="ref_dplus_fst"          , from="texts", group="ISOR", description="Version counter that is zero under normal circumstances but might be higher if more than one version got enacted on the same date.")
+  
+  list(name="ref_dplus_fst"          , from="texts", group="ISOR", description="Version counter that is zero under normal circumstances but might be higher if more than one version got enacted on the same date."),
+  list(name="ref_date_fst"           , from="texts", group="ISOR", description="Date of the reform of SO - equals to (according to availibility) enactment, promulgation, acceptance."),
+  
+list(name="ref_daccept_fst"  , from="texts", group="ISOR", description=""),
+list(name="ref_dpromul_fst"  , from="texts", group="ISOR", description=""),
+list(name="ref_denact_fst"   , from="texts", group="ISOR", description=""),
+list(name="ref_date_lst"     , from="texts", group="ISOR", description=""),
+list(name="ref_dplus_lst"    , from="texts", group="ISOR", description=""),
+list(name="ref_daccept_lst"  , from="texts", group="ISOR", description=""),
+list(name="ref_dpromul_lst"  , from="texts", group="ISOR", description=""),
+list(name="ref_denact_lst"   , from="texts", group="ISOR", description=""),
+list(name="so_id_fst"        , from="texts", group="ISOR", description=""),
+list(name="so_id_lst"        , from="texts", group="ISOR", description=""),
+list(name="so_id_all"        , from="texts", group="ISOR", description=""),
+list(name="so_n"             , from="texts", group="ISOR", description=""),
+list(name="so_start_fst"     , from="texts", group="ISOR", description=""),
+list(name="so_end_fst"       , from="texts", group="ISOR", description=""),
+list(name="so_dplus_fst"     , from="texts", group="ISOR", description=""),
+list(name="so_daccept_fst"   , from="texts", group="ISOR", description=""),
+list(name="so_dpromul_fst"   , from="texts", group="ISOR", description=""),
+list(name="so_denact_fst"    , from="texts", group="ISOR", description=""),
+list(name="so_start_lst"     , from="texts", group="ISOR", description=""),
+list(name="so_end_lst"       , from="texts", group="ISOR", description=""),
+list(name="so_dplus_lst"     , from="texts", group="ISOR", description=""),
+list(name="so_daccept_lst"   , from="texts", group="ISOR", description=""),
+list(name="so_dpromul_lst"   , from="texts", group="ISOR", description=""),
+list(name="so_denact_lst"    , from="texts", group="ISOR", description="")
+
+
+
 )
 
 var_desc_isom <- as.data.frame(var_desc_isom)

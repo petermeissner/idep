@@ -51,7 +51,6 @@ isor  %>%
   select(t_id, wds_clean_rel, wds_chg, pro_min, pro_maj, wds_corp_top_1, pro_minmaj_qual)
 ```
 
-**ADDING FURTHER DESCRIPTION OF REFORM AND TEXT DATA**
 
 
 # Shortcuts 

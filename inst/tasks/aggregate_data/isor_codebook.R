@@ -1,2 +1,2 @@
 library(rmarkdown)
-render('isor_codebook.Rmd')
+render('isor_codebook.Rmd', encoding="UTF-8")

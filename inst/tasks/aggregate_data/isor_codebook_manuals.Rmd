@@ -1,28 +1,138 @@
 ---
-title: "ISOR Coding Manual"
+title: "ISOR Coding Procedures"
 author: "pm/bm"
 date: '`r Sys.time()`'
+header-includes:
+    - \usepackage{graphicx}
 output:
   pdf_document:
+    fig_caption: yes
     keep_tex: yes
     number_sections: yes
+    toc: yes
   html_document:
-    highlight: espresso
     keep_md: yes
     number_sections: yes
     self_contained: no
     toc: yes
+  word_document:
+    toc: yes
+fontsize: 10pt
 ---
 
-# Document Gathering
+\makeatletter
+\newcommand{\justified}{%
+  \rightskip\z@skip%
+  \leftskip\z@skip}
+\makeatother
 
-The aim of this procedure was to identify and correct errors that had occurred through the process of converting PDF-documents into Word-documents. Another purpose was to put the cleaned versions of the parliamentary standing orders in a standardized format while maintaining the original structure of paragraphs. 
-First of all, the oldest consolidated version of the parliamentary standing orders of the single countries was completely read through and corrected manually. Typos, unnecessary line breaks, signs not belonging to the text and everything going beyond the actual text of the standing orders was deleted. 
+```{r, include=FALSE}
+doc_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+doc_type
+```
 
-Next, a header containing information about the version such as the dates of acceptance, promulgation and enactment of the version of the standing orders was inserted. The version cleaned in this manner served as reference version. In the following step the subsequent consolidated version was compared to the reference version using the software DiffDoc (in a later state of the cleaning process the software UltraCompare was used instead). The software made it possible to easily identify identical parts of the two versions that only contained few mistakes to be corrected as well as parts that had been changed. The latter were read completely and handled like the first version. After the cleaning of the second version it served as new reference version for the subsequent consolidated version of the standing orders. 
-Alongside cleaning the text, it was made sure that each subparagraph, headline or other structuring element of the standing orders was given a single line. Each element was separated by a line break; no element was allowed to spread more than one line.
-The steps were repeated for all consolidated versions. Throughout the procedure the PDF-versions of the standing orders were considered in case of uncertainty regarding cleaning decisions. 
-In a last step the lines (representing text elements) that were of non-relevant content (e.g. headlines) were marked by adding a special string at the start of the line (‘#§#’) to allow the computer to automatically dismiss these lines later on. 
+
+```{r, echo=FALSE, results="asis"}
+if(doc_type=="latex") cat("\\newpage")
+```
+
+
+
+# Introduction 
+
+To collect data on reforms to Standing Orders many steps had to be taken and many hands had to help. The basic idea was that two proceeding versions of the same text can be compared by putting them side by side and going through each (sub)-paragraph. 
+
+```{r, include=FALSE}
+library(diffr)
+old <- stringr::str_split(
+"Three kind mice, see how they run!
+They all ran after the farmer's wife,
+Who cut off their tails with the carving knife,
+Did you ever see such a thing in your life?
+As three blind mice.
+End", "\n")
+new <- 
+stringr::str_split(
+"Three blind mice, see how they run!
+They all ran after the farmer's wife,
+they took out some cheese,
+and they cut her a slice,
+Did you ever see such a sight in your life 
+as three kind mice?", "\n")
+res <- diffr(old, new, dist="bow")
+res_df <- 
+  data.frame( 
+    lnr1  = res$alignment_df$lnr1, 
+    old = paste(substring(res$text1_orig[res$alignment_df$lnr1],1,27),"...") ,
+    lnr2  = res$alignment_df$lnr2, 
+    new = paste(substring(res$text2_orig[res$alignment_df$lnr2],1,27),"...") ,
+    bowdist  = res$alignment_df$distance,
+    type  = res$alignment_df$type, 
+    stringsAsFactors = FALSE
+  )
+res_df[is.na(res_df)] <- ""
+res_df[res_df=="NA ..."] <- ""
+```
+
+```{r, size=1, echo=FALSE}
+knitr::kable(
+  data.frame(
+    lnr1  = 1:6, 
+    old   = unlist(old),
+    lnr2  = 1:6,
+    new   = unlist(new)
+  )
+)
+```
+
+Some parts might have changed, others might not have changed but were put at a different locations. Those parts that have been changed might have been deleted, modified or inserted.
+
+```{r, size=1, echo=FALSE}
+knitr::kable(res_df)
+```
+
+
+
+To gather changes in that manner the first task is to **acquire all the documents** that describe the status or evolution of a particular set of Standing Orders. That step incorporated finding contact persons within the parliaments and checking for completeness and consistency of the provided 'historical' documents. 
+
+While intuitively one might think about Standing Orders as fully written out, explicit documents most of the time this is only but a little part of the story. While so called **consolidated versions** exist, most of the time one needs a consolidated version and all the amendments (short, technical instructions of how to transform Standing Orders in place to a new set of Standing Orders) made to that version over time  to know which set of rules was in place at a certain point in time. To apply the basic idea all amendments had to be transformed into consolidated versions. 
+
+Documents were provided in differing form and in differing shades of quality. There might be sheets of paper, Books, Word-documents, machine readable PDFs or scans. All those various types were first transformed to Word-documents and later on freed of transformation errors and artifacts in a **cleaning** step.
+
+After cleaning and consolidation **documents were restructured** in such a way that each sub-paragraph corresponded to one line in a plain text file. Furthermore, lines without relevant content such as headlines or notes were marked by `#§#`. The   restructuring made it easy for the documents to be read in by the coding programs used in the following steps. 
+
+For comparing Standing Orders effectively we made use of two types of programs: First there are programs specialized in presenting the comparison of documents to humans. Second, there are programs that are less accessible by humans but more standardized and therefore better suited to serve as helpers for computer programs. 
+While we found good companions in the first category -- e.g. UltraCompare, the Notepad++ Compare Plugin, DiffDoc, WinMerge, ... see: https://en.wikipedia.org/wiki/Comparison_of_file_comparison_tools, for a list) -- we did not find any tool that suited our needs in the second category -- i.e. indicating line modifications and measuring differences. 
+
+
+
+
+Therefore we wrote our **own software** that helped with comparing texts, assigning change types and measuring differences. Three programs were written: The frist for comparing documents, **gathering links** between sub-paragraph from one version to the other, assigning **change types** an measuring change; the second for coding changes between documents as **minority or majority friendly**; the third for coding sub-paragraphs into **categories capturing the type of regulation**. 
+
+The data gathered with help of the programs than was merged into one **database** with three tables - meta information on the Standing Orders (*texts*), the text of the Standing Orders and accompanied data (*textlines*) and how sub-paragraphs from one version are linked those of another version (*textlines*). Thereafter the information were **checked for errors**. After elimanting all errors the raw information from the database was then **aggregated** to various formats.
+
+
+# Document Transformation
+
+The original Standing Orders documents gathered often were books or came as scans in PDF format. To be able to further work with them the text had to be brought into computer readable format. This first digital format of the Standing Orders text was Word. Although, the texts later on were further broken down into plain text, Word is a good intermediate format since everyone is familiar with it and it is able to emulate the layout of the original document which eases comparisons between original and digital version. 
+
+```{r, results="asis", echo=FALSE}
+if(doc_type=="latex"){
+  cat(
+"\\begin{center}
+\\includegraphics[height=0.4\\textheight]{fig/fig1.png}
+\\end{center}"
+      )
+}else{
+  cat("![List of ammendments to the 1950 SO UK, page 497. 1952 SO Germany word-document](fig/fig1.png)")
+}
+```
+
+*Figure 1: 1952 German Bundestag Standing Orders word-document*
+
+
+
+
 
 
 # Document Consolidation
@@ -32,14 +142,106 @@ In order to construct a data base consisting of all parliamentary standing order
 However, there are often only few consolidated versions provided by national parliaments. Changes to the standing orders are most of the time published as amendments and only once in a while a full version of the current text is issued. As a consequence, consolidated versions of the standing orders for every date of change had to be constructed by inserting manually the changes into the previous complete version. 
 
 
+```{r, results="asis", echo=FALSE}
+if(doc_type=="latex"){
+    cat(
+"\\begin{center}
+\\includegraphics[height=0.4\\textheight]{fig/fig1a.png}
+\\end{center}"
+      )
+}else{
+  cat("![List of ammendments to the 1950 SO UK, page 497](fig/fig1a.png)")
+}
+```
+
+*Figure 2: List of ammendments to the 1950 SO UK, page 497*
+
+
+# Document Cleaning
+
+The aim of this procedure was to identify and correct errors that had occurred through the process of converting PDF-documents into Word-documents. Another purpose was to put the cleaned versions of the parliamentary standing orders in a standardized format while maintaining the original structure of paragraphs. 
+First of all, the oldest consolidated version of Standing Orders was completely read through and corrected manually. Typos, unnecessary line breaks, signs not belonging to the text and everything going beyond the actual text of the standing orders was deleted. 
+
+Next, a header containing information about the version such as the dates of acceptance, promulgation and enactment of the version of the standing orders was inserted. The version cleaned in this manner served as reference version. In the following step the subsequent consolidated version was compared to the reference version using the software DiffDoc (in a later state of the cleaning process the software UltraCompare was used instead). The software made it possible to easily identify identical parts of the two versions that only contained few mistakes to be corrected as well as parts that had been changed. The latter were read completely and handled like the first version. After the cleaning of the second version it served as new reference version for the subsequent consolidated version of the standing orders. 
+Alongside cleaning the text, it was made sure that each sub-paragraph, headline or other structuring element of the standing orders was given a single line. Each element was separated by a line break; no element was allowed to spread more than one line.
+The steps were repeated for all consolidated versions. Throughout the procedure the PDF-versions of the standing orders were considered in case of uncertainty regarding cleaning decisions. 
+In a last step the lines (representing text elements) that were of non-relevant content (e.g. headlines) were marked by adding a special string at the start of the line (‘#§#’) to allow the computer to automatically dismiss these lines later on. 
+
+
+```{r, results="asis", echo=FALSE}
+if(doc_type=="latex"){
+    cat(
+"\\begin{center}
+\\includegraphics[width=\\textwidth]{fig/fig2.png}
+\\end{center}"
+      )
+}else{
+  cat("![1952 SO Germany plain text version](fig/fig2.png)")
+}
+```
+*Figure 3: 1952 SO Germany plain-text version*
+
+```{r, results="asis", echo=FALSE}
+if(doc_type=="latex"){
+    cat(
+"\\begin{center}
+\\includegraphics[height=0.4\\textheight]{fig/fig3a.png}
+\\end{center}"
+      )
+}else{
+  cat("![Comparing Standing Orders versions with Ultra Compare](fig/fig3a.png)")
+}
+```
+
+*Figure 4: Comparing Standing Orders versions with Ultra Compare*
+
+
+
+
 # Linkage
 
-Having generated complete, cleaned versions of the standing orders, the next step was to further prepare the data so that the content of the standing orders could be coded in an efficient manner and to get information about what had or had not changed from one version to the next. For this purpose changes in the standing orders between versions were linked. This means that for each line of text (each relevant subparagraph) it was recorded whether or not the line was deleted in the version to come, got inserted in the current version, got changed or simply stayed the same. 
-The coding was done semi-automatically by first letting an algorithm developed by the project and implemented in R handle all non-relevant lines as well as those that were not changed. Thereafter human coders went through all remaining text lines of two subsequent versions to add there linkage information to the dataset. For this another program implemented in R helped the coders by making sure that: all lines were coded; the information was recorded correct and alongside the text that was linked, coders were given suggestions for possible matching lines similar to that under consideration. As the linked files depicted the basis for later analyzes and coding, it was crucial to differentiate between minor reformulations of paragraphs (e.g. mere orthographic reforms) and actual changes. In case of doubt the supervisors were consulted. 
+Having generated complete, cleaned versions of the standing orders, the next step was to further prepare the data so that the content of the standing orders could be coded in an efficient manner and to get information about what had or had not changed from one version to the next. For this purpose changes in the standing orders between versions were linked. This means that for each line of text (each relevant sub-paragraph) it was recorded whether or not the line was deleted in the version to come, got inserted in the current version, got changed or simply stayed the same. 
+The coding was done semi-automatically by first letting an algorithm developed by the project and implemented in R handle all non-relevant lines as well as those that were not changed. Thereafter human coders went through all remaining text lines of two subsequent versions to add there linkage information to the data-set. For this another program implemented in R helped the coders by making sure that: all lines were coded; the information was recorded correct and alongside the text that was linked, coders were given suggestions for possible matching lines similar to that under consideration. As the linked files depicted the basis for later analyzes and coding, it was crucial to differentiate between minor reformulations of paragraphs (e.g. mere orthographic reforms) and actual changes. In case of doubt the supervisors were consulted. 
 
-The process of gathering link information between subparagraphs of subsequent standing orders versions allows for distinguishing between types of change (deletion, insertion, modification and no-change), measuring its extent more precisely and to later transfer line codes from one version of the standing orders to another so that all subparagraphs (the selected coding entity) that were identical in two versions got automatically the same code. 
 
-Furthermore, the use of an semi-automatic approach allows to use the strengths of both computers and humans: computers are good at doing the same stuff over and over again in the same and predictable way - e.g. finding identical lines, computing measures of similarity, saving data always in the very same format -- while humans on the other hand have a much better understanding of the content of text, might understand intentions of the text authors and are more creative and flexible -- e.g. finding line pairs that might be not very similar based on the sequence of characters or the distribution of words but in regard to the things that are regulated within. 
+The process of gathering link information between sub-paragraphs of subsequent standing orders versions allows for distinguishing between types of change (deletion, insertion, modification and no-change), measuring its extent more precisely and to later transfer line codes from one version of the standing orders to another so that all sub-paragraphs (the selected coding entity) that were identical in two versions got automatically the same code. 
+
+Furthermore, the use of an semi-automatic approach allows to use the strengths of both computers and humans: computers are good at doing the same stuff over and over again in the same and predictable way - e.g. finding identical lines, computing measures of similarity, saving data always in the very same format -- while humans on the other hand have a much better understanding of the content of text, might understand intentions of the text authors and are more creative and flexible -- e.g. finding line pairs that might be not very similar based on the sequence of characters or the distribution of words but in regard to the things that are regulated within.
+
+```{r text comparison with own software}
+library(stringr)
+library(diffr)
+
+# defining text
+old <- str_split("Three kind mice, see how they run!\nThey all ran after the farmer's wife,\nWho cut off their tails with the carving knife,\nDid you ever see such a thing in your life?\nAs three blind mice.\nEnd", "\n")
+new <- str_split("Three blind mice, see how they run!\nThey all ran after the farmer's wife,\nthey took out some cheese,\nand they cut her a slice,\nDid you ever see such a sight in your life\nas three kind mice?", "\n")
+
+# calculating distances, aligning text, determining change types
+res <- diffr(old, new, dist="bow")
+
+# distance matrix
+res$distance_matrix
+
+# resulting alignment and change type
+res$alignment_df
+```
+*Code Snippet 1: Text comparison with own software written in R*
+ 
+
+
+```{r, results="asis", echo=FALSE}
+if(doc_type=="latex"){
+  cat(
+"\\begin{center}
+\\includegraphics[height=0.4\\textwidth]{fig/linkage.png}
+\\end{center}"
+      )
+}else{
+  cat("![List of ammendments to the 1950 SO UK, page 497. 1952 SO Germany word-document](fig/linkage.png)")
+}
+```
+
+*Figure 5: R Software with commandline interface for linking parts of two version of Standing Orders*
 
 
 # Minority-Majority-Change Coding
@@ -47,22 +249,28 @@ Furthermore, the use of an semi-automatic approach allows to use the strengths o
 
 # Corpus Coding
 
-Based on the linked versions of the standing orders the content could be coded. The intention of the so called corpus coding process was to assign a single code expressing the content to every legal subparagraph of every version of the standing orders. 
+Based on the linked versions of the standing orders the content could be coded. The intention of the so called corpus coding process was to assign a single code expressing the content to every legal sub-paragraph of every version of the standing orders. 
 
 The coding scheme comprises 80 different single codes belonging to ten different categories (law-making, special decision procedures other than regular law-making, relationship to government, relationship to external offices/institutions apart from the government, generating publicity, internal organization of parliament, change and interpretation of the standing orders, general rules regarding formation and legislative session/discontinuity, final provisions, miscellaneous (cannot be coded otherwise)). 
 
-Apart from the codes the coding manual encompasses general rules for coding. As every subparagraph got only one code the coders had to decide which code suites best even if several different codes could be assigned to a subparagraph. These decisions were based on a specific hierarchy of codes. Rules which concern the interaction of two actors were attributed to the actor which takes the active part if he has discretion regarding this action. Regular law-making was considered more important than other decision procedures if they were treated together in one subparagraph. A further general coding rule was to take the overall context into account instead of just looking at a specific regulation. 
+Apart from the codes the coding manual encompasses general rules for coding. As every sub-paragraph got only one code the coders had to decide which code suites best even if several different codes could be assigned to a sub-paragraph. These decisions were based on a specific hierarchy of codes. Rules which concern the interaction of two actors were attributed to the actor which takes the active part if he has discretion regarding this action. Regular law-making was considered more important than other decision procedures if they were treated together in one sub-paragraph. A further general coding rule was to take the overall context into account instead of just looking at a specific regulation. 
 
-Like the other coding processes corpus coding was done semi-automatically with a self-written program implemented in R. Human coders went through the oldest version of the standing orders and assigned the appropriate codes from the coding scheme to every text line to create one fully coded version. The next step was to transfer these codes to the other versions. As in the linking procedure text lines that have stayed exactly the same from one version to the following had been identified and linked, the R program automatically assigned the same codes to them. So the coders only had to go through the uncoded text lines of the subsequent version of the standing orders (that is the passages that had been changed between two versions) and code them manually. Then, the new codes were transferred. The coders proceeded in this way until all versions of the standing orders were completely coded with regard to their content. 
+Like the other coding processes corpus coding was done semi-automatically with a self-written program implemented in R. Human coders went through the oldest version of the standing orders and assigned the appropriate codes from the coding scheme to every text line to create one fully coded version. The next step was to transfer these codes to the other versions. As in the linking procedure text lines that have stayed exactly the same from one version to the following had been identified and linked, the R program automatically assigned the same codes to them. So the coders only had to go through the not coded text lines of the subsequent version of the standing orders (that is the passages that had been changed between two versions) and code them manually. Then, the new codes were transferred. The coders proceeded in this way until all versions of the standing orders were completely coded with regard to their content. 
 
 The original standing orders of national parliaments are usually only published in the language of the country. Thus, coders were recruited who were either native speakers or non-native speakers with very high language proficiency. Good knowledge about the government system of the countries was a further requirement. As corpus coding was a very demanding task, all coders got intensive training. First, the coders familiarized themselves with the coding manual, the different categories and coding rules. Next, the new coders practiced through joint coding with experienced coders. After this, the coders coded the most recent version of the standing orders and compared their results to a master version. Usually the most recent versions of the standing orders are also issued in English. These versions had been coded by those responsible for the project and served as master versions. On condition that coders mastered this task they could start coding on their own. Throughout the coding process ambiguities and problems were solved in joint discussion with the project coordinators. If it was necessary, supplementary documents such as constitutions and information from the webpages of the national parliaments were considered to check coding decisions.
 
 
-## Coding Scheme
+# Appendix
+
+## Manual for Text Cleansing
+
+## Manual for Text Cosolidation 
+
+## Coding Scheme for Corpus Coding
 
 ### Basic Intuition:
 
-Each and every code is exclusive, meaning that one subparagraph needs to have one code but one code only. For some codes there are notes on how to decide between multiple codes which may seem appropriate. Sometimes even the coding rules and additional notes will not help to decide between codes. In this case please let us know. Every decision accompanied by doubt should be documented.
+Each and every code is exclusive, meaning that one sub-paragraph needs to have one code but one code only. For some codes there are notes on how to decide between multiple codes which may seem appropriate. Sometimes even the coding rules and additional notes will not help to decide between codes. In this case please let us know. Every decision accompanied by doubt should be documented.
 
 
 ### Further rules of the game:
