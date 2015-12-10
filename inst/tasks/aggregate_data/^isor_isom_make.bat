@@ -18,9 +18,9 @@ CALL R < isor_ext_tsebelis.R            > routs/isor_ext_tsebelis.Rout          
 CALL R < isor_ext_erd_cabinet_ids.R     > routs/isor_ext_erd_cabinet_ids.Rout     --vanilla 
 
 
-REM REM ========================================================  
-REM REM GENERATING isom data set
-REM REM ========================================================
+REM ========================================================  
+REM GENERATING isom data set
+REM ========================================================
 
 CALL R < isom.R                         > routs/isom.rout                         --vanilla 
 

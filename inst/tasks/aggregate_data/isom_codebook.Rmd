@@ -1,7 +1,9 @@
 ---
 title: "ISOM Codebook"
-author: "pm"
+author: "pm/dh"
 date: '`r Sys.time()`'
+header-includes:
+    - \usepackage{graphicx}
 output:
   pdf_document: null
   keep_tex: yes
@@ -39,9 +41,9 @@ Sys.setlocale("LC_TIME", "English")
 
 # IDEP Standing Orders Minority-Majority-Change Dataset \newline (version: `r isom$db_isom_lastupdate[1]`)
 
-The dataset is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISOR [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/) and ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/). 
+The data-set is a compilation of data based on several data-sets: ERD [European Represantatives Dataset, Release 3, February 2014](http://www.erdda.se/index.php/projects/erd/data-archive), ISOR [IDEP Standing Orders Reform Dataset, version `r db_on_disk_version`](http://www.polver.uni-konstanz.de/sieberer/forschung/) and ParlGov [Parliaments and governments database, 2012 release](http://www.parlgov.org/). 
 
-All information are aggregate on cabinet level with one row per cabinet. Cabinet information stems from ERD. Information on Standing Orders reforms was added from ISOR dataset by matching reform dates (date of acceptance of the reform or if not availible earliest date availible) into cabinet time spans (and countries) for inforamtion on reforms. For information on the Standing Order present for a particular cabinet matching was done by overlapping time spans from SO and cabinet. All measures of ideological positions, distances and polarization come from CMP which was merged/joined with ParlGov first (ParlGov includes the CMP party id variable). ParlGov in turn was used as source of volatility measures. Having merged/joined ParlGov and CMP this combined dataset was than joined with ERD by matching cabinet start dates (automatically and by hand due to occasional differing start days). 
+All information are aggregate on cabinet level with one row per cabinet. Cabinet information stems from ERD. Information on Standing Orders reforms was added from ISOR data-set by matching reform dates (date of acceptance of the reform or if not available earliest date available) into cabinet time spans (and countries) for information on reforms. For information on the Standing Orders present for a particular cabinet matching was done by overlapping time spans from SO and cabinet. All measures of ideological positions, distances and polarization come from CMP which was merged/joined with ParlGov first (ParlGov includes the CMP party id variable). ParlGov in turn was used as source for volatility measures. Having merged/joined ParlGov and CMP, this combined data-set was than joined with ERD by matching cabinet start dates (automatically and by hand due to occasional differing start days). 
 
 The data set incorporates aggregated data for 
 `r dim(isom)[1] - length(unique(isom$country))` cabinets in
@@ -54,7 +56,8 @@ The data set incorporates aggregated data for
 #### R-code: #### 
 
 isom  %>% 
-  select(ctr, cab_pm, cab_in, cab_out, wds_chg_sum, pro_minmaj_qual, idl_pnt_all, volatility) %>% 
+  select( ctr, cab_pm, cab_in, cab_out, wds_chg_sum,  pro_minmaj_qual, 
+          idl_pnt_all,  volatility ) %>% 
   mutate(
     idl_pnt_all = round(idl_pnt_all, 1), 
     volatility  = round(volatility, 1)
@@ -63,7 +66,7 @@ isom  %>%
 
 # Citing the Data
 
-Publications using this dataset should acknowledge in writing that the information comes from:
+Publications using this data-set should acknowledge in writing that the information comes from:
 
 Andersson, Staffan; Bergman, Torbjörn; Ersson, Svante (2014). The European Representative Democracy Data Archive,
 Release 3. Main sponsor: Riksbankens Jubileumsfond (In2007-0149:1-E). [www.erdda.se]
@@ -72,23 +75,23 @@ Döring, Holger; Manow, Philip (2015). Parliaments and governments database (Par
 
 Lehmann, Pola; Matthieß, Theres; Merz, Nicolas; Regel, Sven; Werner, Annika (2015): Manifesto Corpus. Version: 2013-b. Berlin: WZB Berlin Social Science Center.
 
-Sieberer, Ulrich; Meißner, Peter; Keh, Julia; Müller, Wolfgang C. (2015): ISOR - IDEP Standing Orders Reforms Dateset. 
+Sieberer, Ulrich; Meißner, Peter; Keh, Julia; Müller, Wolfgang C. (2015): ISOR - IDEP Standing Orders Reforms Date-set. 
 
-Sieberer, Ulrich; Meißner, Peter; Keh, Julia; Müller, Wolfgang C. (2015): ISOM - IDEP Standing Orders Minority-Majority Dateset. 
+Sieberer, Ulrich; Meißner, Peter; Keh, Julia; Müller, Wolfgang C. (2015): ISOM - IDEP Standing Orders Minority-Majority Date-set. 
 
-Tsebelis, George (2002): Veto Players. How Political Institutions Work. Princeton UP
+Tsebelis, George (2002): Veto Players. How Political Institutions Work. Princeton UP.
 
 
 # References used in the Codebook
 
 **ERD:**
 
-ERD (2014): European Representative Democracy (ERD) Release 3.0 February 12, 2014 Codebook for ERD - e. 
+ERD (2014): European Representative Democracy (ERD) Release 3.0 February 12, 2014 Code-book for ERD - e. 
 
 
 **CMP:**
 
-CMP (2015): Manifesto Project Dataset Codebook. Website: https://manifesto-project.wzb.eu/ . Version: 2015a
+CMP (2015): Manifesto Project Data-set Code-book. Website: https://manifesto-project.wzb.eu/. Version: 2015a
 
 **Volatility**
 
@@ -99,17 +102,17 @@ Pedersen, Mogens N. (1979): The Dynamics of European Party Systems: Changing Pat
 
 ## Notes
 
-The variables of the ISOR dataset are extensively described in a seperate codebook (`isor_codebook.pdf`) -- therefore only some of those variables are presented here. 
+The variables of the ISOR data-set are extensively described in a separate code-book (`isor_codebook.pdf`) -- therefore only some of those variables are presented here. 
 
-Since there might be more than one SO reform (ISOR) that took place during the course of a cabinet ISOR data had to be aggregated:
+Since there might be more than one SO reform (ISOR) that took place during the course of a cabinet, ISOR data had to be aggregated:
 
 - all ISOR variables preserve their name 
-- but if values had to be aggregated the variables names get an extra suffix:
+- but if values had to be aggregated, the variables names get an extra suffix:
     - **fst** for the value of the first reform of a cabinet time span
     - **lst** for the value of the last  reform of a cabinet time span
     - **mn**  for the mean value
     - **sum** for the sum of all values
-- Furthermore, due to the aggregation of ISOR data an addtitional variable is provided: **n_reforms** captures the number of times SO were changed during the course of a cabinet. 
+- Furthermore, due to the aggregation of ISOR data an additional variable is provided: **n_reforms** captures the number of times SO were changed during the course of a cabinet. 
   
 
 ```{r, echo=FALSE}
@@ -218,6 +221,7 @@ for( g in sort(unique(var_desc_isom$group)) ){
       },
       error = function(e){
         message("ERROR: Variable not found in dataset!")
+        stop()
       }
     )
     cat("\n\n<p>&nbsp;</p>")
