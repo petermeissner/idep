@@ -393,6 +393,43 @@ rankplot <- function(x, label, axislab="", ...){
 
 
 
+#' function for restricting size of string
+#' @param text vector of text 
+maxchar <- function(text, maxchar=5, indicator=" ..."){
+  stopifnot(nchar(indicator) <= maxchar)
+  ifelse(
+    nchar(x)<=maxchar, 
+    x, 
+    paste0(substring(text, 1, maxchar-4), " ...")
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

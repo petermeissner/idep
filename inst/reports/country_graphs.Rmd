@@ -7,12 +7,15 @@ output:
     fig_height: 6.5
     fig_width: 11.5
     keep_tex: yes
+  html_document:
+    fig_height: 4
+    fig_width: 10
   word_document:
     fig_height: 6
     fig_width: 10
+geometry: margin=0.5cm
 documentclass: article
 classoption: a4paper, landscape
-geometry: margin=0.5cm
 ---
 
 ```{r setup, include=FALSE}
@@ -174,7 +177,6 @@ p_legend <- ggplot()
 ```
 
 ```{r, echo=FALSE}
-P <- list()
 CTR <- unique(isor$ctr)
 COUNTRY <- unique(isor$country)
 for ( i in seq_along(CTR)){
@@ -243,6 +245,7 @@ for ( i in seq_along(CTR)){
     )
   
   grid.arrange(p, p_legend, ncol=2, widths=c(13,1))
+  cat("\\newline{} \\n ")
 }
 ```
 

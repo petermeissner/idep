@@ -65,7 +65,7 @@ img {
 <div id="header">
 <h1 class="title">ISOR Coding Procedures</h1>
 <h4 class="author"><em>pm/bm</em></h4>
-<h4 class="date"><em>2015-12-07 13:27:03</em></h4>
+<h4 class="date"><em>2015-12-11 08:56:58</em></h4>
 </div>
 
 <div id="TOC">
@@ -74,13 +74,25 @@ img {
 <li><a href="#document-transformation"><span class="toc-section-number">2</span> Document Transformation</a></li>
 <li><a href="#document-consolidation"><span class="toc-section-number">3</span> Document Consolidation</a></li>
 <li><a href="#document-cleaning"><span class="toc-section-number">4</span> Document Cleaning</a></li>
-<li><a href="#linkage"><span class="toc-section-number">5</span> Linkage</a></li>
-<li><a href="#minority-majority-change-coding"><span class="toc-section-number">6</span> Minority-Majority-Change Coding</a></li>
+<li><a href="#linkage"><span class="toc-section-number">5</span> Linkage</a><ul>
+<li><a href="#description"><span class="toc-section-number">5.1</span> Description</a></li>
+<li><a href="#training-and-quality-control"><span class="toc-section-number">5.2</span> Training and Quality Control</a></li>
+</ul></li>
+<li><a href="#minority-majority-change-coding"><span class="toc-section-number">6</span> Minority-Majority-Change Coding</a><ul>
+<li><a href="#description-1"><span class="toc-section-number">6.1</span> Description</a></li>
+<li><a href="#training-and-quality-assurance"><span class="toc-section-number">6.2</span> Training and Quality Assurance</a></li>
+</ul></li>
 <li><a href="#corpus-coding"><span class="toc-section-number">7</span> Corpus Coding</a><ul>
-<li><a href="#coding-scheme"><span class="toc-section-number">7.1</span> Coding Scheme</a><ul>
-<li><a href="#basic-intuition"><span class="toc-section-number">7.1.1</span> Basic Intuition:</a></li>
-<li><a href="#further-rules-of-the-game"><span class="toc-section-number">7.1.2</span> Further rules of the game:</a></li>
-<li><a href="#scheme"><span class="toc-section-number">7.1.3</span> Scheme</a></li>
+<li><a href="#description-2"><span class="toc-section-number">7.1</span> Description</a></li>
+<li><a href="#training-and-quality-assurance-1"><span class="toc-section-number">7.2</span> Training and Quality Assurance</a></li>
+</ul></li>
+<li><a href="#appendix"><span class="toc-section-number">8</span> Appendix</a><ul>
+<li><a href="#manual-for-text-cleansing"><span class="toc-section-number">8.1</span> Manual for Text Cleansing</a></li>
+<li><a href="#manual-for-linking-standing-orders-versions"><span class="toc-section-number">8.2</span> Manual for Linking Standing Orders versions</a></li>
+<li><a href="#coding-scheme-for-corpus-coding"><span class="toc-section-number">8.3</span> Coding Scheme for Corpus Coding</a><ul>
+<li><a href="#basic-intuition"><span class="toc-section-number">8.3.1</span> Basic Intuition:</a></li>
+<li><a href="#further-rules-of-the-game"><span class="toc-section-number">8.3.2</span> Further rules of the game:</a></li>
+<li><a href="#scheme"><span class="toc-section-number">8.3.3</span> Scheme</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -89,51 +101,49 @@ img {
 <p> </p>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
-<p>To collect data on reforms to Standing Orders many steps had to be taken and many hands had to help. The basic idea was that two proceeding versions of the same text can be compared by putting them side by side and going through each (sub)-paragraph.</p>
+<p>To collect data on reforms to Standing Orders many steps had to be taken and many hands had to help. The basic idea was that two proceeding versions of the same text can be compared by putting them side by side and going through each (sub)-paragraph:</p>
+<p><em>old text</em></p>
 <table>
-<thead>
-<tr class="header">
-<th align="right">lnr1</th>
-<th align="left">old</th>
-<th align="right">lnr2</th>
-<th align="left">new</th>
-</tr>
-</thead>
 <tbody>
 <tr class="odd">
-<td align="right">1</td>
 <td align="left">Three kind mice, see how they run!</td>
-<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">They all ran after the farmer’s wife,</td>
+</tr>
+<tr class="odd">
+<td align="left">Who cut off their tails with the carving knife,</td>
+</tr>
+<tr class="even">
+<td align="left">Did you ever see such a thing in your life?</td>
+</tr>
+<tr class="odd">
+<td align="left">As three blind mice.</td>
+</tr>
+<tr class="even">
+<td align="left">End</td>
+</tr>
+</tbody>
+</table>
+<p><em>new text</em></p>
+<table>
+<tbody>
+<tr class="odd">
 <td align="left">Three blind mice, see how they run!</td>
 </tr>
 <tr class="even">
-<td align="right">2</td>
-<td align="left">They all ran after the farmer’s wife,</td>
-<td align="right">2</td>
 <td align="left">They all ran after the farmer’s wife,</td>
 </tr>
 <tr class="odd">
-<td align="right">3</td>
-<td align="left">Who cut off their tails with the carving knife,</td>
-<td align="right">3</td>
 <td align="left">they took out some cheese,</td>
 </tr>
 <tr class="even">
-<td align="right">4</td>
-<td align="left">Did you ever see such a thing in your life?</td>
-<td align="right">4</td>
 <td align="left">and they cut her a slice,</td>
 </tr>
 <tr class="odd">
-<td align="right">5</td>
-<td align="left">As three blind mice.</td>
-<td align="right">5</td>
 <td align="left">Did you ever see such a sight in your life</td>
 </tr>
 <tr class="even">
-<td align="right">6</td>
-<td align="left">End</td>
-<td align="right">6</td>
 <td align="left">as three kind mice?</td>
 </tr>
 </tbody>
@@ -142,70 +152,70 @@ img {
 <table>
 <thead>
 <tr class="header">
-<th align="left">lnr1</th>
+<th align="right">lnr1</th>
 <th align="left">old</th>
-<th align="left">lnr2</th>
+<th align="right">lnr2</th>
 <th align="left">new</th>
 <th align="right">bowdist</th>
-<th align="left">type</th>
+<th align="right">type</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">1</td>
+<td align="right">1</td>
 <td align="left">Three kind mice, see how th …</td>
-<td align="left">1</td>
+<td align="right">1</td>
 <td align="left">Three blind mice, see how t …</td>
 <td align="right">2</td>
-<td align="left">change</td>
+<td align="right">mod</td>
 </tr>
 <tr class="even">
-<td align="left">2</td>
+<td align="right">2</td>
 <td align="left">They all ran after the farm …</td>
-<td align="left">2</td>
+<td align="right">2</td>
 <td align="left">They all ran after the farm …</td>
 <td align="right">0</td>
-<td align="left">no change</td>
+<td align="right">equal</td>
 </tr>
 <tr class="odd">
-<td align="left">3</td>
+<td align="right">3</td>
 <td align="left">Who cut off their tails wit …</td>
-<td align="left">4</td>
+<td align="right">4</td>
 <td align="left">and they cut her a slice, …</td>
 <td align="right">13</td>
-<td align="left">change</td>
+<td align="right">mod</td>
 </tr>
 <tr class="even">
+<td align="right"></td>
 <td align="left"></td>
-<td align="left"></td>
-<td align="left">3</td>
+<td align="right">3</td>
 <td align="left">they took out some cheese, …</td>
 <td align="right">5</td>
-<td align="left">insertion</td>
+<td align="right">ins</td>
 </tr>
 <tr class="odd">
-<td align="left">4</td>
+<td align="right">4</td>
 <td align="left">Did you ever see such a thi …</td>
-<td align="left">5</td>
+<td align="right">5</td>
 <td align="left">Did you ever see such a sig …</td>
 <td align="right">2</td>
-<td align="left">change</td>
+<td align="right">mod</td>
 </tr>
 <tr class="even">
-<td align="left">5</td>
+<td align="right">5</td>
 <td align="left">As three blind mice. …</td>
-<td align="left">6</td>
+<td align="right">6</td>
 <td align="left">as three kind mice? …</td>
 <td align="right">4</td>
-<td align="left">change</td>
+<td align="right">mod</td>
 </tr>
 <tr class="odd">
-<td align="left">6</td>
+<td align="right">6</td>
 <td align="left">End …</td>
-<td align="left"></td>
+<td align="right"></td>
 <td align="left"></td>
 <td align="right">1</td>
-<td align="left">deletion</td>
+<td align="right">del</td>
 </tr>
 </tbody>
 </table>
@@ -220,23 +230,31 @@ img {
 <div id="document-transformation" class="section level1">
 <h1><span class="header-section-number">2</span> Document Transformation</h1>
 <p>The original Standing Orders documents gathered often were books or came as scans in PDF format. To be able to further work with them the text had to be brought into computer readable format. This first digital format of the Standing Orders text was Word. Although, the texts later on were further broken down into plain text, Word is a good intermediate format since everyone is familiar with it and it is able to emulate the layout of the original document which eases comparisons between original and digital version.</p>
-<p><img src="fig/fig1.png" alt="List of ammendments to the 1950 SO UK, page 497. 1952 SO Germany word-document" /> <em>Figure 1: 1952 German Bundestag Standing Orders word-document</em></p>
+<p><img src="fig/fig1.png" alt="List of ammendments to the 1950 SO UK, page 497. 1952 SO Germany word-document" /></p>
+<p><em>Figure 1: 1952 German Bundestag Standing Orders word-document</em></p>
 </div>
 <div id="document-consolidation" class="section level1">
 <h1><span class="header-section-number">3</span> Document Consolidation</h1>
 <p>In order to construct a data base consisting of all parliamentary standing orders that were in force at a specific point in time consolidated versions of the standing orders were needed. Consolidated versions are complete versions with all changes that had occurred at a specific date included in the body of the text.</p>
 <p>However, there are often only few consolidated versions provided by national parliaments. Changes to the standing orders are most of the time published as amendments and only once in a while a full version of the current text is issued. As a consequence, consolidated versions of the standing orders for every date of change had to be constructed by inserting manually the changes into the previous complete version.</p>
-<p><img src="fig/fig1a.png" alt="List of ammendments to the 1950 SO UK, page 497" /> <em>Figure 2: List of ammendments to the 1950 SO UK, page 497</em></p>
+<p><img src="fig/fig1a.png" alt="List of ammendments to the 1950 SO UK, page 497" /></p>
+<p><em>Figure 2: List of ammendments to the 1950 SO UK, page 497</em></p>
 </div>
 <div id="document-cleaning" class="section level1">
 <h1><span class="header-section-number">4</span> Document Cleaning</h1>
-<p>The aim of this procedure was to identify and correct errors that had occurred through the process of converting PDF-documents into Word-documents. Another purpose was to put the cleaned versions of the parliamentary standing orders in a standardized format while maintaining the original structure of paragraphs. First of all, the oldest consolidated version of the parliamentary standing orders of the single countries was completely read through and corrected manually. Typos, unnecessary line breaks, signs not belonging to the text and everything going beyond the actual text of the standing orders was deleted.</p>
+<p>The aim of this procedure was to identify and correct errors that had occurred through the process of converting PDF-documents into Word-documents. Another purpose was to put the cleaned versions of the parliamentary standing orders in a standardized format while maintaining the original structure of paragraphs. First of all, the oldest consolidated version of Standing Orders was completely read through and corrected manually. Typos, unnecessary line breaks, signs not belonging to the text and everything going beyond the actual text of the standing orders was deleted.</p>
 <p>Next, a header containing information about the version such as the dates of acceptance, promulgation and enactment of the version of the standing orders was inserted. The version cleaned in this manner served as reference version. In the following step the subsequent consolidated version was compared to the reference version using the software DiffDoc (in a later state of the cleaning process the software UltraCompare was used instead). The software made it possible to easily identify identical parts of the two versions that only contained few mistakes to be corrected as well as parts that had been changed. The latter were read completely and handled like the first version. After the cleaning of the second version it served as new reference version for the subsequent consolidated version of the standing orders. Alongside cleaning the text, it was made sure that each sub-paragraph, headline or other structuring element of the standing orders was given a single line. Each element was separated by a line break; no element was allowed to spread more than one line. The steps were repeated for all consolidated versions. Throughout the procedure the PDF-versions of the standing orders were considered in case of uncertainty regarding cleaning decisions. In a last step the lines (representing text elements) that were of non-relevant content (e.g. headlines) were marked by adding a special string at the start of the line (‘#§#’) to allow the computer to automatically dismiss these lines later on.</p>
-<p><img src="fig/fig2.png" alt="1952 SO Germany plain-text version" /> <em>Figure 2: 1952 SO Germany plain-text version</em></p>
+<p><img src="fig/fig2.png" alt="1952 SO Germany plain text version" /> <em>Figure 3: 1952 SO Germany plain-text version</em></p>
+<p><img src="fig/fig3a.png" alt="Comparing Standing Orders versions with Ultra Compare" /></p>
+<p><em>Figure 4: Comparing Standing Orders versions with Ultra Compare</em></p>
 </div>
 <div id="linkage" class="section level1">
 <h1><span class="header-section-number">5</span> Linkage</h1>
+<div id="description" class="section level2">
+<h2><span class="header-section-number">5.1</span> Description</h2>
 <p>Having generated complete, cleaned versions of the standing orders, the next step was to further prepare the data so that the content of the standing orders could be coded in an efficient manner and to get information about what had or had not changed from one version to the next. For this purpose changes in the standing orders between versions were linked. This means that for each line of text (each relevant sub-paragraph) it was recorded whether or not the line was deleted in the version to come, got inserted in the current version, got changed or simply stayed the same. The coding was done semi-automatically by first letting an algorithm developed by the project and implemented in R handle all non-relevant lines as well as those that were not changed. Thereafter human coders went through all remaining text lines of two subsequent versions to add there linkage information to the data-set. For this another program implemented in R helped the coders by making sure that: all lines were coded; the information was recorded correct and alongside the text that was linked, coders were given suggestions for possible matching lines similar to that under consideration. As the linked files depicted the basis for later analyzes and coding, it was crucial to differentiate between minor reformulations of paragraphs (e.g. mere orthographic reforms) and actual changes. In case of doubt the supervisors were consulted.</p>
+<p>The process of gathering link information between sub-paragraphs of subsequent standing orders versions allows for distinguishing between types of change (deletion, insertion, modification and no-change), measuring its extent more precisely and to later transfer line codes from one version of the standing orders to another so that all sub-paragraphs (the selected coding entity) that were identical in two versions got automatically the same code.</p>
+<p>Furthermore, the use of an semi-automatic approach allows to use the strengths of both computers and humans: computers are good at doing the same stuff over and over again in the same and predictable way - e.g. finding identical lines, computing measures of similarity, saving data always in the very same format – while humans on the other hand have a much better understanding of the content of text, might understand intentions of the text authors and are more creative and flexible – e.g. finding line pairs that might be not very similar based on the sequence of characters or the distribution of words but in regard to the things that are regulated within.</p>
 <pre class="r"><code>library(stringr)
 library(diffr)
 
@@ -258,37 +276,287 @@ res$distance_matrix</code></pre>
 ## [6,]    8    9    6    7   11    5</code></pre>
 <pre class="r"><code># resulting alignment and change type
 res$alignment_df</code></pre>
-<pre><code>##   lnr1 lnr2 distance      type
-## 1    1    1        2    change
-## 2    2    2        0 no change
-## 3    3    4       13    change
-## 7   NA    3        5 insertion
-## 4    4    5        2    change
-## 5    5    6        4    change
-## 6    6   NA        1  deletion</code></pre>
+<pre><code>##   lnr1 lnr2 distance  type
+## 1    1    1        2   mod
+## 2    2    2        0 equal
+## 3    3    4       13   mod
+## 7   NA    3        5   ins
+## 4    4    5        2   mod
+## 5    5    6        4   mod
+## 6    6   NA        1   del</code></pre>
 <p><em>Code Snippet 1: Text comparison with own software written in R</em></p>
-<p>The process of gathering link information between sub-paragraphs of subsequent standing orders versions allows for distinguishing between types of change (deletion, insertion, modification and no-change), measuring its extent more precisely and to later transfer line codes from one version of the standing orders to another so that all sub-paragraphs (the selected coding entity) that were identical in two versions got automatically the same code.</p>
-<p>Furthermore, the use of an semi-automatic approach allows to use the strengths of both computers and humans: computers are good at doing the same stuff over and over again in the same and predictable way - e.g. finding identical lines, computing measures of similarity, saving data always in the very same format – while humans on the other hand have a much better understanding of the content of text, might understand intentions of the text authors and are more creative and flexible – e.g. finding line pairs that might be not very similar based on the sequence of characters or the distribution of words but in regard to the things that are regulated within.</p>
-<p><img src="fig/fig3.png" alt="Text version comparison" /> <em>Figure 3: Text version comparison in human friendly program.</em></p>
+<p><img src="fig/linkage.png" alt="Figure 5: R Software with commandline interface for linking parts of two version of Standing Orders" /></p>
+<p><em>Figure 5: R Software with commandline interface for linking parts of two version of Standing Orders</em></p>
+</div>
+<div id="training-and-quality-control" class="section level2">
+<h2><span class="header-section-number">5.2</span> Training and Quality Control</h2>
+<p>While software was used to help finding matches between versions was non-trivial. Coders were recruited on the basis that either they were native speakers or had a very high language proficiency. Good knowledge about the government system of the countries was a further requirement. In addition, coders had to undergo training:</p>
+<ul>
+<li>First, coders were informed about the purpose of their task, i.e.: Gathering information about changed and unchanged parts of Standing Orders to later on build determine the amount of change, as well as easing Corpus Coding and Minority/Majority-Coding later on.</li>
+<li>Next, coders were asked to take some time to read the first and the last version available to get a feeling for the content, it’s structure, and the amount of change that happend between first and last version.</li>
+<li>Than coders were introduced into DiffDoc and later on UltraCompare to view the whole documents side by side if needed.</li>
+<li>Than coders got supervised training on the coding software for one to three reforms.</li>
+<li>During most of the coding one of the research assistants was present within the same room to answer question and asking questions was explicitly encouraged.</li>
+</ul>
+</div>
 </div>
 <div id="minority-majority-change-coding" class="section level1">
 <h1><span class="header-section-number">6</span> Minority-Majority-Change Coding</h1>
+<div id="description-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Description</h2>
+<p>After having identified which parts of the text were modified, moved around, deleted or inserted those changes could be coded. For this step the software drew on the information gathered before in the linkage stage to confront the coder only with changes instead of all the text. Coding decisions - pro majority or pro minority - were recorded and added to the database.</p>
+<p><img src="fig/minmaj.png" alt="Figure 6: R Software with commandline interface for coding minority/majority proness of reform" /></p>
+<p><em>Figure 6: R Software with commandline interface for coding minority/majority proness of reform</em></p>
+</div>
+<div id="training-and-quality-assurance" class="section level2">
+<h2><span class="header-section-number">6.2</span> Training and Quality Assurance</h2>
+<p>Coding the proness of changes to the parliamentary Standing Orders towards majority or minority is all but trivial. The original standing orders of national parliaments are usually only published in the language of the country. Thus, coders were recruited who were either native speakers or non-native speakers with very high language proficiency. Good knowledge about the government system of the countries was a further requirement. In addition, coders had to undergo an intensive training.</p>
+<ul>
+<li>First, coders were introduced to the concept of parliamentary minority and majority and how it differs from Government and other political bodies which are often closely connected but might not be the same – e.g. Governments often are dependent on a parliamentary majority that is supportive or at least tolerates Government but Government and parliamentary majority are not the same thing with agendas and personal of their own.</li>
+<li>Next, coders were given one Standing Orders reform with the task to try to code on their own. Coders were asked to be careful and if in doubt to gather argumentations for why a coding might go in one direction or the other.</li>
+<li>After having left the coder with this first reform. All coding decissions were discussed.</li>
+<li>This process usually did not have to be repeated but was done so, if canonical solutions and individual coding decissions were to much apart.</li>
+<li>After this formal training phase coders were asked to code all clear neither-nor cases themselves while they should come up with suggestions and reasoning for all non clear cases and changes that might be either minority or majority friendly.</li>
+<li>For most of the time when a coder was working one of the two research assistants was present in the room. Asking questions was strongly and always encouraged.</li>
+<li>After the coder did a batch of coding all non-clear cases were discussed by the coder and one of the research assistants and decided. If need be the project leader entered the discussion as well.</li>
+</ul>
+</div>
 </div>
 <div id="corpus-coding" class="section level1">
 <h1><span class="header-section-number">7</span> Corpus Coding</h1>
+<div id="description-2" class="section level2">
+<h2><span class="header-section-number">7.1</span> Description</h2>
 <p>Based on the linked versions of the standing orders the content could be coded. The intention of the so called corpus coding process was to assign a single code expressing the content to every legal sub-paragraph of every version of the standing orders.</p>
 <p>The coding scheme comprises 80 different single codes belonging to ten different categories (law-making, special decision procedures other than regular law-making, relationship to government, relationship to external offices/institutions apart from the government, generating publicity, internal organization of parliament, change and interpretation of the standing orders, general rules regarding formation and legislative session/discontinuity, final provisions, miscellaneous (cannot be coded otherwise)).</p>
 <p>Apart from the codes the coding manual encompasses general rules for coding. As every sub-paragraph got only one code the coders had to decide which code suites best even if several different codes could be assigned to a sub-paragraph. These decisions were based on a specific hierarchy of codes. Rules which concern the interaction of two actors were attributed to the actor which takes the active part if he has discretion regarding this action. Regular law-making was considered more important than other decision procedures if they were treated together in one sub-paragraph. A further general coding rule was to take the overall context into account instead of just looking at a specific regulation.</p>
 <p>Like the other coding processes corpus coding was done semi-automatically with a self-written program implemented in R. Human coders went through the oldest version of the standing orders and assigned the appropriate codes from the coding scheme to every text line to create one fully coded version. The next step was to transfer these codes to the other versions. As in the linking procedure text lines that have stayed exactly the same from one version to the following had been identified and linked, the R program automatically assigned the same codes to them. So the coders only had to go through the not coded text lines of the subsequent version of the standing orders (that is the passages that had been changed between two versions) and code them manually. Then, the new codes were transferred. The coders proceeded in this way until all versions of the standing orders were completely coded with regard to their content.</p>
-<p>The original standing orders of national parliaments are usually only published in the language of the country. Thus, coders were recruited who were either native speakers or non-native speakers with very high language proficiency. Good knowledge about the government system of the countries was a further requirement. As corpus coding was a very demanding task, all coders got intensive training. First, the coders familiarized themselves with the coding manual, the different categories and coding rules. Next, the new coders practiced through joint coding with experienced coders. After this, the coders coded the most recent version of the standing orders and compared their results to a master version. Usually the most recent versions of the standing orders are also issued in English. These versions had been coded by those responsible for the project and served as master versions. On condition that coders mastered this task they could start coding on their own. Throughout the coding process ambiguities and problems were solved in joint discussion with the project coordinators. If it was necessary, supplementary documents such as constitutions and information from the webpages of the national parliaments were considered to check coding decisions.</p>
-<div id="coding-scheme" class="section level2">
-<h2><span class="header-section-number">7.1</span> Coding Scheme</h2>
+</div>
+<div id="training-and-quality-assurance-1" class="section level2">
+<h2><span class="header-section-number">7.2</span> Training and Quality Assurance</h2>
+<p>The original standing orders of national parliaments are usually only published in the language of the country. Thus, coders were recruited who were either native speakers or non-native speakers with very high language proficiency. Good knowledge about the government system of the countries was a further requirement. As corpus coding was a very demanding task, all coders got intensive training.</p>
+<ul>
+<li>First, the coders familiarized themselves with the coding manual, the different categories and coding rules.</li>
+<li>Next, the new coders practiced through joint coding with experienced coders.</li>
+<li>After this, the coders coded the most recent version of the standing orders and compared their results to a master version. Usually the most recent versions of the standing orders are also issued in English. These versions had been coded by those responsible for the project and served as master versions.</li>
+<li>On the condition that coders mastered this task they could start coding on their own.</li>
+<li>Throughout the coding process ambiguities and problems were solved in joint discussion with the project coordinators.</li>
+<li>If it was necessary, supplementary documents such as constitutions and information from the webpages of the national parliaments were considered to check coding decisions.</li>
+</ul>
+</div>
+</div>
+<div id="appendix" class="section level1">
+<h1><span class="header-section-number">8</span> Appendix</h1>
+<div id="manual-for-text-cleansing" class="section level2">
+<h2><span class="header-section-number">8.1</span> Manual for Text Cleansing</h2>
+<p><strong>First steps</strong></p>
+<ul>
+<li>After Julia assigned you a country, please write your name in the top part of the file “Säuberung_Geschäftsordnungen.xlsx” (Z:/Geschäftsordnungen/Übersichtsdateien/Säuberung_Geschäftsordnungen.xlsx)</li>
+<li>Complete all dates (Date of Acceptance, Date of Promulgation, Date of Enactment) in this file.</li>
+<li>As soon as a version is corrected, please highlight this in the file (highlight line in green, put counter from “1”&quot; to “0”)</li>
+<li>To make sure that the original consolidated versions remain unchanged, please copy (DO NOT DRAG AND DROP, BUT ACTUALLY COPY THEM) all consolidated versions to the folder “gesäuberte Versionen” (Z:/Geschäftsordnungen/Daten/CountryName/Gesäuberte Versionen)</li>
+<li>If this folder does not yet exist, just create it yourself</li>
+</ul>
+<p><strong>Procedure</strong></p>
+<ul>
+<li>First (oldest) consolidated Version
+<ul>
+<li>Read it completely and insert/delete the information listed below</li>
+<li>Save this cleaned version as a .doc</li>
+<li>Use this version as a reference for the following version</li>
+</ul></li>
+<li>Other consolidated versions</li>
+<li>Compare the subsequent consolidated version through DiffDoc with the reference version + Parts that are identical except for mistakes: correct the mistakes in the newer version + Parts that have been changed: read these passages completely and clean it like the first version + Save this version
+<ul>
+<li>Use this version as a reference for the subsequent version, and so on</li>
+</ul></li>
+<li>Note for UltraCompare: Converting the PDF documents to Word documents resulted in so-called “Bedingte Trennstriche” (soft hyphen). These are invisible in the Word documents, but UltraCompare recognizes them. You can delete these by using the “Suchen und Ersetzen” (find and replace) function: at the very bottom, select “Sonderformat” (special format) and then check the option “Bedingter Trennstrich” (soft hyphen). Then, you select the “Replace” option and replace this “Bedingter Trennstrich” with nothing (e.g. not even a space, just leave the line blank).</li>
+</ul>
+<p><strong>Information that should be inserted/deleted</strong></p>
+<ul>
+<li><strong>IMPORTANT: PLEASE DO NOT “CORRECT” THE TEXT WITH REGARDS TO CONTENT – SOME EXPRESSIONS ETC. MAY SEEM ODD, BUT WE ARRE ONLY LOOKING TO ELIMINATE ANY MISTAKES THAT CAME INTO EXISTENCE WHEN THE TEXT WAS TRANSFERRED FROM .pdf TO .doc!!!</strong></li>
+<li>Delete
+<ul>
+<li>Unnecessary line breaks (e.g. if a sentence is intersected by a line break, but the sentence clearly should be in one line)</li>
+<li>all paragraphs and sub-paragraphs should begin in a new line, and there should not be any other line breaks</li>
+<li>Typos</li>
+<li>Weird signs which do not belong in the text (%, &amp;, $)</li>
+<li>Double space characters</li>
+<li>Headers and footers</li>
+<li>At the beginning of the text: all the stuff before the first headline</li>
+</ul></li>
+<li>Insert/change
+<ul>
+<li>At the beginning of the document:
+<ul>
+<li>Country</li>
+<li>Title of the Document</li>
+<li>Date of Acceptance</li>
+<li>Date of Promulgation</li>
+<li>Date of Enactment</li>
+</ul></li>
+<li>Example:
+<ul>
+<li>Germany</li>
+<li>Geschäftsordnung des Bundestages</li>
+<li>Date of Acceptance: 05.11.1969</li>
+<li>Date of Promulgation: 10.11.1969</li>
+<li>Date of Enactment: (if there is no Date of Enactment, do not write anything after the colon)</li>
+</ul></li>
+<li>Footnotes
+<ul>
+<li>Replace the numbers of the footnotes in the text by [[FN:NUMBER]], “NUMBER’ being a place holder for the number of the footnote</li>
+<li>Insert the text of the footnote at the end of the paragraph into a new line. This line starts with [[FT:NUMBER]] ‘NUMBER’ again being a place holder for the number of the footnote</li>
+<li>Example
+<ul>
+<li>text text1 text… –&gt; text text [[FN:1]] text …</li>
+<li>new line: [[FT:1]] text of the footnote</li>
+</ul></li>
+<li>Save the document like this</li>
+<li>In a next step, the footnotes have to be deleted</li>
+<li>save this document as well</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>Saving the new documents</strong></p>
+<ul>
+<li>Word documents
+<ul>
+<li>Names: Abbreviation of country-Year_Month_Date-cons-sauber-mfn/ofn
+<ul>
+<li>Months and days always have to be included (use “Date of Enactment”)</li>
+<li>“mfn” stands for “with footnotes”, “ofn” stands for “without footnotes”</li>
+<li>Example: ITA-1999_12_16-cons-sauber-ofn</li>
+</ul></li>
+<li>Save the documents to the following location: Geschäftsordnungen/Daten/Länderordner/Gesäuberte Versionen</li>
+<li>If this folder does not yet exist, create it yourself</li>
+</ul></li>
+</ul>
+<p><strong>Using Ultra Compare</strong></p>
+<ul>
+<li>Open UltraCompare</li>
+<li>Option for document comparison becomes visible</li>
+<li>Before loading the documents, do the following
+<ul>
+<li>Tab “Ansicht”: choose “Zeilenumbruch ein”; choose “Zeilenbezug-Modus”</li>
+<li>Tab “Modus”: choose “Textmodus”</li>
+<li>Symbol “Sitzungseigenschaften” (this symbol looks like a gearwheel)
+<ul>
+<li>Tab “Vergleichsoptionen”: choose “Beziehungslinien anzeigen” and choose “Wortumbruch”</li>
+<li>Tab “Ignorieren”: choose “leere Zeilen ignorieren” and choose “Weißraum ignorieren”</li>
+<li>Tab “Spaltenbereiche vergleichen/ignorieren”: in the field “Ignorieren”, type in “1-4”</li>
+<li>this leads to the first four characters being ignored, which is very helpful if the numbering changed. However, you now have to manually check if there are spelling mistakes or the like in the first four characters!</li>
+</ul></li>
+</ul></li>
+<li>Load the documents</li>
+<li>Start comparison through hitting the green arrow</li>
+<li>Comparison
+<ul>
+<li>Black lettering: no change</li>
+<li>changes
+<ul>
+<li>&lt;!: line deleted</li>
+<li>!&gt;: line added</li>
+<li>*: line changed</li>
+<li>Red: letter was changed</li>
+<li>Blue: letter remained the same</li>
+</ul></li>
+</ul></li>
+<li>Corrections can be done directly in UltraCompare, it works like a standard text editor</li>
+<li>To save the document, select the tab “Datei”
+<ul>
+<li>select “Speichern Unter”</li>
+<li>select correct place and name for saving</li>
+<li>hit “Speichern”</li>
+</ul></li>
+</ul>
+</div>
+<div id="manual-for-linking-standing-orders-versions" class="section level2">
+<h2><span class="header-section-number">8.2</span> Manual for Linking Standing Orders versions</h2>
+<p><strong>Before linking the changes in R</strong>, the following steps have to be taken</p>
+<ol style="list-style-type: decimal">
+<li>Save all cleaned versions as txt-files in “Geschäftsordnungen/Coding Changes/CountryFolder/TXT”</li>
+<li>Make sure the naming of the TXT-files complies to the following scheme:
+<ol style="list-style-type: lower-alpha">
+<li>Country abbreviation</li>
+<li>minus</li>
+<li>year (4 digits)</li>
+<li>underscore</li>
+<li>month (2 digits)</li>
+<li>underscore</li>
+<li>day (2 digits)</li>
+<li>if and only if there are two versions for the same date indicate them with:</li>
+<li>underscore</li>
+<li>letter (A, B, C, … for the first, second, … version on that date, make sure to use CAPITAL Letters)</li>
+<li>Examples: “SWE-2002_09_23.txt”, “SWE-2003_01_01_A.txt”, “SWE-2003_01_01_B.txt”, …</li>
+</ol></li>
+<li>Put #§# (hash paragraph hash space) before all irrelevant lines (e.g. headlines, name of standing orders, date of going into force)</li>
+</ol>
+<p><strong>The intuition behind linking the changes</strong> is as follows:</p>
+<ul>
+<li>The R-function recognizes automatically when two sub-paragraphs are absolutely identical - if this is the case, they are automatically coded as 100 (% identical)</li>
+<li>All other sub-paragraphs are presented by the R-function for manual linking (this is even the case if there is just a space too much in either one of the sub-paragraphs)</li>
+<li>Whether or not two sub-paragraphs belong together can be assessed best when comparing the versions one is linking in UltraCompare</li>
+</ul>
+<p><strong>Linking in R</strong></p>
+<ol style="list-style-type: decimal">
+<li>Open R</li>
+<li>Open Notepad</li>
+<li>Execute one of the following functions
+<ol style="list-style-type: lower-alpha">
+<li>Begin linking: “Coding Changes”</li>
+<li>Continue linking: “Recode Changes”</li>
+</ol></li>
+<li>Comply with the prompts of the function
+<ol style="list-style-type: lower-alpha">
+<li>Type in your name</li>
+<li>Select the original documents (Geschäftsordnungen/Coding Changes/CountryFolder/TXT/txt-file)</li>
+<li>Press enter</li>
+</ol></li>
+<li>Link non-identical sub-paragraphs (absolutely identical ones are linked automatically)
+<ul>
+<li>0: deletion/insertion of a sub-paragraph</li>
+<li>1: change of a sub-paragraph</li>
+<li>100: sub-paragraph is 100% identical</li>
+<li>-99: line is irrelevant (this option should have become unnecessary through #§# )</li>
+<li>-7: show next match</li>
+<li>321: correct line number can be inserted directly (useful if the proposed lines do not include the correct line)</li>
+<li>666: loop starts again</li>
+<li>987: not sure how sub-paragraph should be coded</li>
+<li>951: end coding –&gt; every subsequent sub-paragraph will be coded with 987 (if you choose to use this option, write down the last “real” 987 to allow you to continue coding at the right point the next time)</li>
+</ul></li>
+</ol>
+<p><strong>FAQ</strong></p>
+<p><strong>Linked as 100% identical (i.e. 100)</strong></p>
+<ul>
+<li>When original document says “in the article number 2” and the new version says “in the second article” (and vice versa)</li>
+<li>When original document says “The commissions are: (and then a list of commissions)”, and the new version says “The commissions are the following: (and then a list of commissions)”</li>
+<li>When original document says “The Parliament”, and the new version says “The National Parliament”, as long as it is clear they refer the same institution</li>
+<li>When the difference between original and new version is:
+<ul>
+<li>A comma</li>
+<li>A space in the middle or end of the sentence</li>
+<li>A capital letter</li>
+</ul></li>
+<li>When the same article refers to a paragraph that has a different number (“according to article 1” in the original, and “according to the article 2” in the new version), but the content of them is the same</li>
+</ul>
+<p><strong>Linked as change (i.e. 1)</strong></p>
+<ul>
+<li>When the same article refers to a paragraph that has a different number (“according to article 1” in the original, and “according to the article 2” in the new version), but the content of these is not the same</li>
+<li>When the same article refers to the same paragraph that has the same number (“according to article 1” in the original, and “according to article 1” in the new version), but the content of these (article 1) is not the same</li>
+<li>When the article has changed</li>
+<li>When part of the original article was deleted (original reads “There are 15 deputies in each commission as minimum, and they cannot exceed 30”, and the new version reads “There are 15 deputies in each commission as minimum”)</li>
+<li>When the original document says “according to the President” and the new document says “according to the President of the Parliament” when the first one could also refer the President of a special commission</li>
+</ul>
+<p><strong>ATTENTION: If in doubt, ALWAYS ask us for help! All of our analyses are based on these linked files!</strong></p>
+</div>
+<div id="coding-scheme-for-corpus-coding" class="section level2">
+<h2><span class="header-section-number">8.3</span> Coding Scheme for Corpus Coding</h2>
 <div id="basic-intuition" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> Basic Intuition:</h3>
+<h3><span class="header-section-number">8.3.1</span> Basic Intuition:</h3>
 <p>Each and every code is exclusive, meaning that one sub-paragraph needs to have one code but one code only. For some codes there are notes on how to decide between multiple codes which may seem appropriate. Sometimes even the coding rules and additional notes will not help to decide between codes. In this case please let us know. Every decision accompanied by doubt should be documented.</p>
 </div>
 <div id="further-rules-of-the-game" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> Further rules of the game:</h3>
+<h3><span class="header-section-number">8.3.2</span> Further rules of the game:</h3>
 <ul>
 <li><p>Often sub-paragraphs can be coded differently, depending on whether or not one takes into consideration the overall context of the rule or the more specific regulation. If in doubt, code based on the overall context. Example: §14 GOBT: president grants vacation time → coded as rights and obligations of individual members of parliament if one takes into account the general context (652) and not as responsibility of the president (6212).</p></li>
 <li><p>Rules which concern the interaction of two actors are attributed to the actor which takes the active part if he has discretion regarding this action. Example: §62 (2) GOBT: The plenary can request report of committee → coded as recall through the plenary (124) and not as report of committee to the plenary (134).</p></li>
@@ -296,7 +564,7 @@ res$alignment_df</code></pre>
 </ul>
 </div>
 <div id="scheme" class="section level3">
-<h3><span class="header-section-number">7.1.3</span> Scheme</h3>
+<h3><span class="header-section-number">8.3.3</span> Scheme</h3>
 <p><strong>(1) Law Making</strong></p>
 <p> </p>
 <p><em>Note: SPs that refer to both the plenary sessions and committees are coded as 12x; SPs dealing with both law-making and special decision procedures are coded as 1xx.</em></p>

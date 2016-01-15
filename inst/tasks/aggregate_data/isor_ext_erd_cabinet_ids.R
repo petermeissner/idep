@@ -33,12 +33,21 @@ isor$erd_cab_id <- NA
 
 for ( i in seq_along(isor$t_id) ) {
   reform_country <- substring(isor$ctr[i], 1, 3)
-  erd_cab_id_1   <- erd$cab_id[erd$ctr == reform_country & isor$t_date[i]    >= erd$cab_in & na_to_true(isor$t_date[i]    <= erd$cab_out) ]
-  erd_cab_id_2   <- erd$cab_id[erd$ctr == reform_country & isor$t_daccept[i] >= erd$cab_in & na_to_true(isor$t_daccept[i] <= erd$cab_out) ]
-  erd_cab_id_3   <- erd$cab_id[erd$ctr == reform_country & isor$t_dpromul[i] >= erd$cab_in & na_to_true(isor$t_dpromul[i] <= erd$cab_out) ]
-  erd_cab_id_4   <- erd$cab_id[erd$ctr == reform_country & isor$t_denact[i]  >= erd$cab_in & na_to_true(isor$t_denact[i]  <= erd$cab_out) ]
-  erd_cab_id     <- sort(c(erd_cab_id_1, erd_cab_id_2, erd_cab_id_3, erd_cab_id_4))[1]
-  isor$erd_cab_id[i] <- ifelse(length(erd_cab_id)==0, NA, erd_cab_id)
+  
+  erd_cab_id_1   <- 
+    erd$cab_id[erd$ctr==reform_country & isor$t_date[i] >= erd$cab_in & na_to_true(isor$t_date[i]    <= erd$cab_out) ]
+  erd_cab_id_2   <- 
+    erd$cab_id[erd$ctr==reform_country & isor$t_daccept[i] >= erd$cab_in & na_to_true(isor$t_daccept[i] <= erd$cab_out) ]
+  erd_cab_id_3   <- 
+    erd$cab_id[erd$ctr==reform_country & isor$t_dpromul[i] >= erd$cab_in & na_to_true(isor$t_dpromul[i] <= erd$cab_out) ]
+  erd_cab_id_4   <- 
+    erd$cab_id[erd$ctr==reform_country & isor$t_denact[i]  >= erd$cab_in & na_to_true(isor$t_denact[i]  <= erd$cab_out) ]
+  
+  erd_cab_id     <- 
+    sort(c(erd_cab_id_1, erd_cab_id_2, erd_cab_id_3, erd_cab_id_4))[1]
+  
+  isor$erd_cab_id[i] <- 
+    ifelse(length(erd_cab_id)==0, NA, erd_cab_id)
 }
 
 #### false matches 

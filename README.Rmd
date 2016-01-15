@@ -1,4 +1,11 @@
-This is work. Its progressing, so its work in progress. Its not supposed to look nice. Its work. Its supposed to work.   
+---
+title: "README"
+author: "Peter Meissner"
+date: "14. Januar 2016"
+output: html_document
+---
+
+   
 
 ## Order of scripts
 

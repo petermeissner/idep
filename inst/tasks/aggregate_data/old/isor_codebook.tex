@@ -112,7 +112,7 @@
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2015-12-02 13:37:35}
+  \date{2015-12-11 13:48:39}
 
 
 % Redefines (sub)paragraphs to behave more like sections
@@ -168,8 +168,6 @@ countries and consists of 741 variables.
 ## 10 AUT_1996-10-15.0         20639    5942      23      32           5332               1
 ## ..              ...           ...     ...     ...     ...            ...             ...
 \end{verbatim}
-
-\textbf{ADDING FURTHER DESCRIPTION OF REFORM AND TEXT DATA}
 
 \section{Shortcuts}\label{shortcuts}
 
@@ -286,7 +284,7 @@ and version counter.
 
 \textbf{t\_date} (texts)
 
-Date of the SO version - equals to (according to availibility)
+Date of the SO version - equals to (according to availability)
 enactment, promulgation, acceptance.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~~~~Date}\\
@@ -322,7 +320,7 @@ higher if more than one version got enacted on the same date.
 
 \textbf{t\_country} (texts)
 
-Country shorthand (as used internal). In case of Swiss two seperate
+Country shorthand (as used internal). In case of Swiss two separate
 shorthands exist because there SO are spread among two bodies.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~character}\\
@@ -392,7 +390,7 @@ Date on which the SO were accepted, voted upon, decided upon, \ldots{} .
 
 \textbf{t\_dpromul} (texts)
 
-Date on which the SO were promulgated - made puplic, printed, published,
+Date on which the SO were promulgated - made public, printed, published,
 \ldots{} .
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~~~~Date}\\
@@ -683,7 +681,7 @@ and so forth.
 
 \textbf{lang} (own research / EU documents)
 
-Language in which SO are written down.
+Language in which SO are written.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~character}\\
 \textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~10}\\
@@ -701,11 +699,11 @@ Language in which SO are written down.
 \textbf{wdns} (own research / EU documents)
 
 The wordiness of a language. Different languages have different
-wordiness meaning that they need different amounts of words to express
+wordiness, meaning that they need different amounts of words to express
 the same concept, sentence, regulation, \ldots{} . The variable gives
 the factor of wordiness compared to English based on the translations of
-EU documents. These are availible in English but also in all other EU
-languages. LAnguages that need more words than English have values above
+EU documents. These are available in English but also in all other EU
+languages. Languages that need more words than English have values above
 1, languages that need less have values below 1.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
@@ -763,7 +761,7 @@ English equivalent word counts. See \texttt{wds\_clean\_rel} and
 
 \textbf{lns\_mdf} (textlines)
 
-Number of lines that were mofified - i.e.~changed but not deleted or
+Number of lines that were modified - i.e.~changed but not deleted or
 inserted.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
@@ -1630,7 +1628,7 @@ Number of lines with corpus code 141
 
 14 Post-parliamentary stage
 
-141 veto right of government actors and head of state ( any case when
+141 veto right of government actors and head of state (any case when
 government actors can oppose themselves to the decisions of parliament)
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
@@ -3302,7 +3300,7 @@ committees}\label{raw-corpus-codes---6-committees}
 
 Number of lines with corpus code 66
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 66 opposition
 
@@ -3323,7 +3321,7 @@ Number of lines with corpus code 66
 
 Number of lines with corpus code 67
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 67 special bodies for emergency situations
 
@@ -3344,7 +3342,7 @@ Number of lines with corpus code 67
 
 Number of lines with corpus code 68
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 68 parliamentary administration
 
@@ -3365,7 +3363,7 @@ Number of lines with corpus code 68
 
 Number of lines with corpus code 611
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 61 plenary
 
@@ -3389,7 +3387,7 @@ which are not specifically regulated under 114)
 
 Number of lines with corpus code 612
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 61 plenary
 
@@ -3412,7 +3410,7 @@ Number of lines with corpus code 612
 
 Number of lines with corpus code 613
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 61 plenary
 
@@ -3435,7 +3433,7 @@ Number of lines with corpus code 613
 
 Number of lines with corpus code 631
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3459,13 +3457,13 @@ Number of lines with corpus code 631
 
 Number of lines with corpus code 632
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
 
-632 membership and committee jurisdiction (area of influence-control .g.
-finance, economy, agriculture\ldots{})
+632 membership and committee jurisdiction (area of influence-control
+e.g.~finance, economy, agriculture\ldots{})
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
 \textbf{\texttt{unique\ \ \ :}} \texttt{~~~~~~~~~~56}\\
@@ -3484,7 +3482,7 @@ finance, economy, agriculture\ldots{})
 
 Number of lines with corpus code 633
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3509,7 +3507,7 @@ sub-committees, staff)
 
 Number of lines with corpus code 634
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3534,7 +3532,7 @@ committees (if not coded as law-making (13))
 
 Number of lines with corpus code 636
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3559,7 +3557,7 @@ inquiry (637))
 
 Number of lines with corpus code 637
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3583,7 +3581,7 @@ Number of lines with corpus code 637
 
 Number of lines with corpus code 638
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3607,7 +3605,7 @@ Number of lines with corpus code 638
 
 Number of lines with corpus code 639
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees (if not coded as more specific category (e.g.~13; 24; 54;
 55; 72))
@@ -3632,7 +3630,7 @@ coding manual (e.g.~oversight committees in Switzerland)
 
 Number of lines with corpus code 641
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 64 parliamentary party groups
 
@@ -3655,7 +3653,7 @@ Number of lines with corpus code 641
 
 Number of lines with corpus code 642
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 64 parliamentary party groups
 
@@ -3679,7 +3677,7 @@ more specifically as e.g.~112; 51; 52; 53)
 
 Number of lines with corpus code 643
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 64 parliamentary party groups
 
@@ -3702,9 +3700,9 @@ Number of lines with corpus code 643
 
 Number of lines with corpus code 651
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
-65 individual members of parlaiment
+65 individual members of parliament
 
 651 election, entry into office, resignation, incompatibilities, legal
 status, immunity, indemnity
@@ -3726,9 +3724,9 @@ status, immunity, indemnity
 
 Number of lines with corpus code 652
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
-65 individual members of parlaiment
+65 individual members of parliament
 
 652 rights and obligations of individual members of parliament (if not
 coded more specifically as e.g.~112; 51; 52; 53)
@@ -3750,9 +3748,9 @@ coded more specifically as e.g.~112; 51; 52; 53)
 
 Number of lines with corpus code 653
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
-65 individual members of parlaiment
+65 individual members of parliament
 
 653 salary, financial and staff resources
 
@@ -3773,7 +3771,7 @@ Number of lines with corpus code 653
 
 Number of lines with corpus code 6211
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 62 parliamentary presiding bodies
 
@@ -3798,7 +3796,7 @@ Number of lines with corpus code 6211
 
 Number of lines with corpus code 6212
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 62 parliamentary presiding bodies
 
@@ -3824,7 +3822,7 @@ Number of lines with corpus code 6212
 
 Number of lines with corpus code 6221
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 62 parliamentary presiding bodies
 
@@ -3849,7 +3847,7 @@ Number of lines with corpus code 6221
 
 Number of lines with corpus code 6222
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 62 parliamentary presiding bodies
 
@@ -3875,11 +3873,11 @@ Number of lines with corpus code 6222
 
 Number of lines with corpus code 6351
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees
 
-relations to other bodies
+635 relations to other bodies
 
 6351 relation to plenary (if not coded as 124; 134; 34)
 
@@ -3900,11 +3898,11 @@ relations to other bodies
 
 Number of lines with corpus code 6352
 
-6 Internal Organization of Parliament
+6 Internal Organization of parliament
 
 63 committees
 
-relations to other bodies
+635 relations to other bodies
 
 6352 relation to other committees
 
@@ -4684,7 +4682,7 @@ codes: 111, 112, 113, 114, 121, 122, 123, 124, 125, 131, 132, 133, 134,
 
 \textbf{lns\_corp\_top\_2} (textlines)
 
-Number of lines with aggregated corpus code 2 - special decission rules
+Number of lines with aggregated corpus code 2 - special decision rules
 
 codes: 21, 22, 23, 241, 242, 243, 244, 26, 27, 28, 29, 67, 71, 72, 73
 
@@ -4820,7 +4818,7 @@ codes: 111, 112, 113, 114, 121, 122, 123, 124, 125, 131, 132, 133, 134,
 
 \textbf{wds\_corp\_top\_2} (textlines)
 
-Number of words with aggregated corpus code 2 - special decission rules
+Number of words with aggregated corpus code 2 - special decision rules
 
 codes: 21, 22, 23, 241, 242, 243, 244, 26, 27, 28, 29, 67, 71, 72, 73
 
@@ -13966,7 +13964,7 @@ extensions}\label{external-variables-and-extensions}
 
 \textbf{tsb\_agc} (Tsebelis )
 
-Tsebelis original 2002, page 182 governenment control of the legislative
+Tsebelis original 2002, page 182 government control of the legislative
 agenda measure. See ext\_tsb\_agc1 for further description.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
@@ -13986,7 +13984,7 @@ agenda measure. See ext\_tsb\_agc1 for further description.
 
 This variable is based on \emph{George Tsebelis (2002): Veto Players:
 How Political Institutions Work, Princeton} table 7.3 at page 182 and
-measures governenment control of the legislative agenda.
+measures government control of the legislative agenda.
 
 The cross section values found in the table were assigned to those SO
 versions that were enacted in 1985 (when the agenda control measure was
@@ -13998,9 +13996,9 @@ the lengths of the 1985 versions.
 
 Because it is unclear which numeric relation the agenda control measure
 and the change of pro majority / pro minority words might hold (one
-would need a second time point to determine that) the varaible exists in
-three variations: ext\_tsb\_agc1, ext\_tsb\_agc2 and ext\_tsb\_agc4. The
-numbers indicate by which factor the change in majority/minority
+would need a second time point to determine that), the variable exists
+in three variations: ext\_tsb\_agc1, ext\_tsb\_agc2 and ext\_tsb\_agc4.
+The numbers indicate by which factor the change in majority/minority
 friendly words was multiplied to give it an higher impact (1, 2, 4) thus
 increasing the variance of the agenda control extrapolation.
 
@@ -14054,7 +14052,7 @@ See ext\_tsb\_agc1.
 \textbf{pro\_minmaj\_qual} (textlines, linelinkage, manual coding)
 
 Whether or not the reform in general was pro majority (1), pro minority
-(-1) or neither (0), the decission was made by comparing the number of
+(-1) or neither (0), the decision was made by comparing the number of
 sub-paragraphs/lines changed in each direction. If there was no change
 in favor of majority but changes in favor of minority it was considered
 minority friendly and vice versa. If changes in both directions took
@@ -14270,7 +14268,7 @@ ratio\_pro & ratio\_all\tabularnewline
 \textbf{pro\_minmaj\_auto1} (textlines, linelinkage, manual coding)
 
 Whether or not the reform in general was pro majority (1), pro minority
-(-1) or neither (0), the decission was made autoamitcally by comparing
+(-1) or neither (0), the decision was made autoamitcally by comparing
 the number of words changed in each direction.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\
@@ -14289,7 +14287,7 @@ the number of words changed in each direction.
 \textbf{pro\_minmaj\_auto2} (textlines, linelinkage, manual coding)
 
 Whether or not the reform in general was pro majority (1), pro minority
-(-1) or neither (0), the decission was made autoamitcally by comparing
+(-1) or neither (0), the decision was made autoamitcally by comparing
 the number of lines changed in each direction.
 
 \textbf{\texttt{class\ \ \ \ :}} \texttt{~~~~~numeric}\\

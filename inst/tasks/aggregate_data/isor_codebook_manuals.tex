@@ -33,7 +33,7 @@
 \fi
 \hypersetup{breaklinks=true,
             bookmarks=true,
-            pdfauthor={pm/bm},
+            pdfauthor={pm/bm/dh/jfk},
             pdftitle={ISOR Coding Procedures},
             colorlinks=true,
             citecolor=blue,
@@ -107,12 +107,12 @@
   \title{ISOR Coding Procedures}
   \pretitle{\vspace{\droptitle}\centering\huge}
   \posttitle{\par}
-  \author{pm/bm}
+  \author{pm/bm/dh/jfk}
   \preauthor{\centering\large\emph}
   \postauthor{\par}
   \predate{\centering\large\emph}
   \postdate{\par}
-  \date{2015-12-10 15:56:48}
+  \date{2016-01-11 10:36:52}
 
 \usepackage{graphicx}
 
@@ -143,8 +143,8 @@
 
 \section{Introduction}\label{introduction}
 
-To collect data on reforms to Standing Orders many steps had to be taken
-and many hands had to help. The basic idea was that two proceeding
+To collect data on reforms of Standing Orders, many steps had to be
+taken and many hands had to help. The basic idea was that two proceeding
 versions of the same text can be compared by putting them side by side
 and going through each (sub)-paragraph.
 
@@ -168,7 +168,7 @@ life\tabularnewline
 \end{longtable}
 
 Some parts might have changed, others might not have changed but were
-put at a different locations. Those parts that have been changed might
+put at different locations. Those parts that have been changed might
 have been deleted, modified or inserted.
 
 \begin{longtable}[c]{@{}rlrlrr@{}}
@@ -191,21 +191,21 @@ sig \ldots{} & 2 & mod\tabularnewline
 \bottomrule
 \end{longtable}
 
-To gather changes in that manner the first task is to \textbf{acquire
+To gather changes in that manner, the first task is to \textbf{acquire
 all the documents} that describe the status or evolution of a particular
 set of Standing Orders. That step incorporated finding contact persons
 within the parliaments and checking for completeness and consistency of
 the provided `historical' documents.
 
-While intuitively one might think about Standing Orders as fully written
-out, explicit documents most of the time this is only but a little part
-of the story. While so called \textbf{consolidated versions} exist, most
-of the time one needs a consolidated version and all the amendments
-(short, technical instructions of how to transform Standing Orders in
-place to a new set of Standing Orders) made to that version over time to
-know which set of rules was in place at a certain point in time. To
-apply the basic idea all amendments had to be transformed into
-consolidated versions.
+While intuitively one might think about Standing Orders as explicit
+documents that are fully written out, most of the time this is only but
+a small part of the story. While so called \textbf{consolidated
+versions} exist, most of the time one needs a consolidated version and
+all the amendments (short, technical instructions of how to transform
+Standing Orders in place to a new set of Standing Orders) made to that
+version over time to know which set of rules was in place at a certain
+point in time. To apply the basic idea, all amendments had to be
+transformed into consolidated versions.
 
 Documents were provided in differing form and in differing shades of
 quality. There might be sheets of paper, Books, Word-documents, machine
@@ -213,17 +213,17 @@ readable PDFs or scans. All those various types were first transformed
 to Word-documents and later on freed of transformation errors and
 artifacts in a \textbf{cleaning} step.
 
-After cleaning and consolidation \textbf{documents were restructured} in
-such a way that each sub-paragraph corresponded to one line in a plain
-text file. Furthermore, lines without relevant content such as headlines
-or notes were marked by \texttt{\#§\#}. The restructuring made it easy
-for the documents to be read in by the coding programs used in the
-following steps.
+After cleaning and consolidation, \textbf{documents were restructured}
+in such a way that each sub-paragraph corresponded to one line in a
+plain text file. Furthermore, lines without relevant content such as
+headlines or notes were marked by \texttt{\#§\#}. The restructuring made
+it easy for the documents to be read in by the coding programs used in
+the following steps.
 
 For comparing Standing Orders effectively we made use of two types of
-programs: First there are programs specialized in presenting the
+programs: First, there are programs specialized in presenting the
 comparison of documents to humans. Second, there are programs that are
-less accessible by humans but more standardized and therefore better
+less accessible by humans, but more standardized and therefore better
 suited to serve as helpers for computer programs. While we found good
 companions in the first category -- e.g.~UltraCompare, the Notepad++
 Compare Plugin, DiffDoc, WinMerge, \ldots{} see:
@@ -233,35 +233,35 @@ second category -- i.e.~indicating line modifications and measuring
 differences.
 
 Therefore we wrote our \textbf{own software} that helped with comparing
-texts, assigning change types and measuring differences. Three programs
-were written: The frist for comparing documents, \textbf{gathering
+texts, assigning change types, and measuring differences. Three programs
+were written: The first for comparing documents, \textbf{gathering
 links} between sub-paragraph from one version to the other, assigning
-\textbf{change types} an measuring change; the second for coding changes
-between documents as \textbf{minority or majority friendly}; the third
-for coding sub-paragraphs into \textbf{categories capturing the type of
-regulation}.
+\textbf{change types}, and measuring change; the second for coding
+changes between documents as \textbf{minority or majority friendly}; the
+third for coding sub-paragraphs into \textbf{categories capturing the
+type of regulation}.
 
-The data gathered with help of the programs than was merged into one
-\textbf{database} with three tables - meta information on the Standing
-Orders (\emph{texts}), the text of the Standing Orders and accompanied
-data (\emph{textlines}) and how sub-paragraphs from one version are
-linked those of another version (\emph{textlines}). Thereafter the
-information were \textbf{checked for errors}. After elimanting all
-errors the raw information from the database was then
+The data gathered with the help of these programs was then merged into
+one \textbf{database} with three tables: Meta information on the
+Standing Orders (\emph{texts}), the text of the Standing Orders and
+accompanied data (\emph{textlines}) and how sub-paragraphs from one
+version are linked those of another version (\emph{textlines}).
+Thereafter, the information were \textbf{checked for errors}. After
+elimanting all errors, the raw information from the database was then
 \textbf{aggregated} to various formats.
 
 \newpage
 
 \section{Document Transformation}\label{document-transformation}
 
-The original Standing Orders documents gathered often were books or came
-as scans in PDF format. To be able to further work with them the text
-had to be brought into computer readable format. This first digital
-format of the Standing Orders text was Word. Although, the texts later
-on were further broken down into plain text, Word is a good intermediate
-format since everyone is familiar with it and it is able to emulate the
-layout of the original document which eases comparisons between original
-and digital version.
+The original Standing Order documents that we gathered often were books
+or came as scans in PDF format. To be able to further work with them,
+the text had to be brought into computer readable format. This first
+digital format of the Standing Orders text was Word. Although, the texts
+later on were further broken down into plain text, Word is a good
+intermediate format since everyone is familiar with it and it is able to
+emulate the layout of the original document which eases comparisons
+between the original and the digital version.
 
 \begin{center}
 \includegraphics[height=0.7\textheight]{fig/fig1.png}
@@ -274,7 +274,7 @@ and digital version.
 \section{Document Consolidation}\label{document-consolidation}
 
 In order to construct a data base consisting of all parliamentary
-standing orders that were in force at a specific point in time
+standing orders that were in force at a specific point in time,
 consolidated versions of the standing orders were needed. Consolidated
 versions are complete versions with all changes that had occurred at a
 specific date included in the body of the text.
@@ -303,28 +303,28 @@ parliamentary standing orders in a standardized format while maintaining
 the original structure of paragraphs. First of all, the oldest
 consolidated version of Standing Orders was completely read through and
 corrected manually. Typos, unnecessary line breaks, signs not belonging
-to the text and everything going beyond the actual text of the standing
-orders was deleted.
+to the text and everything going beyond the actual text of the Standing
+Orders was deleted.
 
 Next, a header containing information about the version such as the
 dates of acceptance, promulgation and enactment of the version of the
-standing orders was inserted. The version cleaned in this manner served
-as reference version. In the following step the subsequent consolidated
+standing orders was inserted. The so cleaned version served as our
+reference version. In the following step, the subsequent consolidated
 version was compared to the reference version using the software DiffDoc
-(in a later state of the cleaning process the software UltraCompare was
+(in a later stage of the cleaning process, the software UltraCompare was
 used instead). The software made it possible to easily identify
 identical parts of the two versions that only contained few mistakes to
 be corrected as well as parts that had been changed. The latter were
 read completely and handled like the first version. After the cleaning
-of the second version it served as new reference version for the
-subsequent consolidated version of the standing orders. Alongside
+of the second version, it served as the new reference version for the
+subsequent consolidated version of the Standing Orders. Alongside
 cleaning the text, it was made sure that each sub-paragraph, headline or
 other structuring element of the standing orders was given a single
 line. Each element was separated by a line break; no element was allowed
 to spread more than one line. The steps were repeated for all
-consolidated versions. Throughout the procedure the PDF-versions of the
-standing orders were considered in case of uncertainty regarding
-cleaning decisions. In a last step the lines (representing text
+consolidated versions. Throughout the procedure, the PDF-versions of the
+Standing Orders were considered in case of uncertainty regarding
+cleaning decisions. In a last step, the lines (representing text
 elements) that were of non-relevant content (e.g.~headlines) were marked
 by adding a special string at the start of the line (`\#§\#') to allow
 the computer to automatically dismiss these lines later on.
@@ -347,33 +347,34 @@ the computer to automatically dismiss these lines later on.
 
 \subsection{Description}\label{description}
 
-Having generated complete, cleaned versions of the standing orders, the
+Having generated complete, cleaned versions of the Standing Orders, the
 next step was to further prepare the data so that the content of the
-standing orders could be coded in an efficient manner and to get
-information about what had or had not changed from one version to the
-next. For this purpose changes in the standing orders between versions
-were linked. This means that for each line of text (each relevant
-sub-paragraph) it was recorded whether or not the line was deleted in
-the version to come, got inserted in the current version, got changed or
-simply stayed the same. The coding was done semi-automatically by first
-letting an algorithm developed by the project and implemented in R
-handle all non-relevant lines as well as those that were not changed.
-Thereafter human coders went through all remaining text lines of two
-subsequent versions to add there linkage information to the data-set.
-For this another program implemented in R helped the coders by making
-sure that: all lines were coded; the information was recorded correct
-and alongside the text that was linked, coders were given suggestions
-for possible matching lines similar to that under consideration. As the
-linked files depicted the basis for later analyzes and coding, it was
-crucial to differentiate between minor reformulations of paragraphs
-(e.g.~mere orthographic reforms) and actual changes. In case of doubt
-the supervisors were consulted.
+Standing Orders could be coded in an efficient manner and to get
+information about what had or had not been changed from one version to
+the next. For this purpose, changes in the standing orders between
+versions were linked. This means that for each line of text (each
+relevant sub-paragraph) it was recorded whether or not the line was
+deleted in the subsequent version, got inserted in the current version,
+got changed or simply stayed the same. The coding was done
+semi-automatically by first letting an algorithm which was developed by
+the project team and implemented in R handle all non-relevant lines as
+well as those that were not changed. Thereafter, human coders went
+through all remaining text lines of two subsequent versions to add
+linkage information to the data-set. For this purpose, another program
+implemented in R helped the coders by making sure that: all lines were
+coded; the information was recorded correctly and alongside the text
+that was linked, coders were given suggestions for possible matching
+lines similar to that under consideration. As the linked files
+constituted the basis for later analyzes and coding, it was crucial to
+differentiate between minor reformulations of paragraphs (e.g.~mere
+orthographic reforms) and actual changes. In case of doubt the
+supervisors were consulted.
 
 The process of gathering link information between sub-paragraphs of
-subsequent standing orders versions allows for distinguishing between
+subsequent Standing Orders versions allows for distinguishing between
 types of change (deletion, insertion, modification and no-change),
 measuring its extent more precisely and to later transfer line codes
-from one version of the standing orders to another so that all
+from one version of the Standing Orders to another, so that all
 sub-paragraphs (the selected coding entity) that were identical in two
 versions got automatically the same code.
 
@@ -383,10 +384,10 @@ same stuff over and over again in the same and predictable way -
 e.g.~finding identical lines, computing measures of similarity, saving
 data always in the very same format -- while humans on the other hand
 have a much better understanding of the content of text, might
-understand intentions of the text authors and are more creative and
-flexible -- e.g.~finding line pairs that might be not very similar based
-on the sequence of characters or the distribution of words but in regard
-to the things that are regulated within.
+understand intentions of the authors and are more creative and flexible
+-- e.g.~finding line pairs that might be not very similar based on the
+sequence of characters or the distribution of words, but in regard to
+the things that are regulated within them.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -402,36 +403,11 @@ to the things that are regulated within.
 
 \CommentTok{# distance matrix}
 \NormalTok{res$distance_matrix}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-##      [,1] [,2] [,3] [,4] [,5] [,6]
-## [1,]    2   15   10   11   15    7
-## [2,]   15    0   13   14   18   12
-## [3,]   16   15   14   13   19   13
-## [4,]   15   18   15   14    2   14
-## [5,]    7   12    9   10   14    4
-## [6,]    8    9    6    7   11    5
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \CommentTok{# resulting alignment and change type}
 \NormalTok{res$alignment_df}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-##   lnr1 lnr2 distance  type
-## 1    1    1        2   mod
-## 2    2    2        0 equal
-## 3    3    4       13   mod
-## 7   NA    3        5   ins
-## 4    4    5        2   mod
-## 5    5    6        4   mod
-## 6    6   NA        1   del
-\end{verbatim}
 
 \emph{Code Snippet 1: Text comparison with own software written in R}
 
@@ -445,34 +421,34 @@ of two version of Standing Orders}
 \subsection{Training and Quality
 Control}\label{training-and-quality-control}
 
-While software was used to help finding matches between versions was
+While software was used to help, finding matches between versions was
 non-trivial. Coders were recruited on the basis that either they were
 native speakers or had a very high language proficiency. Good knowledge
-about the government system of the countries was a further requirement.
-In addition, coders had to undergo training:
+of the government system of the countries was a further requirement. In
+addition, coders had to undergo training:
 
 \begin{itemize}
 \tightlist
 \item
   First, coders were informed about the purpose of their task, i.e.:
   Gathering information about changed and unchanged parts of Standing
-  Orders to later on build determine the amount of change, as well as
-  easing Corpus Coding and Minority/Majority-Coding later on.
+  Orders to later on determine the amount of change, as well as easing
+  Corpus Coding and Minority/Majority-Coding.
 \item
   Next, coders were asked to take some time to read the first and the
-  last version available to get a feeling for the content, it's
+  last version available to get a feeling for the content, its
   structure, and the amount of change that happend between first and
   last version.
 \item
   Than coders were introduced into DiffDoc and later on UltraCompare to
   view the whole documents side by side if needed.
 \item
-  Than coders got supervised training on the coding software for one to
+  Than, coders got supervised training on the coding software for one to
   three reforms.
 \item
-  During most of the coding one of the research assistants was present
-  within the same room to answer question and asking questions was
-  explicitly encouraged.
+  During most of the coding, one of the research assistants was present
+  within the same room to answer questions. Throughout the project,
+  asking questions was explicitly encouraged.
 \end{itemize}
 
 \newpage
@@ -483,11 +459,11 @@ Coding}\label{minority-majority-change-coding}
 \subsection{Description}\label{description-1}
 
 After having identified which parts of the text were modified, moved
-around, deleted or inserted those changes could be coded. For this step
-the software drew on the information gathered before in the linkage
-stage to confront the coder only with changes instead of all the text.
-Coding decisions - pro majority or pro minority - were recorded and
-added to the database.
+around, deleted or inserted, those changes could be coded. For this
+step, the software drew on the information gathered before in the
+linkage stage to confront the coder only with changes instead of all the
+text. Coding decisions - pro majority or pro minority - were recorded
+and added to the database.
 
 \begin{center}
 \includegraphics[width=\textwidth]{fig/minmaj.png}
@@ -500,10 +476,10 @@ minority/majority proness of reform}
 Assurance}\label{training-and-quality-assurance}
 
 Coding the proness of changes to the parliamentary Standing Orders
-towards majority or minority is all but trivial. The original standing
-orders of national parliaments are usually only published in the
-language of the country. Thus, coders were recruited who were either
-native speakers or non-native speakers with very high language
+towards majority or minority is all but trivial. The original Standing
+Orders of national parliaments are usually only published in the
+respective national language. Thus, coders were recruited who were
+either native speakers or non-native speakers with very high language
 proficiency. Good knowledge about the government system of the countries
 was a further requirement. In addition, coders had to undergo an
 intensive training.
@@ -515,7 +491,7 @@ intensive training.
   and majority and how it differs from Government and other political
   bodies which are often closely connected but might not be the same --
   e.g.~Governments often are dependent on a parliamentary majority that
-  is supportive or at least tolerates Government but Government and
+  is supportive or at least tolerates Government, but Government and
   parliamentary majority are not the same thing with agendas and
   personal of their own.
 \item
@@ -524,25 +500,25 @@ intensive training.
   doubt to gather argumentations for why a coding might go in one
   direction or the other.
 \item
-  After having left the coder with this first reform. All coding
-  decissions were discussed.
+  After having left the coder with this first reform, all coding
+  decisions were discussed.
 \item
   This process usually did not have to be repeated but was done so, if
-  canonical solutions and individual coding decissions were to much
+  canonical solutions and individual coding decisions were to much
   apart.
 \item
-  After this formal training phase coders were asked to code all clear
-  neither-nor cases themselves while they should come up with
-  suggestions and reasoning for all non clear cases and changes that
-  might be either minority or majority friendly.
+  After this formal training phase, coders were asked to code all
+  unambiguous neither-nor cases themselves while they should come up
+  with suggestions and reasoning for all ambiguous cases and changes
+  that might be either minority or majority friendly.
 \item
-  For most of the time when a coder was working one of the two research
-  assistants was present in the room. Asking questions was strongly and
-  always encouraged.
+  For most of the time when a coder was working, one of the two research
+  assistants was present in the room. Asking questions was strongly
+  encouraged.
 \item
-  After the coder did a batch of coding all non-clear cases were
-  discussed by the coder and one of the research assistants and decided.
-  If need be the project leader entered the discussion as well.
+  After the coder did a batch of coding, all non-clear cases were
+  discussed by the coder and one of the research assistants. If
+  necessary, the project leader was consulted.
 \end{itemize}
 
 \newpage
@@ -551,22 +527,22 @@ intensive training.
 
 \subsection{Description}\label{description-2}
 
-Based on the linked versions of the standing orders the content could be
-coded. The intention of the so called corpus coding process was to
+Based on the linked versions of the standing orders, the content could
+be coded. The intention of the so called corpus coding process was to
 assign a single code expressing the content to every legal sub-paragraph
-of every version of the standing orders.
+of every version of the Standing Orders.
 
-The coding scheme comprises 80 different single codes belonging to ten
+The coding scheme comprises 80 unique single codes belonging to ten
 different categories (law-making, special decision procedures other than
 regular law-making, relationship to government, relationship to external
 offices/institutions apart from the government, generating publicity,
 internal organization of parliament, change and interpretation of the
-standing orders, general rules regarding formation and legislative
+Standing Orders, general rules regarding formation and legislative
 session/discontinuity, final provisions, miscellaneous (cannot be coded
 otherwise)).
 
-Apart from the codes the coding manual encompasses general rules for
-coding. As every sub-paragraph got only one code the coders had to
+Apart from the codes, the coding manual encompasses general rules for
+coding. As every sub-paragraph got only one code, the coders had to
 decide which code suites best even if several different codes could be
 assigned to a sub-paragraph. These decisions were based on a specific
 hierarchy of codes. Rules which concern the interaction of two actors
@@ -575,58 +551,64 @@ discretion regarding this action. Regular law-making was considered more
 important than other decision procedures if they were treated together
 in one sub-paragraph. A further general coding rule was to take the
 overall context into account instead of just looking at a specific
-regulation.
+regulations.
 
-Like the other coding processes corpus coding was done
+Like the other coding processes, corpus coding was done
 semi-automatically with a self-written program implemented in R. Human
-coders went through the oldest version of the standing orders and
+coders went through the oldest version of the Standing Orders and
 assigned the appropriate codes from the coding scheme to every text line
 to create one fully coded version. The next step was to transfer these
-codes to the other versions. As in the linking procedure text lines that
-have stayed exactly the same from one version to the following had been
-identified and linked, the R program automatically assigned the same
-codes to them. So the coders only had to go through the not coded text
-lines of the subsequent version of the standing orders (that is the
-passages that had been changed between two versions) and code them
-manually. Then, the new codes were transferred. The coders proceeded in
-this way until all versions of the standing orders were completely coded
-with regard to their content.
+codes to the other versions. As in the linking procedure, text lines
+that have stayed exactly the same from one version to the following had
+been identified and linked. The R program automatically assigned the
+same codes to these lines. Thus, the coders only had to go through the
+not coded text lines of the subsequent version of the Standing Orders
+(that is the passages that had been changed between two versions) and
+code them manually. Then, the new codes were transferred. The coders
+proceeded in this way until all versions of the Standing Orders were
+completely coded with regard to their content.
 
 \subsection{Training and Quality
 Assurance}\label{training-and-quality-assurance-1}
 
 The original standing orders of national parliaments are usually only
-published in the language of the country. Thus, coders were recruited
-who were either native speakers or non-native speakers with very high
-language proficiency. Good knowledge about the government system of the
-countries was a further requirement. As corpus coding was a very
-demanding task, all coders got intensive training.
+published in the respective national language. Thus, coders were
+recruited who were either native speakers or non-native speakers with
+very high language proficiency. Good knowledge about the government
+system of the countries was a further requirement. As corpus coding was
+a very demanding task, all coders got intensive training.
 
 \begin{itemize}
 \tightlist
 \item
-  First, the coders familiarized themselves with the coding manual, the
+  First, coders familiarized themselves with the coding manual, the
   different categories and coding rules.
 \item
   Next, the new coders practiced through joint coding with experienced
   coders.
 \item
-  After this, the coders coded the most recent version of the standing
-  orders and compared their results to a master version. Usually the
-  most recent versions of the standing orders are also issued in
+  After this, the coders coded the most recent version of the Standing
+  Orders and compared their results to a master version. Usually, the
+  most recent versions of the Standing Orders are also issued in
   English. These versions had been coded by those responsible for the
   project and served as master versions.
 \item
-  On the condition that coders mastered this task they could start
+  On the condition that coders mastered this task, they could start
   coding on their own.
 \item
-  Throughout the coding process ambiguities and problems were solved in
-  joint discussion with the project coordinators.
+  Throughout the coding process, ambiguities and problems were solved in
+  joint discussions with the project coordinators.
 \item
-  If it was necessary, supplementary documents such as constitutions and
+  If necessary, supplementary documents such as constitutions and
   information from the webpages of the national parliaments were
-  considered to check coding decisions.
+  considered to validate coding decisions.
 \end{itemize}
+
+\begin{center}
+\includegraphics[width=\textwidth]{fig/corpus.png}
+\end{center}
+
+\emph{Figure 7: R Software with GUI interface for coding corpus codes}
 
 \newpage
 
@@ -641,20 +623,20 @@ demanding task, all coders got intensive training.
 \item
   After Julia assigned you a country, please write your name in the top
   part of the file ``Säuberung\_Geschäftsordnungen.xlsx''
-  (Z:/Geschäftsordnungen/Übersichtsdateien/Säuberung\_Geschäftsordnungen.xlsx)
+  (Z:/Geschäftsordnungen/Übersichtsdateien/Säuberung\_Geschäftsordnungen.xlsx).
 \item
   Complete all dates (Date of Acceptance, Date of Promulgation, Date of
   Enactment) in this file.
 \item
   As soon as a version is corrected, please highlight this in the file
-  (highlight line in green, put counter from ``1''" to ``0'')
+  (highlight line in green, put counter from ``1''" to ``0'').
 \item
   To make sure that the original consolidated versions remain unchanged,
   please copy (DO NOT DRAG AND DROP, BUT ACTUALLY COPY THEM) all
   consolidated versions to the folder ``gesäuberte Versionen''
-  (Z:/Geschäftsordnungen/Daten/CountryName/Gesäuberte Versionen)
+  (Z:/Geschäftsordnungen/Daten/CountryName/Gesäuberte Versionen).
 \item
-  If this folder does not yet exist, just create it yourself
+  If this folder does not yet exist, just create it yourself.
 \end{itemize}
 
 \textbf{Procedure}
@@ -706,9 +688,9 @@ demanding task, all coders got intensive training.
 \tightlist
 \item
   \textbf{IMPORTANT: PLEASE DO NOT ``CORRECT'' THE TEXT WITH REGARDS TO
-  CONTENT -- SOME EXPRESSIONS ETC. MAY SEEM ODD, BUT WE ARRE ONLY
-  LOOKING TO ELIMINATE ANY MISTAKES THAT CAME INTO EXISTENCE WHEN THE
-  TEXT WAS TRANSFERRED FROM .pdf TO .doc!!!}
+  CONTENT -- SOME EXPRESSIONS ETC. MAY SEEM ODD, BUT WE ARE ONLY LOOKING
+  TO ELIMINATE ANY MISTAKES THAT CAME INTO EXISTENCE WHEN THE TEXT WAS
+  TRANSFERRED FROM .pdf TO .doc!!!}
 \item
   Delete
 
@@ -1239,7 +1221,7 @@ procedures are coded as 1xx.}
 from regular law-making are coded as follows: highest priority is given
 to constitutional matters, second highest priority is given to financial
 laws and budgeting, third highest priority is given to EU policy and
-fourth highest priority is given toforeign policy.}
+fourth highest priority is given to foreign policy.}
 
 \begin{itemize}
 \tightlist

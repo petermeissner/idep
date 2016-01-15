@@ -116,7 +116,7 @@ htmltable <- function( x,
         )
     }
   }else{
-    head <- ""
+    head <- html
     foot <- ""
   }
   # putting it together

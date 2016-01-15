@@ -93,7 +93,7 @@ manipart$edate2<-as.Date(manipart$edate, "%m/%d/%Y")
 manipart$new_id<-paste(manipart$party_id, manipart$edate2) 
 
 # merge parties and cabinets
-cabinets<-merge(cabinets.temp, manipart, by.x="new_id", by.y="new_id") 
+cabinets <- merge(cabinets.temp, manipart, by.x="new_id", by.y="new_id") 
 
 # seat share
 cabinets$seats_share <- (cabinets$seats / cabinets$election_seats_total) * 100 
