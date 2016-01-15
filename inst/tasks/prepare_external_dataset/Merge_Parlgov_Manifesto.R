@@ -78,7 +78,7 @@ parties$cmp[parties$party_id==1227 ] <- 41223
 #### merge data sets  ==========================================================
            
 # merge the party data 
-manipart <- merge(parties, manifestos, by.x="cmp", by.y="party") 
+manipart <- merge(parties, manifestos, by.x="cmp", by.y="party", all.x = TRUE) 
          
 # apply corrections to dates in ParlGov so that the two data sources match
 source('external_script/correction_dates_cabinets_2014.r') 
@@ -93,7 +93,7 @@ manipart$edate2<-as.Date(manipart$edate, "%m/%d/%Y")
 manipart$new_id<-paste(manipart$party_id, manipart$edate2) 
 
 # merge parties and cabinets
-cabinets <- merge(cabinets.temp, manipart, by.x="new_id", by.y="new_id") 
+cabinets <- merge(cabinets.temp, manipart, by.x="new_id", by.y="new_id", all.x = TRUE) 
 
 # seat share
 cabinets$seats_share <- (cabinets$seats / cabinets$election_seats_total) * 100 

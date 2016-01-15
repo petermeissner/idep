@@ -50,8 +50,6 @@ cabinets <-
 cabinets <- cabinets[ , sort(names(cabinets)) ]
 
 
-
-
 #### save data =================================================================
 
 save(cabinets, file="cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")

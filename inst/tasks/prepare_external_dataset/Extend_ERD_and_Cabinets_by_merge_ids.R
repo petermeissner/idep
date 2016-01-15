@@ -79,7 +79,7 @@ cabinets$erd_pg_mp_matcher[cabinets$erd_pg_mp_matcher=="deu_1994_11_17"] <- "deu
 erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1966_10_28"] <- "deu_1965_10_20"
 erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1962_11_19"] <- "deu_1961_11_07"
 erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1962_12_13"] <- "deu_1961_11_07"
-erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1982_10_01"] <- "deu_1983_03_30"
+#erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1982_10_01"] <- "deu_1983_03_30"
 erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1990_10_30"] <- "deu_1987_03_11"
 erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1980_11_05"] <- "deu_1976_12_15"
 erd$erd_pg_mp_matcher[erd$erd_pg_mp_matcher=="deu_1982_09_17"] <- "deu_1976_12_15"
@@ -145,16 +145,17 @@ cabinets$erd_pg_mp_matcher[cabinets$erd_pg_mp_matcher=="gbr_2005_05_06"] <- "gbr
 #     found = ifelse(cabinets$erd_pg_mp_matcher %in% erd$erd_pg_mp_matcher, "", "not_found")
 #   ) %>%
 #   #filter(ctr==ctrs[15]) %>%
-#   filter(found!="") %>% 
+#   filter(found!="") %>%
 #   head(5000)
 # 
+#   # MORE important because end dataset will be based on ERD not on PG or MP
 # erd %>%
 #   select(ctr, cab_pm, erd_pg_mp_matcher, cab_out) %>%
 #   mutate(
 #     match = ifelse(erd$erd_pg_mp_matcher %in% cabinets$erd_pg_mp_matcher, "", "no_match")
 #   )  %>%
 #   #filter(ctr==ctrs[15]) %>%
-#   filter(match!="") %>% 
+#   filter(match!="") %>%
 #   head(5000)
 # <<<< DEV
 
