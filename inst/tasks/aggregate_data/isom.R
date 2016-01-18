@@ -5,7 +5,7 @@
 
 setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/")  
 
-library(idep)
+library(idep) 
 library(dplyr)
 library(foreign)
 
@@ -410,7 +410,7 @@ for (i in seq_len(dim(isor_so)[1]) ) {
       erd$ctr == so_ctr] %>% 
     .[!is.na(.)]
 
-  # cab_in between so_start and so_end
+  # cab_out between so_start and so_end
   cab_ids <- 
     cab_ids  %>% 
     c(
