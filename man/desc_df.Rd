@@ -4,8 +4,8 @@
 \alias{desc_df}
 \title{function to describe variables in data.frame}
 \usage{
-desc_df(df, what = c("class", "nas", "min", "mean", "modus", "median", "max"),
-  cols = TRUE, digits = 2)
+desc_df(df, what = c("class", "nas", "min", "modus", "max"), cols = TRUE,
+  digits = 2)
 }
 \arguments{
 \item{df}{data.frame to be described}

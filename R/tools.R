@@ -301,7 +301,7 @@ grepv <- function(pattern, x, ...){grep(pattern, x, value = TRUE, ...)}
 #' @param digits shall numbers be rounded to a certain amount of diogits?
 desc_df <- function(
   df, 
-  what=c("class", "nas","min", "mean", "modus", "median", "max"), 
+  what=c("class", "nas","min", "modus", "max"), 
   cols=TRUE,
   digits=2
 ){
@@ -310,12 +310,12 @@ desc_df <- function(
   
   # calculating statistics
   suppressWarnings({
-    tmp$nas   <- unlist( lapply(df, function(x){sum(is.na(x))} ))
-    tmp$min   <- unlist( lapply(df, function(x){min(x, na.rm = TRUE)} ))
-    tmp$mean  <- unlist( lapply(df, function(x){mean(x, na.rm = TRUE)} ))
-    tmp$modus <- unlist( lapply(df, function(x){modus(x)} ))
-    tmp$median<- unlist( lapply(df, function(x){median(x, na.rm = TRUE)} ))
-    tmp$max   <- unlist( lapply(df, function(x){max(x, na.rm = TRUE)} ))
+    tmp$nas   <- unlist( lapply(df, function(x){as.character(sum(is.na(x)))} ))
+    tmp$min   <- unlist( lapply(df, function(x){as.character(min(x, na.rm = TRUE))} ))
+    tmp$mean  <- unlist( lapply(df, function(x){as.character(mean(x, na.rm = TRUE))} ))
+    tmp$modus <- unlist( lapply(df, function(x){as.character(modus(x))} ))
+    tmp$median<- unlist( lapply(df, function(x){as.character(median(x, na.rm = TRUE))} ))
+    tmp$max   <- unlist( lapply(df, function(x){as.character(max(x, na.rm = TRUE))} ))
   })
   
   # applying round
