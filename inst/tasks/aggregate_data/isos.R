@@ -56,16 +56,6 @@ load("../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")
 cabinets[,1:10]
 
 
-
-### DEV ### >>>> ===============================================================
-
-# isor <- isor %>% filter(ctr=="deu")  %>%  select(so_id, so_start, so_end, ctr)  
-# erd  <- erd  %>% filter(ctr=="deu")  %>%  select(cab_id, cab_pm, cab_in, cab_out, ctr)
-
-### DEV ### <<<< ...............................................................
-
-
- 
 #### creating isos data set ====================================================
  
 ### getting all spans 
@@ -92,20 +82,12 @@ for (i in countries ) {
 
   isos_tmp     <- merger_for_time_spans(df1, df2) %>% arrange(span_start, so_id, cab_id)  
   isos_tmp$ctr <- i
+  isos_tmp$span_id <- isos_tmp$span_id + max(max(isos$span_id, na.rm = TRUE, warn=FALSE), max(isos_tmp$span_id))
   isos <- rbind(isos, isos_tmp )
 }
   
- 
 
-
-
-isos %>% head(500)
- 
-###  
-
-
-#### merging erd and isor into isos ============================================
-
+#### adding dates of erd and isom to isos
 isos <- 
   isos  %>% 
   left_join(isor[, c("so_start", "so_end", "so_id")]) %>% 
@@ -114,138 +96,40 @@ isos <-
 #### decide which spans have a reform // outcome of span 
 isos$span_out   <- ifelse(isos$span_end==isos$so_end, 1, 0)
   
+### what are checks / what are critical cases to test against ???? 
+isos  %>% filter(is.na(so_id)|is.na(cab_id))  %>% head(500)
 
 
 
-### what are checks / what are critical cases to test against
+#### add other variables =======================================================
 
-
-
-
-### DEV ### >>>>
-
-merger  %>% 
-  filter(so_id=="AUT_1928-02-01.0") %>% 
-  head(50)
-
-
-
-### DEV ### <<<<
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### gen merger for merging erd and isor into so-cabinet spans =================
-
-# merge / map / match criteria is whether or not there is some kind of overlap
-#
-# -> 
-# 
-# cab_in   <= so_start <= cab_out 
-# cab_in   <= so_end   <= cab_out 
-# so_start <= cab_in   <= so_start
-# so_start <= cab_out  <= so_start
-
-
-merger <- data_frame(cab_id=character(0), so_id=character(0))
-
-for (i in seq_len(dim(isor)[1]) ) {
-  # cab_in between so_start and so_end
-  so_id    <- isor$so_id[i]
-  so_ctr   <- isor$ctr[i]
-  so_start <- isor$so_start[i]
-  so_end   <- # make so_end equal to today if it is NA
-    is.na(isor$so_end[i])  %>% 
-    ifelse(Sys.Date(), isor$so_end[i]) %>% 
-    as.Date(origin="1970-01-01")
+erd_pg <- 
+  erd  %>% 
+  left_join(cabinets, by="erd_pg_mp_matcher")   %>% 
+  mutate(
+    country = country.x,
+    ctr     = ctr.x
+  ) %>% 
+  select(-country.x, -country.y, -ctr.x, -ctr.y, -ctr, -cab_in, - cab_out)
   
-  cab_ids <- 
-    erd$cab_id[
-      so_start <= erd$cab_in & 
-        erd$cab_in <= so_end &
-        erd$ctr == so_ctr] %>% 
-    .[!is.na(.)]
-  
-  # cab_out between so_start and so_end
-  cab_ids <- 
-    cab_ids  %>% 
-    c(
-      erd$cab_id[
-        so_start <= ifelse(is.na(erd$cab_out), Sys.Date(), erd$cab_out) & 
-          erd$cab_out <= so_end &
-          erd$ctr == so_ctr]
-    ) %>% 
-    .[!is.na(.)] %>% 
-    unique()
-  
-  if( length(so_id) > 0 & length(cab_ids) > 0 ){
-    merger <- rbind(merger, data_frame(cab_id=cab_ids, so_id=so_id))
-  }
-}
 
-for (i in seq_len(dim(erd)[1]) ) {
-  # so_start between cab_in and cab_out
-  erd_id    <- erd$cab_id[i]
-  erd_ctr   <- erd$ctr[i]
-  erd_start <- erd$cab_in[i]
-  erd_end    <- 
-    is.na(erd$cab_out[i])  %>% 
-    ifelse(Sys.Date(), erd$cab_out[i]) %>% 
-    as.Date(origin="1970-01-01")
-  
-  
-  so_ids <- 
-    isor$so_id[ 
-      erd_start <= isor$so_start & 
-        isor$so_start <= erd_end &
-        isor$ctr == erd_ctr
-      ] %>% 
-    .[!is.na(.)]
-  
-  # so_end between cab_in and cab_out
-  so_ids <- 
-    so_ids  %>% 
-    c(
-      isor$so_id[
-        erd_start <= ifelse(is.na(isor$so_end), Sys.Date(), isor$so_end) & 
-          isor$so_end <= erd_end &
-          isor$ctr == erd_ctr]
-    ) %>% 
-    .[!is.na(.)] %>% 
-    unique()
-  
-  if( length(so_ids) > 0 & length(erd_id) > 0 ){
-    merger <- 
-      rbind(
-        merger, 
-        data_frame(cab_id=erd_id, so_id=so_ids)
-      )
-  }
-}
+isos <- 
+  isos %>% 
+  left_join(erd_pg)
 
-# adding uncatched ids from both
-erd_ids_not_in_merger <- erd$cab_id[ !(erd$cab_id %in% merger$cab_id) ]
-if ( length(erd_ids_not_in_merger) > 0 ) {
-  merger <- rbind(merger, data.frame(cab_id=erd_ids_not_in_merger, so_id=NA))
-}
+isor_tmp <- 
+  isor  %>% 
+  select(-ctr, so_start, -so_end, -so_start, -erd_cab_id, -country)
 
-so_ids_not_in_merger <- isor$so_id[ !(isor$so_id %in% merger$so_id) ]
-if ( length(so_ids_not_in_merger) > 0 ){
-  merger <- rbind(merger, data.frame(cab_id=NA, so_id=so_ids_not_in_merger))
-}
+isos <- 
+  isos  %>% 
+  left_join(isor_tmp)
 
-# ensure uniqueness of pairs
-(merger <- unique(merger) %>% arrange(so_id, cab_id))
+
+
+
+
+
 
 
 
