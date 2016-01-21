@@ -57,14 +57,89 @@ cabinets[,1:10]
 
 
 
-
-
 ### DEV ### >>>> ===============================================================
 
-# isor <- isor %>% filter(ctr=="deu")  %>%  select(so_id, so_start, so_end, ctr)
+# isor <- isor %>% filter(ctr=="deu")  %>%  select(so_id, so_start, so_end, ctr)  
 # erd  <- erd  %>% filter(ctr=="deu")  %>%  select(cab_id, cab_pm, cab_in, cab_out, ctr)
 
 ### DEV ### <<<< ...............................................................
+
+
+ 
+#### creating isos data set ====================================================
+ 
+### getting all spans 
+#   (by expanding time spans to single days, 
+#    match both data sources on them, 
+#    aggregate if possible
+#   )
+
+isos <- NULL 
+countries <- unique(c(erd$ctr, isor$ctr))
+ 
+for (i in countries ) {
+  df1 <- 
+    isor  %>% 
+    filter(ctr==i) %>% 
+    select(so_id, so_start, so_end) %>% 
+    as.data.frame()
+  
+  df2 <- 
+    erd  %>% 
+    filter(ctr==i) %>% 
+    select(cab_id, cab_in, cab_out) %>% 
+    as.data.frame()
+
+  isos_tmp     <- merger_for_time_spans(df1, df2) %>% arrange(span_start, so_id, cab_id)  
+  isos_tmp$ctr <- i
+  isos <- rbind(isos, isos_tmp )
+}
+  
+ 
+
+
+
+isos %>% head(500)
+ 
+###  
+
+
+#### merging erd and isor into isos ============================================
+
+isos <- 
+  isos  %>% 
+  left_join(isor[, c("so_start", "so_end", "so_id")]) %>% 
+  left_join(erd[, c("cab_in", "cab_out", "cab_id")])  
+
+#### decide which spans have a reform // outcome of span 
+isos$span_out   <- ifelse(isos$span_end==isos$so_end, 1, 0)
+  
+
+
+
+### what are checks / what are critical cases to test against
+
+
+
+
+### DEV ### >>>>
+
+merger  %>% 
+  filter(so_id=="AUT_1928-02-01.0") %>% 
+  head(50)
+
+
+
+### DEV ### <<<<
+
+
+
+
+
+
+
+
+
 
 
 
@@ -89,7 +164,7 @@ for (i in seq_len(dim(isor)[1]) ) {
   so_id    <- isor$so_id[i]
   so_ctr   <- isor$ctr[i]
   so_start <- isor$so_start[i]
-  so_end   <- 
+  so_end   <- # make so_end equal to today if it is NA
     is.na(isor$so_end[i])  %>% 
     ifelse(Sys.Date(), isor$so_end[i]) %>% 
     as.Date(origin="1970-01-01")
@@ -160,62 +235,17 @@ for (i in seq_len(dim(erd)[1]) ) {
 
 # adding uncatched ids from both
 erd_ids_not_in_merger <- erd$cab_id[ !(erd$cab_id %in% merger$cab_id) ]
-  if ( length(erd_ids_not_in_merger) > 0 ) {
-    merger <- rbind(merger, data.frame(cab_id=erd_ids_not_in_merger, so_id=NA))
-  }
+if ( length(erd_ids_not_in_merger) > 0 ) {
+  merger <- rbind(merger, data.frame(cab_id=erd_ids_not_in_merger, so_id=NA))
+}
 
 so_ids_not_in_merger <- isor$so_id[ !(isor$so_id %in% merger$so_id) ]
-  if ( length(so_ids_not_in_merger) > 0 ){
-    merger <- rbind(merger, data.frame(cab_id=NA, so_id=so_ids_not_in_merger))
-  }
+if ( length(so_ids_not_in_merger) > 0 ){
+  merger <- rbind(merger, data.frame(cab_id=NA, so_id=so_ids_not_in_merger))
+}
 
 # ensure uniqueness of pairs
 (merger <- unique(merger) %>% arrange(so_id, cab_id))
-
-
-
-
-#### merging erd and isor into isos ============================================
-
-isos <- 
-  merger  %>% 
-  left_join(isor[, c("so_start", "so_end", "so_id")]) %>% 
-  left_join(erd[, c("cab_in", "cab_out", "cab_id")])  %>% 
-  head(50)
-
-
-#### isos extending and checking ===============================================
-
-### calculate span_start and span_end
-isos$span_start <- apply(isos[, c("so_start","cab_in" )], 1, max, na.rm=TRUE)
-isos$span_end   <- apply(isos[, c("so_end"  ,"cab_out")], 1, min, na.rm=TRUE)
-
-### how to get spans in between // missing ???? 
-
-
-
-
-#### decide which spans have a reform
-
-
-### DEV ### >>>>
-
-merger  %>% 
-  filter(so_id=="AUT_1928-02-01.0") %>% 
-  head(50)
-
-
-
-### DEV ### <<<<
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,3 +1,158 @@
+
+# function that merges according to time span overlaps
+merger_for_time_spans <- function(df1, df2){
+  require(dplyr)
+  # helper function
+  expand_spans <- function(x){ seq( x[1,1], x[1,2], "day") } 
+  
+  # input check 
+  stopifnot( dim(df1)[2] >=3 ) 
+  stopifnot( dim(df2)[2] >=3 )
+  stopifnot( all(class(df1) =="data.frame") )
+  stopifnot( all(class(df2) =="data.frame") )
+  stopifnot( lapply(df1[,2:3], class) %in% "Date")
+  stopifnot( lapply(df2[,2:3], class) %in% "Date")
+  
+  # expand span to all dates
+  dmax <- max(c(df1[[2]], df1[[3]], df2[[2]], df2[[3]]), na.rm=TRUE)
+  dmin <- min(c(df1[[2]], df1[[3]], df2[[2]], df2[[3]]), na.rm=TRUE)
+  dates  <- seq(dmin, dmax, "day")
+  
+  # match expanded dates with df1 spans
+  df_dates1 <- 
+    data.frame(
+      as.Date(NA), 
+      vector(mode=class(df1[[1]]), length=1), 
+      stringsAsFactors = FALSE
+    )
+  names(df_dates1) <- c("date", names(df1)[1] )
+  
+  for ( i in seq_along(df1[,1]) ){
+    df_tmp <- 
+      data.frame(
+        dates[dates %in% expand_spans( df1[i,2:3] )], 
+        df1[i,1]
+      )
+    names(df_tmp) <- c("date", names(df1)[1] )
+    df_dates1 <- rbind(df_dates1, df_tmp)
+  }
+  df_dates1 <- as_data_frame(df_dates1)
+  
+  # match expanded dates with df2 spans
+  df_dates2 <- 
+    data.frame(
+      as.Date(NA), 
+      vector(mode=class(df2[[1]]), length=1), 
+      stringsAsFactors = FALSE
+    )
+  names(df_dates2) <- c("date", names(df2)[1] )
+  
+  for ( i in seq_along(df2[,1]) ){
+    df_tmp <- 
+      data.frame(
+        dates[dates %in% expand_spans( df2[i,2:3] )], 
+        df2[i,1]
+      )
+    names(df_tmp) <- c("date", names(df2)[1] )
+    df_dates2 <- rbind(df_dates2, df_tmp)
+  }
+  df_dates2 <- as_data_frame(df_dates2)
+  
+  # merge expanded dates and df1 / df2
+  # to get data.frame that has all dates 
+  # and for each date matched id1, id2 if availible
+  #  id1 &  id2  - covered by both
+  #  id1 & !id2  - not covered by id2 but by id1
+  # !id1 &  id2  - not covered by id1 but by id2
+  # !id1 & !id2  - covered by neither 
+  df <- 
+    data_frame(date=dates) %>% 
+    left_join(df_dates1) %>% 
+    left_join(df_dates2) %>% 
+    arrange(date) %>% 
+    filter(!is.na(date)) 
+  
+  ## add span_id variable according to changes in df1 id and df2 id 
+  
+  # getting started
+  df <- df[order(df[[1]], df[[2]], df[[3]]),]
+  
+  # separate data covered spans and those not covered
+  iffer <- apply(df[, 2:3], 1, function(x){all(is.na(x))})
+  
+  # unique combinations of id1 - id2 get unique span_id
+  tmp1 <- df[!duplicated(df[, 2:3]) & !iffer, ]
+  tmp1$span_id1 <- NA
+  tmp1$span_id1 <- seq_along(tmp1$span_id1)
+  tmp1 <- tmp1[, c(   2, 3, 4)]
+  
+  # unbroken sequences of days get unique id
+  tmp2 <- df[iffer, ]
+  if( dim(tmp2)[1] > 0 ){
+    tmp2$span_id2 <- NA
+  }else{
+    tmp2[1,] <- NA
+    tmp2$span_id2 <- NA
+  }
+  tmp2 <- tmp2[order(tmp2$date),]
+  if( dim(tmp2)[1] > 0 ){
+    tmp2[1,]$span_id2 <- max(tmp1$span_id1, na.rm=TRUE) + 1
+  }
+  for( i in seq_dim1(tmp2)[-1] ){
+    if( tmp2$date[i] - tmp2$date[i-1] > 1 ) { # broken sequence
+      tmp2$span_id2[i] <- max(tmp2$span_id2, na.rm = TRUE)+1 # -> new id
+    }else{
+      tmp2$span_id2[i] <- tmp2$span_id2[i-1] # -> old id
+    }
+  }
+  tmp2 <- tmp2[!duplicated(tmp2$date), ]  
+  tmp2 <- tmp2[,2:4]
+  
+  df <- 
+    df  %>% 
+    full_join(tmp1) %>% 
+    full_join(tmp2) %>% 
+    filter(
+      !is.na(.[[2]]) | !is.na(.[[3]])
+    )  %>% 
+    mutate(
+      span_id = ifelse( is.na(span_id1), span_id2, span_id1 )
+    )  %>% 
+    select(
+      -span_id1, -span_id2
+    ) %>% 
+    group_by(
+      span_id
+    ) %>% 
+    summarize(
+      so_id  = first(so_id), 
+      cab_id = first(cab_id), 
+      span_start = min(date, na.rm=TRUE),
+      span_end   = max(date, na.rm=TRUE)
+    )
+  
+  return(df)
+}
+
+
+
+#' seq_dim1
+seq_dim1 <- function(x){
+  if( is.vector(x) ){
+    return(seq_along(x))
+  }
+  return(seq_len(dim(x)[1]))
+}
+
+#' seq_dim2
+seq_dim2 <- function(x){
+  if( is.vector(x) ){
+    return(NULL)
+  }
+  return(seq_len(dim(x)[2]))
+}
+
+
 #' wrapper for browseURL()
 goto <- function(x=getwd()){
   browseURL(URLencode(x))
