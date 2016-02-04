@@ -41,6 +41,8 @@ Temporary Items
 # rstudio / rpackage specific
 *.Rproj
 .Rproj.user
+dev.R
+/*.Rdata
 devel/
 /wp*.csv
 inst/doc

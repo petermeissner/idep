@@ -249,6 +249,7 @@ rename(
   so_denact  = t_denact
 )
 
+# end dates for last observations -> max of end-of-study or start-of-so
 last_so <- 
   isor_so %>% 
   arrange(so_t_id)  %>% 
@@ -256,7 +257,8 @@ last_so <-
   summarise(id=last(so_t_id), last(so_end)) %>% 
   `[[`("id")
 
-isor_so[isor_so$so_t_id %in% last_so, "so_end"] <- Sys.Date()
+isor_so[isor_so$so_t_id %in% last_so, "so_end"] <- 
+  apply( cbind( isor_so[isor_so$so_t_id %in% last_so, "so_start"], as.Date("2010-01-01")), 1, max)
 
 
 
