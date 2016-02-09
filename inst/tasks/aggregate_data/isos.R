@@ -113,10 +113,8 @@ isos <-
   left_join(isor[, c("so_start", "so_end", "so_id")]) %>% 
   left_join(erd[, c("cab_in", "cab_out", "cab_id")])  
 
-#### decide which spans have a reform // outcome of span 
 
-#### DEV >>>>
-
+### add minimum date to isor to serve as proxy for reform acceptance
 isor$so_mindate <- 
   apply(
     data.frame(
@@ -124,87 +122,61 @@ isor$so_mindate <-
       isor$so_denact,
       isor$so_daccept,
       isor$so_dpromul
-      ),
+    ),
     1,
     min, na.rm=TRUE
   ) %>% 
   as.Date()
 
-
-# loop initialization
-isos_tmp                <- isos
-isos_tmp$span_out       <- as.integer(NA)
-isos_tmp$span_out_so_id <- as.character("")
-splits            <- NULL 
-# loop 
-for( i in seq_dim1(isor) ){
-  # gathering info 
-  mindatei <- isor$so_mindate[i]
-  ctri     <- isor$ctr[i]
-  soidi    <- isor$so_id[i]
-  iffer    <- 
-    isos_tmp$ctr==ctri & 
-    isos_tmp$span_start <= mindatei & 
-    mindatei <= isos_tmp$span_end
-  # splitting data set into relevant nad not
-  to_be_split <- isos_tmp[  iffer , ]
-  isos_tmp    <- isos_tmp[ !iffer , ]
+### split spans whenever a reform happened
+isos_split <- NULL
+for( i in seq_dim1(isos)){
+  tmp      <- isos[i,]
+  tmp_ctr  <- tmp$ctr
+  tmp_soid <- tmp$so_id
   
-  to_be_split
-  soidi
-  mindatei
+  spl <- 
+    isor %>% 
+    filter(
+      so_mindate %within% interval(tmp$span_start, tmp$span_end),
+      ctr   == tmp_ctr,
+      so_id != tmp_soid
+    ) %>% 
+    select(
+      so_mindate,
+      so_id
+    )
   
-  # splitting 
-  tbs_length <- dim1(to_be_split) 
-  if ( tbs_length == 1 & all(to_be_split$so_id %in% soidi) ){
-    cat(".") # -> do nothing because change has to happen before its implementation
-    isos_tmp <- rbind(isos_tmp, to_be_split)  
-  }
-  if ( tbs_length == 1 & !all(to_be_split$so_id %in% soidi) ){
+  tmp_spl <- 
+    split_timespan_after(
+      start     = tmp$span_start, 
+      end       = tmp$span_end,
+      splitdate = spl$so_mindate
+    )
+  
+  res <- 
+    tmp[rep(1, dim1(tmp_spl)),] 
+  
+  res$span_start     = tmp_spl$start
+  res$span_end       = tmp_spl$end
+  
+  isos_split <- rbind(isos_split, res)
+  if((i %% 100)==0){
     cat(".")
-    tmp <- to_be_split
-    tmp <- rbind(tmp, tmp)
-    tmp[1, "span_end"]   <- mindatei
-    tmp[2, "span_start"] <- mindatei
-    tmp[1, "span_out"]   <- 1
-    tmp[1, "span_out_so_id"]   <- soidi
-    splits <- rbind(splits, tmp)
-    # putting it back together
-    isos_tmp <- rbind(isos_tmp, tmp)  
-  }
-  if ( tbs_length ==  2 ){
-    if( to_be_split$span_start[2] == ){
-      cat(.)
-      isos_tmp <- rbind(isos_tmp, to_be_split)  
-    }else{
-      cat(paste0(" ", i," "))
-    }
-    
-    
-    
-  }
-  if ( tbs_length  >  2 ){
-    cat(paste0(" ", "!"," "))
-    isos_tmp <- rbind(isos_tmp, to_be_split)  
   }
 }
 
-isos_tmp <- isos_tmp %>% arrange(span_id)
-isos_tmp$length = as.integer(isos_tmp$span_end-isos_tmp$span_start)
-htab(isos_tmp)
+#### decide which spans have a reform // outcome of span 
+for(ctri in countries){
+  isos_split$span_outcome[isos_split$ctr==ctri] <- 
+    as.integer(
+      isos_split$span_end[isos_split$ctr==ctri] %in% 
+      isor$so_mindate[isor$ctr==ctri]
+    )  
+}
 
 
-#### <<<< DEV
 
-
-#     - if span ends with end of so -> outcome 1
-isos$span_outcome   <- ifelse(isos$span_end==isos$so_end, 1, 0) 
-#     - if span ist last so, we do not know when it stops -> 0 
-isos[isos$so_id %in% last_so,]$span_outcome <- 0  
-
-
-### what are checks / what are critical cases to test against ???? 
-isos  %>% filter( is.na(so_id) | is.na(cab_id) )  %>% head(500)
 
 
 
@@ -220,16 +192,16 @@ erd_pg <-
   select(-country.x, -country.y, -ctr.x, -ctr.y, -ctr, -cab_in, - cab_out)
   
 
-isos <- 
-  isos %>% 
+isos_split <- 
+  isos_split %>% 
   left_join(erd_pg)
 
 isor_tmp <- 
   isor  %>% 
   select(-ctr, so_start, -so_end, -so_start, -erd_cab_id, -country)
 
-isos <- 
-  isos  %>% 
+isos_split <- 
+  isos_split  %>% 
   left_join(isor_tmp)
 
 
@@ -240,23 +212,23 @@ isos <-
 maj_req  <- maj_req %>% select(-ctr)
 veto_pts <- veto_pts %>% select(-ctr)
 
-isos <- 
-  isos  %>% 
+isos_split <- 
+  isos_split  %>% 
   left_join(maj_req)
 isos <- 
-  isos  %>% 
+  isos_split  %>% 
   left_join(veto_pts)
 
-# isos$veto_pts
-# isos$maj_req
+# isos_split$veto_pts
+# isos_split$maj_req
 
 
 
 
 #### saving to disk ============================================================
 
-save(      isos, file = "isos.Rdata")
-isos_stata <- as.data.frame(isos)
+save(      isos_split, file = "isos.Rdata")
+isos_stata <- as.data.frame(isos_split)
 write.dta( isos_stata, file = "isos.dta")
 
 

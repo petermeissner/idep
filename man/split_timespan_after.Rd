@@ -12,6 +12,8 @@ split_timespan_after(start, end, splitdate, splitdateold = NA)
 \item{end}{vector of end values}
 
 \item{splidate}{data after which time span shall be split}
+
+\item{parameter}{internally needed for recursion, leave it be}
 }
 \description{
 function splitting sequence after certain date
