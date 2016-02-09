@@ -117,6 +117,7 @@ merger_for_time_spans <- function(df1, df2){
 #' @param start vector of start values
 #' @param end vector of end values
 #' @param splidate data after which time span shall be split 
+#' @param parameter internally needed for recursion, leave it be
 split_timespan_after <- function(start, end, splitdate, splitdateold=NA){
   splitdate <- sort(splitdate)
   # check
@@ -126,7 +127,7 @@ split_timespan_after <- function(start, end, splitdate, splitdateold=NA){
   if( length(splitdate)>1 & (length(start)>1 | length(end)>1) ){
     stop("cannot recur over splitdates and timespans at the same time")
   }
-  if( length(splitdate)<=1 & length(start)<=1 & length(end)<=1){
+  if( length(splitdate)==1 & length(start)<=1 & length(end)<=1){
     if( start <= splitdate & splitdate <= end ){
       res <- 
         data.frame(
