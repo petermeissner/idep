@@ -5,28 +5,28 @@ download_linelinkage_raw <- function(con, saveToFile=F){
   # getting data
   message("downloading data ... ")
   report_time( 
-    linelinkage <- suppressWarnings(dbReadTable(con, "data_linelinkage"))
+    ll_raw <- suppressWarnings(dbReadTable(con, "data_linelinkage"))
   )
   
   # getting version and last update date
   version    <- max(dbReadTable(con, "version")$versionnumber, na.rm=T)
   lastupdate <- suppressWarnings(dbGetQuery(con, "SELECT max(int_dupdate) FROM view_last_update"))
   
-  linelinkage$db_version    <- as.numeric(version)
-  linelinkage$db_lastupdate <- as.character(lastupdate)
+  ll_raw$db_version    <- as.numeric(version)
+  ll_raw$db_lastupdate <- as.character(lastupdate)
   
   if ( saveToFile == T ) {
     # generating filenames for STATA and R 
     message("\nsaving data ...")
-    r_name      <- paste0("raw_linelinkage_db_version_",version,".Rdata")
-    stata_name  <- paste0("raw_linelinkage_db_version_",version,".dta")
-    readme_name <- paste0("raw_linelinkage_db_version_README_",version,".txt")
+    r_name      <- paste0("raw_linelinkage_db_version_pre_correct_",version,".Rdata")
+    stata_name  <- paste0("raw_linelinkage_db_version_pre_correct_",version,".dta")
+    readme_name <- paste0("raw_linelinkage_db_version_README_pre_correct_",version,".txt")
     
     # saving to RData
-    report_time(save(linelinkage, file=r_name))
+    report_time(save(ll_raw, file=r_name))
     
     # saving to STATA
-    tmp <- linelinkage
+    tmp <- ll_raw
     #dev# for(i in 1:length(tmp[1,])){ print(class(tmp[,i]))  }
     # remove some variables for STATA
     tmp <- 
@@ -45,8 +45,8 @@ download_linelinkage_raw <- function(con, saveToFile=F){
   }
     
   # return
-  linelinkage <- set_enc_utf8( linelinkage )
-  invisible(linelinkage)
+  ll_raw <- set_enc_utf8( ll_raw )
+  invisible(ll_raw)
  }
 
 

@@ -5,28 +5,28 @@ download_textlines_raw <- function(con, saveToFile=F){
   # getting data
   message("downloading data ... ")
   report_time( 
-    dbdat <- suppressWarnings(dbReadTable(con, "data_textlines"))
+    tl_raw <- suppressWarnings(dbReadTable(con, "data_textlines"))
   )
   
   # getting version and last update date
   version    <- max(dbReadTable(con, "version")$versionnumber, na.rm=T)
   lastupdate <- suppressWarnings(dbGetQuery(con, "SELECT max(int_dupdate) FROM view_last_update"))
   
-  dbdat$db_version    <- as.numeric(version)
-  dbdat$db_lastupdate <- as.character(lastupdate)
+  tl_raw$db_version    <- as.numeric(version)
+  tl_raw$db_lastupdate <- as.character(lastupdate)
   
   if ( saveToFile == T ) {
     # generating filenames for STATA and R 
     message("\nsaving data ...")
-    r_name      <- paste0("raw_textlines_db_version_",version,".Rdata")
-    stata_name  <- paste0("raw_textlines_db_version_",version,".dta")
-    readme_name <- paste0("raw_textlines_db_version_README_",version,".txt")
+    r_name      <- paste0("raw_textlines_db_version_pre_correct_",version,".Rdata")
+    stata_name  <- paste0("raw_textlines_db_version_pre_correct_",version,".dta")
+    readme_name <- paste0("raw_textlines_db_version_README_pre_correct_",version,".txt")
     
     # saving to RData
-    report_time(save(dbdat, file=r_name))
+    report_time(save(tl_raw, file=r_name))
     
     # saving to STATA
-    tmp <- dbdat
+    tmp <- tl_raw
       ## remove some variables for STATA
       tmp <- 
         tmp[,-
@@ -48,8 +48,8 @@ download_textlines_raw <- function(con, saveToFile=F){
   }
   
   # return
-  dbdat <- set_enc_utf8(dbdat)
-  invisible(dbdat)
+  tl_raw <- set_enc_utf8(tl_raw)
+  invisible(tl_raw)
 }
 
 
