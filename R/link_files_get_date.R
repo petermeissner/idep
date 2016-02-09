@@ -3,9 +3,9 @@
 
 link_files_get_date <- function(filelist_full, flatten=F){
     worker2 <- function(linkage_env, flatten) {
-    res <- eval(as.name(linkage_env))$RESULTS
-    link_data_get_date(res, flatten=F)
-  }
+      res <- eval(as.name(linkage_env))$RESULTS
+      link_data_get_date(res, flatten=F)
+    }
   tmp <- ldply(linkage_env, worker2)
   for(i in seq_along(tmp[1,])) tmp[,i] <- as.character(tmp[,i])
   

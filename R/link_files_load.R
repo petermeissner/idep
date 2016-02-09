@@ -16,6 +16,10 @@ link_files_load <- function(filelist_full){
   for ( i in fl_seq )  {
     assign( env(i, name=T), new.env(parent=globalenv()), envir=globalenv())
     load(filelist_full[i], env(i))
+    if( any(grepl("UTF-8", Sys.getlocale())) ){
+      Encoding(env(1)$RESULTS$oldtext) <- "latin1" 
+      Encoding(env(1)$RESULTS$newtext) <- "latin1" 
+    }
   }
   # store names
   assign("linkage_env",
