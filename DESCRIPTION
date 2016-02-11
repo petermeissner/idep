@@ -2,7 +2,7 @@ Package: idep
 Type: Package
 Title: Helper functions and procedures for the IDEP Project
 Date: 2016-02-09
-Version: 1.0.0.900727
+Version: 1.0.0.900733
 Author: Peter Meissner (retep.meissner@gmail.com)
 Meintainer: Peter Meissner (retep.meissner@gmail.com)
 Authors@R: person("Peter", "Meissner", email =

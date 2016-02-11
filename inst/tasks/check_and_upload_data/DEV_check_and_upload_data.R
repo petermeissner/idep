@@ -1,8 +1,5 @@
 # script for checking link data and uploading it to server
 
-if( interactive() & !exists("ctr") ) ctr <- "IRE"
-
-
 #### setting things up =========================================================
 message("\n")
 library(idep)
@@ -30,10 +27,6 @@ try(setwd("~/z/Database/rawdata"))
 countries <- list.dirs(".", FALSE, FALSE)
 countries
 
-
-#### DEV >>>>
-ctr <- "BEL"
-#### <<<< DEV 
 
 
 # commandline argument evaluation

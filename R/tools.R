@@ -1,3 +1,53 @@
+#' function to shorten column content to fit into stata dta savely
+shorten_columns_for_stata_save <- function(x) {
+  for(i in  seq_dim2(x) ){
+    if( max(nchar(x[[i]]), na.rm = TRUE) > 200 ){
+      x[[i]] <- substring(x[[i]], 1, 200)
+    }
+  }
+  return(x)
+}
+
+
+#' encode latin1 if needed 
+encode_latin1_if_needed <- function(df){
+  if( any( class(df) %in% c("data.frame","list") ) ){
+    for(i in seq_dim2(df)){
+      if( should_be_latin1_encoded(df[[i]]) ){
+        Encoding(df[[i]]) <- "latin1"
+      }
+    }  
+    return(df)
+  }
+  if( is.character(df) ){
+    if( should_be_latin1_encoded(df) ){
+      Encoding(df) <- "latin1"
+    }
+  }
+  return(df)
+}
+
+#' function for checking appropriate latin1 coding 
+should_be_latin1_encoded <- function(x) {
+  if(any(class(x) %in% c("data.frame","list"))){
+    return(sapply(x, should_be_latin1_encoded))
+  }
+  tryCatch(
+    {
+      nchar(x)
+      FALSE
+    }, 
+    error = function(e){
+      if(grepl("invalid multibyte string", e$message)){
+        Encoding(x) <- "latin1"
+        tryCatch({nchar(x)}, error=function(e){return(FALSE)})
+        return(TRUE)
+      }else{
+        stop(e)
+      }
+    } 
+  )  
+}
 
 
 

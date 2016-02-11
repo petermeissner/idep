@@ -782,7 +782,10 @@ isor <- reforms
 setwd("Z:/Gesch\u00e4ftsordnungen/database/aggregats")
 
 save(isor, file="isor.Rdata")
-write.dta(isor, file="isor.dta")
+write.dta(
+  shorten_columns_for_stata_save(isor), 
+  file="isor.dta"
+)
 
 
 

@@ -646,9 +646,7 @@ isom <-
 
 save(      isom, file = "isom.Rdata")
 
-isom_stata <- as.data.frame(isom)
-isom_stata[,"ref_id_all"] <- substring(isom_stata[,"ref_id_all"],0,100)
-isom_stata[,"so_id_all"] <- substring(isom_stata[,"so_id_all"],0,100)
+isom_stata <- shorten_columns_for_stata_save(as.data.frame(isom))
 write.dta( isom_stata, file = "isom.dta")
 
 

@@ -6,7 +6,8 @@
 
 #### setting things up =========================================================
 
-setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/")  
+try(setwd("z:/gesch\u00e4ftsordnungen/database/aggregats/"))
+try(setwd("~/z/Database/aggregats/"))
 
 library(idep) 
 library(dplyr)
@@ -19,6 +20,7 @@ library(foreign)
 
 # isor
 load("isor.Rdata")
+isor <- encode_latin1_if_needed(isor)
 isor[,1:8]
 
 isor  <- 
@@ -56,6 +58,7 @@ isor <-
 
 # erd
 load("../external_data/erd_cleaned_up.Rdata")
+erd <- encode_latin1_if_needed(erd)
 erd[,1:11]
 erd <- 
   erd %>% 
@@ -65,14 +68,16 @@ erd <-
 
 # pg / mp
 load("../external_data/cmp_parlgov_cabinets_ideo_confl_volatility.Rdata")
+cabinets <- encode_latin1_if_needed(cabinets)
 cabinets[,1:10]
 
 # majority requirement
 load("../external_data/maj_req.Rdata")
+maj_req <- encode_latin1_if_needed(maj_req)
 
 # veto points
 load("../external_data/veto_pts.Rdata")
-
+veto_pts <- encode_latin1_if_needed(veto_pts)
 
 
 #### creating isos data set ====================================================
@@ -131,6 +136,7 @@ isor$so_mindate <-
 ### split spans whenever a reform happened
 isos_split <- NULL
 for( i in seq_dim1(isos)){
+  if(i == 1)  cat("|")
   tmp      <- isos[i,]
   tmp_ctr  <- tmp$ctr
   tmp_soid <- tmp$so_id
@@ -164,15 +170,31 @@ for( i in seq_dim1(isos)){
   if((i %% 100)==0){
     cat(".")
   }
+  if(i == max(seq_dim1(isos)) )  cat("|")
+}
+isos <- isos_split
+
+
+### redo span ids (duplicated due to splitting) 
+countries <- sort(unique(c(erd$ctr, isor$ctr)))
+isos %>%
+  arrange(ctr, span_start, span_end, cab_id)
+for( i in seq_along(countries)){
+  isos$span_id[isos$ctr==countries[i]] <-
+    seq_along(isos$span_id[isos$ctr==countries[i]]) + 10000*i
 }
 
+
+
 #### decide which spans have a reform // outcome of span 
+isos$span_outcome <- NA                          # all are NA if not coded otherwise
+isos$span_outcome[!is.na(isos$so_id)] <- 0 # 0 if under observation and not coded otherwise
 for(ctri in countries){
-  isos_split$span_outcome[isos_split$ctr==ctri] <- 
-    as.integer(
-      isos_split$span_end[isos_split$ctr==ctri] %in% 
-      isor$so_mindate[isor$ctr==ctri]
-    )  
+  isos$span_outcome[
+      isos$ctr==ctri
+    ][
+      isos$span_end[isos$ctr==ctri] %in% isor$so_mindate[isor$ctr==ctri]
+    ] <- 1 # one if span_end in mindate
 }
 
 
@@ -192,16 +214,16 @@ erd_pg <-
   select(-country.x, -country.y, -ctr.x, -ctr.y, -ctr, -cab_in, - cab_out)
   
 
-isos_split <- 
-  isos_split %>% 
+isos <- 
+  isos %>% 
   left_join(erd_pg)
 
 isor_tmp <- 
   isor  %>% 
   select(-ctr, so_start, -so_end, -so_start, -erd_cab_id, -country)
 
-isos_split <- 
-  isos_split  %>% 
+isos <- 
+  isos  %>% 
   left_join(isor_tmp)
 
 
@@ -212,23 +234,21 @@ isos_split <-
 maj_req  <- maj_req %>% select(-ctr)
 veto_pts <- veto_pts %>% select(-ctr)
 
-isos_split <- 
-  isos_split  %>% 
+isos <- 
+  isos  %>% 
   left_join(maj_req)
 isos <- 
-  isos_split  %>% 
+  isos  %>% 
   left_join(veto_pts)
 
-# isos_split$veto_pts
-# isos_split$maj_req
-
+# isos$veto_pts
+# isos$maj_req
 
 
 
 #### saving to disk ============================================================
-
-save(      isos_split, file = "isos.Rdata")
-isos_stata <- as.data.frame(isos_split)
+save(  isos, file = "isos.Rdata")
+isos_stata <- shorten_columns_for_stata_save( as.data.frame(isos) )
 write.dta( isos_stata, file = "isos.dta")
 
 
